@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "57422513105",
+    "firebase_url": "https://habit-5baae.firebaseio.com",
+    "project_id": "habit-5baae",
+    "storage_bucket": "habit-5baae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57422513105:android:28a8e61a993b11ff",
+        "android_client_info": {
+          "package_name": "com.ltthuc.habit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57422513105-ihm2g22g55kmae9p25aat2r6ajq2msrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVqH97S23aDEyIS-3DgJroiojKHtKVazA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57422513105-ihm2g22g55kmae9p25aat2r6ajq2msrn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

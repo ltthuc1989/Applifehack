@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Habit</string>
+    <string name="home">Home</string>
+    <string name="category">Category</string>
+    <string name="setting">Setting</string>
+    <string name="app_version">App version</string>
+</resources>

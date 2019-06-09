@@ -1,0 +1,124 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion rootProject.androidMinSdkVersion
+        targetSdkVersion rootProject.androidTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    androidExtensions {
+        experimental = true
+    }
+    testOptions {
+        animationsDisabled = true
+    }
+
+}
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    def appDependencies = rootProject.ext.dependencies
+    def testDependencies = rootProject.ext.testDependencies
+
+    api appDependencies.kotlin
+    api appDependencies.coreKtx
+    api appDependencies.kotlinCoroutine
+
+
+    // Arch
+    api appDependencies.ArchLifeCycle
+    api appDependencies.ArchReactiveStreams
+
+    // Support
+    api appDependencies.support
+    api appDependencies.supportAppCompat
+    api appDependencies.supportDesign
+    api appDependencies.supportCardView
+    api appDependencies.constraintLayout
+
+    // Room
+    api appDependencies.Room
+    api appDependencies.RxRoom
+    kapt appDependencies.RoomCompiler
+
+    // Glide
+    api appDependencies.glide
+    kapt appDependencies.glideCompiler
+
+
+    // Dagger
+    implementation appDependencies.dagger
+    implementation appDependencies.daggerAndroid
+    kapt appDependencies.daggerCompiler
+    kapt appDependencies.daggerAndroidCompiler
+
+    // Rx
+    api appDependencies.rxJava
+    api appDependencies.rxAndroid
+
+    api appDependencies.gson
+
+    //view
+
+    api appDependencies.spinkit
+    api appDependencies.fastNetwork
+    api appDependencies.errorView
+
+
+    // api "com.facebook.android:facebook-android-sdk:$facebook_version"
+    api appDependencies.multipleDex
+
+
+    //push
+
+    api appDependencies.timber
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockitoKotlin
+    testImplementation testDependencies.archTesting
+
+    androidTestImplementation testDependencies.testCore
+    androidTestImplementation testDependencies.testRunner
+    androidTestImplementation testDependencies.esperesso
+
+    androidTestImplementation 'androidx.test:rules:1.1.0-beta02'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'com.tapadoo.android:alerter:4.0.0'
+
+
+}
+repositories {
+
+    maven {
+        url "https://jitpack.io"
+    }
+    mavenCentral()
+
+
+}
+
