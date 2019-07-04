@@ -89,6 +89,16 @@ dependencies {
     kapt appDependencies.daggerCompiler
     kapt appDependencies.daggerAndroidCompiler
 
+    // firebase-firestore
+    implementation 'com.androidhuman.rxfirebase2:firebase-firestore-kotlin:17.0.4.0'
+    implementation 'com.androidhuman.rxfirebase2:firebase-firestore:17.0.4.0'
+    implementation 'com.google.firebase:firebase-firestore:17.0.4'
+    implementation 'com.androidhuman.rxfirebase2:firebase-core:16.0.1.0'
+    implementation 'com.androidhuman.rxfirebase2:firebase-database:16.0.1.1'
+    implementation 'com.prof.rssparser:rssparser:2.0.4'
+
+
+
     //room
     implementation appDependencies.Room
     implementation appDependencies.RxRoom

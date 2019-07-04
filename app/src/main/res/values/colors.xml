@@ -542,4 +542,30 @@
     <color name="theme_custom_color_primary_dark">#4b2c20</color>
     <color name="tooltip_background_dark">#e6616161</color>
     <color name="tooltip_background_light">#e6ffffff</color>
+    <color name="bg_app">#008c33</color>
+
+    <color name="primary">#08306D</color>
+    <color name="primary_dark">#08306D</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="accent">#455A64</color>
+    <color name="divider1">#B6B6B6</color>
+    <color name="startblue">#4bb6ef</color>
+    <color name="endblue">#4bb6ef</color>
+    <color name="app_8e8e8e">#8E8E8E</color>
+    <color name="app_yello">#F3E11E</color>
+    <color name="app_4a4a4a">#4A4A4A</color>
+    <color name="app_green">#2ecc71</color>
+    <color name="app_fffff0">#c0c0c0</color>
+    <color name="app_9F7D42">#9F7D42</color>
+
+    <color name="colorOrange">#FF7F50</color>
+    <color name="colorPrimary">#08306D</color>
+    <color name="colorPrimaryDark">#08306D</color>
+    <color name="colorAccent">#08306D</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_gray">#f2f2f2</color>
+    <color name="red">#ff3a33</color>
+    <color name="color_f2f2f2">#f2f2f2</color>
+    <color name="app_f2f2f2">#f2f2f2</color>
+    <color name="app_cecece">#cecece</color>
 </resources>

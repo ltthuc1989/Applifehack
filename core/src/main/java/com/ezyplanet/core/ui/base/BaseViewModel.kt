@@ -32,6 +32,9 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import io.reactivex.Single
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import java.lang.IllegalArgumentException
 import java.net.SocketException
 import java.net.SocketTimeoutException
@@ -82,6 +85,8 @@ abstract class BaseViewModel<n : MvvmNav, m : Any?>(private val connectionManage
 
         }
     }
+    private val viewModelJob = SupervisorJob()
+    protected val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     open fun updateModel(data: m?) {
         _model.postValue(data)
@@ -114,6 +119,7 @@ abstract class BaseViewModel<n : MvvmNav, m : Any?>(private val connectionManage
         super.onCleared()
         compositeDisposable?.clear()
         navigator?.hideProgress()
+        viewModelJob?.cancel()
     }
 
 

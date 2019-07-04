@@ -2,6 +2,8 @@ package com.ltthuc.habit.di.buider
 
 import androidx.lifecycle.ViewModelProvider
 import com.ezyplanet.core.viewmodel.ArchViewModelFactory
+import com.ltthuc.habit.ui.activity.HomeActivityVM
+import com.ltthuc.habit.ui.activity.HomeActivityVMBuilder
 import dagger.Binds
 import dagger.Module
 
@@ -13,7 +15,8 @@ import dagger.Module
  * And finally [ArchViewModelFactory] will be provided as [ViewModelProvider.Factory].
  *
  */
-@Module(includes = [])
+@Module(includes = [
+    (HomeActivityVMBuilder::class)])
 abstract class ViewModelBuilder {
 
     @Binds

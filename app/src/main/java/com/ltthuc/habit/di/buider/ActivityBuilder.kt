@@ -1,6 +1,8 @@
 package com.ltthuc.habit.di.buider
 
+import com.ltthuc.habit.ui.activity.HomeActivity
 import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
 /**
  * The Main Module for binding all of activities.
@@ -8,5 +10,7 @@ import dagger.Module
  */
 @Module
 abstract class ActivityBuilder {
+    @ContributesAndroidInjector
+    internal abstract fun bindHomeActivity(): HomeActivity
 
 }
