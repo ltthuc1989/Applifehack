@@ -8,8 +8,10 @@ import com.google.firebase.firestore.QuerySnapshot
 
 import com.google.gson.Gson
 import com.irmansyah.catalogmoviekotlin.data.DataManager
+import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.network.ApiHeader
 import com.ltthuc.habit.data.network.ApiHelper
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import timber.log.Timber
@@ -36,5 +38,9 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
 
     override fun getRssCat(): Single<Value<QuerySnapshot>> {
         return apiHelper.getRssCat()
+    }
+
+    override fun createPost(postContent: Post): Completable {
+       return apiHelper.createPost(postContent)
     }
 }

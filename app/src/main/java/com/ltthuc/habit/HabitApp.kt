@@ -3,6 +3,8 @@ package com.ltthuc.habit
 import android.app.Activity
 import android.app.Application
 import android.app.Service
+import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.crashlytics.android.Crashlytics
@@ -20,7 +22,7 @@ import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class HabitApp : Application(), HasActivityInjector, HasServiceInjector {
+class HabitApp : MultiDexApplication(), HasActivityInjector {
     @Inject
     lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
     @Inject
@@ -31,12 +33,13 @@ class HabitApp : Application(), HasActivityInjector, HasServiceInjector {
 
     override fun onCreate() {
         super.onCreate()
-        FacebookSdk.sdkInitialize(this)
-
+       // FacebookSdk.sdkInitialize(this)
+        MultiDex.install(this)
+        FirebaseApp.initializeApp(this)
         initDebugModeValues()
         initOneSignal()
-        initCrashLytics()
-        FirebaseApp.initializeApp(this)
+        //initCrashLytics()
+      //  FirebaseApp.initializeApp(this)
         DaggerAppComponent.builder()
                 .application(this)
                 .build()
@@ -51,10 +54,10 @@ class HabitApp : Application(), HasActivityInjector, HasServiceInjector {
 
         AndroidNetworking.initialize(this, okHttpClient)
         // disable Logging to upload photo
-        if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this)
-            AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
-        }
+//        if (BuildConfig.DEBUG) {
+//            Stetho.initializeWithDefaults(this)
+//            AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
+//        }
 
     }
 
@@ -69,9 +72,6 @@ class HabitApp : Application(), HasActivityInjector, HasServiceInjector {
         return activityDispatchingAndroidInjector
     }
 
-    override fun serviceInjector(): AndroidInjector<Service> {
-        return dispatchingServiceInjector
-    }
 
     internal fun initOneSignal() {
     }
@@ -81,4 +81,5 @@ class HabitApp : Application(), HasActivityInjector, HasServiceInjector {
             Fabric.with(this, Crashlytics())
         }
     }
+
 }

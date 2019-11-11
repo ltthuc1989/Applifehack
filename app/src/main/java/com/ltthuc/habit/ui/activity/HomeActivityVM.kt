@@ -5,6 +5,7 @@ import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.ltthuc.habit.data.AppDataManager
+import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.network.response.RssCatResp
 import java.util.ArrayList
 import javax.inject.Inject
@@ -32,13 +33,16 @@ class HomeActivityVM @Inject constructor(val appDataManager: AppDataManager, sch
 
                 }, {
                     navigator?.hideProgress()
+                    navigator?.showAlert(it.message)
                 }))
 
     }
 
     fun onItemClicked(item:RssCatResp){
-
+       navigator?.gotoListPostScreen(item)
     }
+
+
 
 
 }

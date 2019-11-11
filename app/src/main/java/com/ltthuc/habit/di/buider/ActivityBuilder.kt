@@ -1,6 +1,7 @@
 package com.ltthuc.habit.di.buider
 
 import com.ltthuc.habit.ui.activity.HomeActivity
+import com.ltthuc.habit.ui.activity.listpost.ListPostActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,5 +13,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilder {
     @ContributesAndroidInjector
     internal abstract fun bindHomeActivity(): HomeActivity
+    @ContributesAndroidInjector
+    internal abstract fun bindListPostActivity(): ListPostActivity
 
 }

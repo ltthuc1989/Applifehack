@@ -4,4 +4,18 @@
     <string name="category">Category</string>
     <string name="setting">Setting</string>
     <string name="app_version">App version</string>
+
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">"022eb08df0a690dd698c4f34e269c769"</string>
+    <string name="FACEBOOK_APP_ID" translatable="false">"320409838804774"</string>
+    <string name="post_now">Post Now</string>
+    <string name="schedule">Schedule</string>
+
+    <string name="posts_label">Posts:</string>
+    <string name="complain_sent">Complain was sent successfully</string>
+    <string name="now_time_range">now</string>
+
+    <string name="duration_minutes_shortest">%1$d m</string>
+    <string name="duration_hours_shortest">%1$d h</string>
+    <string name="duration_days_shortest">%1$d d</string>
+    <string name="duration_week_shortest">%1$d w</string>
 </resources>

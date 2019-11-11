@@ -1,5 +1,7 @@
 package com.ltthuc.habit.ui.activity.listpost
 
+import com.ltthuc.habit.data.entity.Post
+import com.ltthuc.habit.data.network.response.RssCatResp
 import com.prof.rssparser.Article
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -43,6 +45,20 @@ data class PostContent(
     }
     fun getTitle():String?{
         return article.title
+    }
+    fun getImage():String?{
+        return article.image
+    }
+
+    fun toPost(rssCatResp: RssCatResp): Post{
+        val post= Post()
+        post.title = getTitle()
+        post.imgLink = getImage()
+        post.description =article?.description
+        post.createdDate = Date().time
+        post.webLink = rssCatResp.domain
+        return  post
+
     }
 
 }

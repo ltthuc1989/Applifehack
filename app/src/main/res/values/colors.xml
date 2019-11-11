@@ -542,7 +542,7 @@
     <color name="theme_custom_color_primary_dark">#4b2c20</color>
     <color name="tooltip_background_dark">#e6616161</color>
     <color name="tooltip_background_light">#e6ffffff</color>
-    <color name="bg_app">#008c33</color>
+    <color name="bg_app">#0C2B62</color>
 
     <color name="primary">#08306D</color>
     <color name="primary_dark">#08306D</color>
