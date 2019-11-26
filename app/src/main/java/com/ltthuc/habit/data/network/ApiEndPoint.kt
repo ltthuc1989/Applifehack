@@ -6,5 +6,6 @@ package com.ltthuc.habit.data.network
 object ApiEndPoint {
     const val GET_RSS_CATEGORY = "rss"
     const val POST_DB_KEY = "posts"
+    const val GET_CATEGORIES = "category"
 
 }

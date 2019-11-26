@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_tab_results_topic_row_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/feed_simple_list_item_dark_background"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingStart="@dimen/padding_base_2x"
+    android:paddingTop="@dimen/padding_base"
+    android:paddingEnd="@dimen/padding_base_2x"
+    android:paddingBottom="@dimen/padding_base">
+
+    <ImageView
+        android:id="@+id/search_tab_results_topic_row_image"
+        android:layout_width="@dimen/search_result_topic_item_image_width"
+        android:layout_height="@dimen/search_result_topic_item_image_height"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_base_2x"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/search_tab_results_topic_row_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/margin_base_2x"
+        android:layout_marginBottom="@dimen/margin_base_h"
+        android:layout_toRightOf="@+id/search_tab_results_topic_row_image"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.1"
+        android:maxLines="3"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/search_result_topic_item_title_textSize" />
+
+    <TextView
+        android:id="@+id/search_tab_results_topic_row_likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_tab_results_topic_row_title"
+        android:layout_marginTop="@dimen/margin_base"
+        android:layout_toRightOf="@+id/search_tab_results_topic_row_image"
+        android:drawableLeft="@drawable/ic_home_black_36dp"
+        android:drawablePadding="@dimen/padding_base_h"
+        android:gravity="left|center_vertical|center_horizontal|center|start"
+        android:letterSpacing="0.1"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/search_result_topic_item_subtitle_textSize"
+        android:visibility="visible" />
+</RelativeLayout>

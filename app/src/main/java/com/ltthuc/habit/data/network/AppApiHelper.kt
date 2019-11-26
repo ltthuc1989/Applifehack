@@ -47,4 +47,12 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             document(generatePostId()),postValues)
 
     }
+
+    override fun getPost(): Single<Value<QuerySnapshot>> {
+        return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.POST_DB_KEY))
+    }
+
+    override fun getCatgories(): Single<Value<QuerySnapshot>> {
+        return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.GET_CATEGORIES))
+    }
 }

@@ -3,4 +3,6 @@
     <string name="home">Home</string>
     <string name="category">Category</string>
     <string name="setting">Setting</string>
+    <string name="back">Back</string>
+    <string name="most_popular_last_week">Most Popular Last Week</string>
 </resources>

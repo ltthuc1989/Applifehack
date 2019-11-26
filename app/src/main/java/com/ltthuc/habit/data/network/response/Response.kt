@@ -10,3 +10,10 @@ data class RssCatResp constructor(val feed:String?="",
                                   val thumb_url:String?="",
                                   val title:String?="",
                                   val domain:String?=""):Parcelable
+
+@Parcelize
+@IgnoreExtraProperties
+data class CatResp constructor(val name:String?="",
+                                  val image:String?="",
+                                  val id:String?="",
+                                  val desc:String?=""):Parcelable

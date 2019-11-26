@@ -1,8 +1,10 @@
 package com.ezyplanet.core.util.extension
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -11,7 +13,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+
 import androidx.cardview.widget.CardView
+
 import androidx.fragment.app.*
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
@@ -57,13 +61,12 @@ inline fun <reified T> Gson.fromJson(jsonElement: JsonElement): T? = this.fromJs
 
 inline fun <reified T> Gson.fromJson(jsonStr: String?): T? = this.fromJson<T>(jsonStr, object : com.google.gson.reflect.TypeToken<T>() {}.type)
 
-inline fun <reified T> Gson.ToJson(data:T?): String? = this.toJson(data, object : com.google.gson.reflect.TypeToken<T>() {}.type)
+inline fun <reified T> Gson.ToJson(data: T?): String? = this.toJson(data, object : com.google.gson.reflect.TypeToken<T>() {}.type)
 
 inline fun <reified T> toObjectRespone(result: String?): Any? {
     return if (result.isNullOrEmpty() || result == "[]") result
     else return Gson().fromJson<T>(result)
 }
-
 
 
 /**
@@ -140,6 +143,7 @@ fun Activity.showKeyboard() {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 }
+
 /**
  * close keyboard on [Activity.getCurrentFocus] view
  */
@@ -219,14 +223,14 @@ fun <T> lazyFast(operation: () -> T): Lazy<T> = lazy(LazyThreadSafetyMode.NONE) 
 inline fun <FRAGMENT : Fragment> FRAGMENT.putArgs(argsBuilder: Bundle.() -> Unit): FRAGMENT = this.apply { arguments = Bundle().apply(argsBuilder) }
 inline fun <FRAGMENT : DialogFragment> FRAGMENT.putArgs(argsBuilder: Bundle.() -> Unit): FRAGMENT = this.apply { arguments = Bundle().apply(argsBuilder) }
 
-fun MvvmActivity<*,*>.gotoActivity(cls: KClass<out Activity>, finish: Boolean = false) {
+fun MvvmActivity<*, *>.gotoActivity(cls: KClass<out Activity>, finish: Boolean = false) {
     isSwitchSreen?.postValue(true)
     val intent = Intent(this, cls.java)
     startActivity(intent)
     if (finish) finishActivity()
 }
 
-fun MvvmActivity<*,*>.gotoActivityClearTask(cls: KClass<out Activity>, finish: Boolean = false) {
+fun MvvmActivity<*, *>.gotoActivityClearTask(cls: KClass<out Activity>, finish: Boolean = false) {
     isSwitchSreen?.postValue(true)
     val intent = Intent(this, cls.java)
     intent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -234,8 +238,8 @@ fun MvvmActivity<*,*>.gotoActivityClearTask(cls: KClass<out Activity>, finish: B
     if (finish) finishActivity()
 }
 
-fun MvvmActivity<*,*>.gotoActivity(cls: KClass<out Activity>,
-                          extras: Map<String, Any?>? = null, finish: Boolean = false) {
+fun MvvmActivity<*, *>.gotoActivity(cls: KClass<out Activity>,
+                                    extras: Map<String, Any?>? = null, finish: Boolean = false) {
     isSwitchSreen?.postValue(true)
     val intent = Intent(this, cls.java)
 
@@ -260,8 +264,8 @@ fun Intent.addExtra(key: String?, value: Any?) {
     }
 }
 
-inline fun MvvmActivity<*,*>.gotoActivity(cls: KClass<out Activity>,
-                                 extras: Pair<String, Parcelable?>? = null, finish: Boolean = false) {
+inline fun MvvmActivity<*, *>.gotoActivity(cls: KClass<out Activity>,
+                                           extras: Pair<String, Parcelable?>? = null, finish: Boolean = false) {
     isSwitchSreen?.postValue(true)
 
     val intent = Intent(this, cls.java)
@@ -270,8 +274,8 @@ inline fun MvvmActivity<*,*>.gotoActivity(cls: KClass<out Activity>,
     if (finish) finishActivity()
 }
 
-inline fun MvvmActivity<*,*>.gotoActivityNewTask(cls: KClass<out Activity>,
-                                 extras: Pair<String, Parcelable?>? = null, finish: Boolean = false) {
+inline fun MvvmActivity<*, *>.gotoActivityNewTask(cls: KClass<out Activity>,
+                                                  extras: Pair<String, Parcelable?>? = null, finish: Boolean = false) {
     isSwitchSreen?.postValue(true)
     val intent = Intent(this, cls.java)
     intent.putExtra(extras?.first, extras?.second)
@@ -279,8 +283,8 @@ inline fun MvvmActivity<*,*>.gotoActivityNewTask(cls: KClass<out Activity>,
     if (finish) finishActivity()
 }
 
-inline fun MvvmActivity<*,*>.gotoActivityForResult(cls: KClass<out Activity>,
-                                          extras: Pair<String, Any?>? = null, requestCode: Int) {
+inline fun MvvmActivity<*, *>.gotoActivityForResult(cls: KClass<out Activity>,
+                                                    extras: Pair<String, Any?>? = null, requestCode: Int) {
     val intent = Intent(this, cls.java)
     intent.addExtra(extras?.first, extras?.second)
 
@@ -288,29 +292,31 @@ inline fun MvvmActivity<*,*>.gotoActivityForResult(cls: KClass<out Activity>,
 
 }
 
-inline fun MvvmActivity<*,*>.gotoActivityForResult(cls: KClass<out Activity>, requestCode: Int) {
+inline fun MvvmActivity<*, *>.gotoActivityForResult(cls: KClass<out Activity>, requestCode: Int) {
     val intent = Intent(this, cls.java)
     startActivityResult(intent, requestCode)
 
 }
-inline fun MvvmActivity<*,*>.startActivityResult(intent: Intent,requestCode: Int){
+
+inline fun MvvmActivity<*, *>.startActivityResult(intent: Intent, requestCode: Int) {
     isSwitchSreen?.postValue(true)
-    startActivityForResult(intent,requestCode)
+    startActivityForResult(intent, requestCode)
 }
 
-inline fun MvvmActivity<*,*>.finishActivityWithResult(extras: Pair<String, Any?>? = null, resultCode: Int) {
+inline fun MvvmActivity<*, *>.finishActivityWithResult(extras: Pair<String, Any?>? = null, resultCode: Int) {
     isSwitchSreen?.postValue(true)
     val intent = Intent()
     intent.addExtra(extras?.first, extras?.second)
     setResult(resultCode, intent)
     finishActivity()
 }
-inline fun MvvmActivity<*,*>.startActivity( intent: Intent){
+
+inline fun MvvmActivity<*, *>.startActivity(intent: Intent) {
     isSwitchSreen?.postValue(true)
     startActivity(intent)
 }
 
-inline fun MvvmActivity<*,*>.finishActivity(){
+inline fun MvvmActivity<*, *>.finishActivity() {
     isSwitchSreen?.postValue(true)
     finish()
 }
@@ -355,20 +361,20 @@ fun CardView.setBackground(text: Int?) {
     text?.let { this.setBackgroundColor(text) }
 }
 
-inline fun Activity.delay(delayListner: DelayListner, time: Long = 5,timeUnit: TimeUnitType = TimeUnitType.MILLION_SECOND) {
+inline fun Activity.delay(delayListner: DelayListner, time: Long = 5, timeUnit: TimeUnitType = TimeUnitType.MILLION_SECOND) {
     GlobalScope.launch(Dispatchers.Main) {
-        when(timeUnit){
-            TimeUnitType.HOUR->{
-                kotlinx.coroutines.delay(time * 60*60*1000)
+        when (timeUnit) {
+            TimeUnitType.HOUR -> {
+                kotlinx.coroutines.delay(time * 60 * 60 * 1000)
             }
-            TimeUnitType.MINUTES->{
-                kotlinx.coroutines.delay(time * 60*1000)
+            TimeUnitType.MINUTES -> {
+                kotlinx.coroutines.delay(time * 60 * 1000)
             }
-            TimeUnitType.SECOND->{
+            TimeUnitType.SECOND -> {
                 kotlinx.coroutines.delay(time * 1000)
             }
-            TimeUnitType.MILLION_SECOND->{
-                kotlinx.coroutines.delay(time*100)
+            TimeUnitType.MILLION_SECOND -> {
+                kotlinx.coroutines.delay(time * 100)
             }
         }
 
@@ -377,21 +383,21 @@ inline fun Activity.delay(delayListner: DelayListner, time: Long = 5,timeUnit: T
     }
 }
 
-inline fun DialogFragment.delay(delayListner: DelayListner, time: Long = 5,timeUnit: TimeUnitType = TimeUnitType.MILLION_SECOND) {
+inline fun DialogFragment.delay(delayListner: DelayListner, time: Long = 5, timeUnit: TimeUnitType = TimeUnitType.MILLION_SECOND) {
 
     GlobalScope.launch(Dispatchers.Main) {
-        when(timeUnit){
-            TimeUnitType.HOUR->{
-                kotlinx.coroutines.delay(time * 60*60*1000)
+        when (timeUnit) {
+            TimeUnitType.HOUR -> {
+                kotlinx.coroutines.delay(time * 60 * 60 * 1000)
             }
-            TimeUnitType.MINUTES->{
-                kotlinx.coroutines.delay(time * 60*1000)
+            TimeUnitType.MINUTES -> {
+                kotlinx.coroutines.delay(time * 60 * 1000)
             }
-            TimeUnitType.SECOND->{
+            TimeUnitType.SECOND -> {
                 kotlinx.coroutines.delay(time * 1000)
             }
-            TimeUnitType.MILLION_SECOND->{
-                kotlinx.coroutines.delay(time*100)
+            TimeUnitType.MILLION_SECOND -> {
+                kotlinx.coroutines.delay(time * 100)
             }
         }
 
@@ -400,3 +406,6 @@ inline fun DialogFragment.delay(delayListner: DelayListner, time: Long = 5,timeU
 
     }
 }
+
+
+

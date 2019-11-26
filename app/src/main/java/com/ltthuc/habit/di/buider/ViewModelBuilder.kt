@@ -4,7 +4,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.ezyplanet.core.viewmodel.ArchViewModelFactory
 import com.ltthuc.habit.ui.activity.HomeActivityVM
 import com.ltthuc.habit.ui.activity.HomeActivityVMBuilder
+import com.ltthuc.habit.ui.activity.category.CategoryVMBuilder
+import com.ltthuc.habit.ui.activity.feed.FeedVMBuilder
 import com.ltthuc.habit.ui.activity.listpost.ListPostVMBuilder
+import com.ltthuc.habit.ui.activity.webview.WebViewVMBuilder
+import com.ltthuc.habit.ui.fragment.slidepost.SlidePostVMBuilder
 import dagger.Binds
 import dagger.Module
 
@@ -18,7 +22,12 @@ import dagger.Module
  */
 @Module(includes = [
     (HomeActivityVMBuilder::class),
-    (ListPostVMBuilder::class)])
+    (ListPostVMBuilder::class),
+    (FeedVMBuilder::class),
+    (WebViewVMBuilder::class),
+    (CategoryVMBuilder::class),
+    (SlidePostVMBuilder::class)
+])
 abstract class ViewModelBuilder {
 
     @Binds

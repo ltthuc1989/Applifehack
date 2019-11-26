@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Base application theme. -->
@@ -5,24 +6,36 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowActionBarOverlay">false</item>
-        <item name="android:windowContentOverlay">@null</item>
     </style>
+
     <style name="text_roboto">
         <item name="android:textColor">@color/app_444444</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">14sp</item>
 
     </style>
+
     <style name="text_roboto_header">
         <item name="android:textColor">@color/app_444444</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">15sp</item>
 
     </style>
+    <style name="text_roboto_h1">
+        <item name="android:textColor">@color/app_444444</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18sp</item>
+
+    </style>
+    <style name="text_roboto_bold_h1">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">20sp</item>
+
+    </style>
+
     <style name="text_roboto_medium">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -31,6 +44,7 @@
         <item name="android:textSize">15sp</item>
 
     </style>
+
     <style name="edt_border_gray">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">35dp</item>
@@ -39,6 +53,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
+
     <style name="bt_border_gray">
         <item name="android:layout_height">45dp</item>
         <item name="android:background">@drawable/bg_btn_gray</item>
@@ -48,6 +63,7 @@
         <item name="android:fontFamily">@font/roboto_medium</item>
 
     </style>
+
     <style name="bt_border_green">
         <item name="android:layout_height">45dp</item>
         <item name="android:textAllCaps">false</item>
@@ -57,6 +73,7 @@
         <item name="android:fontFamily">@font/roboto_medium</item>
 
     </style>
+
     <style name="bt_border_red">
         <item name="android:layout_height">45dp</item>
         <item name="android:textAllCaps">false</item>
@@ -66,4 +83,468 @@
         <item name="android:fontFamily">@font/roboto_medium</item>
 
     </style>
+
+    //
+
+    <style name="ActionTextAppearance"></style>
+
+    <style name="ActionTextAppearance.Dark">
+        <item name="textColor">@color/lightest_gray</item>
+    </style>
+
+    <style name="ActionTextAppearance.Light">
+        <item name="textColor">@color/dark_gray</item>
+    </style>
+
+
+    <style name="DefaultActionBarStyle">
+        <item name="android:elevation">@dimen/bottom_navigation_elevation</item>
+        <item name="android:stateListAnimator">@drawable/appbar_always_elevated</item>
+    </style>
+
+    <style name="DailyFeedAppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/FadeAnimation.Activity</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="cardActionsStyle">@style/ActionTextAppearance.Light</item>
+        <item name="cardDividerColor">@color/lighter_gray_50</item>
+        <item name="cardStyle">@style/DailyFeedCardView.Light</item>
+        <item name="cardTitleStyle">@style/TitleTextAppearance.Light</item>
+        <item name="feedItemBackground">@drawable/feed_title_light_background</item>
+        <item name="feedSectionStyle">@style/DailyFeedSectionAppearance.Light</item>
+        <item name="feedSubtitleStyle">@style/DailyFeedSubtitleAppearance.Light</item>
+        <item name="feedTitleStyle">@style/DailyFeedTitleAppearance.Light</item>
+        <item name="subjectCardStyle">@style/CardView.Dark</item>
+        <item name="themeTextSecondaryColor">@color/gray</item>
+        <item name="toolbarNavigationButtonStyle">@style/DailyFeedToolbarNavigationButtonStyle
+        </item>
+        <item name="toolbarStyle">@style/DailyFeedToolbarStyle</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle" />
+
+    <style name="AppCompatAlertDialogStyle.Dark">
+        <item name="android:textColorPrimary">#bbbbbb</item>
+        <item name="android:textColor">@color/lightest_gray</item>
+        <item name="android:background">#222222</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="colorAccent">#5fa3d0</item>
+        <item name="colorPrimary">#888888</item>
+        <item name="colorPrimaryDark">#3367d6</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle.Light">
+        <item name="android:textColorPrimary">#888888</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="colorAccent">#5fa3d0</item>
+        <item name="colorPrimary">#444444</item>
+        <item name="colorPrimaryDark">#3367d6</item>
+    </style>
+    <style name="DailyFeedSectionAppearance"/>
+    <style name="DailyFeedSectionAppearance.Dark">
+        <item name="android:background">@null</item>
+        <item name="android:paddingLeft">@dimen/padding_base</item>
+        <item name="android:paddingTop">@dimen/padding_base_2x</item>
+        <item name="android:paddingBottom">@dimen/padding_base</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">-16dp</item>
+    </style>
+
+    <style name="DailyFeedSectionAppearance.Light">
+        <item name="android:background">@null</item>
+        <item name="android:paddingLeft">@dimen/padding_base</item>
+        <item name="android:paddingTop">@dimen/padding_base_2x</item>
+        <item name="android:paddingBottom">@dimen/padding_base</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">-8dp</item>
+    </style>
+
+    <style name="DailyFeedAppTheme.Dark">
+        <item name="android:windowBackground">@color/darkest_gray</item>
+        <item name="android:alertDialogTheme">@style/AppCompatAlertDialogStyle.Dark</item>
+        <item name="cardActionsStyle">@style/ActionTextAppearance.Dark</item>
+        <item name="cardDividerColor">@color/lighter_gray_50</item>
+        <item name="cardStyle">@style/DailyFeedCardView.Dark</item>
+        <item name="cardTitleStyle">@style/TitleTextAppearance.Dark</item>
+        <item name="feedItemBackground">@drawable/feed_item_dark_background</item>
+        <item name="feedSectionStyle">@style/DailyFeedSectionAppearance.Dark</item>
+        <item name="feedSimpleListItemBackground">@drawable/feed_simple_list_item_dark_background
+        </item>
+        <item name="feedSubtitleStyle">@style/DailyFeedSubtitleAppearance.Dark</item>
+        <item name="feedTitleStyle">@style/DailyFeedTitleAppearance.Dark</item>
+        <item name="subjectCardStyle">@style/CardView.Dark</item>
+        <item name="themeBackground">@android:color/black</item>
+        <item name="themeContentBackground">@color/darkest_gray</item>
+        <item name="themeTextAppearance">@style/TitleTextAppearance.Dark</item>
+        <item name="themeTextInvertedColor">@color/white_25</item>
+        <item name="themeTextPrimaryColor">@android:color/white</item>
+        <item name="themeTextSecondaryColor">@color/lightest_gray</item>
+        <item name="toolbarStyle">@style/DailyFeedToolbarStyle.Dark</item>
+    </style>
+
+    <style name="FadeAnimation" />
+
+    <style name="FadeAnimation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="DailyFeedCardView" />
+
+    <style name="DailyFeedCardView.Dark">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cardBackgroundColor">@color/dark_gray</item>
+    </style>
+
+    <style name="DailyFeedCardView.Light">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="cardBackgroundColor">@android:color/white</item>
+        <item name="cardCornerRadius">@dimen/radius_base_2x</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="contentPadding">0dp</item>
+    </style>
+
+
+
+
+
+    <style name="DailyFeedSubtitleAppearance" />
+
+    <style name="DailyFeedSubtitleAppearance.Dark">
+        <item name="android:paddingLeft">@dimen/padding_base</item>
+        <item name="android:layout_marginBottom">@dimen/margin_base_h</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="DailyFeedSubtitleAppearance.Light">
+        <item name="android:paddingLeft">@dimen/padding_base</item>
+        <item name="android:layout_marginBottom">@dimen/margin_base_h</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="DailyFeedTitleAppearance" />
+
+    <style name="DailyFeedTitleAppearance.Dark">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white_50</item>
+        <item name="android:paddingLeft">@dimen/padding_base</item>
+        <item name="android:paddingBottom">@dimen/padding_base</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="DailyFeedTitleAppearance.Light">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black_50</item>
+        <item name="android:paddingLeft">@dimen/padding_base</item>
+        <item name="android:paddingBottom">@dimen/padding_base_h</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="DailyFeedToolbarNavigationButtonStyle">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:scaleX">0.8</item>
+        <item name="android:scaleY">0.8</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <style name="DailyFeedToolbarStyle">
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="contentInsetLeft">0dp</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="titleTextAppearance">@style/DailyFeedToolbarTitleAppearance</item>
+    </style>
+
+    <style name="DailyFeedToolbarStyle.Dark">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="titleTextAppearance">@style/DailyFeedToolbarTitleAppearance.Dark</item>
+    </style>
+
+    <style name="DailyFeedToolbarTitleAppearance">
+        <item name="android:textSize">@dimen/feed_daily_toolbar_textSize</item>
+        <item name="android:textColor">@color/darker_gray</item>
+        <item name="android:gravity">top|right|center_vertical|center_horizontal|center</item>
+        <item name="android:textAlignment">gravity</item>
+    </style>
+
+    <style name="TitleTextAppearance">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">left|center_horizontal</item>
+    </style>
+
+    <style name="TitleTextAppearance.Dark">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TitleTextAppearance.Light">
+        <item name="android:textColor">@color/darker_gray</item>
+    </style>
+
+    <style name="TopicActionBarStyle">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+    </style>
+
+    <style name="DailyFeedToolbarTitleAppearance.Dark">
+        <item name="android:textColor">@color/lightest_gray</item>
+    </style>
+
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+<style name="TopicCardView"></style>
+    <style name="TopicCardView.Dark">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cardBackgroundColor">@color/dark_gray</item>
+    </style>
+    <style name="TopicCardView.Light">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="cardBackgroundColor">@android:color/white</item>
+        <item name="cardCornerRadius">@dimen/radius_base_2x</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="contentPadding">0dp</item>
+    </style>
+
+    <style name="DiscoverFeedAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/FadeAnimation.Activity</item>
+        <item name="cardActionsStyle">@style/ActionTextAppearance.Light</item>
+        <item name="cardDividerColor">@color/lighter_gray_50</item>
+        <item name="cardStyle">@style/TopicCardView.Light</item>
+        <item name="cardTitleStyle">@style/TitleTextAppearance.Light</item>
+        <item name="feedCarouselPositionButtonColor">@color/darker_gray</item>
+        <item name="feedItemBackground">@android:color/transparent</item>
+        <item name="feedSectionStyle">@style/FeedSectionAppearance.Light</item>
+        <item name="feedSubtitleStyle">@style/FeedSubtitleAppearance.Light</item>
+        <item name="feedTitleStyle">@style/FeedTitleAppearance.Light</item>
+        <item name="subjectCardStyle">@style/CardView.Dark</item>
+    </style>
+    <style name="DiscoverFeedAppTheme.Dark">
+        <item name="android:windowBackground">@color/darkest_gray</item>
+        <item name="android:alertDialogTheme">@style/AppCompatAlertDialogStyle.Dark</item>
+        <item name="cardActionsStyle">@style/ActionTextAppearance.Dark</item>
+        <item name="cardDividerColor">@color/lighter_gray_50</item>
+        <item name="cardStyle">@style/TopicCardView.Dark</item>
+        <item name="cardTitleStyle">@style/TitleTextAppearance.Dark</item>
+        <item name="feedCarouselPositionButtonColor">@color/lightest_gray</item>
+        <item name="feedItemBackground">@android:color/transparent</item>
+        <item name="feedSectionStyle">@style/FeedSectionAppearance.Dark</item>
+        <item name="feedSimpleListItemBackground">@drawable/feed_simple_list_item_dark_background</item>
+        <item name="feedSubtitleStyle">@style/FeedSubtitleAppearance.Dark</item>
+        <item name="feedTitleStyle">@style/FeedTitleAppearance.Dark</item>
+        <item name="subjectCardStyle">@style/CardView.Dark</item>
+        <item name="themeBackground">@android:color/black</item>
+        <item name="themeContentBackground">@color/darkest_gray</item>
+        <item name="themeTextAppearance">@style/TitleTextAppearance.Dark</item>
+        <item name="themeTextInvertedColor">@color/white_25</item>
+        <item name="themeTextPrimaryColor">@android:color/white</item>
+        <item name="themeTextSecondaryColor">@color/lightest_gray</item>
+    </style>
+    <style name="SubjectTextLabel">
+        <item name="android:textSize">@dimen/subject_card_textSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">right</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">@dimen/padding_base</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:lineSpacingMultiplier">0.9</item>
+        <item name="android:paddingStart">@dimen/padding_base</item>
+        <item name="android:paddingEnd">@dimen/padding_base</item>
+    </style>
+
+    <style name="FeedSectionAppearance">
+        <item name="android:ellipsize">end</item>
+        <item name="android:paddingTop">@dimen/padding_base</item>
+        <item name="android:paddingBottom">@dimen/padding_base_h</item>
+        <item name="android:layout_marginLeft">@dimen/margin_base_2x</item>
+        <item name="android:layout_marginTop">@dimen/margin_base</item>
+        <item name="android:layout_marginBottom">@dimen/margin_base</item>
+    </style>
+    <style name="FeedSectionAppearance.Dark">
+        <item name="android:background">@drawable/feed_title_dark_background</item>
+    </style>
+    <style name="FeedSectionAppearance.Light">
+        <item name="android:background">@drawable/feed_title_light_background</item>
+    </style>
+    <style name="FeedSubtitleAppearance">
+        <item name="android:textSize">@dimen/feed_section_subtitle_textSize</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginBottom">@dimen/margin_base</item>
+    </style>
+    <style name="FeedSubtitleAppearance.Dark">
+        <item name="android:textColor">@color/lightest_gray</item>
+    </style>
+    <style name="FeedSubtitleAppearance.Light">
+        <item name="android:textColor">@color/light_gray</item>
+    </style>
+    <style name="FeedTitleAppearance">
+        <item name="android:textSize">@dimen/feed_section_title_textSize</item>
+
+        <item name="android:ellipsize">end</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+    <style name="FeedTitleAppearance.Dark">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="FeedTitleAppearance.Light">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+
+    <style name="TagFeedAppTheme">
+        <item name="android:windowAnimationStyle">@style/AppAnimation.Activity</item>
+        <item name="cardActionsStyle">@style/ActionTextAppearance.Light</item>
+        <item name="cardDividerColor">@color/lighter_gray_50</item>
+        <item name="cardStyle">@style/TopicCardView.Light</item>
+        <item name="cardTitleStyle">@style/TitleTextAppearance.Light</item>
+        <item name="feedCarouselPositionButtonColor">@android:color/white</item>
+        <item name="feedCollapsedToolbarStyle">@style/FeedHeroCollapsedToolbarText</item>
+        <item name="feedExpandedToolbarStyle">@style/FeedHeroExpandedToolbarTitleText.Dark</item>
+        <item name="feedItemBackground">@android:color/transparent</item>
+        <item name="feedSectionStyle">@style/FeedSectionAppearance.Light</item>
+        <item name="feedSubtitleStyle">@style/FeedSubtitleAppearance.Light</item>
+        <item name="feedTitleStyle">@style/FeedTitleAppearance.Light</item>
+        <item name="subjectCardStyle">@style/CardView.Dark</item>
+        <item name="toolbarNavigationButtonStyle">@style/FeedHeroToolbarNavigationButtonStyle</item>
+        <item name="toolbarStyle">@style/FeedHeroToolbarNoLogoStyle.Dark</item>
+    </style>
+    <style name="TagFeedAppTheme.Dark">
+        <item name="android:windowBackground">@color/darkest_gray</item>
+        <item name="android:windowAnimationStyle">@style/AppAnimation.Activity</item>
+        <item name="android:alertDialogTheme">@style/AppCompatAlertDialogStyle.Dark</item>
+        <item name="cardActionsStyle">@style/ActionTextAppearance.Dark</item>
+        <item name="cardDividerColor">@color/lighter_gray_50</item>
+        <item name="cardStyle">@style/TopicCardView.Dark</item>
+        <item name="cardTitleStyle">@style/TitleTextAppearance.Dark</item>
+        <item name="feedCarouselPositionButtonColor">@android:color/white</item>
+        <item name="feedCollapsedToolbarStyle">@style/FeedHeroCollapsedToolbarText</item>
+        <item name="feedExpandedToolbarStyle">@style/FeedHeroExpandedToolbarTitleText.Dark</item>
+        <item name="feedItemBackground">@android:color/transparent</item>
+        <item name="feedSectionStyle">@style/FeedSectionAppearance.Dark</item>
+        <item name="feedSimpleListItemBackground">@drawable/feed_simple_list_item_dark_background</item>
+        <item name="feedSubtitleStyle">@style/FeedSubtitleAppearance.Dark</item>
+        <item name="feedTitleStyle">@style/FeedTitleAppearance.Dark</item>
+        <item name="themeBackground">@android:color/black</item>
+        <item name="themeContentBackground">@color/darkest_gray</item>
+        <item name="themeTextAppearance">@style/TitleTextAppearance.Dark</item>
+        <item name="themeTextInvertedColor">@color/white_25</item>
+        <item name="themeTextPrimaryColor">@android:color/white</item>
+        <item name="themeTextSecondaryColor">@color/lightest_gray</item>
+        <item name="toolbarNavigationButtonStyle">@style/FeedHeroToolbarNavigationButtonStyle</item>
+        <item name="toolbarStyle">@style/FeedHeroToolbarNoLogoStyle.Dark</item>
+    </style>
+
+    <style name="FeedHeroCollapsedToolbarText">
+        <item name="android:textSize">@dimen/feed_hero_toolbar_title_textSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">right|center_horizontal|clip_horizontal</item>
+        <item name="android:paddingRight">@dimen/iconSize_small</item>
+        <item name="android:layout_marginTop">@dimen/margin_base</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="AppAnimation"/>
+
+    <style name="AppAnimation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="FeedHeroExpandedToolbarSubTitleText"/>
+
+    <style name="FeedHeroExpandedToolbarSubTitleText.Dark">
+    </style>
+    <style name="FeedHeroExpandedToolbarSubTitleText.Light">
+    </style>
+    <style name="FeedHeroExpandedToolbarTitleText"/>
+    <style name="FeedHeroExpandedToolbarTitleText.Dark">
+    </style>
+    <style name="FeedHeroExpandedToolbarTitleText.Light">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+    <style name="FeedHeroToolbarNavigationButtonStyle">
+        <item name="android:paddingLeft">@dimen/padding_base</item>
+        <item name="android:paddingRight">@dimen/padding_base</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">@dimen/padding_base</item>
+        <item name="android:paddingEnd">@dimen/padding_base</item>
+    </style>
+    <style name="FeedHeroToolbarNavigationButtonStyle.Dark">
+    </style>
+    <style name="FeedHeroToolbarNoLogoStyle">
+        <item name="logo">@null</item>
+    </style>
+    <style name="FeedHeroToolbarNoLogoStyle.Dark">
+        <item name="logo">@null</item>
+    </style>
+    <style name="TopicToolbarNavigationButtonStyle">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">@dimen/padding_base</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:minWidth">0dp</item>
+    </style>
+    <style name="FeedHeroToolbarTitleAppearance">
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    <style name="TopicToolbarNavigationButtonStyle.Dark"/>
+    <style name="FeedHeroToolbarStyle">
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:actionButtonStyle">@style/TopicToolbarNavigationButtonStyle</item>
+        <item name="android:paddingStart">@dimen/padding_base_h</item>
+        <item name="android:paddingEnd">@dimen/padding_base_h</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="logo">@drawable/ic_topic_toolbar_logo_dark</item>
+        <item name="logoDescription">@string/back</item>
+        <item name="navigationIcon">@drawable/btn_back_arrow</item>
+        <item name="titleTextAppearance">@style/FeedHeroToolbarTitleAppearance</item>
+    </style>
+
+    <style name="FeedCarouselTagLabel">
+        <item name="android:textSize">@dimen/subject_card_textSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/tag_button_background_white</item>
+        <item name="android:paddingTop">@dimen/padding_base_h</item>
+        <item name="android:paddingBottom">@dimen/padding_base_h</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:paddingStart">@dimen/padding_base</item>
+        <item name="android:paddingEnd">@dimen/padding_base</item>
+    </style>
+
 </resources>

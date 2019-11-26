@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.ltthuc.habit.data.network.response.CatResp" />
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.category.CategoryVM" />
+    </data>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="?attr/subjectCardStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/subject_card_radius"
+    app:cardElevation="@dimen/subject_card_elevation"
+    app:cardUseCompatPadding="true">
+
+    <ImageView
+        android:id="@+id/subject_card_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:alpha="0.8"
+        android:maxWidth="@dimen/subject_card_height"
+        android:minHeight="@dimen/subject_card_height"
+        app:srcImageUrl="@{item.image}"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/subject_card_title"
+        style="@style/SubjectTextLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:background="@drawable/subject_card_gradient_background"
+        android:text="@{item.name}"
+
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:maxWidth="@dimen/subject_card_height" />
+
+
+</androidx.cardview.widget.CardView>
+</layout>

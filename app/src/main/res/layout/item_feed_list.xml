@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.ltthuc.habit.data.entity.Post" />
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.feed.FeedVM" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/feed_hero_gradient_background">
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/feed_hero_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_above="@id/linBottom"
+
+            android:layout_alignParentTop="true"
+            android:background="@color/darker_gray"
+            android:fitsSystemWindows="true">
+
+
+            <ImageView
+                android:id="@+id/feed_hero_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:alpha="0.8"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_exploremore_en"
+
+                />
+
+            <TextView
+                style="@style/text_roboto_bold_h1"
+                android:text="@{item.title}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                tools:text="hello abc" />
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="like"
+
+                android:textColor="@color/white_75" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/light_gray" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="share"
+                android:textColor="@color/white_75" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

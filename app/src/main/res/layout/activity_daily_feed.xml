@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <import type="com.ltthuc.habit.databinding.ItemFeedListBinding" />
+        <import type="com.ltthuc.habit.data.entity.Post" />
+        <variable
+            name="listener"
+            type="com.ltthuc.habit.ui.widget.listener.BottomBarListener"/>
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.feed.FeedVM" />
+        <variable
+            name="adapter"
+            type="com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter&lt;Post, ItemFeedListBinding&gt;" />
+    </data>
+
+    <LinearLayout
+    android:id="@+id/daily_feed_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/daily_feed_appbar"
+        style="@style/DefaultActionBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/themeBackground"
+        android:fitsSystemWindows="true">
+
+        <com.ltthuc.habit.ui.widget.toolbar.BaseToolBar
+            android:id="@+id/daily_feed_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/feed_daily_toolbar_height"
+            app:titleBar='@{@string/feed"}'
+             />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/daily_feed_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:adapter="@{adapter}"
+            android:orientation="vertical"
+            app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
+            android:overScrollMode="always" />
+
+
+
+        <ProgressBar
+            android:id="@+id/daily_feed_progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:visibility="gone"
+            android:indeterminate="true" />
+
+
+
+
+
+    </FrameLayout>
+
+        <include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"
+            app:listener="@{listener}"
+            layout="@layout/bottom_navigation"/>
+</LinearLayout>
+
+</layout>

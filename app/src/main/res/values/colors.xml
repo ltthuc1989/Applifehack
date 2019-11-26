@@ -1,54 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="_color_lib_grey_1000">#181818</color>
-    <color name="abc_input_method_navigation_guard">@android:color/black</color>
-    <color name="abc_search_url_text_normal">#7fa87f</color>
-    <color name="abc_search_url_text_pressed">@android:color/black</color>
-    <color name="abc_search_url_text_selected">@android:color/black</color>
-    <color name="accent_material_dark">@color/material_deep_teal_200</color>
-    <color name="accent_material_light">@color/material_deep_teal_500</color>
+
     <color name="ads_background">#1d242c</color>
     <color name="app_background">#282c34</color>
-    <color name="background_floating_material_dark">@color/material_grey_800</color>
-    <color name="background_floating_material_light">@android:color/white</color>
-    <color name="background_material_dark">@color/material_grey_850</color>
-    <color name="background_material_light">@color/material_grey_50</color>
+
     <color name="black_overlay">#66000000</color>
-    <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
-    <color name="bright_foreground_disabled_material_light">#80000000</color>
-    <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
-    <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark</color>
-    <color name="bright_foreground_material_dark">@android:color/white</color>
-    <color name="bright_foreground_material_light">@android:color/black</color>
-    <color name="browser_actions_bg_grey">#f5f5f5</color>
-    <color name="browser_actions_divider_color">#1e000000</color>
-    <color name="browser_actions_text_color">#de000000</color>
-    <color name="browser_actions_title_color">#646464</color>
-    <color name="button_material_dark">#ff5a595b</color>
-    <color name="button_material_light">#ffd6d7d7</color>
-    <color name="cardview_dark_background">#ff424242</color>
-    <color name="cardview_light_background">#ffffffff</color>
-    <color name="cardview_shadow_end_color">#03000000</color>
-    <color name="cardview_shadow_start_color">#37000000</color>
-    <color name="com_facebook_blue">#3b5998</color>
-    <color name="com_facebook_button_background_color">#415dae</color>
-    <color name="com_facebook_button_background_color_disabled">#bdc1c9</color>
-    <color name="com_facebook_button_background_color_focused">#fffffe</color>
-    <color name="com_facebook_button_background_color_focused_disabled">#84878c</color>
-    <color name="com_facebook_button_background_color_pressed">#2f477a</color>
-    <color name="com_facebook_button_background_color_selected">#7c8fc8</color>
-    <color name="com_facebook_button_border_color_focused">#dedee6</color>
-    <color name="com_facebook_button_login_background_color">#4267b2</color>
-    <color name="com_facebook_button_login_silver_background_color">#f4f6f8</color>
-    <color name="com_facebook_button_login_silver_background_color_pressed">#e9eaf0</color>
-    <color name="com_facebook_button_send_background_color">@color/com_facebook_messenger_blue</color>
-    <color name="com_facebook_button_send_background_color_pressed">#006fff</color>
-    <color name="com_facebook_device_auth_text">#90949c</color>
-    <color name="com_facebook_likeboxcountview_border_color">#6a7180</color>
-    <color name="com_facebook_likeboxcountview_text_color">#6a7180</color>
-    <color name="com_facebook_likeview_text_color">#6a7180</color>
-    <color name="com_facebook_messenger_blue">#0084ff</color>
-    <color name="com_smart_login_code">#3c6499</color>
+
     <color name="common_google_signin_btn_text_dark_default">@android:color/white</color>
     <color name="common_google_signin_btn_text_dark_disabled">#1f000000</color>
     <color name="common_google_signin_btn_text_dark_focused">@android:color/black</color>
@@ -61,35 +19,17 @@
     <color name="default_progress_color">#33b5e5</color>
     <color name="default_stroke_color">#33b5e5</color>
     <color name="default_text_color">#333333</color>
-    <color name="design_bottom_navigation_shadow_color">#14000000</color>
-    <color name="design_fab_shadow_end_color">@android:color/transparent</color>
-    <color name="design_fab_shadow_mid_color">#14000000</color>
-    <color name="design_fab_shadow_start_color">#44000000</color>
-    <color name="design_fab_stroke_end_inner_color">#0a000000</color>
-    <color name="design_fab_stroke_end_outer_color">#0f000000</color>
-    <color name="design_fab_stroke_top_inner_color">#1affffff</color>
-    <color name="design_fab_stroke_top_outer_color">#2effffff</color>
-    <color name="design_snackbar_background_color">#323232</color>
-    <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
-    <color name="dim_foreground_disabled_material_light">#80323232</color>
-    <color name="dim_foreground_material_dark">#ffbebebe</color>
-    <color name="dim_foreground_material_light">#ff323232</color>
-    <color name="divider">@color/material_divider_color_dark_theme</color>
+
     <color name="error_color_material">#f4511e</color>
     <color name="error_view_retry">#69f0ae</color>
 
-    <color name="foreground_material_dark">@android:color/white</color>
-    <color name="foreground_material_light">@android:color/black</color>
-    <color name="highlighted_text_material_dark">#6680cbc4</color>
-    <color name="highlighted_text_material_light">#66009688</color>
+
     <color name="hint_text">@color/material_typography_hint_text_color_dark</color>
     <color name="ic_launcher_background">#9d7a40</color>
-    <color name="icons">@color/material_icon_color_dark_theme_active</color>
+
     <color name="icons_disabled">@color/material_button_text_color_disabled_light_theme</color>
     <color name="list_item_action_color">@color/material_icon_color_dark_theme_active</color>
-    <color name="material_blue_grey_800">#ff37474f</color>
-    <color name="material_blue_grey_900">#ff263238</color>
-    <color name="material_blue_grey_950">#ff21272b</color>
+
     <color name="material_bottom_sheet_background_fill">@color/material_color_white</color>
     <color name="material_bottom_sheet_contents_text_color">@color/material_typography_primary_text_color_dark</color>
     <color name="material_bottom_sheet_title_text_color">@color/material_typography_primary_text_color_dark</color>
@@ -429,19 +369,12 @@
     <color name="material_color_yellow_accent_700">#ffd600</color>
     <color name="material_color_yellow_primary">@color/material_color_yellow_500</color>
     <color name="material_color_yellow_primary_dark">@color/material_color_yellow_700</color>
-    <color name="material_deep_teal_200">#ff80cbc4</color>
-    <color name="material_deep_teal_500">#ff009688</color>
+
     <color name="material_divider_color_dark_theme">@color/material_color_white_12_percent</color>
     <color name="material_divider_color_light_theme">@color/material_color_black_12_percent</color>
     <color name="material_expansion_panel_label_secondary_content_text_color">@color/material_typography_secondary_text_color_dark</color>
     <color name="material_expansion_panel_label_text_color">@color/material_typography_primary_text_color_dark</color>
-    <color name="material_grey_100">#fff5f5f5</color>
-    <color name="material_grey_300">#ffe0e0e0</color>
-    <color name="material_grey_50">#fffafafa</color>
-    <color name="material_grey_600">#ff757575</color>
-    <color name="material_grey_800">#ff424242</color>
-    <color name="material_grey_850">#ff303030</color>
-    <color name="material_grey_900">#ff212121</color>
+
     <color name="material_icon_color_dark_theme_active">@color/material_color_black_54_percent</color>
     <color name="material_icon_color_dark_theme_inactive">@color/material_color_black_26_percent</color>
     <color name="material_icon_color_light_theme_active">@color/material_color_white</color>
@@ -507,46 +440,26 @@
     <color name="mdtp_transparent_black">#7f000000</color>
     <color name="mdtp_white">#ffffff</color>
     <color name="navigation_view_bg">@color/root_container_bg</color>
-    <color name="notification_action_color_filter">#ffffffff</color>
-    <color name="notification_icon_bg_color">#ff9e9e9e</color>
-    <color name="notification_material_background_media_default_color">#ff424242</color>
+
     <color name="picture_placeholder_dark">@color/material_color_black_12_percent</color>
     <color name="picture_placeholder_light">@color/material_color_white_12_percent</color>
-    <color name="preference_fallback_accent_color">#ff80cbc4</color>
-    <color name="primary_dark_material_dark">@android:color/black</color>
-    <color name="primary_dark_material_light">@color/material_grey_600</color>
-    <color name="primary_material_dark">@color/material_grey_900</color>
-    <color name="primary_material_light">@color/material_grey_100</color>
+
     <color name="primary_text">@color/material_typography_primary_text_color_dark</color>
-    <color name="primary_text_default_material_dark">#ffffffff</color>
-    <color name="primary_text_default_material_light">#de000000</color>
-    <color name="primary_text_disabled_material_dark">#4dffffff</color>
-    <color name="primary_text_disabled_material_light">#39000000</color>
+
     <color name="primary_text_inverse">@color/material_typography_primary_text_color_light</color>
-    <color name="ripple_material_dark">#33ffffff</color>
-    <color name="ripple_material_light">#1f000000</color>
+
     <color name="root_container_bg">@color/app_background</color>
-    <color name="secondary_text">@color/material_typography_secondary_text_color_dark</color>
-    <color name="secondary_text_default_material_dark">#b3ffffff</color>
-    <color name="secondary_text_default_material_light">#8a000000</color>
-    <color name="secondary_text_disabled_material_dark">#36ffffff</color>
-    <color name="secondary_text_disabled_material_light">#24000000</color>
+
     <color name="splash_background_res">@color/theme_custom_color_primary_dark</color>
     <color name="splash_status_color">@color/material_typography_disabled_text_color_dark</color>
-    <color name="switch_thumb_disabled_material_dark">#ff616161</color>
-    <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
-    <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
-    <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
+
     <color name="theme_custom_color_accent">#ff3d00</color>
     <color name="theme_custom_color_primary">#795548</color>
     <color name="theme_custom_color_primary_dark">#4b2c20</color>
-    <color name="tooltip_background_dark">#e6616161</color>
-    <color name="tooltip_background_light">#e6ffffff</color>
+
     <color name="bg_app">#0C2B62</color>
 
-    <color name="primary">#08306D</color>
-    <color name="primary_dark">#08306D</color>
-    <color name="primary_light">#BBDEFB</color>
+
     <color name="accent">#455A64</color>
     <color name="divider1">#B6B6B6</color>
     <color name="startblue">#4bb6ef</color>
@@ -568,4 +481,241 @@
     <color name="color_f2f2f2">#f2f2f2</color>
     <color name="app_f2f2f2">#f2f2f2</color>
     <color name="app_cecece">#cecece</color>
+
+
+
+    <color name="dart_transparent">#81000000</color>
+
+    <color name="primary_dark_text">#28333D</color>
+    <color name="secondary_text">#434343</color>
+    <color name="secondary_light">#979797</color>
+
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
+
+    <color name="custom_divider_color">#dfdfdf</color>
+    <color name="highlight_text">#17a1d7</color>
+
+
+
+
+
+    <color name="posts_counter_bg">#df3e3e3e</color>
+
+    <color name="like_icon_activated">#FF5252</color>
+    <color name="icons_counter_color">#828181</color>
+    <color name="circle_image_shadow">#8b8b8b</color>
+
+    <color name="send_comment_button_activated">#0097d3</color>
+    <color name="send_comment_button_deactivated">#7fcbe9</color>
+
+    <color name="facebook_button_color">#3b5999</color>
+    <color name="facebook_button_color_pressed">#2f477a</color>
+    <color name="google_button_color">#d44837</color>
+    <color name="google_button_color_pressed">#FFA43528</color>
+    <color name="button_pressed_text_color">#bcbcbc</color>
+
+    <color name="follow_button_color">#0097D3</color>
+    <color name="follow_button_pressed_color">#0087BC</color>
+    <color name="follow_button_light_color">@color/white_10</color>
+    <color name="follow_button_light_pressed_color">#f7f7f7</color>
+
+    <color name="abc_input_method_navigation_guard">@android:color/black</color>
+    <color name="abc_search_url_text_normal">#7fa87f</color>
+    <color name="abc_search_url_text_pressed">@android:color/black</color>
+    <color name="abc_search_url_text_selected">@android:color/black</color>
+    <color name="accent_material_dark">@color/material_deep_teal_200</color>
+    <color name="accent_material_light">@color/material_deep_teal_500</color>
+    <color name="baby_blue">#4a90e2</color>
+    <color name="background_floating_material_dark">@color/material_grey_800</color>
+    <color name="background_floating_material_light">@android:color/white</color>
+    <color name="background_material_dark">@color/material_grey_850</color>
+    <color name="background_material_light">@color/material_grey_50</color>
+    <color name="black_10">#1a000000</color>
+    <color name="black_23">#232323</color>
+    <color name="black_25">#40000000</color>
+    <color name="black_27">#1b1b1b</color>
+    <color name="black_30">#48000000</color>
+    <color name="black_50">#80000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_70">#b3000000</color>
+    <color name="black_75">#bf000000</color>
+    <color name="black_90">#e6000000</color>
+    <color name="bottom_gradient_background_center">@color/black_70</color>
+    <color name="bottom_navigation_color">@color/light_gray</color>
+    <color name="bottom_navigation_dark_background">@android:color/black</color>
+    <color name="bottom_navigation_dark_background_border">@color/white_25</color>
+    <color name="bottom_navigation_light_background">@android:color/white</color>
+    <color name="bottom_navigation_light_background_border">@color/black_25</color>
+    <color name="bright_blue">#ff1d7ec2</color>
+    <color name="bright_blue_50">#801d7ec2</color>
+    <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
+    <color name="bright_foreground_disabled_material_light">#80000000</color>
+    <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
+    <color name="bright_foreground_inverse_material_light">@color/bright_foreground_material_dark</color>
+    <color name="bright_foreground_material_dark">@android:color/white</color>
+    <color name="bright_foreground_material_light">@android:color/black</color>
+    <color name="brighter_blue">#ff19b5fe</color>
+    <color name="browser_actions_bg_grey">#f5f5f5</color>
+    <color name="browser_actions_divider_color">#1e000000</color>
+    <color name="browser_actions_text_color">#de000000</color>
+    <color name="browser_actions_title_color">#646464</color>
+    <color name="button_material_dark">#ff5a595b</color>
+    <color name="button_material_light">#ffd6d7d7</color>
+    <color name="cardview_dark_background">#ff424242</color>
+    <color name="cardview_light_background">#ffffffff</color>
+    <color name="cardview_shadow_end_color">#03000000</color>
+    <color name="cardview_shadow_start_color">#37000000</color>
+    <color name="com_facebook_blue">#3b5998</color>
+    <color name="com_facebook_button_background_color">#415dae</color>
+    <color name="com_facebook_button_background_color_disabled">#bdc1c9</color>
+    <color name="com_facebook_button_background_color_focused">#fffffe</color>
+    <color name="com_facebook_button_background_color_focused_disabled">#84878c</color>
+    <color name="com_facebook_button_background_color_pressed">#2f477a</color>
+    <color name="com_facebook_button_background_color_selected">#7c8fc8</color>
+    <color name="com_facebook_button_border_color_focused">#dedee6</color>
+    <color name="com_facebook_button_login_background_color">#4267b2</color>
+    <color name="com_facebook_button_login_silver_background_color">#f4f6f8</color>
+    <color name="com_facebook_button_login_silver_background_color_pressed">#e9eaf0</color>
+    <color name="com_facebook_button_send_background_color">@color/com_facebook_messenger_blue</color>
+    <color name="com_facebook_button_send_background_color_pressed">#006fff</color>
+    <color name="com_facebook_device_auth_text">#90949c</color>
+    <color name="com_facebook_likeboxcountview_border_color">#6a7180</color>
+    <color name="com_facebook_likeboxcountview_text_color">#6a7180</color>
+    <color name="com_facebook_likeview_text_color">#6a7180</color>
+    <color name="com_facebook_messenger_blue">#0084ff</color>
+    <color name="com_smart_login_code">#3c6499</color>
+
+    <color name="dark_gray">#3e3f45</color>
+    <color name="darker_gray">#ff282930</color>
+    <color name="darkest_gray">#ff222222</color>
+    <color name="deep_blue">#ff1e3138</color>
+    <color name="deep_blue_dark">#ff1c292e</color>
+    <color name="deep_blue_darker">#ff121b1f</color>
+    <color name="deep_blue_darker_10">#1a121b1f</color>
+    <color name="deep_blue_light">#ff2d464f</color>
+    <color name="deep_blue_lighter">#ff82adbd</color>
+    <color name="deep_blue_lighter_75">#bf82adbd</color>
+    <color name="design_bottom_navigation_shadow_color">#14000000</color>
+    <color name="design_default_color_primary">#3f51b5</color>
+    <color name="design_default_color_primary_dark">#303f9f</color>
+    <color name="design_fab_shadow_end_color">@android:color/transparent</color>
+    <color name="design_fab_shadow_mid_color">#14000000</color>
+    <color name="design_fab_shadow_start_color">#44000000</color>
+    <color name="design_fab_stroke_end_inner_color">#0a000000</color>
+    <color name="design_fab_stroke_end_outer_color">#0f000000</color>
+    <color name="design_fab_stroke_top_inner_color">#1affffff</color>
+    <color name="design_fab_stroke_top_outer_color">#2effffff</color>
+    <color name="design_snackbar_background_color">#323232</color>
+    <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
+    <color name="dim_foreground_disabled_material_light">#80323232</color>
+    <color name="dim_foreground_material_dark">#ffbebebe</color>
+    <color name="dim_foreground_material_light">#ff323232</color>
+    <color name="error_color_material_dark">#ff7043</color>
+    <color name="error_color_material_light">#ff5722</color>
+    <color name="facebook">#3b5998</color>
+    <color name="facebook_50">#803b5998</color>
+    <color name="foreground_material_dark">@android:color/white</color>
+    <color name="foreground_material_light">@android:color/black</color>
+    <color name="google">#3367d6</color>
+    <color name="google_50">#803367d6</color>
+    <color name="gray">#ff535459</color>
+    <color name="gray_30">#48535459</color>
+    <color name="gray_50">#80535459</color>
+    <color name="highlighted_text_material_dark">#6680cbc4</color>
+    <color name="highlighted_text_material_light">#66009688</color>
+    <color name="light_gray">#ffa9a9ac</color>
+    <color name="lighter_gray">#c9c9cb</color>
+    <color name="lighter_gray_50">#80c9c9cb</color>
+    <color name="lightest_gray">#ffe9eaea</color>
+    <color name="material_blue_grey_800">#ff37474f</color>
+    <color name="material_blue_grey_900">#ff263238</color>
+    <color name="material_blue_grey_950">#ff21272b</color>
+    <color name="material_deep_teal_200">#ff80cbc4</color>
+    <color name="material_deep_teal_500">#ff009688</color>
+    <color name="material_grey_100">#fff5f5f5</color>
+    <color name="material_grey_300">#ffe0e0e0</color>
+    <color name="material_grey_50">#fffafafa</color>
+    <color name="material_grey_600">#ff757575</color>
+    <color name="material_grey_800">#ff424242</color>
+    <color name="material_grey_850">#ff303030</color>
+    <color name="material_grey_900">#ff212121</color>
+    <color name="meme_card_actions_color">#6c6c6c</color>
+    <color name="mtrl_btn_bg_color_disabled">#1f000000</color>
+    <color name="mtrl_btn_text_color_disabled">#61000000</color>
+    <color name="mtrl_btn_transparent_bg_color">#00ffffff</color>
+    <color name="mtrl_scrim_color">#52000000</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#6b000000</color>
+    <color name="mtrl_textinput_disabled_color">#1f000000</color>
+    <color name="mtrl_textinput_filled_box_default_background_color">#0a000000</color>
+    <color name="mtrl_textinput_hovered_box_stroke_color">#de000000</color>
+    <color name="notification_action_color_filter">@color/secondary_text_default_material_light</color>
+    <color name="notification_icon_bg_color">#ff9e9e9e</color>
+    <color name="notification_material_background_media_default_color">#ff424242</color>
+    <color name="preference_fallback_accent_color">#ff008577</color>
+    <color name="primary_dark_material_dark">@android:color/black</color>
+    <color name="primary_dark_material_light">@color/material_grey_600</color>
+    <color name="primary_material_dark">@color/material_grey_900</color>
+    <color name="primary_material_light">@color/material_grey_100</color>
+    <color name="primary_text_default_material_dark">#ffffffff</color>
+    <color name="primary_text_default_material_light">#de000000</color>
+    <color name="primary_text_disabled_material_dark">#4dffffff</color>
+    <color name="primary_text_disabled_material_light">#39000000</color>
+    <color name="related_topics_container_background">#ececf1</color>
+    <color name="ripple_material_dark">#33ffffff</color>
+    <color name="ripple_material_light">#1f000000</color>
+    <color name="seafoam">#ff54c1a9</color>
+    <color name="seafoam_50">#8054c1a9</color>
+    <color name="secondary_text_default_material_dark">#b3ffffff</color>
+    <color name="secondary_text_default_material_light">#8a000000</color>
+    <color name="secondary_text_disabled_material_dark">#36ffffff</color>
+    <color name="secondary_text_disabled_material_light">#24000000</color>
+    <color name="seekThumb">#5fc9e7</color>
+    <color name="slate">#4b6f7d</color>
+    <color name="sponsored">#ff33b5e5</color>
+    <color name="switch_thumb_disabled_material_dark">#ff616161</color>
+    <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
+    <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
+    <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
+    <color name="teads_ab_background">#efefef</color>
+    <color name="teads_button_overlay">#55ffffff</color>
+    <color name="tooltip_background_dark">#e6616161</color>
+    <color name="tooltip_background_light">#e6ffffff</color>
+    <color name="topic_appbar_contentScrim">#f5f5f5</color>
+    <color name="tw__blue_default">#ff5baaf4</color>
+    <color name="tw__blue_pressed">#ff4186c8</color>
+    <color name="tw__blue_pressed_light">#ffe1e8ed</color>
+    <color name="tw__composer_black">#ff292f33</color>
+    <color name="tw__composer_blue">#ff1da1f2</color>
+    <color name="tw__composer_blue_text">#ff1b95e0</color>
+    <color name="tw__composer_deep_gray">#ff8899a6</color>
+    <color name="tw__composer_light_gray">#ffccd6dd</color>
+    <color name="tw__composer_red">#ffe81c4f</color>
+    <color name="tw__composer_white">#ffffffff</color>
+    <color name="tw__cta_border_color">@android:color/white</color>
+    <color name="tw__cta_text_color">@android:color/white</color>
+    <color name="tw__light_gray">#ccd6dd</color>
+    <color name="tw__seekbar_thumb_inner_color">#ffffffff</color>
+    <color name="tw__seekbar_thumb_outer_color">#4dffffff</color>
+    <color name="tw__solid_white">#ffffffff</color>
+    <color name="tw__transparent">#00000000</color>
+    <color name="tw__tweet_action_color">#55acee</color>
+    <color name="tw__tweet_action_dark_highlight_color">#667580</color>
+    <color name="tw__tweet_action_light_highlight_color">#ebeef0</color>
+    <color name="tw__tweet_dark_container_bg_color">#d9000000</color>
+    <color name="tw__tweet_dark_primary_text_color">#e1ffffff</color>
+    <color name="tw__tweet_light_container_bg_color">#ffffff</color>
+    <color name="tw__tweet_light_primary_text_color">#292f33</color>
+    <color name="twitter">#4099ff</color>
+    <color name="twitter_50">#804099ff</color>
+
+    <color name="white_10">#1affffff</color>
+    <color name="white_25">#40ffffff</color>
+    <color name="white_30">#48ffffff</color>
+    <color name="white_50">#80ffffff</color>
+    <color name="white_75">#bfffffff</color>
+    <color name="app_2882C9">#2882C9</color>
+    <color name="app_6C6C6C">#6C6C6C</color>
+
+
 </resources>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+    <variable
+        name="listener"
+        type="com.ltthuc.habit.ui.widget.listener.BottomBarListener"/>
+    </data>
+
+<LinearLayout
+    
+    android:id="@+id/bottom_navigation_layout"
+    style="@style/Widget.Design.BottomNavigationView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@null"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_shadow_height"
+        android:background="@drawable/bottom_navigation_shadow" />
+
+    <LinearLayout
+        android:id="@+id/linBottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_navigation_height"
+        android:layout_weight="1"
+        android:background="?attr/themeBackground"
+        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="@{()->listener.onHomeClick()}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/bottom_navigation_icon"
+                android:layout_marginBottom="@dimen/bottom_navigation_icon_marginBottom"
+                android:tint="@color/white_75"
+                android:src="@drawable/ic_home_black_36dp"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_light"
+                android:textColor="@color/bottom_navigation_color"
+                android:textSize="@dimen/bottom_navigation_title_textSize"
+
+                android:text="@string/home" />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:onClick="@{()->listener.onCategoryClick()}"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/bottom_navigation_icon"
+                    android:layout_marginBottom="@dimen/bottom_navigation_icon_marginBottom"
+                    android:tint="@color/white_75"
+
+                    android:src="@drawable/ic_search_black_36dp"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
+                    android:textColor="@color/bottom_navigation_color"
+                    android:textSize="@dimen/bottom_navigation_title_textSize"
+                    android:gravity="center"
+                    android:text="discovery" />
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:onClick="@{()->listener.onSettingClick()}"
+
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/bottom_navigation_icon"
+                        android:layout_marginBottom="@dimen/bottom_navigation_icon_marginBottom"
+                        android:tint="@color/white_75"
+                        android:src="@drawable/ic_settings_black_36dp"
+                        android:scaleType="centerInside" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:textColor="@color/bottom_navigation_color"
+                        android:textSize="@dimen/bottom_navigation_title_textSize"
+
+                        android:text="@string/setting" />
+                </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
+</layout>

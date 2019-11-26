@@ -1,4 +1,4 @@
-package  com.ezyplanet.thousandhands.shipper.ui.widgets.decoration
+package  com.ezyplanet.core.ui.widget.decoration
 
 /**
  * Available `ItemDecoration` of `RecyclerView` doesn't allow option of show / hide

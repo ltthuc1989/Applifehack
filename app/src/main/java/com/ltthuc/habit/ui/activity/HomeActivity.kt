@@ -8,7 +8,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.network.response.RssCatResp
 import com.ltthuc.habit.databinding.ActivityHomeBinding
-import com.ltthuc.habit.databinding.ItemRssLinkBinding
+
 import com.ltthuc.habit.ui.activity.listpost.ListPostActivity
 
 class HomeActivity : MvvmActivity<ActivityHomeBinding,HomeActivityVM>(),HomeActivityNav{
@@ -16,7 +16,7 @@ class HomeActivity : MvvmActivity<ActivityHomeBinding,HomeActivityVM>(),HomeActi
     override val viewModel: HomeActivityVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_home
 
-    override fun onViewInitialized(binding: ActivityHomeBinding) {
+    override fun onViewInitialized(binding: com.ltthuc.habit.databinding.ActivityHomeBinding) {
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         viewModel.navigator = this
@@ -27,7 +27,7 @@ class HomeActivity : MvvmActivity<ActivityHomeBinding,HomeActivityVM>(),HomeActi
 
 
 
-        binding.adapter = SingleLayoutAdapter<RssCatResp, ItemRssLinkBinding>(
+        binding.adapter = SingleLayoutAdapter<RssCatResp, com.ltthuc.habit.databinding.ItemRssLinkBinding>(
                 R.layout.item_rss_link,
                 emptyList(),
                 viewModel

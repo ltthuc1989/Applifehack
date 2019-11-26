@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="themeBackground" format="reference">
+    </attr>
+    <attr name="cardActionsStyle" format="reference">
+    </attr>
+    <attr name="cardBackgroundColor" format="color">
+    </attr>
+    <attr name="cardCornerRadius" format="dimension">
+    </attr>
+    <attr name="cardDividerColor" format="reference">
+    </attr>
+    <attr name="cardElevation" format="dimension">
+    </attr>
+    <attr name="cardMaxElevation" format="dimension">
+    </attr>
+    <attr name="cardPreventCornerOverlap" format="boolean">
+    </attr>
+    <attr name="cardStyle" format="reference">
+    </attr>
+    <attr name="cardTitleStyle" format="reference">
+    </attr>
+    <attr name="cardUseCompatPadding" format="boolean">
+    </attr>
+    <attr name="cardViewStyle" format="reference"/>
+    <attr name="feedCarouselBackground" format="reference">
+    </attr>
+    <attr name="feedCarouselBrandingVisible" format="reference">
+    </attr>
+    <attr name="feedCarouselHeight" format="reference">
+    </attr>
+    <attr name="feedCarouselPaddingBottom" format="reference">
+    </attr>
+    <attr name="feedCarouselPagerMarginBottom" format="reference">
+    </attr>
+    <attr name="feedCarouselPositionButtonColor" format="reference">
+    </attr>
+    <attr name="feedCollapsedToolbarStyle" format="reference">
+    </attr>
+    <attr name="feedExpandedToolbarStyle" format="reference">
+    </attr>
+    <attr name="feedItemBackground" format="reference">
+    </attr>
+    <attr name="feedSectionStyle" format="reference">
+    </attr>
+    <attr name="feedSimpleListItemBackground" format="reference">
+    </attr>
+    <attr name="feedSubtitleStyle" format="reference">
+    </attr>
+    <attr name="feedTitleStyle" format="reference">
+    </attr>
+    <attr name="firstBaselineToTopHeight" format="dimension">
+    </attr>
+    <attr name="floatingActionButtonStyle" format="reference|string|integer|boolean|color|float|dimension|fraction">
+    </attr>
+    <attr name="font" format="reference">
+    </attr>
+    <attr name="fontFamily" format="string">
+    </attr>
+    <attr name="fontProviderAuthority" format="string">
+    </attr>
+    <attr name="fontProviderCerts" format="reference">
+    </attr>
+    <attr name="subjectCardStyle" format="reference"/>
+    <attr name="textColor" format="integer"/>
+
+
+    <attr name="themeContentBackground" format="reference">
+    </attr>
+    <attr name="themeTextAppearance" format="reference">
+    </attr>
+    <attr name="themeTextInvertedColor" format="reference">
+    </attr>
+    <attr name="themeTextPrimaryColor" format="reference">
+    </attr>
+    <attr name="themeTextSecondaryColor" format="reference">
+    </attr>
+    <attr name="thickness" format="dimension">
+    </attr>
+    <attr name="thumbTextPadding" format="dimension">
+    </attr>
+    <attr name="thumbTint" format="color">
+    </attr>
+</resources>

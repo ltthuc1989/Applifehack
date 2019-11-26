@@ -49,6 +49,9 @@ data class PostContent(
     fun getImage():String?{
         return article.image
     }
+    fun getLink():String?{
+        return article?.link
+    }
 
     fun toPost(rssCatResp: RssCatResp): Post{
         val post= Post()
@@ -57,6 +60,8 @@ data class PostContent(
         post.description =article?.description
         post.createdDate = Date().time
         post.webLink = rssCatResp.domain
+        post.url = article?.link
+
         return  post
 
     }

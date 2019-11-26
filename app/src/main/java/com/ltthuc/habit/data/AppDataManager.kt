@@ -43,4 +43,12 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
     override fun createPost(postContent: Post): Completable {
        return apiHelper.createPost(postContent)
     }
+
+    override fun getPost(): Single<Value<QuerySnapshot>> {
+       return apiHelper.getPost()
+    }
+
+    override fun getCatgories(): Single<Value<QuerySnapshot>> {
+       return apiHelper.getCatgories()
+    }
 }

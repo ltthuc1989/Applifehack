@@ -19,7 +19,9 @@ class BaseToolBar :FrameLayout{
     set(value) {
         _showBack = value
         if(_showBack) binding.imBack.visibility= View.VISIBLE
-        else binding.imBack.visibility= View.GONE
+        else {
+            //binding.imBack.visibility= View.GONE
+        }
 
     }
    private var _titleBar:String?=null

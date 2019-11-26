@@ -15,5 +15,7 @@ interface ApiHelper {
     fun getApiHeader(): ApiHeader
     fun getRssCat():Single<Value<QuerySnapshot>>
     fun createPost(postContent: Post) : Completable
+    fun getPost():Single<Value<QuerySnapshot>>
+    fun getCatgories(): Single<Value<QuerySnapshot>>
 
 }

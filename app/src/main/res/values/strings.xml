@@ -18,4 +18,8 @@
     <string name="duration_hours_shortest">%1$d h</string>
     <string name="duration_days_shortest">%1$d d</string>
     <string name="duration_week_shortest">%1$d w</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="feed">Feed</string>
+    <string name="back">Back</string>
+    <string name="most_popular_last_week">Most Popular Last Week</string>
 </resources>

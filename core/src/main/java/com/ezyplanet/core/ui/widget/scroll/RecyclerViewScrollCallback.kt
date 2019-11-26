@@ -1,7 +1,9 @@
-package  com.ezyplanet.thousandhands.shipper.ui.widgets.scoll
+package  com.ezyplanet.core.widgets.scoll
 
 import androidx.recyclerview.widget.RecyclerView
 import com.ezyplanet.core.util.CoreConstants
+import com.ezyplanet.thousandhands.shipper.ui.widgets.scoll.LayoutManagerType
+import com.ezyplanet.thousandhands.shipper.ui.widgets.scoll.RecyclerViewUtil
 
 
 class RecyclerViewScrollCallback(private val visibleThreshold: Int, private val layoutManager: RecyclerView.LayoutManager?)
