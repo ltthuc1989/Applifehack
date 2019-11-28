@@ -417,7 +417,7 @@
     </style>
 
 
-    <style name="TagFeedAppTheme">
+    <style name="TagFeedAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowAnimationStyle">@style/AppAnimation.Activity</item>
         <item name="cardActionsStyle">@style/ActionTextAppearance.Light</item>
         <item name="cardDividerColor">@color/lighter_gray_50</item>
@@ -546,5 +546,7 @@
         <item name="android:paddingStart">@dimen/padding_base</item>
         <item name="android:paddingEnd">@dimen/padding_base</item>
     </style>
+
+
 
 </resources>

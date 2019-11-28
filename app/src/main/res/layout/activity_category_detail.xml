@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout >
+
+    <data>
+
+
+        <variable
+            name="listener"
+            type="com.ltthuc.habit.ui.widget.listener.BottomBarListener" />
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVM" />
+
+
+    </data>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tag_feed_layout"
     android:layout_width="match_parent"
@@ -12,7 +28,7 @@
         android:layout_height="wrap_content" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/tag_feed_results_pager"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/bottom_navigation_height"
@@ -23,3 +39,4 @@
         layout="@layout/bottom_navigation"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

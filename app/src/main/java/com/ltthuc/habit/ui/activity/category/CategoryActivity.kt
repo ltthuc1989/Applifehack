@@ -12,6 +12,7 @@ import com.ezyplanet.core.util.extension.observe
 import com.google.firebase.iid.FirebaseInstanceId
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
+import com.ltthuc.habit.data.entity.PostType
 import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.data.network.response.RssCatResp
 import com.ltthuc.habit.databinding.ActivityCategoryBinding
@@ -20,6 +21,8 @@ import com.ltthuc.habit.databinding.ItemCategoryBinding
 import com.ltthuc.habit.databinding.ItemRssLinkBinding
 import com.ltthuc.habit.ui.activity.HomeActivityNav
 import com.ltthuc.habit.ui.activity.HomeActivityVM
+import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
+import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailProvider
 import com.ltthuc.habit.ui.activity.listpost.ListPostActivity
 import com.ltthuc.habit.ui.fragment.slidepost.SlidePostFrag
 import com.ltthuc.habit.util.CustomTabHelper
@@ -38,6 +41,9 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
     private var timer: Timer? = null
     private var count: Int = 0
     private var banners: List<Post>? = null
+    companion object {
+        val KEY_CATEGORY_DETAIL = "category_detail"
+    }
 
     override fun onViewInitialized(binding: ActivityCategoryBinding) {
         super.onViewInitialized(binding)
@@ -79,10 +85,19 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
 
 
     override fun gotoCatDetailScreen(resp: CatResp) {
+        gotoActivity(CategoryDetailActivity::class, mapOf(KEY_CATEGORY_DETAIL to resp))
     }
 
     override fun gotoPostDetail(post: Post) {
-        gotoPostDetail(post,customTabHelper)
+        if(post.getPostType()==PostType.ARTICLE) {
+            gotoPostDetail(post, customTabHelper)
+        }else {
+            openYoutube(post?.video)
+        }
+    }
+
+    override fun openYoutube(link: String?) {
+
     }
 
     override fun onPageScrollStateChanged(state: Int) {

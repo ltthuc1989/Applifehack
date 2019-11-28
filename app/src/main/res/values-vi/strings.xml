@@ -5,4 +5,6 @@
     <string name="setting">Setting</string>
     <string name="back">Back</string>
     <string name="most_popular_last_week">Most Popular Last Week</string>
+    <string name="article">Article</string>
+    <string name="video">Video</string>
 </resources>

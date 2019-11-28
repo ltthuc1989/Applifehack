@@ -55,8 +55,7 @@
                 android:scaleType="center"
                 android:textColor="@color/white_75"
                 android:textSize="18sp"
-                android:visibility="visible"
-
+                android:visibility="gone"
                 tools:text="title bar" />
 
 

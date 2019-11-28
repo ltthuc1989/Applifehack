@@ -3,6 +3,8 @@ package com.ltthuc.habit.di.buider
 import com.ltthuc.habit.ui.activity.HomeActivity
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
 import com.ltthuc.habit.ui.activity.category.CategoryProvider
+import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
+import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailProvider
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.activity.listpost.ListPostActivity
 import com.ltthuc.habit.ui.activity.webview.WebViewActivity
@@ -25,5 +27,7 @@ abstract class ActivityBuilder {
     internal abstract fun bindWebViewActivity(): WebViewActivity
     @ContributesAndroidInjector(modules = [(CategoryProvider::class)])
     internal abstract fun bindCategoryActivity(): CategoryActivity
+    @ContributesAndroidInjector(modules = [(CategoryDetailProvider::class)])
+    internal abstract fun bindCategoryDetailActivity(): CategoryDetailActivity
 
 }

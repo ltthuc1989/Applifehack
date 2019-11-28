@@ -5,10 +5,13 @@ import com.ezyplanet.core.viewmodel.ArchViewModelFactory
 import com.ltthuc.habit.ui.activity.HomeActivityVM
 import com.ltthuc.habit.ui.activity.HomeActivityVMBuilder
 import com.ltthuc.habit.ui.activity.category.CategoryVMBuilder
+import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVMBuilder
 import com.ltthuc.habit.ui.activity.feed.FeedVMBuilder
 import com.ltthuc.habit.ui.activity.listpost.ListPostVMBuilder
 import com.ltthuc.habit.ui.activity.webview.WebViewVMBuilder
+import com.ltthuc.habit.ui.fragment.articlelist.ArticleListVMBuilder
 import com.ltthuc.habit.ui.fragment.slidepost.SlidePostVMBuilder
+import com.ltthuc.habit.ui.fragment.videolist.VideoListVMBuilder
 import dagger.Binds
 import dagger.Module
 
@@ -26,7 +29,10 @@ import dagger.Module
     (FeedVMBuilder::class),
     (WebViewVMBuilder::class),
     (CategoryVMBuilder::class),
-    (SlidePostVMBuilder::class)
+    (SlidePostVMBuilder::class),
+    (CategoryDetailVMBuilder::class),
+    (ArticleListVMBuilder::class),
+    (VideoListVMBuilder::class)
 ])
 abstract class ViewModelBuilder {
 

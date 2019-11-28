@@ -9,4 +9,5 @@ interface CategoryNav : MvvmNav{
 
     fun gotoCatDetailScreen(resp: CatResp)
     fun gotoPostDetail(post: Post)
+    fun openYoutube(link:String?)
 }

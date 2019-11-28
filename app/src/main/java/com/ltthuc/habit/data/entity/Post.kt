@@ -19,7 +19,7 @@ class Post(var id:String?="",
            var webLink:String?="",
            var video:String?="",
            var url:String?="",
-           var type:String?="",
+           var type:String?="article",
            var viewsCount:Long?=0,
            var catName:String?=""):Parcelable{
     init {
@@ -38,4 +38,13 @@ class Post(var id:String?="",
         return result
 
     }
+    fun getPostType():PostType=when(type){
+            "article"-> PostType.ARTICLE
+            else ->  PostType.VIDEO
+
+    }
+}
+enum class PostType(type: String?){
+    ARTICLE("article"),
+    VIDEO("video")
 }

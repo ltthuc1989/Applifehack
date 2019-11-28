@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVM" />
+    </data>
 <com.google.android.material.appbar.AppBarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -34,12 +41,13 @@
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
             app:layout_collapseMode="parallax"
+            srcImageUrl="@{viewModel.model."
             app:layout_collapseParallaxMultiplier="0.5" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_indicator_height"
-            android:layout_gravity="bottom|center_vertical|center_horizontal|center"
+            android:layout_gravity="bottom"
             android:background="@color/white_50"
             app:layout_collapseMode="parallax"
             app:layout_collapseParallaxMultiplier="0.3" />
@@ -48,37 +56,34 @@
             android:id="@+id/feed_hero_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom|left|center_vertical|center_horizontal|center|start"
+            android:layout_gravity="left"
             android:background="@drawable/feed_hero_gradient_background"
-            android:gravity="bottom|left|center_vertical|center_horizontal|center|start"
+            android:gravity="left"
             android:orientation="vertical"
             android:paddingBottom="?attr/actionBarSize"
-            app:layout_collapseMode="parallax"
             android:textColor="@color/white"
+            app:layout_collapseMode="parallax"
             app:layout_collapseParallaxMultiplier="0.3">
 
 
         </TextView>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/feed_hero_toolbar"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="top|center_vertical|center_horizontal|center"
-            android:layout_marginBottom="?attr/actionBarSize"
-            android:background="@null"
-            app:layout_collapseMode="pin"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="wrap_content">
+            <com.ltthuc.habit.ui.widget.toolbar.ToolbarCategoryDetail
+                android:id="@+id/daily_feed_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/feed_daily_toolbar_height"
+                app:titleBar='@{@string/feed"}' />
+        </FrameLayout>
     </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/feed_hero_tab_layout"
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="bottom|center_vertical|center_horizontal|center"
+            android:layout_gravity="bottom"
             android:background="@null"
             android:elevation="6dp"
             android:visibility="gone"
@@ -90,3 +95,4 @@
             app:tabSelectedTextColor="@color/brighter_blue"
             app:tabTextColor="@color/white_50" />
 </com.google.android.material.appbar.AppBarLayout>
+</layout>
