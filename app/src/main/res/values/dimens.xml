@@ -116,4 +116,15 @@
     <dimen name ="banner_dot_height">15dp</dimen>
     <dimen name ="banner_view_pager_heigt">200dp</dimen>
 
+    <dimen name="material_content_edge_margin_horizontal">@dimen/material_responsive_gutter</dimen>
+    <dimen name="material_responsive_gutter">@dimen/material_baseline_grid_2x</dimen>
+    <dimen name="material_baseline_grid_2x">16dp</dimen>
+    <dimen name="material_dialog_content_area_padding_horizontal">@dimen/material_baseline_grid_3x</dimen>
+    <dimen name="material_dialog_content_area_padding_vertical">@dimen/material_baseline_grid_3x</dimen>
+    <dimen name="material_dialog_content_area_title_content_margin">@dimen/material_baseline_grid_2.5x</dimen>
+    <dimen name="material_baseline_grid_2.5x">20dp</dimen>
+    <dimen name="material_baseline_grid_3x">24dp</dimen>
+    <dimen name="material_card_gutter">@dimen/material_baseline_grid_1x</dimen>
+    <dimen name="material_baseline_grid_1x">8dp</dimen>
+    <dimen name="material_card_supporting_text_padding_top">@dimen/material_baseline_grid_2x</dimen>
 </resources>

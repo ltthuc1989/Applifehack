@@ -17,11 +17,12 @@ class Post(var id:String?="",
            var catId:String?="",
            var contentId:String?="",
            var webLink:String?="",
-           var video:String?="",
+           var video_url:String?="",
            var url:String?="",
            var type:String?="article",
            var viewsCount:Long?=0,
-           var catName:String?=""):Parcelable{
+           var catName:String?="",
+           var duration:String?=""):Parcelable{
     init {
         createdDate = Date().time
     }
@@ -44,7 +45,7 @@ class Post(var id:String?="",
 
     }
 }
-enum class PostType(type: String?){
+enum class PostType(val type: String?){
     ARTICLE("article"),
     VIDEO("video")
 }

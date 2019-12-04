@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <variable
+            name="listener"
+            type="com.ltthuc.habit.ui.widget.listener.BottomBarListener" />
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVM" />
+
+
+    </data>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tag_feed_layout"
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="?attr/themeBackground"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/include_youtube_detail"
+            android:id="@+id/youtubeAppbar"
+            android:layout_width="match_parent"
+
+
+            android:layout_height="wrap_content"
+            app:viewModel="@{viewModel}"
+            />
+
+
+<include layout="@layout/view_youtube_appbar"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    />
+        <ImageView
+            android:id="@+id/feed_hero_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+            android:background="@drawable/ic_youtube_play"
+
+            android:orientation="vertical"
+            android:paddingBottom="?attr/actionBarSize"
+            app:layout_collapseMode="parallax"
+
+            app:layout_anchor="@id/youtubeAppbar"
+            app:layout_anchorGravity="bottom|end"
+
+            app:layout_collapseParallaxMultiplier="0.3">
+
+
+        </ImageView>
+
+        <include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"
+            layout="@layout/bottom_navigation"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

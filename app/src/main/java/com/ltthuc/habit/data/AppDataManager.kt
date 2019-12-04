@@ -51,4 +51,12 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
     override fun getCatgories(): Single<Value<QuerySnapshot>> {
        return apiHelper.getCatgories()
     }
+
+    override fun getPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
+        return apiHelper.getPostByCat(catId)
+    }
+
+    override fun getVideoPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
+       return apiHelper.getVideoPostByCat(catId)
+    }
 }

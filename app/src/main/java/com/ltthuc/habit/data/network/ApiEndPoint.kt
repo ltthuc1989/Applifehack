@@ -7,5 +7,12 @@ object ApiEndPoint {
     const val GET_RSS_CATEGORY = "rss"
     const val POST_DB_KEY = "posts"
     const val GET_CATEGORIES = "category"
+    const val VIDEO_PATH = "video"
 
+
+
+}
+object DatabasePath{
+    const val CAT_ID = "catId"
+    const val TYPE = "type"
 }

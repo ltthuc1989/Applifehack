@@ -31,7 +31,7 @@
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp"
-        android:background="@null"
+        android:background="?attr/themeBackground"
         app:layout_collapseMode="pin"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"

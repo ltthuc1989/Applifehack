@@ -14,16 +14,9 @@ import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.entity.PostType
 import com.ltthuc.habit.data.network.response.CatResp
-import com.ltthuc.habit.data.network.response.RssCatResp
 import com.ltthuc.habit.databinding.ActivityCategoryBinding
-import com.ltthuc.habit.databinding.ActivityHomeBinding
 import com.ltthuc.habit.databinding.ItemCategoryBinding
-import com.ltthuc.habit.databinding.ItemRssLinkBinding
-import com.ltthuc.habit.ui.activity.HomeActivityNav
-import com.ltthuc.habit.ui.activity.HomeActivityVM
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
-import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailProvider
-import com.ltthuc.habit.ui.activity.listpost.ListPostActivity
 import com.ltthuc.habit.ui.fragment.slidepost.SlidePostFrag
 import com.ltthuc.habit.util.CustomTabHelper
 import com.ltthuc.habit.util.extension.gotoPostDetail
@@ -92,7 +85,7 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
         if(post.getPostType()==PostType.ARTICLE) {
             gotoPostDetail(post, customTabHelper)
         }else {
-            openYoutube(post?.video)
+            openYoutube(post?.video_url)
         }
     }
 

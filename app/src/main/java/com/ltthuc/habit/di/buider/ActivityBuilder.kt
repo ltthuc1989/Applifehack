@@ -7,6 +7,8 @@ import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailProvider
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.activity.listpost.ListPostActivity
+import com.ltthuc.habit.ui.activity.viewer.ViewerActivity
+import com.ltthuc.habit.ui.activity.viewer.ViewerProvider
 import com.ltthuc.habit.ui.activity.webview.WebViewActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -29,5 +31,7 @@ abstract class ActivityBuilder {
     internal abstract fun bindCategoryActivity(): CategoryActivity
     @ContributesAndroidInjector(modules = [(CategoryDetailProvider::class)])
     internal abstract fun bindCategoryDetailActivity(): CategoryDetailActivity
+    @ContributesAndroidInjector(modules = [(ViewerProvider::class)])
+    internal abstract fun bindViewerActivity(): ViewerActivity
 
 }

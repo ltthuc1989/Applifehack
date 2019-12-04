@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout >
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,20 +19,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tag_feed_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:nestedScrollingEnabled="false">
+    android:fitsSystemWindows="true"
+    android:background="?attr/themeBackground"
+    android:layout_height="match_parent">
 
     <include layout="@layout/view_category_detail"
         android:id="@+id/tag_feed_hero_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
+        android:layout_height="wrap_content"
+        app:viewModel="@{viewModel}"
+        />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/bottom_navigation_height"
+        android:background="?attr/themeBackground"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
 
     <include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"

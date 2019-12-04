@@ -60,29 +60,24 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":core")
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':core')
     def appDependencies = rootProject.ext.dependencies
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.8@aar') {
         transitive = true;
     }
-
     implementation appDependencies.play_services.analytics
     implementation appDependencies.play_services.gcm
     implementation appDependencies.play_services.auth
-
     implementation appDependencies.firebase.core
     implementation appDependencies.firebase.iid
     implementation appDependencies.firebase.messaging
     implementation appDependencies.firebase.jobdispatcher
     implementation appDependencies.firebase.database
-
     implementation appDependencies.facebook.facebookSdk
     implementation appDependencies.facebook.accountKit
     implementation appDependencies.facebook.stetho
     implementation appDependencies.facebook.stetho_okhttp3
-
     // Dagger
     implementation appDependencies.dagger
     implementation appDependencies.daggerAndroid
@@ -91,7 +86,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     kapt appDependencies.daggerCompiler
     kapt appDependencies.daggerAndroidCompiler
-
     // firebase-firestore
     implementation 'com.androidhuman.rxfirebase2:firebase-firestore-kotlin:17.0.4.0'
     implementation 'com.androidhuman.rxfirebase2:firebase-firestore:17.0.4.0'
@@ -100,14 +94,12 @@ dependencies {
     implementation 'com.androidhuman.rxfirebase2:firebase-database:16.0.1.1'
     implementation 'com.prof.rssparser:rssparser:2.0.4'
     implementation 'com.android.support:multidex:1.0.1'
-
-
-
-    implementation "androidx.browser:browser:1.0.0"
+    implementation 'androidx.browser:browser:1.0.0'
     //room
     implementation appDependencies.Room
     implementation appDependencies.RxRoom
     kapt appDependencies.RoomCompiler
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }
 
 repositories {

@@ -17,5 +17,7 @@ interface ApiHelper {
     fun createPost(postContent: Post) : Completable
     fun getPost():Single<Value<QuerySnapshot>>
     fun getCatgories(): Single<Value<QuerySnapshot>>
+    fun getPostByCat(catId:String?):Single<Value<QuerySnapshot>>
+    fun getVideoPostByCat(catId:String?):Single<Value<QuerySnapshot>>
 
 }

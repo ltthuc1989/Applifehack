@@ -19,6 +19,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/subject_card_radius"
     app:cardElevation="@dimen/subject_card_elevation"
+    android:onClick="@{()->viewModel.onItemClicked(item)}"
     app:cardUseCompatPadding="true">
 
     <ImageView

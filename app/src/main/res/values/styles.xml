@@ -546,7 +546,52 @@
         <item name="android:paddingStart">@dimen/padding_base</item>
         <item name="android:paddingEnd">@dimen/padding_base</item>
     </style>
+    <style name="TopicTheme"></style>
 
+    <style name="TopicAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/AppAnimation.Activity</item>
+        <item name="cardStyle">@style/CardView.Light</item>
+        <item name="feedItemBackground">@null</item>
+        <item name="subjectCardStyle">@style/CardView.Dark</item>
+        <item name="toolbarNavigationButtonStyle">@style/TopicToolbarNavigationButtonStyle</item>
+        <item name="toolbarStyle">@style/TopicToolbarStyle</item>
 
+    </style>
+    <style name="TopicAppTheme.Dark">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:alertDialogTheme">@style/AppCompatAlertDialogStyle.Light</item>
+        <item name="cardStyle">@style/CardView.Dark</item>
+        <item name="subjectCardStyle">@style/CardView.Dark</item>
+        <item name="themeBackground">@android:color/black</item>
+        <item name="themeContentBackground">@color/darkest_gray</item>
+        <item name="themeTextInvertedColor">@color/white_25</item>
+        <item name="themeTextPrimaryColor">@android:color/white</item>
+        <item name="themeTextSecondaryColor">@color/lighter_gray</item>
+        <item name="feedSimpleListItemBackground">@drawable/feed_simple_list_item_dark_background</item>
+
+        <item name="toolbarNavigationButtonStyle">@style/TopicToolbarNavigationButtonStyle.Dark</item>
+        <item name="toolbarStyle">@style/TopicToolbarStyle.Dark</item>
+
+    </style>
+
+    <style name="TopicTheme.Dark">
+
+        <item name="android:textColor">@color/lightest_gray</item>
+        <item name="android:background">@color/darker_gray</item>
+    </style>
+
+    <style name="TopicToolbarStyle">
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:actionButtonStyle">@style/TopicToolbarNavigationButtonStyle</item>
+    </style>
+    <style name="TopicToolbarStyle.Dark">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:background">@android:color/black</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:actionButtonStyle">@style/TopicToolbarNavigationButtonStyle.Dark</item>
+    </style>
 
 </resources>

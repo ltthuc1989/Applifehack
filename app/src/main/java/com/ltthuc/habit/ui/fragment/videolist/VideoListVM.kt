@@ -17,9 +17,9 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
 
 
-    fun getPosts() {
+    fun getPosts(catId:String?) {
         navigator?.showProgress()
-        compositeDisposable.add(appDataManager.getPost().compose(schedulerProvider?.ioToMainSingleScheduler())
+        compositeDisposable.add(appDataManager.getVideoPostByCat(catId).compose(schedulerProvider?.ioToMainSingleScheduler())
                 .map {
                     it.value().toObjects(Post::class.java)
                 }.subscribe({

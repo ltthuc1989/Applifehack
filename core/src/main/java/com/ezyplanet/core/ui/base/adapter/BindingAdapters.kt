@@ -74,9 +74,13 @@ class BindingAdapters {
          * @param orientation 0 for LinearLayout.HORIZONTAL and 1 for LinearLayout.VERTICAL
          */
         @JvmStatic
-        @BindingAdapter("dividerItemDecoration")
-        fun setDividerItemDecoration(recyclerView: RecyclerView, orientation: Int) {
+        @BindingAdapter(value=["dividerItemDecoration","itemDecorationBackGround"],requireAll = false)
+        fun setDividerItemDecoration(recyclerView: RecyclerView, orientation: Int,background:Drawable) {
             val itemDecoration = DividerItemDecoration(recyclerView.context, orientation)
+            background?.let {
+                itemDecoration.setDrawable(background)
+            }
+
             recyclerView.addItemDecoration(itemDecoration)
         }
 

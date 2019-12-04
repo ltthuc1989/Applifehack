@@ -89,7 +89,7 @@ abstract class BaseViewModel<n : MvvmNav, m : Any?>(private val connectionManage
     protected val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     open fun updateModel(data: m?) {
-        _model.postValue(data)
+        _model.value=data
         setIsUiStageChange(true)
     }
 

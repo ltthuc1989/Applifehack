@@ -19,9 +19,9 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
 
 
 
-    fun getRssCat() {
+    fun getRssCat(catId:String?) {
         navigator?.showProgress()
-        compositeDisposable.add(appDataManager.getPost().compose(schedulerProvider?.ioToMainSingleScheduler())
+        compositeDisposable.add(appDataManager.getPostByCat(catId).compose(schedulerProvider?.ioToMainSingleScheduler())
                 .map {
                     it.value().toObjects(Post::class.java)
                 }.subscribe({

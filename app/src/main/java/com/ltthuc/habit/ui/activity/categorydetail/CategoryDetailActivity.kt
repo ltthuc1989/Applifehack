@@ -11,34 +11,36 @@ import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.ui.fragment.tab.TabVM
 import com.ezyplanet.core.util.extension.getExtraParcel
 import com.ltthuc.habit.R
+import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.ActivityCategoryDetailBinding
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
 import com.ltthuc.habit.ui.fragment.articlelist.ArticleListFrag
 import com.ltthuc.habit.ui.fragment.videolist.VideoListFrag
 import kotlinx.android.synthetic.main.view_category_detail.*
 
-class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding,CategoryDetailVM>(), CategoryDetailNav {
+class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, CategoryDetailVM>(), CategoryDetailNav {
 
     override val viewModel: CategoryDetailVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_category_detail
-
+    lateinit var catId:String
 
 
     override fun onViewInitialized(binding: ActivityCategoryDetailBinding) {
         super.onViewInitialized(binding)
         viewModel.navigator = this
-        binding.run {
-            binding.viewModel = viewModel
-            viewPager.offscreenPageLimit = 1
-            viewPager.adapter = TabAdapter(supportFragmentManager)
-            tabs.setupWithViewPager(viewPager)
-        }
-        viewModel.updateModel(getExtraParcel(CategoryActivity.KEY_CATEGORY_DETAIL))
+        binding.viewModel = viewModel
+        val catResp = getExtraParcel<CatResp>(CategoryActivity.KEY_CATEGORY_DETAIL)
+        catId = catResp?.id!!
+        viewModel.updateModel(catResp)
+
+        binding.viewPager.offscreenPageLimit = 1
+        binding.viewPager.adapter = TabAdapter(supportFragmentManager)
+        tabs.setupWithViewPager(binding.viewPager)
+
 
     }
 
-    inner class TabAdapter(fm: FragmentManager) :
-            FragmentPagerAdapter(fm) {
+    inner class TabAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getCount() = getTabTitle().size
 
@@ -48,16 +50,14 @@ class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding,Catego
         }
 
 
-
-
         override fun getPageTitle(position: Int): CharSequence {
             return resources.getString(getTabTitle()[position]).toUpperCase()
         }
 
         private fun getItemFragment(position: Int): Fragment {
 
-            return if(position==0) ArticleListFrag()
-            else return VideoListFrag()
+            return if (position == 0) ArticleListFrag.newInstance(catId)
+            else return VideoListFrag.newInstance(catId)
 
         }
 

@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.*
 import com.ltthuc.habit.data.entity.Post
+import com.ltthuc.habit.data.entity.PostType
 import com.ltthuc.habit.ui.activity.listpost.PostContent
 import com.prof.rssparser.Parser
 import io.reactivex.Completable
@@ -54,5 +55,22 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun getCatgories(): Single<Value<QuerySnapshot>> {
         return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.GET_CATEGORIES))
+    }
+
+    override fun getPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).
+                whereEqualTo(DatabasePath.CAT_ID,catId).
+                whereEqualTo(DatabasePath.TYPE,PostType.ARTICLE.type)
+
+        return RxFirebaseFirestore.data(query)
+
+    }
+
+    override fun getVideoPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).
+                whereEqualTo(DatabasePath.CAT_ID,catId).
+                whereEqualTo(DatabasePath.TYPE,PostType.VIDEO.type)
+
+        return RxFirebaseFirestore.data(query)
     }
 }

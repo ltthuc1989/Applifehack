@@ -14,35 +14,26 @@
             type="com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter&lt;Post, ItemCatTopicBinding&gt;" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical"
-        >
+
 
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:paddingTop="32dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp"
+            android:background="?attr/themeBackground"
             android:adapter="@{adapter}"
-            android:padding="16dp"
-            app:layoutManager="com.ezyplanet.core.ui.widget.scroll.GridLayoutManagerWrapper"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_gravity="center_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:spanCount="2" />
+            app:dividerItemDecoration="@{1}"
+            app:itemDecorationBackGround="@{@drawable/item_divider}"
+
+             />
 
 
-
-    </LinearLayout>
 </layout>
