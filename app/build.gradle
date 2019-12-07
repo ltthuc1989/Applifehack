@@ -6,6 +6,15 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+
+    signingConfigs {
+        debug {
+            storeFile file('../habit.jks')
+            storePassword 'habit@prod'
+            keyAlias 'habit'
+            keyPassword 'habit@prod'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.ltthuc.habit"
@@ -51,6 +60,21 @@ android {
     }
 
     flavorDimensions "default"
+
+    productFlavors {
+        mockup {
+            // minSdkVersion 21
+           // ext.enableCrashlytics = false
+            applicationId "com.ltthuc.habit"
+            buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
+
+
+        }
+        production {
+            applicationId "com.ltthuc.habit"
+            buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -100,6 +124,16 @@ dependencies {
     implementation appDependencies.RxRoom
     kapt appDependencies.RoomCompiler
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    implementation  appDependencies.timeAgo
+    implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+        exclude group:'com.google.guava'
+    }
+
+
+
+
+
 }
 
 repositories {

@@ -9,6 +9,7 @@ import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVMBuilder
 import com.ltthuc.habit.ui.activity.feed.FeedVMBuilder
 import com.ltthuc.habit.ui.activity.listpost.ListPostVMBuilder
 import com.ltthuc.habit.ui.activity.viewer.ViewerVMBuilder
+import com.ltthuc.habit.ui.activity.viewer.YtDetailVMBuilder
 import com.ltthuc.habit.ui.activity.webview.WebViewVMBuilder
 import com.ltthuc.habit.ui.fragment.articlelist.ArticleListVMBuilder
 import com.ltthuc.habit.ui.fragment.slidepost.SlidePostVMBuilder
@@ -36,7 +37,8 @@ import dagger.Module
     (ArticleListVMBuilder::class),
     (VideoListVMBuilder::class),
     (VideoViewerVMBuilder::class),
-    (ViewerVMBuilder::class)
+    (ViewerVMBuilder::class),
+    (YtDetailVMBuilder::class)
 ])
 abstract class ViewModelBuilder {
 

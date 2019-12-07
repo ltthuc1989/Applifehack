@@ -1,17 +1,24 @@
 package com.ltthuc.habit.data.network
 
+import android.provider.MediaStore
 import com.androidhuman.rxfirebase2.database.RxFirebaseDatabase
 import com.androidhuman.rxfirebase2.firestore.RxFirebaseFirestore
 import com.androidhuman.rxfirebase2.firestore.model.Value
 import com.google.android.gms.tasks.Tasks
+import com.google.api.client.http.HttpRequest
+
+
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.*
+import com.ltthuc.habit.BuildConfig
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.entity.PostType
+import com.ltthuc.habit.data.network.response.youtube.YoutubeResp
 import com.ltthuc.habit.ui.activity.listpost.PostContent
 import com.prof.rssparser.Parser
+import com.rx2androidnetworking.Rx2AndroidNetworking
 import io.reactivex.Completable
 import io.reactivex.Single
 import kotlinx.coroutines.Deferred
@@ -22,6 +29,16 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+import com.google.api.client.http.HttpRequestInitializer
+import com.google.api.client.json.jackson2.JacksonFactory
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.services.youtube.YouTube
+import com.google.api.services.youtube.model.Video
+import android.content.pm.PackageManager
+import com.google.common.io.BaseEncoding
+
+
+
 
 /**
  * Created by jyotidubey on 04/01/18.
@@ -29,6 +46,7 @@ import kotlin.coroutines.suspendCoroutine
 class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHelper {
 
     val limitPage: Int = 20
+    private var youtube:YouTube?=null
 
     val firStore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private fun generatePostId(): String = firStore.collection(ApiEndPoint.POST_DB_KEY).document().id
@@ -72,5 +90,19 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
                 whereEqualTo(DatabasePath.TYPE,PostType.VIDEO.type)
 
         return RxFirebaseFirestore.data(query)
+    }
+
+    override fun getYtDetail(youtubeId: String?): Single<YoutubeResp> {
+
+        val request= "items/snippet/title,items/snippet/publishedAt,items/snippet/description,items/snippet/thumbnails/default/url,items/snippet/thumbnails/high/url,items/statistics"
+
+
+        return Rx2AndroidNetworking.get(ApiEndPoint.API_YOUTUBE)
+                .addQueryParameter("id", youtubeId)
+                .addQueryParameter("key",BuildConfig.API_YOUTUBE)
+                .addQueryParameter("part","snippet,statistics")
+                .addQueryParameter("fields",request)
+                .build()
+                .getObjectSingle(YoutubeResp::class.java)
     }
 }

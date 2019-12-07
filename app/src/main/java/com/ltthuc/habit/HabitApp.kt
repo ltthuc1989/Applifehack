@@ -54,10 +54,10 @@ class HabitApp : MultiDexApplication(), HasActivityInjector {
 
         AndroidNetworking.initialize(this, okHttpClient)
         // disable Logging to upload photo
-//        if (BuildConfig.DEBUG) {
-//            Stetho.initializeWithDefaults(this)
-//            AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
-//        }
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this)
+            AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
+        }
 
     }
 

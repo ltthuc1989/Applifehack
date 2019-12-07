@@ -38,7 +38,7 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
     }
 
     fun onItemClicked(item: Post){
-        navigator?.openYoutube(item.url)
+        navigator?.openYoutube(item.video_url)
     }
 
 

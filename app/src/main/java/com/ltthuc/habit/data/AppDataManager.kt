@@ -1,9 +1,11 @@
 package com.ltthuc.habit.data
 
 import android.content.Context
+import android.provider.MediaStore
 import android.telephony.TelephonyManager
 import com.androidhuman.rxfirebase2.firestore.model.Value
 import com.ezyplanet.thousandhands.shipper.data.preferences.AppPreferenceHelper
+import com.google.api.services.youtube.model.Video
 import com.google.firebase.firestore.QuerySnapshot
 
 import com.google.gson.Gson
@@ -11,6 +13,7 @@ import com.irmansyah.catalogmoviekotlin.data.DataManager
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.network.ApiHeader
 import com.ltthuc.habit.data.network.ApiHelper
+import com.ltthuc.habit.data.network.response.youtube.YoutubeResp
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -41,15 +44,15 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
     }
 
     override fun createPost(postContent: Post): Completable {
-       return apiHelper.createPost(postContent)
+        return apiHelper.createPost(postContent)
     }
 
     override fun getPost(): Single<Value<QuerySnapshot>> {
-       return apiHelper.getPost()
+        return apiHelper.getPost()
     }
 
     override fun getCatgories(): Single<Value<QuerySnapshot>> {
-       return apiHelper.getCatgories()
+        return apiHelper.getCatgories()
     }
 
     override fun getPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
@@ -57,6 +60,10 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
     }
 
     override fun getVideoPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
-       return apiHelper.getVideoPostByCat(catId)
+        return apiHelper.getVideoPostByCat(catId)
+    }
+
+    override  fun getYtDetail(youtubeId: String?): Single<YoutubeResp> {
+        return apiHelper.getYtDetail(youtubeId)
     }
 }

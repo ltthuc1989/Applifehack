@@ -47,6 +47,7 @@ ext {
     final gsonVersion = "2.8.1"
     final spinkitVersion = '1.1.0'
     final errorViewVersion = '4.0.0'
+    final timeAgoVersion = '4.0.1'
 
 
 
@@ -153,6 +154,7 @@ ext {
                     'auth'           : "com.google.android.gms:play-services-auth:$play_service_authVersion"
 
 
+
             ],
             facebook :[
                     'stetho':"com.facebook.stetho:stetho:$stethoVersion",
@@ -160,7 +162,9 @@ ext {
                     'facebookSdk': "com.facebook.android:facebook-android-sdk:$facebookVersion",
                     'accountKit': "com.facebook.android:account-kit-sdk:$accountKitVersion"
 
-            ]
+            ],
+            timeAgo : "com.github.marlonlom:timeago:$timeAgoVersion"
+
 
 
     ]

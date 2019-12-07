@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVM" />
+            type="com.ltthuc.habit.ui.activity.ytDetail.YtDetailVM" />
 
 
     </data>
@@ -27,7 +27,6 @@
             android:id="@+id/youtubeAppbar"
             android:layout_width="match_parent"
 
-
             android:layout_height="wrap_content"
             app:viewModel="@{viewModel}"
             />
@@ -36,6 +35,7 @@
 <include layout="@layout/view_youtube_appbar"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    app:viewModel="@{viewModel}"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     />
         <ImageView
@@ -51,6 +51,7 @@
 
             app:layout_anchor="@id/youtubeAppbar"
             app:layout_anchorGravity="bottom|end"
+            android:onClick="@{()->viewModel.playClick(viewModel.model.id)}"
 
             app:layout_collapseParallaxMultiplier="0.3">
 

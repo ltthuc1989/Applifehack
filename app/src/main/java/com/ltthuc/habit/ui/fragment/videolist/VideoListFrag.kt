@@ -23,6 +23,7 @@ import com.ltthuc.habit.databinding.ItemCatVideoBinding
 import com.ltthuc.habit.ui.activity.HomeActivityNav
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
 import com.ltthuc.habit.ui.activity.viewer.ViewerActivity
+import com.ltthuc.habit.ui.activity.ytDetail.YtDetailActivity
 import com.ltthuc.habit.ui.fragment.articlelist.ArticleListFrag
 import com.ltthuc.habit.ui.fragment.articlelist.ArticleListNav
 import com.ltthuc.habit.ui.fragment.articlelist.ArticleListVM
@@ -77,6 +78,6 @@ class VideoListFrag : MvvmFragment<VideoListVM, FragVideoListBinding>(), VideoLi
 
 
     override fun openYoutube(link: String?) {
-        ( activity as MvvmActivity<*,*>).gotoActivity(ViewerActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to link))
+        ( activity as MvvmActivity<*,*>).gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to link))
     }
 }

@@ -74,6 +74,14 @@
             android:windowSoftInputMode="adjustResize"
 
             />
+        <activity
+            android:name="com.ltthuc.habit.ui.activity.ytDetail.YtDetailActivity"
+            android:label="@string/app_name"
+
+            android:theme="@style/TagFeedAppTheme.Dark"
+            android:windowSoftInputMode="adjustResize"
+
+            />
 
         <activity android:name=".ui.activity.webview.WebViewActivity"/>
 
