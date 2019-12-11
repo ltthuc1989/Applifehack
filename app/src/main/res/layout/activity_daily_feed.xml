@@ -52,6 +52,9 @@
             android:adapter="@{adapter}"
             android:orientation="vertical"
             app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
+            app:onScrolledToBottom="@{(page) -> viewModel.onLoadMore(page)}"
+            app:resetLoadingState="@{viewModel.resetLoadingState}"
+            app:visibleThreshold="@{viewModel.visibleThreshold}"
             android:overScrollMode="always" />
 
 

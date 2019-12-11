@@ -98,6 +98,7 @@ dependencies {
     implementation appDependencies.firebase.messaging
     implementation appDependencies.firebase.jobdispatcher
     implementation appDependencies.firebase.database
+    implementation appDependencies.firebase.fireStorage
     implementation appDependencies.facebook.facebookSdk
     implementation appDependencies.facebook.accountKit
     implementation appDependencies.facebook.stetho

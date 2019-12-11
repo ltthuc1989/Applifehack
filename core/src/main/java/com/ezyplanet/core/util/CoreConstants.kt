@@ -6,7 +6,7 @@ package com.ezyplanet.core.util
  */
 object CoreConstants {
     val API_STATUS_CODE_LOCAL_ERROR = 0
-    val LIMIT_ITEM_PER_PAGE=20
+    val LIMIT_ITEM_PER_PAGE=10
     val VISIBLE_THRESHOLD = 5
     val LOGIN_SUCESS="login_success"
 

@@ -68,7 +68,7 @@ class FeedActivity: MvvmActivity<ActivityDailyFeedBinding, FeedVM>(), FeedNav,Bo
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
         }
-        Log.d("HomeActivity",getSHA1())
+
 
     }
 
@@ -89,21 +89,5 @@ class FeedActivity: MvvmActivity<ActivityDailyFeedBinding, FeedVM>(), FeedNav,Bo
     override fun onSettingClick() {
     }
 
-    private fun getSHA1(): String? {
-        try {
-            val signatures = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES).signatures
-            for (signature in signatures) {
-                val md: MessageDigest
-                md = MessageDigest.getInstance("SHA-1")
-                md.update(signature.toByteArray())
-                return BaseEncoding.base16().encode(md.digest())
-            }
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        }
 
-        return null
-    }
 }

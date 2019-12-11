@@ -33,7 +33,9 @@ ext {
     final firebaseIidVersion = '17.0.4'
     final firebaseMessagingVersion = '17.3.4'
     final firebaseJobdispatcherVersion = '0.8.5'
-    final fireBasseDataBaseVersion = '16.0.5'
+    final fireBasseDataBaseVersion = '19.2.0'
+    final fireBasseStorageVersion = '19.1.0'
+    final firebseFirebaseStorage= '21.3.0'
     //play-service
     final play_serviceVersion = '16.0.0'
     final play_service_authVersion = '16.0.1'
@@ -137,7 +139,9 @@ ext {
                     'iid'          : "com.google.firebase:firebase-iid:$firebaseIidVersion",
                     'messaging'    : "com.google.firebase:firebase-messaging:$firebaseMessagingVersion",
                     'jobdispatcher': "com.firebase:firebase-jobdispatcher:$firebaseJobdispatcherVersion",
-                    'database'     :"com.google.firebase:firebase-database:$fireBasseDataBaseVersion"
+                    'database'     :"com.google.firebase:firebase-database:$fireBasseDataBaseVersion",
+                    'storage'      :"com.google.firebase:firebase-storage:$fireBasseStorageVersion",
+                    'fireStorage' : "com.google.firebase:firebase-firestore:$firebseFirebaseStorage"
 
             ],
             //map

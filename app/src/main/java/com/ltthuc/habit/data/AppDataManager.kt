@@ -5,8 +5,11 @@ import android.provider.MediaStore
 import android.telephony.TelephonyManager
 import com.androidhuman.rxfirebase2.firestore.model.Value
 import com.ezyplanet.thousandhands.shipper.data.preferences.AppPreferenceHelper
+import com.google.android.gms.tasks.Task
 import com.google.api.services.youtube.model.Video
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.Transaction
 
 import com.google.gson.Gson
 import com.irmansyah.catalogmoviekotlin.data.DataManager
@@ -47,8 +50,8 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
         return apiHelper.createPost(postContent)
     }
 
-    override fun getPost(): Single<Value<QuerySnapshot>> {
-        return apiHelper.getPost()
+    override fun getPost(loadMore:Boolean?,lastItem:DocumentSnapshot?): Task<QuerySnapshot> {
+        return apiHelper.getPost(loadMore,lastItem)
     }
 
     override fun getCatgories(): Single<Value<QuerySnapshot>> {
@@ -65,5 +68,9 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
 
     override  fun getYtDetail(youtubeId: String?): Single<YoutubeResp> {
         return apiHelper.getYtDetail(youtubeId)
+    }
+
+    override   fun updateViewCount(postId: String?): Task<Transaction> {
+        return  apiHelper.updateViewCount(postId)
     }
 }

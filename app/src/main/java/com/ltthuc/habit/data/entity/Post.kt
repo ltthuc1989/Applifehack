@@ -1,9 +1,11 @@
 package com.ltthuc.habit.data.entity
 
 import android.os.Parcelable
+import android.text.format.DateUtils
 import com.google.firebase.database.IgnoreExtraProperties
 import com.ltthuc.habit.util.FormatterUtil
 import kotlinx.android.parcel.Parcelize
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.HashMap
 @Parcelize
@@ -44,6 +46,7 @@ class Post(var id:String?="",
             else ->  PostType.VIDEO
 
     }
+
 }
 enum class PostType(val type: String?){
     ARTICLE("article"),

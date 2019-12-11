@@ -4,14 +4,24 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.gotoActivity
+import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.QuerySnapshot
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.ui.activity.webview.WebViewActivity
 import com.ltthuc.habit.util.CustomTabHelper
+import java.time.LocalDateTime
+import java.time.ZoneId
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 import kotlin.reflect.KClass
 
 
@@ -64,4 +74,18 @@ fun MvvmActivity<*,*>.gotoPostDetail(post: Post,customTabHelper: CustomTabHelper
         customTabsIntent.intent.setPackage(packageName)
         customTabsIntent.launchUrl(this, Uri.parse(post?.url))
     }
+
+
+
 }
+ suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
+    addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            continuation?.resume(task.result as T)
+        } else {
+            continuation.resumeWithException(task.exception ?: RuntimeException("Unknown task exception"))
+        }
+    }
+}
+
+

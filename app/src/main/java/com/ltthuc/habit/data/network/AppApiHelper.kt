@@ -35,9 +35,14 @@ import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.services.youtube.YouTube
 import com.google.api.services.youtube.model.Video
 import android.content.pm.PackageManager
+import android.util.Log
+import com.google.android.gms.tasks.Task
+import com.google.api.client.util.DateTime
 import com.google.common.io.BaseEncoding
-
-
+import com.google.firebase.Timestamp
+import com.google.protobuf.WireFormat
+import com.ltthuc.habit.util.extension.await
+import io.reactivex.Flowable
 
 
 /**
@@ -45,8 +50,8 @@ import com.google.common.io.BaseEncoding
  */
 class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHelper {
 
-    val limitPage: Int = 20
-    private var youtube:YouTube?=null
+    val limitPage = 20L
+    private var youtube: YouTube? = null
 
     val firStore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private fun generatePostId(): String = firStore.collection(ApiEndPoint.POST_DB_KEY).document().id
@@ -62,13 +67,24 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     override fun createPost(post: Post): Completable {
         val postValues = post.toMap()
 
-        return RxFirebaseFirestore.set(firStore.collection(ApiEndPoint.POST_DB_KEY).
-            document(generatePostId()),postValues)
+        return RxFirebaseFirestore.set(firStore.collection(ApiEndPoint.POST_DB_KEY).document(generatePostId()), postValues)
 
     }
 
-    override fun getPost(): Single<Value<QuerySnapshot>> {
-        return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.POST_DB_KEY))
+    override fun getPost(loadMore:Boolean?,lastItem:DocumentSnapshot?): Task<QuerySnapshot> {
+        if(loadMore==true) {
+            val createdAt= lastItem!!["createdDateText"] as Timestamp
+            return firStore.collection(ApiEndPoint.POST_DB_KEY)
+                    .orderBy("createdDateText",Query.Direction.DESCENDING)?.whereLessThanOrEqualTo("createdDateText",createdAt)
+                    .startAfter(lastItem).limit(10).get()
+        }else{
+
+            return firStore.collection(ApiEndPoint.POST_DB_KEY)
+                    .orderBy("createdDateText",Query.Direction.DESCENDING)
+                    .limit(10).get()
+        }
+
+
     }
 
     override fun getCatgories(): Single<Value<QuerySnapshot>> {
@@ -76,33 +92,46 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun getPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).
-                whereEqualTo(DatabasePath.CAT_ID,catId).
-                whereEqualTo(DatabasePath.TYPE,PostType.ARTICLE.type)
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.CAT_ID, catId).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
 
         return RxFirebaseFirestore.data(query)
 
     }
 
     override fun getVideoPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).
-                whereEqualTo(DatabasePath.CAT_ID,catId).
-                whereEqualTo(DatabasePath.TYPE,PostType.VIDEO.type)
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.CAT_ID, catId).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
 
         return RxFirebaseFirestore.data(query)
     }
 
     override fun getYtDetail(youtubeId: String?): Single<YoutubeResp> {
 
-        val request= "items/snippet/title,items/snippet/publishedAt,items/snippet/description,items/snippet/thumbnails/default/url,items/snippet/thumbnails/high/url,items/statistics"
+        val request = "items/snippet/title,items/snippet/publishedAt,items/snippet/description,items/snippet/thumbnails/default/url,items/snippet/thumbnails/high/url,items/statistics"
 
 
         return Rx2AndroidNetworking.get(ApiEndPoint.API_YOUTUBE)
                 .addQueryParameter("id", youtubeId)
-                .addQueryParameter("key",BuildConfig.API_YOUTUBE)
-                .addQueryParameter("part","snippet,statistics")
-                .addQueryParameter("fields",request)
+                .addQueryParameter("key", BuildConfig.API_YOUTUBE)
+                .addQueryParameter("part", "snippet,statistics")
+                .addQueryParameter("fields", request)
                 .build()
                 .getObjectSingle(YoutubeResp::class.java)
     }
+
+    override  fun updateViewCount(postId: String?): Task<Transaction> {
+
+
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
+       return firStore.runTransaction {
+            val snapshot = it.get(query)
+            val newViewCount = snapshot.getDouble("viewCount")!! + 1
+            it.update(query, "viewCount", newViewCount)
+        }
+
+
+
+
+    }
+
+
 }

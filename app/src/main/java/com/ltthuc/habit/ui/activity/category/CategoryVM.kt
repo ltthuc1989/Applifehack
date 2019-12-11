@@ -62,20 +62,20 @@ class CategoryVM @Inject constructor(val appDataManager: AppDataManager, schedul
 
     private fun getPopularPost() {
         navigator?.showProgress()
-        compositeDisposable.add(appDataManager!!.getPost().map {
-            it.value().toObjects(Post::class.java)
-        }
-                .subscribe({
-                    banners.value = it
-
-
-                }, {
-
-                    navigator?.hideProgress()
-                    navigator?.showAlert(it.message)
-
-
-                }))
+//        compositeDisposable.add(appDataManager!!.getPost().map {
+//            it.value().toObjects(Post::class.java)
+//        }
+//                .subscribe({
+//                    banners.value = it
+//
+//
+//                }, {
+//
+//                    navigator?.hideProgress()
+//                    navigator?.showAlert(it.message)
+//
+//
+//                }))
 
     }
 
