@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    
+    <data>
+        <variable
+            name="listener"
+            type="com.ltthuc.habit.ui.widget.listener.NavListener" />
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/darkest_gray"
+
+
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="200dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@color/white_50"
+            android:textSize="13sp"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:background="@drawable/bg_knowlege_gradient"
+
+
+            android:text="@string/knowlege_sologan"/>
+
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white_25"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:fontFamily="@font/cabin_condensed_regular"
+        android:textColor="@color/white_50"
+        android:textSize="18sp"
+        android:onClick="@{()->listener.onHome()}"
+
+
+
+        android:text="@string/home"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cabin_condensed_regular"
+        android:textColor="@color/white_50"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:onClick="@{()->listener.onCategory()}"
+        android:text="@string/category"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cabin_condensed_regular"
+        android:textColor="@color/white_50"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:onClick="@{()->listener.onSaved()}"
+        android:text="@string/save"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cabin_condensed_regular"
+        android:textColor="@color/white_50"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:onClick="@{()->listener.onSetting()}"
+        android:text="@string/setting"/>
+
+</LinearLayout>
+</layout>

@@ -8,7 +8,7 @@
         <import type="com.ltthuc.habit.data.entity.Post" />
         <variable
             name="listener"
-            type="com.ltthuc.habit.ui.widget.listener.BottomBarListener"/>
+            type="com.ltthuc.habit.ui.widget.listener.NavListener"/>
         <variable
             name="viewModel"
             type="com.ltthuc.habit.ui.activity.feed.FeedVM" />
@@ -16,7 +16,12 @@
             name="adapter"
             type="com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter&lt;Post, ItemFeedListBinding&gt;" />
     </data>
+    <androidx.drawerlayout.widget.DrawerLayout
 
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
     <LinearLayout
     android:id="@+id/daily_feed_layout"
     android:layout_width="match_parent"
@@ -75,9 +80,15 @@
 
     </FrameLayout>
 
-        <include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"
-            app:listener="@{listener}"
-            layout="@layout/bottom_navigation"/>
+
 </LinearLayout>
+        <com.ltthuc.habit.ui.widget.NavigationViewApp
+            android:id="@+id/home_navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"/>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </layout>

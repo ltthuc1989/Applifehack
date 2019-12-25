@@ -130,6 +130,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
         exclude group:'com.google.guava'
     }
+    implementation 'jp.wasabeef:blurry:3.0.0' //blur library
 
 
 

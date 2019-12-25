@@ -96,6 +96,9 @@ abstract class BaseViewModel<n : MvvmNav, m : Any?>(private val connectionManage
     open fun handleIntent(intent: Intent?, isOnNewIntent: Boolean? = false) {
 
     }
+   fun getScopeUI():CoroutineScope{
+        return uiScope
+    }
 
     fun updateLoginSatus(boolean: Boolean) {
         isLogIn.value = boolean

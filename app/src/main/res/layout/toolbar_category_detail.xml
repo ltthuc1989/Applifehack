@@ -67,7 +67,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
                 android:tint="@color/white"
-                android:onClick="@{()->listener.onBack()}"
+                android:onClick="@{()->listener.onMenu()}"
                 android:scaleType="center"
                 app:srcCompat="@drawable/ic_nav_back" />
 

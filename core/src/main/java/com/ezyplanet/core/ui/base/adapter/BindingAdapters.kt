@@ -32,6 +32,7 @@ import com.ezyplanet.core.ui.listener.OneClickListener
 import com.ezyplanet.core.ui.widget.decoration.GridSpacingItemDecoration
 import com.ezyplanet.core.ui.widget.decoration.SpaceItemDecoration
 import com.ezyplanet.core.widgets.scoll.RecyclerViewScrollCallback
+import com.google.firebase.storage.FirebaseStorage
 
 
 class BindingAdapters {
@@ -156,6 +157,17 @@ class BindingAdapters {
         fun setImageSrc(imageView: ImageView, url: String?) {
             if (!url.isNullOrEmpty()) {
                 GlideApp.with(imageView.context).load(url).diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(imageView)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("srcFireStorageUrl")
+        fun setFireStorageImageSrc(imageView: ImageView, url: String?) {
+            if (!url.isNullOrEmpty()) {
+                val storage = FirebaseStorage.getInstance()
+                val gsReference = storage.getReferenceFromUrl("url")
+                GlideApp.with(imageView.context).load(gsReference).diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(imageView)
             }
         }

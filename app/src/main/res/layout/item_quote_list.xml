@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.ltthuc.habit.data.entity.Post" />
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.feed.FeedVM" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/feed_hero_gradient_background"
+        android:onClick="@{()->viewModel.openPostDetail(item)}">
+       <FrameLayout
+           android:layout_width="match_parent"
+           android:layout_above="@id/linBottom"
+           android:layout_height="match_parent">
+           <com.ltthuc.habit.ui.widget.QuoteView
+               android:layout_width="match_parent"
+               app:model="@{item}"
+               android:layout_height="match_parent"/>
+
+       </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linBottom"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCatName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_button"
+                android:fontFamily="@font/open_sans_light"
+                android:gravity="center"
+                android:onClick="@{()->viewModel.openCatDetail(item)}"
+                android:paddingLeft="10dp"
+                android:paddingTop="3dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="3dp"
+                android:textColor="@color/deep_blue_dark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPostedDate"
+                tools:text="Productive"
+
+                />
+
+            <ImageView
+                android:id="@+id/imgShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{()->viewModel.shareClick(context,item)}"
+                android:src="@drawable/ic_share"
+                android:tint="@color/white_75"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{()->viewModel.likeClick(item)}"
+                android:src="@drawable/ic_like"
+
+                android:tint="@color/white_75"
+                app:layout_constraintEnd_toStartOf="@+id/imgShare"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tvPageLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingTop="3dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="3dp"
+                android:text="@{item.webLink}"
+                android:textAllCaps="true"
+                android:textColor="@color/bright_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPostedDate"
+                tools:text="Productive" />
+
+            <TextView
+                android:id="@+id/tvPostedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:text="@{item.getPublishedDate()}"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
+
+                app:layout_constraintStart_toEndOf="@+id/ic_calendar"
+                app:layout_constraintTop_toTopOf="@id/ic_calendar"
+                tools:text="7 days ago" />
+
+            <ImageView
+                android:id="@+id/ic_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_calender"
+                android:tint="@color/white_75"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</layout>

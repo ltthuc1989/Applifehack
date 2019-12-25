@@ -34,7 +34,7 @@ class WebViewActivity : MvvmActivity<ActivityWebviewBinding, WebViewVM>(), WebVi
 
         lazyLoadWebview()
         binding.toolbarWebview.setListner(object : ToolbarListener {
-            override fun onBack() { isSwitchSreen?.value = true
+            override fun onMenu() { isSwitchSreen?.value = true
                 finish()
             }
         })

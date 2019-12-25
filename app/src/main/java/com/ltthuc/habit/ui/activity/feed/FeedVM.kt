@@ -1,11 +1,13 @@
 package com.ltthuc.habit.ui.activity.feed
 
+import android.content.Context
 import android.util.Log
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.google.firebase.firestore.DocumentSnapshot
+import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.firebase.AnalyticsEventType
@@ -86,6 +88,25 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
         }
 
     }
+    fun openCatDetail(data: Post){
+        navigator?.gotoCatDetail(data?.catId)
+    }
+    fun openPageUrl(data: Post){
+        navigator?.gotoPageUrl(data)
+    }
+    fun shareClick(context: Context,data:Post){
+        val download = context.getString(R.string.download)
+        val applink = context.getString(R.string.app_link)
+        val messge = String.format(context.getString(R.string.share_info_message),
+                context.getString(R.string.app_name))+"\n ${data.title}\n ${data.url} \n $download\n $applink"
+        navigator?.share(messge)
+
+
+    }
+    fun likeClick(data:Post){
+
+    }
+
 
 
     fun onLoadMore(page: Int) {

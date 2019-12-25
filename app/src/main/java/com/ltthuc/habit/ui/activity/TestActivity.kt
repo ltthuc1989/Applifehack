@@ -1,23 +1,23 @@
 package com.ltthuc.habit.ui.activity
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import com.ltthuc.habit.R
 
-import kotlinx.android.synthetic.main.activity_test.*
+
+import android.webkit.WebViewClient
+import android.webkit.WebSettings
+
+
+
 
 class TestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
 
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
     }
 
 }

@@ -13,7 +13,7 @@ import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 class BaseToolBar :FrameLayout{
     lateinit var binding: ToolbarBinding
 
-  private  var _showBack =false
+  private  var _showBack =true
     var showBack :Boolean
     get() = _showBack
     set(value) {

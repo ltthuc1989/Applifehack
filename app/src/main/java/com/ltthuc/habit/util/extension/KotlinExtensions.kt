@@ -22,14 +22,16 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-import kotlin.reflect.KClass
+
+
+
 
 
 fun MvvmActivity<*,*>.gotoPostDetail(post: Post,customTabHelper: CustomTabHelper) {
     val builder = CustomTabsIntent.Builder()
 
     // modify toolbar color
-    builder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
+    builder.setToolbarColor(ContextCompat.getColor(this, com.ltthuc.habit.R.color.colorPrimary))
 
     // add share button to overflow menu
     builder.addDefaultShareMenuItem()
@@ -77,6 +79,15 @@ fun MvvmActivity<*,*>.gotoPostDetail(post: Post,customTabHelper: CustomTabHelper
 
 
 
+}
+fun MvvmActivity<*,*>.shareMessage(message:String){
+
+    val intent2 = Intent()
+
+    intent2.action=Intent.ACTION_SEND
+    intent2.type="text/plain"
+    intent2.putExtra(Intent.EXTRA_TEXT, message)
+    startActivity(Intent.createChooser(intent2, "Share via"))
 }
  suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
     addOnCompleteListener { task ->

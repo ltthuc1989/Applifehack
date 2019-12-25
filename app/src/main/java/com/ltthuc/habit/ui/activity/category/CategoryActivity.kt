@@ -17,12 +17,14 @@ import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.ActivityCategoryBinding
 import com.ltthuc.habit.databinding.ItemCategoryBinding
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
+import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.fragment.slidepost.SlidePostFrag
+import com.ltthuc.habit.ui.widget.listener.NavListener
 import com.ltthuc.habit.util.CustomTabHelper
 import com.ltthuc.habit.util.extension.gotoPostDetail
 import java.util.*
 
-class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), CategoryNav,ViewPager.OnPageChangeListener {
+class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), CategoryNav,ViewPager.OnPageChangeListener,NavListener {
 
     override val viewModel: CategoryVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_category
@@ -73,6 +75,7 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
         }
+        binding.homeNavigationView.setListner(this)
     }
 
 
@@ -148,4 +151,21 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
             timer?.cancel()
         }
     }
+
+
+    override fun onSetting() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onHome() {
+        gotoActivity(FeedActivity::class)
+    }
+
+    override fun onSaved() {
+    }
+
+    override fun onCategory() {
+        gotoActivity(CategoryActivity::class)
+    }
+
 }

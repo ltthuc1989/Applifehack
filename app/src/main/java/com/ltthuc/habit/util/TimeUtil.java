@@ -20,7 +20,9 @@ public abstract class TimeUtil {
     }
 
 
-
+    public static String formatTimeAgo(long j) {
+        return TimeAgo.using(j);
+    }
 
 
 }

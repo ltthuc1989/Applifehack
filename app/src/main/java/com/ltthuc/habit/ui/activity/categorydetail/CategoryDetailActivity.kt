@@ -10,15 +10,18 @@ import com.ezyplanet.core.ui.base.MvvmNav
 import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.ui.fragment.tab.TabVM
 import com.ezyplanet.core.util.extension.getExtraParcel
+import com.ezyplanet.core.util.extension.gotoActivity
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.ActivityCategoryDetailBinding
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
+import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.fragment.articlelist.ArticleListFrag
 import com.ltthuc.habit.ui.fragment.videolist.VideoListFrag
+import com.ltthuc.habit.ui.widget.listener.NavListener
 import kotlinx.android.synthetic.main.view_category_detail.*
 
-class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, CategoryDetailVM>(), CategoryDetailNav {
+class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, CategoryDetailVM>(), CategoryDetailNav, NavListener {
 
     override val viewModel: CategoryDetailVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_category_detail
@@ -32,7 +35,7 @@ class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, Categ
         val catResp = getExtraParcel<CatResp>(CategoryActivity.KEY_CATEGORY_DETAIL)
         catId = catResp?.id!!
         viewModel.updateModel(catResp)
-
+        binding.homeNavigationView.setListner(this)
         binding.viewPager.offscreenPageLimit = 1
         binding.viewPager.adapter = TabAdapter(supportFragmentManager)
         tabs.setupWithViewPager(binding.viewPager)
@@ -70,6 +73,21 @@ class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, Categ
 
         }
 
+    }
+
+    override fun onSetting() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onHome() {
+        gotoActivity(FeedActivity::class)
+    }
+
+    override fun onSaved() {
+    }
+
+    override fun onCategory() {
+        gotoActivity(CategoryActivity::class)
     }
 
 

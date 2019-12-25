@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -57,34 +57,103 @@
 
         </FrameLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linBottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvCatName"
+                tools:text="Productive"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPostedDate"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/open_sans_light"
+                android:background="@drawable/bg_button"
+                android:textColor="@color/deep_blue_dark"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.openCatDetail(item)}"
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:text="like"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_share"
+                android:id="@+id/imgShare"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:tint="@color/white_75"
+                android:onClick="@{()->viewModel.shareClick(context,item)}"
 
-                android:textColor="@color/white_75" />
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_like"
+                app:layout_constraintEnd_toStartOf="@+id/imgShare"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                android:onClick="@{()->viewModel.likeClick(item)}"
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/light_gray" />
+                android:layout_marginEnd="16dp"
+                android:tint="@color/white_75"
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:text="share"
-                android:textColor="@color/white_75" />
-        </LinearLayout>
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvPageLink"
+                tools:text="Productive"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPostedDate"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:text="@{item.webLink}"
+                android:textColor="@color/bright_blue"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvPostedDate"
+                tools:text="7 days ago"
+                android:text="@{item.getPublishedDate()}"
+
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@id/ic_calendar"
+                app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@+id/ic_calendar"
+
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_75"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_calender"
+                android:id="@+id/ic_calendar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:tint="@color/white_75"
+
+                android:layout_height="wrap_content" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 </layout>

@@ -25,4 +25,10 @@
     <string name="article">Article</string>
     <string name="video">Video</string>
     <string name="publish_on">Published on  %s</string>
+    <string name="save">Saved</string>
+    <string name="knowlege_sologan">Knowlege Gives You Power\n Power Gives you control\nControl gives you freedom\nFreedom gives you potential\nPotential gives you endles possibilities</string>
+    <string name="share_info_message"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it. \n Sent from %1$s.]]></string>
+    <string name="download">Download:</string>
+    <string name="app_link">link_app</string>
+
 </resources>

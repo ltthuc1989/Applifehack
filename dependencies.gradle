@@ -141,7 +141,8 @@ ext {
                     'jobdispatcher': "com.firebase:firebase-jobdispatcher:$firebaseJobdispatcherVersion",
                     'database'     :"com.google.firebase:firebase-database:$fireBasseDataBaseVersion",
                     'storage'      :"com.google.firebase:firebase-storage:$fireBasseStorageVersion",
-                    'fireStorage' : "com.google.firebase:firebase-firestore:$firebseFirebaseStorage"
+                    'fireStorage' : "com.google.firebase:firebase-firestore:$firebseFirebaseStorage",
+                    'fireUiStorage': "com.firebaseui:firebase-ui-storage:6.2.0"
 
             ],
             //map

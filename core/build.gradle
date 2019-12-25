@@ -93,7 +93,9 @@ dependencies {
     api appDependencies.multipleDex
 
 
-    //push
+    //firebase
+    api appDependencies.firebase.fireUiStorage
+
 
     api appDependencies.timber
 

@@ -2,6 +2,7 @@ package com.ltthuc.habit.ui.activity.listpost
 
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.network.response.RssCatResp
+import com.ltthuc.habit.util.TimeUtil
 import com.prof.rssparser.Article
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -24,11 +25,13 @@ data class PostContent(
             val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
             sdf.format(date)
 
-        } catch (e: ParseException) {
+        } catch (e: Exception) {
             e.printStackTrace()
             article.pubDate
         }
         return pubDateString
+
+
 
     }
 
@@ -58,7 +61,7 @@ data class PostContent(
         post.title = getTitle()
         post.imgLink = getImage()
         post.description =article?.description
-        post.createdDate = Date().time
+       // post.createdDate = Date().time
         post.webLink = rssCatResp.domain
         post.url = article?.link
 

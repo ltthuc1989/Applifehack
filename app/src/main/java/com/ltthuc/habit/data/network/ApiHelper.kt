@@ -25,6 +25,6 @@ interface ApiHelper {
     fun getPostByCat(catId:String?):Single<Value<QuerySnapshot>>
     fun getVideoPostByCat(catId:String?):Single<Value<QuerySnapshot>>
     fun getYtDetail(youtubeId:String?):Single<YoutubeResp>
-   fun updateViewCount(postId:String?):Task<Transaction>
+     fun updateViewCount(postId:String?):Task<Transaction>
 
 }
