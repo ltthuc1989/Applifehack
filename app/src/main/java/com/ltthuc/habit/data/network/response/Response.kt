@@ -16,4 +16,5 @@ data class RssCatResp constructor(val feed:String?="",
 data class CatResp constructor(val name:String?="",
                                   val image:String?="",
                                   val id:String?="",
-                                  val desc:String?=""):Parcelable
+                                  val desc:String?="",
+                               val type:String?=""):Parcelable

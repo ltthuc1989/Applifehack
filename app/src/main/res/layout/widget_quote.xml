@@ -76,8 +76,8 @@
                 android:letterSpacing="0.05"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                app:autoResizeTextMax="@{30}"
-                app:autoResizeTextMin="@{12}"
+                app:autoResizeTextMax="@{50}"
+                app:autoResizeTextMin="@{16}"
                 app:autoSizeTextType="uniform" />
 
             <!--Author-->

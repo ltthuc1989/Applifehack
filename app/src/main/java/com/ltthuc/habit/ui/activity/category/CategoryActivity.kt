@@ -82,7 +82,12 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
 
 
     override fun gotoCatDetailScreen(resp: CatResp) {
-        gotoActivity(CategoryDetailActivity::class, mapOf(KEY_CATEGORY_DETAIL to resp))
+        if(resp?.type!=null&&resp?.type=="quote"){
+            gotoActivity(QuotesActivity::class)
+        }else{
+            gotoActivity(CategoryDetailActivity::class, mapOf(KEY_CATEGORY_DETAIL to resp))
+        }
+
     }
 
     override fun gotoPostDetail(post: Post) {
