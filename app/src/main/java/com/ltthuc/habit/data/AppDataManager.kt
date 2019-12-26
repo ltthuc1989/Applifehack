@@ -17,6 +17,7 @@ import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.network.ApiHeader
 import com.ltthuc.habit.data.network.ApiHelper
 import com.ltthuc.habit.data.network.response.youtube.YoutubeResp
+import com.ltthuc.habit.util.SortBy
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -58,12 +59,16 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
         return apiHelper.getCatgories()
     }
 
-    override fun getPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
-        return apiHelper.getPostByCat(catId)
+    override fun getPostByCat(catId: String?, sortBy: SortBy?, loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
+       return  apiHelper.getPostByCat(catId,sortBy,loadMore,lastItem)
     }
 
-    override fun getVideoPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
-        return apiHelper.getVideoPostByCat(catId)
+    override fun getVideoPostByCat(catId: String?, sortBy: SortBy?, loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
+        return  apiHelper.getVideoPostByCat(catId,sortBy,loadMore,lastItem)
+    }
+
+    override fun getPostByQuote(typeQuote: String?, sortBy: SortBy?, loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
+        return  apiHelper.getPostByQuote(typeQuote,sortBy,loadMore,lastItem)
     }
 
     override  fun getYtDetail(youtubeId: String?): Single<YoutubeResp> {

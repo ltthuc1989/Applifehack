@@ -81,4 +81,5 @@
     </attr>
     <attr name="thumbTint" format="color">
     </attr>
+    <attr name="toolBarTextStyle" format="reference"/>
 </resources>

@@ -13,17 +13,7 @@ import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 class BaseToolBar :FrameLayout{
     lateinit var binding: ToolbarBinding
 
-  private  var _showBack =true
-    var showBack :Boolean
-    get() = _showBack
-    set(value) {
-        _showBack = value
-        if(_showBack) binding.imBack.visibility= View.VISIBLE
-        else {
-            //binding.imBack.visibility= View.GONE
-        }
 
-    }
    private var _titleBar:String?=null
     var titleBar: String?
         get() = _titleBar
@@ -50,7 +40,6 @@ class BaseToolBar :FrameLayout{
     fun initInflate() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = ToolbarBinding.inflate(inflater, this, true)
-        binding.imBack.visibility= View.GONE
 
 
     }

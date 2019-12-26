@@ -5,6 +5,9 @@
         <variable
             name="model"
             type="com.ltthuc.habit.data.entity.Post" />
+        <variable
+            name="listener"
+            type="com.ltthuc.habit.ui.widget.listener.QuoteViewListener" />
 
     </data>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -73,8 +76,8 @@
                 android:letterSpacing="0.05"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                app:autoSizeMaxTextSize="64sp"
-                app:autoSizeMinTextSize="18sp"
+                app:autoResizeTextMax="@{30}"
+                app:autoResizeTextMin="@{12}"
                 app:autoSizeTextType="uniform" />
 
             <!--Author-->

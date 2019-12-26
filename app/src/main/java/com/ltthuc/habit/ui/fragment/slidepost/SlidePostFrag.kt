@@ -1,6 +1,5 @@
 package com.ltthuc.habit.ui.fragment.slidepost
 
-import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.MvvmFragment
 import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.util.extension.lazyFast
@@ -10,7 +9,6 @@ import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.databinding.ItemSlidePostBinding
 import com.ltthuc.habit.ui.activity.category.CategoryVM
-import com.ltthuc.habit.util.extension.gotoPostDetail
 
 class SlidePostFrag :MvvmFragment<SlidePostVM,ItemSlidePostBinding>(),SlidePostNav{
 

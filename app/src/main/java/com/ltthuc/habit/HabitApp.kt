@@ -19,6 +19,8 @@ import dagger.android.HasActivityInjector
 import dagger.android.HasServiceInjector
 import io.fabric.sdk.android.Fabric
 import okhttp3.OkHttpClient
+import org.sourcei.kowts.utils.functions.F
+import org.sourcei.kowts.utils.reusables.Gradients
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -58,6 +60,7 @@ class HabitApp : MultiDexApplication(), HasActivityInjector {
             Stetho.initializeWithDefaults(this)
             AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
         }
+        Gradients = F.readGradients(this)
 
     }
 

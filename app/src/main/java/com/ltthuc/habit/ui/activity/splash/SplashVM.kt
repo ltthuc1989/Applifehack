@@ -4,7 +4,6 @@ import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ltthuc.habit.data.AppDataManager
-import com.ltthuc.habit.ui.activity.HomeActivityNav
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject

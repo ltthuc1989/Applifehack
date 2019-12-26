@@ -362,6 +362,8 @@
         <item name="themeTextInvertedColor">@color/white_25</item>
         <item name="themeTextPrimaryColor">@android:color/white</item>
         <item name="themeTextSecondaryColor">@color/lightest_gray</item>
+        <item name="toolBarTextStyle">@style/FeedToolbarTextStyle</item>
+
     </style>
     <style name="SubjectTextLabel">
         <item name="android:textSize">@dimen/subject_card_textSize</item>
@@ -592,6 +594,10 @@
         <item name="android:paddingLeft">6dp</item>
         <item name="android:paddingRight">0dp</item>
         <item name="android:actionButtonStyle">@style/TopicToolbarNavigationButtonStyle.Dark</item>
+    </style>
+    <style name="FeedToolbarTextStyle">
+        <item name="android:textColor">@color/white_75</item>
+        <item name="android:fontFamily">@font/cabin_condensed_regular</item>
     </style>
 
 </resources>

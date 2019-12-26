@@ -27,7 +27,7 @@ import kotlin.coroutines.suspendCoroutine
 
 
 
-fun MvvmActivity<*,*>.gotoPostDetail(post: Post,customTabHelper: CustomTabHelper) {
+fun MvvmActivity<*,*>.openLink(url: String?, customTabHelper: CustomTabHelper) {
     val builder = CustomTabsIntent.Builder()
 
     // modify toolbar color
@@ -40,7 +40,7 @@ fun MvvmActivity<*,*>.gotoPostDetail(post: Post,customTabHelper: CustomTabHelper
 
     val requestCode = 100
     val intent = anotherCustomTab.intent
-    intent.setData(Uri.parse(post.webLink))
+    intent.setData(Uri.parse(url))
 
     val pendingIntent = PendingIntent.getActivity(this,
             requestCode,
@@ -67,14 +67,14 @@ fun MvvmActivity<*,*>.gotoPostDetail(post: Post,customTabHelper: CustomTabHelper
     val customTabsIntent = builder.build()
 
     // check is chrom available
-    val packageName = customTabHelper.getPackageNameToUse(this, post?.url!!)
+    val packageName = customTabHelper.getPackageNameToUse(this, url!!)
 
     if (packageName == null) {
         // if chrome not available open in web view
-        gotoActivity(WebViewActivity::class, mapOf(WebViewActivity.URL to post?.url))
+        gotoActivity(WebViewActivity::class, mapOf(WebViewActivity.URL to url))
     } else {
         customTabsIntent.intent.setPackage(packageName)
-        customTabsIntent.launchUrl(this, Uri.parse(post?.url))
+        customTabsIntent.launchUrl(this, Uri.parse(url))
     }
 
 

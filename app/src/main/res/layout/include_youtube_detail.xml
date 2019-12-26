@@ -95,7 +95,7 @@
 
 
                     <ImageView
-                        android:id="@+id/imBack"
+                        android:id="@+id/imMenu"
                         android:layout_width="20dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"

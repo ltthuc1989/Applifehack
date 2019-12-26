@@ -34,7 +34,7 @@ class ArticleListFrag : MvvmFragment<ArticleListVM, FragArticleListBinding>(), A
 
 
            arguments?.getString(CategoryActivity.KEY_CATEGORY_DETAIL)?.let {
-               viewModel.getRssCat(it)
+               viewModel.updateModel(it)
            }
 
 

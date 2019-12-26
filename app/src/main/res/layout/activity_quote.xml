@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <import type="com.ltthuc.habit.databinding.ItemQuotesListBinding" />
+        <import type="com.ltthuc.habit.data.entity.Post" />
+        <import type="com.ltthuc.habit.util.SortBy" />
+        <variable
+            name="listener"
+            type="com.ltthuc.habit.ui.widget.listener.NavListener"/>
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.quotes.QuotesVM" />
+        <variable
+            name="adapter"
+            type="com.ltthuc.habit.ui.adapter.FeedAdapter" />
+    </data>
+    <androidx.drawerlayout.widget.DrawerLayout
+
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+        <LinearLayout
+            android:id="@+id/daily_feed_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/daily_feed_appbar"
+                style="@style/DefaultActionBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/themeBackground"
+                android:fitsSystemWindows="true">
+
+                <com.ltthuc.habit.ui.widget.toolbar.ToolbarQuote
+                    android:id="@+id/daily_feed_toolbar"
+                    android:layout_width="match_parent"
+                    app:sortBy="@{SortBy.NEWEST.type}"
+                    android:layout_height="@dimen/feed_daily_toolbar_height"
+                    />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/daily_feed_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:adapter="@{adapter}"
+                    android:orientation="vertical"
+                    app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
+                    app:onScrolledToBottom="@{(page) -> viewModel.onLoadMore(page)}"
+                    app:resetLoadingState="@{viewModel.resetLoadingState}"
+                    app:visibleThreshold="@{viewModel.visibleThreshold}"
+                    android:overScrollMode="always" />
+
+
+
+                <ProgressBar
+                    android:id="@+id/daily_feed_progress_bar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:visibility="gone"
+                    android:indeterminate="true" />
+
+
+
+
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+        <com.ltthuc.habit.ui.widget.NavigationViewApp
+            android:id="@+id/home_navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"/>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</layout>

@@ -1,14 +1,9 @@
 package com.ltthuc.habit.data.entity
 
 import android.os.Parcelable
-import android.text.format.DateUtils
 import com.google.firebase.Timestamp
 import com.google.firebase.database.IgnoreExtraProperties
-import com.ltthuc.habit.util.FormatterUtil
-import com.ltthuc.habit.util.TimeUtil
 import kotlinx.android.parcel.Parcelize
-import java.time.LocalDateTime
-import java.util.*
 import kotlin.collections.HashMap
 
 @Parcelize
@@ -23,12 +18,13 @@ class Post(var id: String? = "",
            var contentId: String? = "",
            var webLink: String? = "",
            var video_url: String? = "",
-           var url: String? = "",
+           var redirect_link: String? = "",
            var type: String? = "article",
            var viewsCount: Long? = 0,
            var catName: String? = "",
            var duration: String? = "",
-           var author:String?="") : Parcelable {
+           var author:String?="",
+           var authorLink:String?="") : Parcelable {
 
 
     fun toMap(): Map<String, Any> {
@@ -38,7 +34,7 @@ class Post(var id: String? = "",
 
         result["imgLink"] = imgLink!!
         result["webLink"] = webLink!!
-        result["url"] = url!!
+        result["url"] = redirect_link!!
         return result
 
     }
@@ -51,7 +47,7 @@ class Post(var id: String? = "",
     }
 
     fun getPublishedDate(): String? {
-        return TimeUtil.formatTimeAgo(createdDate?.seconds?.times(1000)!!)
+        return ""
     }
 
 }

@@ -2,6 +2,7 @@ package com.ltthuc.habit.ui.widget
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Point
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,10 +10,13 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.setMargins
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ezyplanet.core.GlideApp
+import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.databinding.WidgetQuoteBinding
+import com.ltthuc.habit.ui.widget.listener.QuoteViewListener
 import com.ltthuc.habit.util.setGradient
 import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.widget_quote.view.*
@@ -56,6 +60,11 @@ class QuoteView : FrameLayout{
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = WidgetQuoteBinding.inflate(inflater, this, true)
         binding.model = _model
+        binding.authorCard.setOnClickListener {
+            binding.listener?.openAuthorWiki(_model?.authorLink)
+
+        }
+        setDimensions(F.displayDimensions(context))
         getBitmap(bitmap,context)
 
 
@@ -79,7 +88,7 @@ class QuoteView : FrameLayout{
                         getBitmap(bitmap, context)
                     else
                         (context as AppCompatActivity).runOnUiThread {
-
+                            setQuote(bitmapN,context)
 
 
                         }
@@ -174,6 +183,45 @@ class QuoteView : FrameLayout{
                 .sampling(1)
                 .from(bitmap)
                 .into(blurBg)
+    }
+
+    private fun setDimensions(point: Point) {
+
+        // set dimensions for card
+        val x = point.x - F.dpToPx(32, context)
+        val y = x
+
+        val params = RelativeLayout.LayoutParams(x, y)
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL)
+        params.addRule(RelativeLayout.CENTER_VERTICAL)
+        binding.card.layoutParams = params
+
+
+
+
+        // set dimensions for quote & author layout
+        val margin = F.dpToPx(16, context)
+
+        // original params
+        val paramsT = quote.layoutParams // original params for quote
+        val paramsA = authorCard.layoutParams // original params for author
+
+        // new params
+        val paramsNQ = RelativeLayout.LayoutParams(paramsT.width, 3 * y / 4)
+        val paramsNA = RelativeLayout.LayoutParams(paramsA.width, paramsA.height)
+
+        paramsNQ.setMargins(margin)
+        paramsNA.setMargins(margin, 0, margin, margin)
+        paramsNA.addRule(RelativeLayout.BELOW, R.id.quote)
+
+        // set params
+        binding.authorCard.layoutParams = paramsNA
+        binding.quote.layoutParams = paramsNQ
+    }
+
+    fun setListener(listener:QuoteViewListener){
+        binding.listener = listener
+
     }
 
 

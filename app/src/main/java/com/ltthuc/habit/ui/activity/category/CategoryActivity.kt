@@ -18,10 +18,11 @@ import com.ltthuc.habit.databinding.ActivityCategoryBinding
 import com.ltthuc.habit.databinding.ItemCategoryBinding
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
+import com.ltthuc.habit.ui.activity.quotes.QuotesActivity
 import com.ltthuc.habit.ui.fragment.slidepost.SlidePostFrag
 import com.ltthuc.habit.ui.widget.listener.NavListener
 import com.ltthuc.habit.util.CustomTabHelper
-import com.ltthuc.habit.util.extension.gotoPostDetail
+import com.ltthuc.habit.util.extension.openLink
 import java.util.*
 
 class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), CategoryNav,ViewPager.OnPageChangeListener,NavListener {
@@ -86,8 +87,10 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
 
     override fun gotoPostDetail(post: Post) {
         if(post.getPostType()==PostType.ARTICLE) {
-            gotoPostDetail(post, customTabHelper)
-        }else {
+            openLink(post?.redirect_link, customTabHelper)
+        }else if(post?.getPostType()==PostType.QUOTE) {
+            gotoActivity(QuotesActivity::class)
+        }else{
             openYoutube(post?.video_url)
         }
     }

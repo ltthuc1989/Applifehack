@@ -13,8 +13,6 @@ import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.network.response.CatResp
-import com.ltthuc.habit.data.network.response.RssCatResp
-import com.ltthuc.habit.ui.activity.HomeActivityNav
 import java.util.ArrayList
 import javax.inject.Inject
 

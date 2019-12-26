@@ -8,7 +8,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Transaction
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.network.response.youtube.YoutubeResp
-import com.ltthuc.habit.ui.activity.listpost.PostContent
+import com.ltthuc.habit.util.SortBy
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -22,8 +22,9 @@ interface ApiHelper {
     fun createPost(postContent: Post) : Completable
     fun getPost(loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getCatgories(): Single<Value<QuerySnapshot>>
-    fun getPostByCat(catId:String?):Single<Value<QuerySnapshot>>
-    fun getVideoPostByCat(catId:String?):Single<Value<QuerySnapshot>>
+    fun getPostByCat(catId:String?, sortBy:SortBy?=SortBy.NEWEST, loadMore:Boolean?=false, lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
+    fun getVideoPostByCat(catId:String?,sortBy:SortBy?=SortBy.NEWEST,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
+    fun getPostByQuote(typeQuote:String?,sortBy:SortBy?=SortBy.NEWEST,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getYtDetail(youtubeId:String?):Single<YoutubeResp>
      fun updateViewCount(postId:String?):Task<Transaction>
 

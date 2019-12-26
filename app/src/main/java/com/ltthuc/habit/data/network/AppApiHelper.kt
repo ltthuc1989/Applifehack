@@ -16,7 +16,6 @@ import com.ltthuc.habit.BuildConfig
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.entity.PostType
 import com.ltthuc.habit.data.network.response.youtube.YoutubeResp
-import com.ltthuc.habit.ui.activity.listpost.PostContent
 import com.prof.rssparser.Parser
 import com.rx2androidnetworking.Rx2AndroidNetworking
 import io.reactivex.Completable
@@ -41,6 +40,8 @@ import com.google.api.client.util.DateTime
 import com.google.common.io.BaseEncoding
 import com.google.firebase.Timestamp
 import com.google.protobuf.WireFormat
+import com.ltthuc.habit.util.PostDatabaseKey
+import com.ltthuc.habit.util.SortBy
 import com.ltthuc.habit.util.extension.await
 import io.reactivex.Flowable
 
@@ -71,16 +72,16 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     }
 
-    override fun getPost(loadMore:Boolean?,lastItem:DocumentSnapshot?): Task<QuerySnapshot> {
-        if(loadMore==true) {
-            val createdAt= lastItem!!["createdDateText"] as Timestamp
+    override fun getPost(loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
+        if (loadMore == true) {
+            val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
             return firStore.collection(ApiEndPoint.POST_DB_KEY)
-                    .orderBy("createdDateText",Query.Direction.DESCENDING)?.whereLessThanOrEqualTo("createdDateText",createdAt)
+                    .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
                     .startAfter(lastItem).limit(10).get()
-        }else{
+        } else {
 
             return firStore.collection(ApiEndPoint.POST_DB_KEY)
-                    .orderBy("createdDateText",Query.Direction.DESCENDING)
+                    .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                     .limit(10).get()
         }
 
@@ -91,17 +92,89 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.GET_CATEGORIES))
     }
 
-    override fun getPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.CAT_ID, catId).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
+    override fun getPostByCat(catId: String?, sortBy: SortBy?, loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
 
-        return RxFirebaseFirestore.data(query)
+        val query = when (sortBy) {
+            SortBy.NEWEST -> {
+                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
+                        .whereEqualTo(DatabasePath.CAT_ID, catId)
+                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+
+            }
+
+            SortBy.MOST_POPUPLAR -> {
+                val viewCount = lastItem!![DatabasePath.VIEW_COUNT] as Int
+                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
+                        .whereEqualTo(DatabasePath.CAT_ID, catId)
+                        .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, viewCount)
+            }
+            else -> {
+                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
+                        .whereEqualTo(DatabasePath.CAT_ID, catId)
+                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+            }
+        }
+        return if (loadMore == true) query.startAfter(lastItem).limit(10).get() else query.limit(10).get()
+
 
     }
 
-    override fun getVideoPostByCat(catId: String?): Single<Value<QuerySnapshot>> {
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.CAT_ID, catId).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
+    override fun getVideoPostByCat(catId: String?, sortBy: SortBy?, loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
 
-        return RxFirebaseFirestore.data(query)
+        val query = when (sortBy) {
+            SortBy.NEWEST -> {
+                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
+                        .whereEqualTo(DatabasePath.CAT_ID, catId)
+                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+
+
+            }
+
+            SortBy.MOST_POPUPLAR -> {
+                val viewCount = lastItem!![DatabasePath.VIEW_COUNT] as Int
+                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
+                        .whereEqualTo(DatabasePath.CAT_ID, catId)
+                        .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, viewCount)
+            }
+            else -> {
+                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
+                        .whereEqualTo(DatabasePath.CAT_ID, catId)
+                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+            }
+        }
+        return if (loadMore == true) query.startAfter(lastItem).limit(10).get() else query.limit(10).get()
+
+    }
+
+    override fun getPostByQuote(typeQuote: String?, sortBy: SortBy?, loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
+        val query = when (sortBy) {
+            SortBy.NEWEST -> {
+                val supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
+                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                if (typeQuote != null) supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote) else null
+                supQuery.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+
+            }
+
+            SortBy.MOST_POPUPLAR -> {
+                val supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
+                val createdAt = lastItem!![DatabasePath.VIEW_COUNT] as Timestamp
+                if (typeQuote != null) supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote) else null
+                supQuery.orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, createdAt)
+            }
+            else -> {
+                val supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
+                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                if (typeQuote != null) supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote) else null
+                supQuery.orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, createdAt)
+            }
+        }
+        return if (loadMore == true) query.startAfter(lastItem).limit(10).get() else query.limit(10).get()
+
     }
 
     override fun getYtDetail(youtubeId: String?): Single<YoutubeResp> {
@@ -118,17 +191,15 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
                 .getObjectSingle(YoutubeResp::class.java)
     }
 
-    override  fun updateViewCount(postId: String?): Task<Transaction> {
+    override fun updateViewCount(postId: String?): Task<Transaction> {
 
 
         val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
-       return firStore.runTransaction {
+        return firStore.runTransaction {
             val snapshot = it.get(query)
-            val newViewCount = snapshot.getDouble("viewCount")!! + 1
-            it.update(query, "viewCount", newViewCount)
+            val newViewCount = snapshot.getDouble(DatabasePath.VIEW_COUNT)!! + 1
+            it.update(query, DatabasePath.VIEW_COUNT, newViewCount)
         }
-
-
 
 
     }

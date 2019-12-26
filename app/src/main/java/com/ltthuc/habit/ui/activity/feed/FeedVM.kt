@@ -10,12 +10,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
-import com.ltthuc.habit.data.firebase.AnalyticsEventType
-import com.ltthuc.habit.data.firebase.AnalyticsValueType
-import com.ltthuc.habit.data.network.response.RssCatResp
-import com.ltthuc.habit.ui.activity.HomeActivityNav
 import com.ltthuc.habit.util.extension.await
-import io.reactivex.processors.PublishProcessor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -98,7 +93,7 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
         val download = context.getString(R.string.download)
         val applink = context.getString(R.string.app_link)
         val messge = String.format(context.getString(R.string.share_info_message),
-                context.getString(R.string.app_name))+"\n ${data.title}\n ${data.url} \n $download\n $applink"
+                context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
         navigator?.share(messge)
 
 

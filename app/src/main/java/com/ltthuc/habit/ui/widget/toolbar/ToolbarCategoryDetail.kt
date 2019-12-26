@@ -17,10 +17,10 @@ class ToolbarCategoryDetail : FrameLayout {
         get() = _showBack
         set(value) {
             _showBack = value
-            if (_showBack) binding.imBack.visibility = View.VISIBLE
-            else {
-                //binding.imBack.visibility= View.GONE
-            }
+//            if (_showBack) binding.imBack.visibility = View.VISIBLE
+//            else {
+//                //binding.imBack.visibility= View.GONE
+//            }
 
         }
     private var _titleBar: String? = null
@@ -49,7 +49,7 @@ class ToolbarCategoryDetail : FrameLayout {
     fun initInflate() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = ToolbarCategoryDetailBinding.inflate(inflater, this, true)
-        binding.imBack.visibility = View.GONE
+       // binding.imBack.visibility = View.GONE
 
 
     }

@@ -1,12 +1,11 @@
 package com.ltthuc.habit.di.buider
 
-import com.ltthuc.habit.ui.activity.HomeActivity
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
 import com.ltthuc.habit.ui.activity.category.CategoryProvider
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailProvider
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
-import com.ltthuc.habit.ui.activity.listpost.ListPostActivity
+import com.ltthuc.habit.ui.activity.quotes.QuotesActivity
 import com.ltthuc.habit.ui.activity.viewer.ViewerActivity
 import com.ltthuc.habit.ui.activity.viewer.ViewerProvider
 import com.ltthuc.habit.ui.activity.webview.WebViewActivity
@@ -21,10 +20,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
     @ContributesAndroidInjector
-    internal abstract fun bindHomeActivity(): HomeActivity
-    @ContributesAndroidInjector
-    internal abstract fun bindListPostActivity(): ListPostActivity
-    @ContributesAndroidInjector
     internal abstract fun bindFeedActivity(): FeedActivity
     @ContributesAndroidInjector
     internal abstract fun bindWebViewActivity(): WebViewActivity
@@ -36,5 +31,7 @@ abstract class ActivityBuilder {
     internal abstract fun bindViewerActivity(): ViewerActivity
     @ContributesAndroidInjector
     internal abstract fun bindYtDetailActivity(): YtDetailActivity
+    @ContributesAndroidInjector
+    internal abstract fun bindQuoteActivity(): QuotesActivity
 
 }
