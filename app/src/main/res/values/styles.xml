@@ -120,14 +120,14 @@
         <item name="toolbarStyle">@style/DailyFeedToolbarStyle</item>
     </style>
 
-    <style name="AppCompatAlertDialogStyle" />
+    <style name="AppCompatAlertDialogStyle" parent="Theme.MaterialComponents.Dialog.Alert"/>
+
 
     <style name="AppCompatAlertDialogStyle.Dark">
         <item name="android:textColorPrimary">#bbbbbb</item>
         <item name="android:textColor">@color/lightest_gray</item>
         <item name="android:background">#222222</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="colorAccent">#5fa3d0</item>
         <item name="colorPrimary">#888888</item>
         <item name="colorPrimaryDark">#3367d6</item>
     </style>
@@ -184,6 +184,8 @@
         <item name="themeTextSecondaryColor">@color/lightest_gray</item>
         <item name="toolbarStyle">@style/DailyFeedToolbarStyle.Dark</item>
     </style>
+
+
 
     <style name="FadeAnimation" />
 

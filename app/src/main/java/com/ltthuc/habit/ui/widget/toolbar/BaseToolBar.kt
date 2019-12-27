@@ -40,6 +40,9 @@ class BaseToolBar :FrameLayout{
     fun initInflate() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = ToolbarBinding.inflate(inflater, this, true)
+        binding.imMenu.setOnClickListener {
+            binding?.listener?.onMenu()
+        }
 
 
     }

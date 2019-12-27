@@ -1,5 +1,8 @@
 package com.ltthuc.habit.ui.activity.feed
 
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.gotoActivity
@@ -12,7 +15,9 @@ import com.ltthuc.habit.databinding.ActivityDailyFeedBinding
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
 import com.ltthuc.habit.ui.adapter.FeedAdapter
+import com.ltthuc.habit.ui.widget.QuoteView
 import com.ltthuc.habit.ui.widget.listener.NavListener
+import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 import com.ltthuc.habit.util.AppBundleKey
 import com.ltthuc.habit.util.CustomTabHelper
 import com.ltthuc.habit.util.extension.openLink
@@ -20,7 +25,8 @@ import com.ltthuc.habit.util.extension.shareMessage
 import kotlinx.android.synthetic.main.activity_daily_feed.*
 
 
-class FeedActivity: MvvmActivity<ActivityDailyFeedBinding, FeedVM>(), FeedNav, NavListener {
+class FeedActivity: MvvmActivity<ActivityDailyFeedBinding, FeedVM>(),
+        FeedNav, NavListener, ToolbarListener {
 
     override val viewModel: FeedVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_daily_feed
@@ -42,13 +48,14 @@ class FeedActivity: MvvmActivity<ActivityDailyFeedBinding, FeedVM>(), FeedNav, N
             snapHelper.attachToRecyclerView(daily_feed_recyclerview)
 
 
-        } catch (ex:Exception){
+        } catch (ex: Exception) {
 
         }
 
         binding.adapter = FeedAdapter(viewModel)
 
         binding.homeNavigationView.setListner(this)
+        binding.dailyFeedToolbar?.setListner(this)
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
         }
@@ -72,7 +79,7 @@ class FeedActivity: MvvmActivity<ActivityDailyFeedBinding, FeedVM>(), FeedNav, N
     }
 
     override fun gotoFeedDetail(post: Post) {
-        openLink(post?.redirect_link!!,customTabHelper)
+        openLink(post?.redirect_link!!, customTabHelper)
 
 
     }
@@ -81,12 +88,29 @@ class FeedActivity: MvvmActivity<ActivityDailyFeedBinding, FeedVM>(), FeedNav, N
         gotoActivity(CategoryDetailActivity::class, mapOf(AppBundleKey.KEY_CATEGORY_DETAIL to id))
     }
 
-    override fun gotoPageUrl(post:Post) {
-        openLink(post?.webLink,customTabHelper)
+    override fun gotoPageUrl(post: Post) {
+        openLink(post?.webLink, customTabHelper)
 
     }
 
     override fun share(message: String) {
         shareMessage(message)
+    }
+
+    override fun onMenu() {
+        if (!isOpenDrawer || !binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+            isOpenDrawer = true
+
+        } else {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            isOpenDrawer = false
+        }
+    }
+
+    override fun shareImage(view: View) {
+        val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
+        val quote = view.getQuote()
+        viewModel.generataQuote(this,quote)
     }
 }

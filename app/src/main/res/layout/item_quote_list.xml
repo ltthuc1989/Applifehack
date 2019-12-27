@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/feed_hero_gradient_background"
-        android:onClick="@{()->viewModel.openPostDetail(item)}">
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -28,6 +28,7 @@
             <com.ltthuc.habit.ui.widget.QuoteView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/quoteView"
                 app:model="@{item}" />
 
         </FrameLayout>
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
 
-                android:onClick="@{()->viewModel.shareClick(context,item)}"
+                android:onClick="@{(view)->viewModel.shareClick(view,item)}"
                 android:src="@drawable/ic_share"
                 android:tint="@color/white_75"
                 app:layout_constraintEnd_toEndOf="parent"

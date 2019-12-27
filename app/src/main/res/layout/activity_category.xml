@@ -44,7 +44,7 @@
             app:layout_scrollFlags="scroll">
 
             <com.ltthuc.habit.ui.widget.toolbar.BaseToolBar
-                android:id="@+id/daily_feed_toolbar"
+                android:id="@+id/toolBarCat"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/feed_daily_toolbar_height"
                 app:titleBar='@{@string/feed"}' />

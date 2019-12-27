@@ -11,6 +11,7 @@ import com.ltthuc.habit.databinding.ToolbarQuoteBinding
 import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 import com.ltthuc.habit.ui.widget.listener.ToolbarQuoteListener
 import com.ltthuc.habit.util.AlertDialogUtils
+import com.ltthuc.habit.util.SortBy
 
 class ToolbarQuote : FrameLayout {
     lateinit var binding: ToolbarQuoteBinding
@@ -51,9 +52,19 @@ class ToolbarQuote : FrameLayout {
         binding = ToolbarQuoteBinding.inflate(inflater, this, true)
         binding.tvSortBy.setOnClickListener {
             AlertDialogUtils.showSingleChoice(context,_sortBy,R.array.sortBy){
-                binding.listener?.sortBy(it)
+
+                binding.listener?.sortBy(
+                        when(it) {
+                            "Newest" -> SortBy.NEWEST
+                            "Oldest" -> SortBy.OLDEST
+                            else -> SortBy.MOST_POPUPLAR
+                        }
+                )
                 binding.tvSortBy.text = it
             }
+        }
+        binding.imMenu.setOnClickListener {
+            binding?.listener?.onMenu()
         }
 
 

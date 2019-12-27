@@ -137,6 +137,7 @@ class QuoteView : FrameLayout{
 
 
 
+
     }
     private fun getAlignment(align: Int) :Int{
         quote.gravity = when (align) {
@@ -222,6 +223,9 @@ class QuoteView : FrameLayout{
     fun setListener(listener:QuoteViewListener){
         binding.listener = listener
 
+    }
+    fun getQuote():QuoteResp{
+        return quoteObject
     }
 
 

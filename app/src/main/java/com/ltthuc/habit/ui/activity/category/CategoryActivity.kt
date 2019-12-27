@@ -1,6 +1,7 @@
 package com.ltthuc.habit.ui.activity.category
 
 import android.widget.ImageView
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -21,11 +22,13 @@ import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.activity.quotes.QuotesActivity
 import com.ltthuc.habit.ui.fragment.slidepost.SlidePostFrag
 import com.ltthuc.habit.ui.widget.listener.NavListener
+import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 import com.ltthuc.habit.util.CustomTabHelper
 import com.ltthuc.habit.util.extension.openLink
 import java.util.*
 
-class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), CategoryNav,ViewPager.OnPageChangeListener,NavListener {
+class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), CategoryNav,
+        ViewPager.OnPageChangeListener,NavListener, ToolbarListener{
 
     override val viewModel: CategoryVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_category
@@ -174,6 +177,17 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
 
     override fun onCategory() {
         gotoActivity(CategoryActivity::class)
+    }
+
+    override fun onMenu() {
+        if (!isOpenDrawer || !binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+            isOpenDrawer = true
+
+        } else {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            isOpenDrawer = false
+        }
     }
 
 }

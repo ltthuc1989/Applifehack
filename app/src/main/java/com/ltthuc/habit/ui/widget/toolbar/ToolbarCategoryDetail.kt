@@ -49,7 +49,9 @@ class ToolbarCategoryDetail : FrameLayout {
     fun initInflate() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = ToolbarCategoryDetailBinding.inflate(inflater, this, true)
-       // binding.imBack.visibility = View.GONE
+        binding.imMenu.setOnClickListener {
+            binding?.listener?.onMenu()
+        }
 
 
     }

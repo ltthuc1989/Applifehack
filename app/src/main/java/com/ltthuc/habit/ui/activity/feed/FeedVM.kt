@@ -2,7 +2,10 @@ package com.ltthuc.habit.ui.activity.feed
 
 import android.content.Context
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import com.ezyplanet.core.ui.base.BaseViewModel
+import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
@@ -10,10 +13,14 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
+import com.ltthuc.habit.data.entity.PostType
 import com.ltthuc.habit.util.extension.await
+import com.ltthuc.habit.util.extension.shareImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.sourcei.kowts.utils.functions.F
+import org.sourcei.kowts.utils.pojo.QuoteResp
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -89,12 +96,19 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
     fun openPageUrl(data: Post){
         navigator?.gotoPageUrl(data)
     }
-    fun shareClick(context: Context,data:Post){
-        val download = context.getString(R.string.download)
-        val applink = context.getString(R.string.app_link)
-        val messge = String.format(context.getString(R.string.share_info_message),
-                context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
-        navigator?.share(messge)
+    fun shareClick(view: View, data:Post){
+        if(data.getPostType()==PostType.QUOTE){
+            navigator?.shareImage(view)
+
+        }else{
+            val context = view.context
+            val download = context.getString(R.string.download)
+            val applink = context.getString(R.string.app_link)
+            val messge = String.format(context.getString(R.string.share_info_message),
+                    context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
+            navigator?.share(messge)
+        }
+
 
 
     }
@@ -107,6 +121,24 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
     fun onLoadMore(page: Int) {
         if(page==1) return
         getPost(true)
+    }
+
+    fun generataQuote(context: Context,quoteResp: QuoteResp){
+        uiScope?.launch {
+            try {
+                navigator?.showProgress()
+
+                val result = F.generateBitmap(context, quoteResp)
+                F.saveBitmap(context, result)
+                navigator?.hideProgress()
+                ( context as MvvmActivity<*, *>).shareImage()
+            }catch (ex:Exception){
+                ex.printStackTrace()
+            }
+
+
+        }
+
     }
 
 }

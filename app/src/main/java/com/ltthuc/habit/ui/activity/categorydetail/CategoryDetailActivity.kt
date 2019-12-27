@@ -1,5 +1,6 @@
 package com.ltthuc.habit.ui.activity.categorydetail
 
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -19,9 +20,11 @@ import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.fragment.articlelist.ArticleListFrag
 import com.ltthuc.habit.ui.fragment.videolist.VideoListFrag
 import com.ltthuc.habit.ui.widget.listener.NavListener
+import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 import kotlinx.android.synthetic.main.view_category_detail.*
 
-class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, CategoryDetailVM>(), CategoryDetailNav, NavListener {
+class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, CategoryDetailVM>(),
+        CategoryDetailNav, NavListener,ToolbarListener {
 
     override val viewModel: CategoryDetailVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_category_detail
@@ -38,6 +41,7 @@ class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, Categ
         binding.homeNavigationView.setListner(this)
         binding.viewPager.offscreenPageLimit = 1
         binding.viewPager.adapter = TabAdapter(supportFragmentManager)
+
         tabs.setupWithViewPager(binding.viewPager)
 
 
@@ -88,6 +92,17 @@ class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, Categ
 
     override fun onCategory() {
         gotoActivity(CategoryActivity::class)
+    }
+
+    override fun onMenu() {
+        if (!isOpenDrawer || !binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+            isOpenDrawer = true
+
+        } else {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            isOpenDrawer = false
+        }
     }
 
 

@@ -92,7 +92,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:tint="@color/white_75"
-                android:onClick="@{()->viewModel.shareClick(context,item)}"
+                android:onClick="@{(view)->viewModel.shareClick(view,item)}"
 
                 android:layout_height="wrap_content" />
             <ImageView

@@ -61,7 +61,7 @@ open abstract class MvvmActivity<B : ViewDataBinding, V : BaseViewModel<*,*>> : 
     override lateinit var viewModelFactory: ViewModelProvider.Factory
     private var progressDialog: TransparentProgressDialog? = null
     var isSwitchSreen=MutableLiveData<Boolean>()
-
+    protected var isOpenDrawer = false
 
 
 

@@ -161,7 +161,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
             SortBy.MOST_POPUPLAR -> {
                 val supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
-                val createdAt = lastItem!![DatabasePath.VIEW_COUNT] as Timestamp
+                val createdAt = lastItem!![DatabasePath.VIEW_COUNT] as Int
                 if (typeQuote != null) supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote) else null
                 supQuery.orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, createdAt)
             }
@@ -169,7 +169,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
                 val supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
                 val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
                 if (typeQuote != null) supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote) else null
-                supQuery.orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, createdAt)
+                supQuery.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
             }
         }
         return if (loadMore == true) {

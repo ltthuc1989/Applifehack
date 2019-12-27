@@ -3,18 +3,23 @@ package com.ltthuc.habit.ui.activity.quotes
 import android.content.Context
 import android.util.Log
 import com.ezyplanet.core.ui.base.BaseViewModel
+import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
+import com.google.android.youtube.player.internal.s
 import com.google.firebase.firestore.DocumentSnapshot
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.util.SortBy
 import com.ltthuc.habit.util.extension.await
+import com.ltthuc.habit.util.extension.shareImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.sourcei.kowts.utils.functions.F
+import org.sourcei.kowts.utils.pojo.QuoteResp
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -29,9 +34,13 @@ class QuotesVM @Inject constructor(val appDataManager: AppDataManager, scheduler
     private var sortBy :SortBy = SortBy.NEWEST
     private var quoteType :String?= null
 
-    fun getQuotes(nextPage: Boolean? = false) {
+    fun getQuotes(nextPage: Boolean? = false,sort: SortBy?=null) {
+        if(sort!=null) this.sortBy = sort
 
-        if (nextPage == false) navigator?.showProgress()
+        if (nextPage == false){
+            navigator?.showProgress()
+            mData?.clear()
+        }
         resetLoadingState = true
         uiScope?.launch {
             try {
@@ -91,6 +100,23 @@ class QuotesVM @Inject constructor(val appDataManager: AppDataManager, scheduler
     fun onLoadMore(page: Int) {
         if(page==1) return
         getQuotes(true)
+    }
+    fun generataQuote(context: Context,quoteResp: QuoteResp){
+        uiScope?.launch {
+            try {
+                navigator?.showProgress()
+
+                val result = F.generateBitmap(context, quoteResp)
+                F.saveBitmap(context, result)
+                navigator?.hideProgress()
+                ( context as MvvmActivity<*,*>).shareImage()
+            }catch (ex:Exception){
+                ex.printStackTrace()
+            }
+
+
+        }
+
     }
 
 }

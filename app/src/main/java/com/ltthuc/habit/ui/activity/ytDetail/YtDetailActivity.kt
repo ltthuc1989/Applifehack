@@ -1,5 +1,6 @@
 package com.ltthuc.habit.ui.activity.ytDetail
 
+import androidx.core.view.GravityCompat
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.getExtra
 import com.ezyplanet.core.util.extension.gotoActivity
@@ -9,10 +10,11 @@ import com.ltthuc.habit.databinding.ActivityYoutubeDetailBinding
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.widget.listener.NavListener
+import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 import com.ltthuc.habit.util.AppBundleKey
 import com.ltthuc.habit.util.MediaUtil
 
-class YtDetailActivity : MvvmActivity<ActivityYoutubeDetailBinding,YtDetailVM>(),YtDetailNav,NavListener{
+class YtDetailActivity : MvvmActivity<ActivityYoutubeDetailBinding,YtDetailVM>(),YtDetailNav,NavListener,ToolbarListener{
 
     override val viewModel: YtDetailVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_youtube_detail
@@ -45,4 +47,14 @@ class YtDetailActivity : MvvmActivity<ActivityYoutubeDetailBinding,YtDetailVM>()
         gotoActivity(CategoryActivity::class)
     }
 
+    override fun onMenu() {
+        if (!isOpenDrawer || !binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+            isOpenDrawer = true
+
+        } else {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            isOpenDrawer = false
+        }
+    }
 }

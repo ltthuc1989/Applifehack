@@ -23,8 +23,10 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+import android.graphics.Bitmap
 
-
+import androidx.core.content.FileProvider
+import java.io.File
 
 
 fun MvvmActivity<*,*>.openLink(url: String?, customTabHelper: CustomTabHelper) {
@@ -88,6 +90,22 @@ fun MvvmActivity<*,*>.shareMessage(message:String){
     intent2.type="text/plain"
     intent2.putExtra(Intent.EXTRA_TEXT, message)
     startActivity(Intent.createChooser(intent2, "Share via"))
+}
+fun MvvmActivity<*,*>.shareImage(message:String?=null){
+
+
+    val imagePath = File(getCacheDir(), "images")
+    val newFile = File(imagePath, "image.png")
+    val contentUri = FileProvider.getUriForFile(this, "com.ltthuc.habit.fileprovider", newFile)
+
+    if (contentUri != null) {
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // temp permission for receiving app to read this file
+        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
+        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+        startActivity(Intent.createChooser(shareIntent, "Share via"))
+    }
 }
  suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
     addOnCompleteListener { task ->

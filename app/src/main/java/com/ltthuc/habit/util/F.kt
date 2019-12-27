@@ -29,7 +29,8 @@ import androidx.core.view.setMargins
 import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ltthuc.habit.R
+import com.ltthuc.habit.util.setGradient
+import kotlinx.android.synthetic.main.inflator_quote_empty.view.*
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,6 +40,10 @@ import org.sourcei.kowts.utils.pojo.QuoteResp
 import org.sourcei.kowts.utils.reusables.Gradients
 
 import kotlin.random.Random
+
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 /**
@@ -141,7 +146,7 @@ object F {
 
     // read gradients
     fun readGradients(context: Context): List<ObjectGradient> {
-        val string = context.resources.openRawResource(R.raw.gradients).bufferedReader()
+        val string = context.resources.openRawResource(com.ltthuc.habit.R.raw.gradients).bufferedReader()
             .use { it.readText() }
         val json = JSONArray(string)
 
@@ -149,5 +154,97 @@ object F {
             json.toString(),
             object : TypeToken<List<ObjectGradient>>() {}.type
         )!!
+    }
+
+    fun generateBitmap(context: Context, quoteObject: QuoteResp): Bitmap {
+        val layout = LayoutInflater.from(context).inflate(com.ltthuc.habit.R.layout.inflator_quote_empty, null)
+        val card = layout.card
+        val quote = layout.quote
+        val authorText = layout.author
+        val image = layout.image
+        val gradient = layout.gradient
+        val authorLayout = layout.authorLayout
+        val logo = layout.logo
+
+        // set values
+        image.setImageBitmap(quoteObject.image)
+        authorText.text = quoteObject.author
+        quote.text = quoteObject.quote
+
+        // set dimensions for card
+        val point = displayDimensions(context)
+        val margin = dpToPx(16, context)
+        val x = point.x
+        val y = x
+
+        val params = FrameLayout.LayoutParams(x, y)
+        card.layoutParams = params
+
+
+        // new params
+        val paramsNQ = RelativeLayout.LayoutParams(x, 3 * y / 4)
+        val paramsNA = RelativeLayout.LayoutParams(
+                authorLayout.layoutParams.width,
+                authorLayout.layoutParams.height
+        )
+        val paramsL = RelativeLayout.LayoutParams(dpToPx(48, context), dpToPx(48, context))
+
+        // alignment quote
+        quote.gravity = when (quoteObject.quoteAlign) {
+            0 -> Gravity.LEFT
+            1 -> Gravity.CENTER
+            else -> Gravity.RIGHT
+        }
+
+        // align author
+        when (quoteObject.authorAlign) {
+            0 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+            1 -> paramsNA.addRule(RelativeLayout.CENTER_HORIZONTAL)
+            2 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+        }
+
+        // align logo
+        when (quoteObject.authorAlign) {
+            0, 1 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            2 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+        }
+
+        // set new params
+        paramsNQ.setMargins(margin)
+        paramsL.setMargins(margin, 0, margin, margin)
+        paramsNA.setMargins(margin, 0, margin, margin)
+        paramsNA.addRule(RelativeLayout.BELOW, com.ltthuc.habit.R.id.quote)
+        paramsL.addRule(RelativeLayout.BELOW, com.ltthuc.habit.R.id.quote)
+
+        quote.layoutParams = paramsNQ
+        authorLayout.layoutParams = paramsNA
+        logo.layoutParams = paramsL
+
+        // set gradients
+        gradient.setGradient(quoteObject.gradient!!, 0, quoteObject.angle!!)
+        authorLayout.setGradient(quoteObject.authorGradient!!, 16)
+
+        // prepare for export
+        layout.measure(
+                View.MeasureSpec.makeMeasureSpec(x, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(y, View.MeasureSpec.EXACTLY)
+        )
+        layout.layout(0, 0, layout.measuredWidth, layout.measuredHeight)
+
+        return getBitmapFromView(layout)
+    }
+    fun saveBitmap(context: Context,bitmap: Bitmap){
+        try {
+
+            val cachePath = File(context.getCacheDir(), "images")
+            cachePath.mkdirs() // don't forget to make the directory
+            val stream = FileOutputStream("$cachePath /image.png") // overwrites this image every time
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            stream.close()
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
     }
 }
