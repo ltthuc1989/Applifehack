@@ -79,7 +79,13 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
     fun openPostDetail(data: Post) {
         uiScope?.launch {
             try {
-                navigator?.gotoFeedDetail(data)
+                if(data?.getPostType()==PostType.VIDEO){
+                    navigator?.gotoYoutubeDetail(data)
+
+                }else{
+                    navigator?.gotoFeedDetail(data)
+                }
+
                 val resul = appDataManager.updateViewCount(data.id)
                 resul.await()
             } catch (ex: Exception) {
@@ -129,9 +135,8 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
                 navigator?.showProgress()
 
                 val result = F.generateBitmap(context, quoteResp)
-                F.saveBitmap(context, result)
                 navigator?.hideProgress()
-                ( context as MvvmActivity<*, *>).shareImage()
+                ( context as MvvmActivity<*, *>).shareImage(result)
             }catch (ex:Exception){
                 ex.printStackTrace()
             }
@@ -140,5 +145,6 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
         }
 
     }
+    fun getVersionCode():Int? = appDataManager?.appPreferenceHelper?.versionUpdate
 
 }

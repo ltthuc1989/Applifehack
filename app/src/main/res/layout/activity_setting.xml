@@ -1,0 +1,94 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.setting.SettingVM" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/darkest_gray"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.ltthuc.habit.ui.widget.toolbar.BaseToolBar
+                android:id="@+id/setting_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:titleBar='@{@string/setting}' />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+
+            <TextView
+                android:id="@+id/lb_notification"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:gravity="bottom"
+                android:padding="@dimen/padding"
+                android:text="@string/Notifications"
+                />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_notification"
+                style="@style/MySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@id/lb_notification"
+                android:layout_alignBottom="@id/lb_notification"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:checked="@={viewModel.switch.click}"
+
+                android:gravity="center"
+                android:textOff="@string/off"
+                android:textOn="@string/on"
+                 />
+
+
+            <TextView
+                android:id="@+id/lbchange_password"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lb_notification"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.openPolicy()}"
+                android:padding="@dimen/padding"
+                android:text="@string/privacy" />
+
+
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

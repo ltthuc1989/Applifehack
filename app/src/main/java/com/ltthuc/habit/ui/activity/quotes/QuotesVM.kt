@@ -107,9 +107,8 @@ class QuotesVM @Inject constructor(val appDataManager: AppDataManager, scheduler
                 navigator?.showProgress()
 
                 val result = F.generateBitmap(context, quoteResp)
-                F.saveBitmap(context, result)
                 navigator?.hideProgress()
-                ( context as MvvmActivity<*,*>).shareImage()
+                ( context as MvvmActivity<*,*>).shareImage(result)
             }catch (ex:Exception){
                 ex.printStackTrace()
             }

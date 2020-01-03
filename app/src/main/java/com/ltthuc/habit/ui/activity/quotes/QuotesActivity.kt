@@ -10,6 +10,7 @@ import com.ezyplanet.core.util.extension.observe
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.databinding.ActivityQuoteBinding
+import com.ltthuc.habit.ui.activity.BaseActivity
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.adapter.FeedAdapter
@@ -23,13 +24,13 @@ import com.ltthuc.habit.util.extension.openLink
 import com.ltthuc.habit.util.extension.shareMessage
 import kotlinx.android.synthetic.main.activity_daily_feed.*
 
-class QuotesActivity : MvvmActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
-        NavListener, QuoteViewListener, ToolbarQuoteListener ,MvvmAdapter.OnItemClickListener<Post>{
+class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
+        QuoteViewListener, ToolbarQuoteListener ,MvvmAdapter.OnItemClickListener<Post>{
 
     override val viewModel: QuotesVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_quote
 
-    private var customTabHelper: CustomTabHelper = CustomTabHelper()
+
 
     override fun onViewInitialized(binding: ActivityQuoteBinding) {
         super.onViewInitialized(binding)
@@ -66,20 +67,8 @@ class QuotesActivity : MvvmActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
         viewModel.generataQuote(this,quote)
     }
 
-    override fun onSetting() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-    override fun onHome() {
-        gotoActivity(FeedActivity::class)
-    }
 
-    override fun onSaved() {
-    }
-
-    override fun onCategory() {
-        gotoActivity(CategoryActivity::class)
-    }
 
     override fun openAuthorWiki(link: String?) {
         openLink(link!!, customTabHelper)

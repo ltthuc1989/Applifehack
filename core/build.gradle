@@ -98,6 +98,7 @@ dependencies {
 
 
     api appDependencies.timber
+    api appDependencies.playCore
 
     testImplementation testDependencies.junit
     testImplementation testDependencies.mockitoKotlin

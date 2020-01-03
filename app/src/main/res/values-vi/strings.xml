@@ -12,4 +12,9 @@
     <string name="share_info_message"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it. \n Sent from %1$s.]]></string>
     <string name="download">Download:</string>
     <string name="app_link">link_app</string>
+    <string name="Notifications">Notification</string>
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="privacy">Privicy</string>
+    <string name="restart_to_update">Restart to update</string>
 </resources>

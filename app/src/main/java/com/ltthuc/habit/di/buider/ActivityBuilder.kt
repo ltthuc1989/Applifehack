@@ -6,6 +6,7 @@ import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailProvider
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.activity.quotes.QuotesActivity
+import com.ltthuc.habit.ui.activity.setting.SettingActivity
 import com.ltthuc.habit.ui.activity.viewer.ViewerActivity
 import com.ltthuc.habit.ui.activity.viewer.ViewerProvider
 import com.ltthuc.habit.ui.activity.webview.WebViewActivity
@@ -33,5 +34,7 @@ abstract class ActivityBuilder {
     internal abstract fun bindYtDetailActivity(): YtDetailActivity
     @ContributesAndroidInjector
     internal abstract fun bindQuoteActivity(): QuotesActivity
+    @ContributesAndroidInjector
+    internal abstract fun bindSettingActivity(): SettingActivity
 
 }

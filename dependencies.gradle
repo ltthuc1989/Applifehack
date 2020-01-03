@@ -50,6 +50,7 @@ ext {
     final spinkitVersion = '1.1.0'
     final errorViewVersion = '4.0.0'
     final timeAgoVersion = '4.0.1'
+    final playCoreVersion = '1.6.0'
 
 
 
@@ -168,7 +169,8 @@ ext {
                     'accountKit': "com.facebook.android:account-kit-sdk:$accountKitVersion"
 
             ],
-            timeAgo : "com.github.marlonlom:timeago:$timeAgoVersion"
+            timeAgo : "com.github.marlonlom:timeago:$timeAgoVersion",
+            playCore : "com.google.android.play:core:$playCoreVersion"
 
 
 

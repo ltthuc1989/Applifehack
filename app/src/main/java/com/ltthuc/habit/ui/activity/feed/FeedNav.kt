@@ -12,4 +12,6 @@ interface FeedNav : MvvmNav{
     fun gotoPageUrl(post: Post)
     fun share(message:String)
     fun shareImage(view: View)
+    fun gotoYoutubeDetail(post: Post)
+    fun showSnackUpdateBar()
 }

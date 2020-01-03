@@ -15,6 +15,7 @@ import com.ezyplanet.core.util.extension.gotoActivity
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.ActivityCategoryDetailBinding
+import com.ltthuc.habit.ui.activity.BaseActivity
 import com.ltthuc.habit.ui.activity.category.CategoryActivity
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.fragment.articlelist.ArticleListFrag
@@ -23,8 +24,8 @@ import com.ltthuc.habit.ui.widget.listener.NavListener
 import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 import kotlinx.android.synthetic.main.view_category_detail.*
 
-class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, CategoryDetailVM>(),
-        CategoryDetailNav, NavListener,ToolbarListener {
+class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, CategoryDetailVM>(),
+        CategoryDetailNav, ToolbarListener {
 
     override val viewModel: CategoryDetailVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_category_detail
@@ -79,20 +80,7 @@ class CategoryDetailActivity : MvvmActivity<ActivityCategoryDetailBinding, Categ
 
     }
 
-    override fun onSetting() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-    override fun onHome() {
-        gotoActivity(FeedActivity::class)
-    }
-
-    override fun onSaved() {
-    }
-
-    override fun onCategory() {
-        gotoActivity(CategoryActivity::class)
-    }
 
     override fun onMenu() {
         if (!isOpenDrawer || !binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {

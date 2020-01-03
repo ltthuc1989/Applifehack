@@ -12,7 +12,7 @@ import com.ezyplanet.core.util.extension.gotoActivity
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.QuerySnapshot
-import com.ltthuc.habit.R
+
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.ui.activity.webview.WebViewActivity
 import com.ltthuc.habit.util.CustomTabHelper
@@ -24,9 +24,16 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 import android.graphics.Bitmap
+import androidx.core.content.ContextCompat.startActivity
 
 import androidx.core.content.FileProvider
 import java.io.File
+import androidx.core.content.ContextCompat.startActivity
+import com.google.common.io.Flushables.flush
+import android.R.attr.bitmap
+import android.R
+import com.ltthuc.habit.BuildConfig
+import java.io.FileOutputStream
 
 
 fun MvvmActivity<*,*>.openLink(url: String?, customTabHelper: CustomTabHelper) {
@@ -91,21 +98,31 @@ fun MvvmActivity<*,*>.shareMessage(message:String){
     intent2.putExtra(Intent.EXTRA_TEXT, message)
     startActivity(Intent.createChooser(intent2, "Share via"))
 }
-fun MvvmActivity<*,*>.shareImage(message:String?=null){
+fun MvvmActivity<*,*>.shareImage(bitmap: Bitmap?=null){
 
 
-    val imagePath = File(getCacheDir(), "images")
-    val newFile = File(imagePath, "image.png")
-    val contentUri = FileProvider.getUriForFile(this, "com.ltthuc.habit.fileprovider", newFile)
-
-    if (contentUri != null) {
-        val shareIntent = Intent()
-        shareIntent.action = Intent.ACTION_SEND
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // temp permission for receiving app to read this file
-        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
-        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-        startActivity(Intent.createChooser(shareIntent, "Share via"))
+    try {
+    var CODE_FOR_RESULT = 981
+        val file = File(this.externalCacheDir, "quote.png")
+        val fOut = FileOutputStream(file)
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, fOut)
+        fOut.flush()
+        fOut.close()
+        file.setReadable(true, false)
+        val intent = Intent(android.content.Intent.ACTION_SEND)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        val photoURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file)
+        // intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file.getC));
+        intent.putExtra(Intent.EXTRA_STREAM, photoURI)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.type = "image/png"
+        //startActivity(Intent.createChooser(intent, "Share image via"));
+        startActivityForResult(Intent.createChooser(intent, "Share image via"), CODE_FOR_RESULT)
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
+
+
 }
  suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
     addOnCompleteListener { task ->

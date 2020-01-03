@@ -4,6 +4,7 @@ import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.ltthuc.habit.R
 import com.ltthuc.habit.databinding.ActivitySplashBinding
+import com.ltthuc.habit.ui.activity.BaseActivity
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
 
 class SplashActivity : MvvmActivity<ActivitySplashBinding,SplashVM>(),SplashNav{
@@ -15,6 +16,7 @@ class SplashActivity : MvvmActivity<ActivitySplashBinding,SplashVM>(),SplashNav{
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         viewModel.navigator = this
+
     }
 
     override fun gotoHomeScreen() {

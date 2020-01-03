@@ -17,6 +17,7 @@ import com.ltthuc.habit.data.entity.PostType
 import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.ActivityCategoryBinding
 import com.ltthuc.habit.databinding.ItemCategoryBinding
+import com.ltthuc.habit.ui.activity.BaseActivity
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
 import com.ltthuc.habit.ui.activity.feed.FeedActivity
 import com.ltthuc.habit.ui.activity.quotes.QuotesActivity
@@ -27,13 +28,12 @@ import com.ltthuc.habit.util.CustomTabHelper
 import com.ltthuc.habit.util.extension.openLink
 import java.util.*
 
-class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), CategoryNav,
-        ViewPager.OnPageChangeListener,NavListener, ToolbarListener{
+class CategoryActivity : BaseActivity<ActivityCategoryBinding, CategoryVM>(), CategoryNav,
+        ViewPager.OnPageChangeListener, ToolbarListener{
 
     override val viewModel: CategoryVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_category
 
-    private var customTabHelper: CustomTabHelper = CustomTabHelper()
 
     private lateinit var viewPager: ViewPager
     private var dots: Array<ImageView>? = null
@@ -164,20 +164,7 @@ class CategoryActivity : MvvmActivity<ActivityCategoryBinding, CategoryVM>(), Ca
     }
 
 
-    override fun onSetting() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-    override fun onHome() {
-        gotoActivity(FeedActivity::class)
-    }
-
-    override fun onSaved() {
-    }
-
-    override fun onCategory() {
-        gotoActivity(CategoryActivity::class)
-    }
 
     override fun onMenu() {
         if (!isOpenDrawer || !binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {

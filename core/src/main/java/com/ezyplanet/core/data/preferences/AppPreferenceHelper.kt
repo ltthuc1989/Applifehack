@@ -34,6 +34,8 @@ import javax.inject.Inject
         val PREF_KEY_AGREE_PRIVACY = "AGREE_PRIVACY"
         val PREF_KEY_LOCATION_HISTORY = "location_history"
         val PREF_KEY_DATE = "show_take_order"
+        val PREF_KEY_NOTIFICATION = "notification"
+        val PREF_KEY_VERSIION_CODE = "version_code"
 
     }
 
@@ -61,9 +63,13 @@ import javax.inject.Inject
     var agreePrivacy :Boolean by PreferenceDelegate(mPrefs, PREF_KEY_AGREE_PRIVACY,false)
     var location_history :String? by PreferenceDelegate(mPrefs, PREF_KEY_LOCATION_HISTORY,"")
     var date :String? by PreferenceDelegate(mPrefs, PREF_KEY_DATE,"")
+    var enableNotification:Boolean? by PreferenceDelegate(mPrefs, PREF_KEY_NOTIFICATION,false)
+    var versionUpdate:Int? by PreferenceDelegate(mPrefs, PREF_KEY_VERSIION_CODE,0)
 
 
 }
+
+
 
 
 

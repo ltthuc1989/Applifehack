@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.ltthuc.habit.data.entity.Post" />
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.feed.FeedVM" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/feed_hero_gradient_background"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_above="@id/linBottom">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/quoteView"
+                srcImageUrl="@{item.imgLink}"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                 android:layout_gravity="center"
+                android:onClick="@{()->viewModel.openPostDetail(item)}"
+                android:src="@drawable/ic_play_circle_outline_black_24dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/text_roboto_bold_h1"
+                android:text="@{item.title}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                tools:text="hello abc" />
+
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+
+            <ImageView
+                android:id="@+id/imgShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+
+                android:onClick="@{(view)->viewModel.shareClick(view,item)}"
+                android:src="@drawable/ic_share"
+                android:tint="@color/white_75"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{()->viewModel.likeClick(item)}"
+                android:src="@drawable/ic_like"
+
+                android:tint="@color/white_75"
+                app:layout_constraintEnd_toStartOf="@+id/imgShare"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tvPostedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:text="@{item.getPublishedDate()}"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
+
+                app:layout_constraintStart_toEndOf="@+id/ic_calendar"
+                app:layout_constraintTop_toTopOf="@id/ic_calendar"
+                tools:text="7 days ago" />
+
+            <ImageView
+                android:id="@+id/ic_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_calender"
+                android:tint="@color/white_75"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</layout>

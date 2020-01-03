@@ -6,6 +6,7 @@ import com.ltthuc.habit.ui.activity.category.CategoryVMBuilder
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVMBuilder
 import com.ltthuc.habit.ui.activity.feed.FeedVMBuilder
 import com.ltthuc.habit.ui.activity.quotes.QuotesVMBuilder
+import com.ltthuc.habit.ui.activity.setting.SettingVMBuilder
 import com.ltthuc.habit.ui.activity.viewer.ViewerVMBuilder
 import com.ltthuc.habit.ui.activity.viewer.YtDetailVMBuilder
 import com.ltthuc.habit.ui.activity.webview.WebViewVMBuilder
@@ -35,7 +36,8 @@ import dagger.Module
     (VideoViewerVMBuilder::class),
     (ViewerVMBuilder::class),
     (YtDetailVMBuilder::class),
-    (QuotesVMBuilder::class)
+    (QuotesVMBuilder::class),
+    (SettingVMBuilder::class)
 ])
 abstract class ViewModelBuilder {
 

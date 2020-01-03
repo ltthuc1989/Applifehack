@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ltthuc.habit">
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,7 +17,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.ltthuc.habit.fileprovider"
+            android:authorities="com.ltthuc.habit.provider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
@@ -90,6 +91,11 @@
             />
         <activity
             android:name="com.ltthuc.habit.ui.activity.quotes.QuotesActivity"
+            android:theme="@style/DailyFeedAppTheme.Dark"
+
+            />
+        <activity
+            android:name="com.ltthuc.habit.ui.activity.setting.SettingActivity"
             android:theme="@style/DailyFeedAppTheme.Dark"
 
             />

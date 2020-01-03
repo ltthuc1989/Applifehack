@@ -127,4 +127,5 @@
     <dimen name="material_card_gutter">@dimen/material_baseline_grid_1x</dimen>
     <dimen name="material_baseline_grid_1x">8dp</dimen>
     <dimen name="material_card_supporting_text_padding_top">@dimen/material_baseline_grid_2x</dimen>
+    <dimen name="padding">8dp</dimen>
 </resources>

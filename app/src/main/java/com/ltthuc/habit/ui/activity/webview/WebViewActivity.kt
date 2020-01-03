@@ -9,8 +9,7 @@ import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.getExtra
-
-
+import com.ltthuc.habit.ui.activity.BaseActivity
 
 
 class WebViewActivity : MvvmActivity<ActivityWebviewBinding, WebViewVM>(), WebViewNav {

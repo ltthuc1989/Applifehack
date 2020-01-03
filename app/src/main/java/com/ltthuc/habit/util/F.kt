@@ -233,18 +233,5 @@ object F {
 
         return getBitmapFromView(layout)
     }
-    fun saveBitmap(context: Context,bitmap: Bitmap){
-        try {
 
-            val cachePath = File(context.getCacheDir(), "images")
-            cachePath.mkdirs() // don't forget to make the directory
-            val stream = FileOutputStream("$cachePath /image.png") // overwrites this image every time
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            stream.close()
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-    }
 }

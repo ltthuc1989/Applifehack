@@ -69,6 +69,7 @@ open abstract class MvvmActivity<B : ViewDataBinding, V : BaseViewModel<*,*>> : 
 
 
 
+
     /**
      * Attempt to get viewModel lazily from [viewModelFactory] with the scope of given activity.
      *
