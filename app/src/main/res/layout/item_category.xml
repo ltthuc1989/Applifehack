@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.activity.category.CategoryVM" />
+            type="com.ltthuc.habit.ui.fragment.category.CategoryVM" />
     </data>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"

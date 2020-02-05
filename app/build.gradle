@@ -103,6 +103,9 @@ dependencies {
     implementation appDependencies.facebook.accountKit
     implementation appDependencies.facebook.stetho
     implementation appDependencies.facebook.stetho_okhttp3
+    implementation appDependencies.circleImageView
+    implementation 'com.makeramen:roundedimageview:2.2.1'
+    implementation 'com.github.rubensousa:gravitysnaphelper:2.2.0'
     // Dagger
     implementation appDependencies.dagger
     implementation appDependencies.daggerAndroid
@@ -131,6 +134,11 @@ dependencies {
         exclude group:'com.google.guava'
     }
     implementation 'jp.wasabeef:blurry:3.0.0' //blur library
+
+    implementation appDependencies.play_services.ads
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
+
+    implementation 'com.byoutline.observablecachedfield:observablecachedfield:1.7.0'
 
 
 

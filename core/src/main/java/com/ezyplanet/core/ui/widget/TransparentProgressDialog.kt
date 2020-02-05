@@ -20,7 +20,7 @@ class TransparentProgressDialog(context: Context, display: Display) : Dialog(con
 
         window!!.attributes = wlmp
         setTitle(null)
-        setCancelable(false)
+        setCancelable(true)
         setOnCancelListener(null)
         val layout = LinearLayout(context)
         layout.orientation = LinearLayout.VERTICAL

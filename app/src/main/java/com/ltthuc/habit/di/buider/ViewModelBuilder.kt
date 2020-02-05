@@ -2,11 +2,13 @@ package com.ltthuc.habit.di.buider
 
 import androidx.lifecycle.ViewModelProvider
 import com.ezyplanet.core.viewmodel.ArchViewModelFactory
-import com.ltthuc.habit.ui.activity.category.CategoryVMBuilder
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVMBuilder
-import com.ltthuc.habit.ui.activity.feed.FeedVMBuilder
+import com.ltthuc.habit.ui.activity.home.HomeVMBuilder
+import com.ltthuc.habit.ui.fragment.category.CategoryVMBuilder
+import com.ltthuc.habit.ui.fragment.feed.FeedVMBuilder
 import com.ltthuc.habit.ui.activity.quotes.QuotesVMBuilder
 import com.ltthuc.habit.ui.activity.setting.SettingVMBuilder
+import com.ltthuc.habit.ui.activity.splash.SplashVMBuilder
 import com.ltthuc.habit.ui.activity.viewer.ViewerVMBuilder
 import com.ltthuc.habit.ui.activity.viewer.YtDetailVMBuilder
 import com.ltthuc.habit.ui.activity.webview.WebViewVMBuilder
@@ -26,6 +28,7 @@ import dagger.Module
  *
  */
 @Module(includes = [
+    (SplashVMBuilder::class),
     (FeedVMBuilder::class),
     (WebViewVMBuilder::class),
     (CategoryVMBuilder::class),
@@ -37,7 +40,8 @@ import dagger.Module
     (ViewerVMBuilder::class),
     (YtDetailVMBuilder::class),
     (QuotesVMBuilder::class),
-    (SettingVMBuilder::class)
+    (SettingVMBuilder::class),
+    (HomeVMBuilder::class)
 ])
 abstract class ViewModelBuilder {
 

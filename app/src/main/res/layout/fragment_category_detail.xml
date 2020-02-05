@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+
+        <variable
+            name="listener"
+            type="com.ltthuc.habit.ui.widget.listener.BottomBarListener" />
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVM" />
+
+
+    </data>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    android:id="@+id/tag_feed_layout"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="?attr/themeBackground"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/view_category_detail"
+        android:id="@+id/tag_feed_hero_fragment"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        app:viewModel="@{viewModel}"
+        />
+
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/bottom_navigation_height"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+
+
+<!--<include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"-->
+        <!--layout="@layout/bottom_navigation"/>-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

@@ -71,6 +71,24 @@ class BindingAdapters {
         }
 
         /**
+         * @param recyclerView  RecyclerView to bind to SpaceItemDecoration
+         * @param spaceInPx space in pixels
+         */
+        @JvmStatic
+        @BindingAdapter(value = ["spaceItemDecoration","showFirstDivider"] ,requireAll = false)
+        fun setSpaceItemDecoration(recyclerView: RecyclerView, spaceInPx: Float,showFirstDivider:Boolean) {
+            if (spaceInPx != 0f) {
+                val itemDecoration = SpaceItemDecoration(spaceInPx.toInt(), showFirstDivider, false)
+                recyclerView.addItemDecoration(itemDecoration)
+            } else {
+                val itemDecoration = SpaceItemDecoration(spaceInPx.toInt(), showFirstDivider, false)
+
+                recyclerView.addItemDecoration(itemDecoration)
+            }
+        }
+
+
+        /**
          * @param recyclerView  RecyclerView to bind to DividerItemDecoration
          * @param orientation 0 for LinearLayout.HORIZONTAL and 1 for LinearLayout.VERTICAL
          */

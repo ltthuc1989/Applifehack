@@ -8,6 +8,14 @@ import com.bumptech.glide.module.AppGlideModule
 import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.firebase.storage.StorageReference
 import java.io.InputStream
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import android.util.DisplayMetrics
+import androidx.annotation.NonNull
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.annotation.GlideOption
+import com.bumptech.glide.annotation.GlideExtension
+
+
 
 @GlideModule
 class CoreGlideModule : AppGlideModule(){
@@ -16,4 +24,7 @@ class CoreGlideModule : AppGlideModule(){
         registry.append(StorageReference::class.java, InputStream::class.java,
                 FirebaseImageLoader.Factory())
     }
+
+
 }
+

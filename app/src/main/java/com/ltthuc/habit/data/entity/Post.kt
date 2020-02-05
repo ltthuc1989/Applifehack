@@ -5,6 +5,8 @@ import com.google.firebase.Timestamp
 import com.google.firebase.database.IgnoreExtraProperties
 import kotlinx.android.parcel.Parcelize
 import kotlin.collections.HashMap
+import java.util.regex.Pattern
+
 
 @Parcelize
 @IgnoreExtraProperties
@@ -24,7 +26,8 @@ class Post(var id: String? = "",
            var catName: String? = "",
            var duration: String? = "",
            var author:String?="",
-           var authorLink:String?="") : Parcelable {
+           var authorLink:String?="",
+           var url: String? = "") : Parcelable {
 
 
     fun toMap(): Map<String, Any> {
@@ -47,6 +50,19 @@ class Post(var id: String? = "",
     }
 
     fun getPublishedDate(): String? {
+        return ""
+    }
+
+    fun getVideoId():String?{
+
+        val pattern = "(?<=watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*"
+
+        val compiledPattern = Pattern.compile(pattern)
+        val matcher = compiledPattern.matcher(video_url)
+
+        if (matcher.find()) {
+            return matcher.group()
+        }
         return ""
     }
 

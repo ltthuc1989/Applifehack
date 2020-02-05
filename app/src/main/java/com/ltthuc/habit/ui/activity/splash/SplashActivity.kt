@@ -4,8 +4,8 @@ import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.ltthuc.habit.R
 import com.ltthuc.habit.databinding.ActivitySplashBinding
-import com.ltthuc.habit.ui.activity.BaseActivity
-import com.ltthuc.habit.ui.activity.feed.FeedActivity
+import com.ltthuc.habit.ui.activity.home.HomeActivity
+import com.ltthuc.habit.ui.fragment.feed.FeedFrag
 
 class SplashActivity : MvvmActivity<ActivitySplashBinding,SplashVM>(),SplashNav{
 
@@ -16,10 +16,11 @@ class SplashActivity : MvvmActivity<ActivitySplashBinding,SplashVM>(),SplashNav{
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         viewModel.navigator = this
+        viewModel.updateModel("")
 
     }
 
     override fun gotoHomeScreen() {
-        gotoActivity(FeedActivity::class)
+        gotoActivity(HomeActivity::class,true)
     }
 }

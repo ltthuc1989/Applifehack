@@ -27,5 +27,6 @@ interface ApiHelper {
     fun getPostByQuote(typeQuote:String?,sortBy:SortBy?=SortBy.NEWEST,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getYtDetail(youtubeId:String?):Single<YoutubeResp>
      fun updateViewCount(postId:String?):Task<Transaction>
+    fun updateLikeCount(postId:String?):Task<Transaction>
 
 }

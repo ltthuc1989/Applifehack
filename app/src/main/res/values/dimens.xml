@@ -128,4 +128,27 @@
     <dimen name="material_baseline_grid_1x">8dp</dimen>
     <dimen name="material_card_supporting_text_padding_top">@dimen/material_baseline_grid_2x</dimen>
     <dimen name="padding">8dp</dimen>
+    <dimen name="status_bar_height_half">12.5dp</dimen>
+    <dimen name="youtube_details_photo_height">250dp</dimen>
+    <dimen name="status_bar_height">25dip</dimen>
+    <dimen name="titles_container_margin_top">132dp</dimen>
+
+    <!-- Fonts sizes -->
+    <dimen name="font_20">20sp</dimen>
+    <dimen name="font_13">13sp</dimen>
+    <dimen name="font_22">22sp</dimen>
+    <dimen name="font_21">21sp</dimen>
+    <dimen name="font_11">11sp</dimen>
+    <dimen name="font_15">15sp</dimen>
+    <dimen name="font_16">16sp</dimen>
+    <dimen name="font_14">14sp</dimen>
+    <dimen name="font_31">31sp</dimen>
+    <dimen name="font_34">34sp</dimen>
+
+    <dimen name="back_project_button_height">56dp</dimen>
+    <dimen name="back_project_button_height_half">-28dp</dimen>
+    <dimen name="project_number_details_padding">20dp</dimen>
+    <dimen name="project_details_total_scroll_margin">380dp</dimen>
+
+    <dimen name="button_size">56dp</dimen>
 </resources>

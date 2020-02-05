@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0F1010</color>
+    <color name="colorPrimaryDark">#0F1010</color>
+    <color name="colorAccent">#181921</color>
+    <color name="colorBackground">#0F1010</color>
+    <color name="colorCard">#202124</color>
+    <color name="colorText">#6B6D72</color>
+
+    <color name="fab_bg">#6b6d72</color>
+    <color name="drawer_item_bg_p">#6b6d72</color>
+    <color name="drawer_item_bg_n">#303030</color>
+    <color name="news_unread">#999999</color>
+    <color name="news_read">#6b6d72</color>
+
+    <color name="comment_text">#bdb4b3</color>
+    <color name="comment_reply">#606266</color>
+    <color name="comment_btn">#606266</color>
+    <color name="comment_line">#222222</color>
+    <color name="comment_at">#3289b3</color>
+    <color name="gold_title">#6B6D72</color>
+    <color name="node_bg">#0F1010</color>
+
+    <color name="white_10">#1affffff</color>
+    <color name="white_25">#40ffffff</color>
+    <color name="white_30">#48ffffff</color>
+    <color name="white_50">#80ffffff</color>
+    <color name="white_75">#bfffffff</color>
+    <color name="app_2882C9">#2882C9</color>
+    <color name="app_6C6C6C">#6C6C6C</color>
+    <color name="black">#000000</color>
+    <color name="main_bg">#f2f2f2</color>
+
+    <color name="green_primary">#00E16A</color>
+    <color name="green_dark">#14a458</color>
+    <color name="dark_gray">#3e3f45</color>
+    <color name="darker_gray">#ff282930</color>
+    <color name="darkest_gray">#ff222222</color>
+
+    <color name="bottom_navigation_color">@color/light_gray</color>
+    <color name="light_gray">#ffa9a9ac</color>
+    <color name="deep_blue_dark">#ff1c292e</color>
+    <color name="bright_blue">#ff1d7ec2</color>
+    <color name="brighter_blue">#ff19b5fe</color>
+    <color name="primary_text_inverse">@color/material_typography_primary_text_color_light</color>
+    <color name="material_typography_secondary_text_color_dark">@color/material_color_black_54_percent</color>
+    <color name="material_typography_secondary_text_color_light">@color/material_color_white_70_percent</color>
+    <color name="material_color_black_54_percent">#8a000000</color>
+    <color name="material_color_white_70_percent">#b3ffffff</color>
+    <color name="material_typography_primary_text_color_light">@color/material_color_white</color>
+    <color name="material_color_white">#ffffff</color>
+
+    <color name="black_10">#1a000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="bottom_navigation_dark_background">@android:color/black</color>
+    <color name="bottom_navigation_dark_background_border">@color/white_25</color>
+    <color name="bottom_navigation_light_background">@android:color/white</color>
+    <color name="bottom_navigation_light_background_border">@color/black_25</color>
+    <color name="black_25">#40000000</color>
+    <color name="textColor">#bdbdbd</color>
+    <color name="grey_500">#696969</color>
+    <color name="yellow">#e9b76d</color>
+    <color name="yellow_rate_bar">#f1c40f</color>
+    <color name="grey_200">#b0bec5</color>
+    <color name="bg_app">#0C2B62</color>
+</resources>

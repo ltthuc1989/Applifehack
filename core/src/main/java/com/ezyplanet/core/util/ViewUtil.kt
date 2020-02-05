@@ -1,5 +1,6 @@
 package com.ezyplanet.core.util
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
@@ -39,5 +40,9 @@ object ViewUtil {
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
         return bitmap
+    }
+
+    fun dpToPx(dp: Float, context: Context): Int {
+        return (context.resources.displayMetrics.density * dp).toInt()
     }
 }

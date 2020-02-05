@@ -69,23 +69,82 @@
                 android:textOn="@string/on"
                  />
 
+            <TextView
+                android:id="@+id/lbNightMode"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/lb_notification"
+
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:gravity="bottom"
+                android:padding="@dimen/padding"
+                android:text="@string/night_mode"
+                />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchNightMode"
+                style="@style/MySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@id/lbNightMode"
+                android:layout_alignBottom="@id/lbNightMode"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:checked="@={viewModel.switch.click}"
+
+                android:gravity="center"
+                android:textOff="@string/off"
+                android:textOn="@string/on"
+                />
+
 
             <TextView
-                android:id="@+id/lbchange_password"
-
+                android:id="@+id/lbRateUse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lb_notification"
+                android:layout_below="@+id/lbNightMode"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding"
                 android:layout_marginRight="@dimen/padding"
-
                 android:fontFamily="@font/cabin_condensed_regular"
                 android:textColor="@color/white_50"
                 android:onClick="@{()->viewModel.openPolicy()}"
                 android:padding="@dimen/padding"
-                android:text="@string/privacy" />
+                android:text="@string/rate_us" />
+            <TextView
+                android:id="@+id/lbTermCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbRateUse"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.openPolicy()}"
+                android:padding="@dimen/padding"
+                android:text="@string/term_condition" />
+            <TextView
+                android:id="@+id/lbPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbTermCondition"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.openPolicy()}"
+                android:padding="@dimen/padding"
+                android:text="@string/privacy_policy" />
 
 
         </RelativeLayout>

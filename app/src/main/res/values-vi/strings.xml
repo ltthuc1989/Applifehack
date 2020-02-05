@@ -17,4 +17,6 @@
     <string name="on">On</string>
     <string name="privacy">Privicy</string>
     <string name="restart_to_update">Restart to update</string>
+    <string name="transition_project_photo">project_photo</string>
+    <string name="readMore">Read More</string>
 </resources>

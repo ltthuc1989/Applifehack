@@ -27,7 +27,7 @@ class AppUpdateHelper :LifecycleObserver,InstallStateUpdatedListener, MutableLiv
     fun checkUpdate(context: Context,versionCode:Int) {
 
 
-        val appUpdateManager = AppUpdateManagerFactory.create(context)
+         appUpdateManager = AppUpdateManagerFactory.create(context)
 
         // Returns an intent object that you use to check for an update.
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
@@ -64,7 +64,7 @@ class AppUpdateHelper :LifecycleObserver,InstallStateUpdatedListener, MutableLiv
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy(){
-        appUpdateManager.unregisterListener(this)
+        appUpdateManager?.unregisterListener(this)
 
     }
 

@@ -1,19 +1,19 @@
 package com.ltthuc.habit.ui.activity.ytDetail
 
+import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.getExtra
-import com.ezyplanet.core.util.extension.gotoActivity
+import com.ezyplanet.core.util.extension.getExtraParcel
 import com.ltthuc.habit.BuildConfig
 import com.ltthuc.habit.R
+import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.databinding.ActivityYoutubeDetailBinding
 import com.ltthuc.habit.ui.activity.BaseActivity
-import com.ltthuc.habit.ui.activity.category.CategoryActivity
-import com.ltthuc.habit.ui.activity.feed.FeedActivity
-import com.ltthuc.habit.ui.widget.listener.NavListener
 import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 import com.ltthuc.habit.util.AppBundleKey
 import com.ltthuc.habit.util.MediaUtil
+import kotlinx.android.synthetic.main.activity_youtube_detail.*
 
 class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>(),YtDetailNav,ToolbarListener{
 
@@ -23,26 +23,57 @@ class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>()
     override fun onViewInitialized(binding: ActivityYoutubeDetailBinding) {
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
+        setToolBar(binding.viewToolbar, "")
         viewModel.navigator = this
-        viewModel.getYtDetail(getExtra(AppBundleKey.YOUTUBE_URL))
-        binding.homeNavigationView.setListner(this)
+        val youtubeUrl = getExtraParcel<Post>(AppBundleKey.YOUTUBE_URL)
+        viewModel.getYtDetail(youtubeUrl?.video_url)
+        doTransition {
+            viewModel.youtubeUrl.value =youtubeUrl?.imgLink
+        }
+
     }
 
     override fun openYoutube(url: String?) {
         MediaUtil.openYoutube(this,BuildConfig.API_YOUTUBE,url,0,true,true)
     }
 
+    private fun setToolBar(toolbar: Toolbar, title: String) {
+        toolbar.setTitle(title)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationOnClickListener{
+            onBackPressed()
+        }
+    }
+
 
 
 
     override fun onMenu() {
-        if (!isOpenDrawer || !binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
-            isOpenDrawer = true
 
-        } else {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-            isOpenDrawer = false
-        }
     }
+
+    override fun onSetting() {
+
+    }
+
+    override fun onHome() {
+
+    }
+
+    override fun onSaved() {
+
+    }
+
+    override fun onCategory() {
+
+    }
+
+    override fun onBackPress() {
+        finishAfterTransition()
+    }
+
+
+
 }

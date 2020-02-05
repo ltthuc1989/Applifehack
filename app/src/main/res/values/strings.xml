@@ -35,5 +35,15 @@
     <string name="on">On</string>
     <string name="privacy">Privicy</string>
     <string name="restart_to_update">Restart to update</string>
+    <string name="transition_project_photo">project_photo</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="term_condition">Terms &amp; Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="rating_dialog_never">Never</string>
+    <string name="rating_dialog_not_now">Not now</string>
+    <string name="rating_dialog_title">Are you enjoying life hacks? \n Please rate us.</string>
+    <string name="readMore">Read More</string>
+
 
 </resources>

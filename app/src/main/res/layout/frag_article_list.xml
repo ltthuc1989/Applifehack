@@ -20,13 +20,13 @@
       <FrameLayout
           android:layout_width="match_parent"
           android:orientation="vertical"
-          android:background="?attr/themeBackground"
+          android:background="@color/color_transparent"
           android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
-            android:paddingTop="32dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/color_transparent"
 
             android:adapter="@{adapter}"
             app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"

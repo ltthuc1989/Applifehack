@@ -1,6 +1,7 @@
 package com.ezyplanet.core.util.extension
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -245,6 +246,16 @@ fun MvvmActivity<*, *>.gotoActivity(cls: KClass<out Activity>,
 
     extras?.forEach { intent.addExtra(it.key, it.value) }
     startActivity(intent)
+    if (finish) finishActivity()
+}
+
+fun MvvmActivity<*, *>.transitionActivity(cls: KClass<out Activity>,
+                                    extras: Map<String, Any?>? = null, shareView : View,finish: Boolean = false) {
+    val intent = Intent(this, cls.java)
+
+    extras?.forEach { intent.addExtra(it.key, it.value) }
+    val options = ActivityOptions.makeSceneTransitionAnimation(this, shareView, getString(R.string.shareView))
+    startActivity(intent,options.toBundle())
     if (finish) finishActivity()
 }
 

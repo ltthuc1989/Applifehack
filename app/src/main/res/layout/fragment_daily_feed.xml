@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.ltthuc.habit.databinding.ItemFeedListBinding" />
+
+        <import type="com.ltthuc.habit.data.entity.Post" />
+
+
+        <variable
+            name="viewModel"
+            type="com.ltthuc.habit.ui.fragment.feed.FeedVM" />
+
+        <variable
+            name="adapter"
+            type="com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter&lt;Post, ItemFeedListBinding&gt;" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/daily_feed_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/daily_feed_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/darker_gray"
+                android:paddingTop="8dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:adapter="@{adapter}"
+                android:orientation="vertical"
+                android:overScrollMode="always"
+                app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
+                app:onScrolledToBottom="@{(page) -> viewModel.onLoadMore(page)}"
+                app:resetLoadingState="@{viewModel.resetLoadingState}"
+                app:visibleThreshold="@{viewModel.visibleThreshold}" />
+
+
+            <ProgressBar
+                android:id="@+id/daily_feed_progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+</layout>

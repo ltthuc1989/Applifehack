@@ -8,7 +8,7 @@ import com.ezyplanet.core.util.extension.putArgs
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.databinding.ItemSlidePostBinding
-import com.ltthuc.habit.ui.activity.category.CategoryVM
+import com.ltthuc.habit.ui.fragment.category.CategoryVM
 
 class SlidePostFrag :MvvmFragment<SlidePostVM,ItemSlidePostBinding>(),SlidePostNav{
 

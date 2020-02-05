@@ -96,27 +96,43 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
         val query = when (sortBy) {
             SortBy.NEWEST -> {
-                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
-                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
+               val temp= firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
                         .whereEqualTo(DatabasePath.CAT_ID, catId)
-                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
+                if(lastItem!=null) {
+                    val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                    temp?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                }else{
+                    temp
+                }
 
             }
 
             SortBy.MOST_POPUPLAR -> {
-                val viewCount = lastItem!![DatabasePath.VIEW_COUNT] as Int
-                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
+
+               val temp= firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
                         .whereEqualTo(DatabasePath.CAT_ID, catId)
-                        .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, viewCount)
+                        .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
+                if(lastItem!=null){
+                    val viewCount = lastItem!![DatabasePath.VIEW_COUNT] as Int
+                    temp?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, viewCount)
+                }else temp
             }
             else -> {
                 val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
-                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
+               val temp= firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
                         .whereEqualTo(DatabasePath.CAT_ID, catId)
-                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)
+                if(lastItem!=null){
+                    temp?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                }else{
+                    temp
+                }
             }
         }
-        return if (loadMore == true) query.startAfter(lastItem).limit(10).get() else query.limit(10).get()
+        return if (loadMore == true) {
+            query.startAfter(lastItem).limit(10).get()
+        } else query.limit(10).get()
 
 
     }
@@ -125,25 +141,40 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
         val query = when (sortBy) {
             SortBy.NEWEST -> {
-                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
-                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
+
+              val temp= firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
                         .whereEqualTo(DatabasePath.CAT_ID, catId)
-                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
+                if(lastItem!=null){
+                     val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                    temp?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+
+                }else temp
 
 
             }
 
             SortBy.MOST_POPUPLAR -> {
-                val viewCount = lastItem!![DatabasePath.VIEW_COUNT] as Int
-                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
+
+                val temp=firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
                         .whereEqualTo(DatabasePath.CAT_ID, catId)
-                        .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, viewCount)
+                        .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
+                if(lastItem!=null){
+                    val viewCount = lastItem!![DatabasePath.VIEW_COUNT] as Int
+                    temp?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, viewCount)
+                }else temp
             }
             else -> {
-                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
-                firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
+
+               val temp= firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
                         .whereEqualTo(DatabasePath.CAT_ID, catId)
-                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                        .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)
+                if(lastItem!=null) {
+                    val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+                    temp?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                }else temp
+
+
             }
         }
         return if (loadMore == true) query.startAfter(lastItem).limit(10).get() else query.limit(10).get()
@@ -161,15 +192,23 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
             SortBy.MOST_POPUPLAR -> {
                 val supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
-                val createdAt = lastItem!![DatabasePath.VIEW_COUNT] as Int
+
                 if (typeQuote != null) supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote) else null
-                supQuery.orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, createdAt)
+                val temp=supQuery.orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
+                if(lastItem!=null){
+                    val createdAt = lastItem!![DatabasePath.VIEW_COUNT] as Int
+                    temp?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, createdAt)
+                }else temp
             }
             else -> {
                 val supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
-                val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
                 if (typeQuote != null) supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote) else null
-                supQuery.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                val temp=supQuery.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
+                if(lastItem!=null){
+                    val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+
+                    temp?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                }else temp
             }
         }
         return if (loadMore == true) {
@@ -204,6 +243,19 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             val snapshot = it.get(query)
             val newViewCount = snapshot.getDouble(DatabasePath.VIEW_COUNT)!! + 1
             it.update(query, DatabasePath.VIEW_COUNT, newViewCount)
+        }
+
+
+    }
+
+    override fun updateLikeCount(postId: String?): Task<Transaction> {
+
+
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
+        return firStore.runTransaction {
+            val snapshot = it.get(query)
+            val newViewCount = snapshot.getDouble(DatabasePath.LIKES_COUNT)!! + 1
+            it.update(query, DatabasePath.LIKES_COUNT, newViewCount)
         }
 
 

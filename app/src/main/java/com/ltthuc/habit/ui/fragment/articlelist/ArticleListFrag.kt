@@ -1,19 +1,16 @@
 package com.ltthuc.habit.ui.fragment.articlelist
 
-import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.MvvmFragment
 import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter
-import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.observe
 import com.ezyplanet.core.util.extension.putArgs
-import com.google.firebase.iid.FirebaseInstanceId
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
-import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.FragArticleListBinding
 import com.ltthuc.habit.databinding.ItemCatTopicBinding
-import com.ltthuc.habit.ui.activity.category.CategoryActivity
+import com.ltthuc.habit.ui.activity.BaseActivity
+import com.ltthuc.habit.ui.fragment.category.CategoryFrag
 
 
 class ArticleListFrag : MvvmFragment<ArticleListVM, FragArticleListBinding>(), ArticleListNav {
@@ -25,7 +22,7 @@ class ArticleListFrag : MvvmFragment<ArticleListVM, FragArticleListBinding>(), A
     }
     companion object {
         fun newInstance(catId:String) = ArticleListFrag().putArgs {
-            putString(CategoryActivity.KEY_CATEGORY_DETAIL,catId)
+            putString(CategoryFrag.KEY_CATEGORY_DETAIL,catId)
         }
     }
     override fun onViewInitialized(binding: FragArticleListBinding) {
@@ -33,7 +30,7 @@ class ArticleListFrag : MvvmFragment<ArticleListVM, FragArticleListBinding>(), A
         binding.viewModel = viewModel
 
 
-           arguments?.getString(CategoryActivity.KEY_CATEGORY_DETAIL)?.let {
+           arguments?.getString(CategoryFrag.KEY_CATEGORY_DETAIL)?.let {
                viewModel.updateModel(it)
            }
 
@@ -56,5 +53,13 @@ class ArticleListFrag : MvvmFragment<ArticleListVM, FragArticleListBinding>(), A
 
     override fun gotoPostDetail(post: Post) {
 
+    }
+
+    override fun share(message: String) {
+        (activity as BaseActivity<*, *>).shareMss(message)
+    }
+
+    override fun like(data: Post) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

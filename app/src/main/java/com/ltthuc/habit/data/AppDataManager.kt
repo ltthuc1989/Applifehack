@@ -78,4 +78,8 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
     override   fun updateViewCount(postId: String?): Task<Transaction> {
         return  apiHelper.updateViewCount(postId)
     }
+
+    override   fun updateLikeCount(postId: String?): Task<Transaction> {
+        return  apiHelper.updateLikeCount(postId)
+    }
 }

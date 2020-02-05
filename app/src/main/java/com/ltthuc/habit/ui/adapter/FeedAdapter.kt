@@ -24,17 +24,16 @@ class FeedAdapter(viewModel: BaseViewModel<*, *>,private val isInFeed:Boolean=tr
                     if(isInFeed) ITEM_QUOTE else ITEM_QUOTES
                 }
                 PostType.VIDEO -> {
-                    ITEM_ARTICLE
+                    ITEM_VIDEO
                 }
-                else -> {
-                    ITEM_ARTICLE
-                }
+
             }
 
 
     companion object {
 
         private val ITEM_ARTICLE = R.layout.item_feed_list
+        private val ITEM_VIDEO = R.layout.item_video_list
         private val ITEM_QUOTE = R.layout.item_quote_list
         private val ITEM_QUOTES = R.layout.item_quotes_list
     }

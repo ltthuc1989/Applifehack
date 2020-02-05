@@ -3,7 +3,6 @@ package com.ltthuc.habit.ui.activity.quotes
 import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.adapter.MvvmAdapter
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.observe
@@ -11,18 +10,17 @@ import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.databinding.ActivityQuoteBinding
 import com.ltthuc.habit.ui.activity.BaseActivity
-import com.ltthuc.habit.ui.activity.category.CategoryActivity
-import com.ltthuc.habit.ui.activity.feed.FeedActivity
+import com.ltthuc.habit.ui.activity.home.HomeActivity
+import com.ltthuc.habit.ui.activity.setting.SettingActivity
 import com.ltthuc.habit.ui.adapter.FeedAdapter
+import com.ltthuc.habit.ui.fragment.category.CategoryFrag
 import com.ltthuc.habit.ui.widget.QuoteView
-import com.ltthuc.habit.ui.widget.listener.NavListener
 import com.ltthuc.habit.ui.widget.listener.QuoteViewListener
 import com.ltthuc.habit.ui.widget.listener.ToolbarQuoteListener
-import com.ltthuc.habit.util.CustomTabHelper
 import com.ltthuc.habit.util.SortBy
 import com.ltthuc.habit.util.extension.openLink
 import com.ltthuc.habit.util.extension.shareMessage
-import kotlinx.android.synthetic.main.activity_daily_feed.*
+import kotlinx.android.synthetic.main.fragment_daily_feed.*
 
 class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
         QuoteViewListener, ToolbarQuoteListener ,MvvmAdapter.OnItemClickListener<Post>{
@@ -96,6 +94,22 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             isOpenDrawer = false
         }
+    }
+
+    override fun onSetting() {
+        gotoActivity(SettingActivity::class)
+    }
+
+    override fun onHome() {
+        gotoActivity(HomeActivity::class,true)
+
+    }
+
+    override fun onSaved() {
+    }
+
+    override fun onCategory() {
+        gotoActivity(HomeActivity::class,true)
     }
 
 }

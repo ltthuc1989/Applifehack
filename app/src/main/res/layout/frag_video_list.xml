@@ -18,24 +18,25 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:background="?attr/themeBackground"
+        android:background="@color/color_transparent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:paddingTop="32dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:adapter="@{adapter}"
-
             app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:adapter="@{adapter}"
+            app:onScrolledToBottom="@{(page) -> viewModel.onLoadMore(page)}"
+            app:resetLoadingState="@{viewModel.resetLoadingState}"
+            app:visibleThreshold="@{viewModel.visibleThreshold}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:dividerItemDecoration="@{1}"
+            app:itemDecorationBackGround="@{@drawable/item_divider}"
             />
     </FrameLayout>
 

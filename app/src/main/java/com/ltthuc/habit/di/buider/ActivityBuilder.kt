@@ -1,12 +1,13 @@
 package com.ltthuc.habit.di.buider
 
-import com.ltthuc.habit.ui.activity.category.CategoryActivity
-import com.ltthuc.habit.ui.activity.category.CategoryProvider
-import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailActivity
+import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailFrag
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailProvider
-import com.ltthuc.habit.ui.activity.feed.FeedActivity
+import com.ltthuc.habit.ui.activity.home.HomeActivity
+import com.ltthuc.habit.ui.activity.home.HomeProvider
+
 import com.ltthuc.habit.ui.activity.quotes.QuotesActivity
 import com.ltthuc.habit.ui.activity.setting.SettingActivity
+import com.ltthuc.habit.ui.activity.splash.SplashActivity
 import com.ltthuc.habit.ui.activity.viewer.ViewerActivity
 import com.ltthuc.habit.ui.activity.viewer.ViewerProvider
 import com.ltthuc.habit.ui.activity.webview.WebViewActivity
@@ -20,14 +21,13 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module
 abstract class ActivityBuilder {
-    @ContributesAndroidInjector
-    internal abstract fun bindFeedActivity(): FeedActivity
+
     @ContributesAndroidInjector
     internal abstract fun bindWebViewActivity(): WebViewActivity
-    @ContributesAndroidInjector(modules = [(CategoryProvider::class)])
-    internal abstract fun bindCategoryActivity(): CategoryActivity
-    @ContributesAndroidInjector(modules = [(CategoryDetailProvider::class)])
-    internal abstract fun bindCategoryDetailActivity(): CategoryDetailActivity
+
+    @ContributesAndroidInjector(modules = [(HomeProvider::class)])
+    internal abstract fun bindHomeActivity(): HomeActivity
+
     @ContributesAndroidInjector(modules = [(ViewerProvider::class)])
     internal abstract fun bindViewerActivity(): ViewerActivity
     @ContributesAndroidInjector
@@ -36,5 +36,9 @@ abstract class ActivityBuilder {
     internal abstract fun bindQuoteActivity(): QuotesActivity
     @ContributesAndroidInjector
     internal abstract fun bindSettingActivity(): SettingActivity
+    @ContributesAndroidInjector
+    internal abstract fun bindSplashActivity(): SplashActivity
+    @ContributesAndroidInjector(modules = [(CategoryDetailProvider::class)])
+    internal abstract fun bindCategoryDetailActivity(): CategoryDetailFrag
 
 }

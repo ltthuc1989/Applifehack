@@ -13,10 +13,16 @@ class SplashVM  @Inject constructor(val appDataManager: AppDataManager, schedule
 
 
     override fun updateModel(data: String?) {
+        val appLaunchCount = appDataManager.appPreferenceHelper.appLaunchCount
+        appDataManager.appPreferenceHelper.appLaunchCount=appLaunchCount?.plus(1)
         uiScope?.launch {
             delay(3*1000)
             navigator?.gotoHomeScreen()
+
         }
     }
+
+
+
 
 }

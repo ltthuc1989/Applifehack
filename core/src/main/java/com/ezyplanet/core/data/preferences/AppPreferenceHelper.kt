@@ -36,6 +36,7 @@ import javax.inject.Inject
         val PREF_KEY_DATE = "show_take_order"
         val PREF_KEY_NOTIFICATION = "notification"
         val PREF_KEY_VERSIION_CODE = "version_code"
+        val PREF_KEY_APP_LAUNCH_COUNT = "app_launch_count"
 
     }
 
@@ -65,7 +66,7 @@ import javax.inject.Inject
     var date :String? by PreferenceDelegate(mPrefs, PREF_KEY_DATE,"")
     var enableNotification:Boolean? by PreferenceDelegate(mPrefs, PREF_KEY_NOTIFICATION,false)
     var versionUpdate:Int? by PreferenceDelegate(mPrefs, PREF_KEY_VERSIION_CODE,0)
-
+    var appLaunchCount :Int? by PreferenceDelegate(mPrefs, PREF_KEY_APP_LAUNCH_COUNT,0)
 
 }
 

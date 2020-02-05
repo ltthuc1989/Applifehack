@@ -18,5 +18,6 @@
     <string name="cancel_trip">取消</string>
     <string name="waiting_more">繼續等待</string>
     <string name="start_trip" >開始行程</string>
+    <string name="shareView">ShareView</string>
 
 </resources>
