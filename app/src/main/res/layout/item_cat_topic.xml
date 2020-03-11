@@ -91,7 +91,7 @@
         android:id="@+id/tvLinkCount"
         android:layout_toRightOf="@id/imgLike"
         android:layout_marginStart="8dp"
-        android:text="@{item.likesCount}"
+        android:text="@{item.formatLikes}"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/textSize_h4"
         android:gravity="center"

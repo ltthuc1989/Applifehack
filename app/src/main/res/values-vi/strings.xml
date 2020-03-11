@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Habit</string>
+    <string name="app_name">Knowledge</string>
     <string name="home">Home</string>
     <string name="category">Category</string>
     <string name="setting">Setting</string>
@@ -19,4 +19,6 @@
     <string name="restart_to_update">Restart to update</string>
     <string name="transition_project_photo">project_photo</string>
     <string name="readMore">Read More</string>
+    <string name="choose_email_app">Choose Email App</string>
+    <string name="send_feedback">Send FeedBack</string>
 </resources>

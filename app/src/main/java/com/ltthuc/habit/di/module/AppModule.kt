@@ -9,6 +9,7 @@ import com.ezyplanet.core.util.CoreConstants
 import com.ezyplanet.core.util.SchedulerProvider
 
 import com.ezyplanet.thousandhands.shipper.data.preferences.AppPreferenceHelper
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.irmansyah.catalogmoviekotlin.data.DataManager
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.network.ApiHeader
@@ -83,4 +84,10 @@ class AppModule {
 
     @Provides
     internal fun provideSchedulerProvider(): SchedulerProvider = SchedulerProvider()
+
+    @Provides
+    @Singleton
+    internal fun provideFirebaseAnylytics(context: Context): FirebaseAnalytics {
+        return FirebaseAnalytics.getInstance(context)
+    }
 }

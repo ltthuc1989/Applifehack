@@ -66,6 +66,8 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
                 android:tint="@color/white_75"
+                android:padding="10dp"
+
                 android:onClick="@{()->listener.onMenu()}"
                 app:srcCompat="@drawable/ic_menu" />
 

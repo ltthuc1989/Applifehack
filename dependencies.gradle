@@ -157,7 +157,8 @@ ext {
 
                     'location'      : "com.google.android.gms:play-services-location:$play_serviceVersion",
                     'places'        : "com.google.android.gms:play-services-places:$play_serviceVersion",
-                    'auth'           : "com.google.android.gms:play-services-auth:$play_service_authVersion"
+                    'auth'           : "com.google.android.gms:play-services-auth:$play_service_authVersion",
+                    'ads'   : "com.google.android.gms:play-services-ads:$play_serviceVersion"
 
 
 

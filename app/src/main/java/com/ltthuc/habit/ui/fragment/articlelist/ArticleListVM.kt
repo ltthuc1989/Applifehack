@@ -2,6 +2,7 @@ package com.ltthuc.habit.ui.fragment.articlelist
 
 import android.content.Context
 import android.util.Log
+import android.view.TextureView
 import android.view.View
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.util.SchedulerProvider
@@ -12,6 +13,7 @@ import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.entity.PostType
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import com.ltthuc.habit.util.SortBy
 import com.ltthuc.habit.util.extension.await
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +30,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
     private var lastItem: DocumentSnapshot?=null
     private var currentPage=0
     lateinit var catId:String
+    @Inject lateinit var fbAnalytics:FirebaseAnalyticsHelper
     override fun updateModel(data: String?) {
         catId = data!!
         getPost(catId)
@@ -80,6 +83,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
 
     fun onItemClicked(item: Post){
         navigator?.gotoPostDetail(item)
+        tapEvent(item?.id)
     }
 
     fun onLoadMore(page: Int) {
@@ -94,6 +98,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
             val messge = String.format(context.getString(R.string.share_info_message),
                     context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
             navigator?.share(messge)
+        logEvent(data?.id,"share")
 
 
 
@@ -101,6 +106,46 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
     }
     fun likeClick(data:Post){
 
+        uiScope?.launch {
+
+           results.value = updateRow(data)
+            appDataManager.updateViewCount(data.id)
+            logEvent(data?.id,"like")
+        }
+
+
+
     }
+
+    private fun updateRow(data: Post):List<Post>{
+        val size = mData?.size
+            for(i in 0..size){
+                var p = mData.get(i)
+                if(p.id==data.id){
+                    p.likesCount=+1
+                    mData[i] = p
+                    return mData
+                }
+            }
+        return mData
+    }
+
+
+    private fun logEvent(id:String?,action:String){
+        val event = "$${id}_$action"
+        val likeButton = "card_$action"
+        val str = "app_attribute"
+        fbAnalytics.logEvent(event,event,str)
+        fbAnalytics.logEvent(likeButton,likeButton,str)
+
+
+    }
+    private fun tapEvent(id:String?){
+        val event = "${id}_tap"
+        fbAnalytics.logEvent(event,event,"app_attribute")
+        fbAnalytics.logEvent("article_appview","article_appview","app_attribute")
+
+    }
+
 
 }

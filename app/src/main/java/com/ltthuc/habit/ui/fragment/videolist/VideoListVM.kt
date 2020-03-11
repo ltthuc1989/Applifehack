@@ -8,6 +8,7 @@ import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.google.firebase.firestore.DocumentSnapshot
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import com.ltthuc.habit.util.SortBy
 import com.ltthuc.habit.util.extension.await
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
     private var lastItem: DocumentSnapshot?=null
     private var currentPage=0
     lateinit var catId:String
+    @Inject lateinit var fbAnalytics:FirebaseAnalyticsHelper
     override fun updateModel(data: String?) {
         catId = data!!
         getPost(catId)
@@ -78,7 +80,8 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
     fun onItemClicked(item: Post){
 
-        navigator?.openYoutube(item.getVideoId())
+        navigator?.openYoutube(item)
+        logEvent(item?.id)
     }
 
     fun onLoadMore(page: Int) {
@@ -87,6 +90,11 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
     }
 
 
+    private fun logEvent(id:String?){
+        val event = "${id}_tap"
+        fbAnalytics.logEvent(event,event,"app_attribute")
+        fbAnalytics.logEvent("video_appview","video_appview","app_attribute")
 
+    }
 
 }

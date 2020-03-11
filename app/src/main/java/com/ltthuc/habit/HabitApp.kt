@@ -31,6 +31,7 @@ class HabitApp : MultiDexApplication(), HasActivityInjector {
     lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
 
     // @Inject   lateinit var locationHelper: LocationHelper
+    var isBackGround = false
 
 
     override fun onCreate() {

@@ -15,8 +15,9 @@ class YtDetailVM @Inject constructor(val appDataManager: AppDataManager, schedul
     fun getYtDetail(youtubeId:String?){
 
         apiSingle(appDataManager.getYtDetail(youtubeId),{
-
-            updateModel(YtModel(youtubeId,it.items[0]))
+              if(it.items?.isEmpty()!=true) {
+                  updateModel(YtModel(youtubeId, it.items[0]))
+              }
 
         },true)
 
@@ -26,8 +27,8 @@ class YtDetailVM @Inject constructor(val appDataManager: AppDataManager, schedul
 
     }
 
-    fun playClick(id:String){
-        navigator?.openYoutube(id)
+    fun playClick(){
+        navigator?.openYoutube(_model?.value?.id)
     }
 
 

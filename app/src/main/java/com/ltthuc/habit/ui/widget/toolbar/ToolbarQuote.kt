@@ -17,6 +17,7 @@ class ToolbarQuote : FrameLayout {
     lateinit var binding: ToolbarQuoteBinding
 
     private var _category:String?=null
+    private var indexSortBy = 0
     var category: String?
         get() = _category
         set(value) {
@@ -51,13 +52,23 @@ class ToolbarQuote : FrameLayout {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = ToolbarQuoteBinding.inflate(inflater, this, true)
         binding.tvSortBy.setOnClickListener {
-            AlertDialogUtils.showSingleChoice(context,_sortBy,R.array.sortBy){
+            AlertDialogUtils.showSingleChoice(context,_sortBy,R.array.sortBy,indexSortBy){
 
                 binding.listener?.sortBy(
                         when(it) {
-                            "Newest" -> SortBy.NEWEST
-                            "Oldest" -> SortBy.OLDEST
-                            else -> SortBy.MOST_POPUPLAR
+                            "Newest" -> {
+                                indexSortBy =0
+                                SortBy.NEWEST
+
+                            }
+                            "Oldest" -> {
+                                indexSortBy =2
+                                SortBy.OLDEST
+                            }
+                            else -> {
+                                indexSortBy =1
+                                SortBy.MOST_POPUPLAR
+                            }
                         }
                 )
                 binding.tvSortBy.text = it

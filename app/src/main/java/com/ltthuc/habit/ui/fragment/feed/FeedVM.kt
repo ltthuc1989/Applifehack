@@ -14,6 +14,7 @@ import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.entity.PostType
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import com.ltthuc.habit.util.extension.await
 import com.ltthuc.habit.util.extension.shareImage
 import kotlinx.coroutines.Dispatchers
@@ -31,10 +32,14 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
     private val mData = ArrayList<Post>()
 
     private var lastItem: DocumentSnapshot?=null
-    private var currentPage=0
+     var currentPage=0
     init {
         visibleThreshold = 10
     }
+
+    private var hasMore = false
+    private var currentItem = 0
+    @Inject lateinit var fbAnalytics: FirebaseAnalyticsHelper
 
     fun getPost(nextPage: Boolean? = false) {
 
@@ -54,9 +59,9 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
                         lastItem = it.documents[it.size() - 1]
                         val rs = snapshot.await()
                         mData.addAll(rs)
-                        rs.forEach {
-                            Log.d("PostTitle",it.title)
-                        }
+                        hasMore=(rs.size>visibleThreshold-1)
+
+
 
 
                         currentPage += 1
@@ -82,15 +87,18 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
     fun openPostDetail(data: Post,shareView:View) {
         uiScope?.launch {
             try {
+
                 if(data?.getPostType()==PostType.VIDEO){
                     navigator?.gotoYoutubeDetail(data,shareView)
 
                 }else{
                     navigator?.gotoFeedDetail(data)
                 }
+                logEvent(data?.id,"readmore")
 
                 val resul = appDataManager.updateViewCount(data.id)
                 resul.await()
+
             } catch (ex: Exception) {
 
             }
@@ -117,19 +125,27 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
                     context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
             navigator?.share(messge)
         }
+        logEvent(data?.id,"share")
 
 
 
     }
     fun likeClick(data:Post){
-
+        uiScope?.launch {
+            results.value = updateRow(currentItem)
+            appDataManager.updateLikeCount(data.id)
+            logEvent(data?.id,"like")
+        }
     }
 
 
 
-    fun onLoadMore(page: Int) {
-        if(page==1) return
-        getPost(true)
+    fun onLoadMore(position: Int) {
+        currentItem = position
+        if(hasMore&&position+5>mData.size){
+            getPost(true)
+        }
+
     }
 
     fun generataQuote(context: Context,quoteResp: QuoteResp){
@@ -146,6 +162,25 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
 
 
         }
+
+
+    }
+
+    private fun updateRow(position: Int):List<Post>{
+
+       mData[position]?.apply {
+           likesCount =likesCount!!+1
+       }
+
+        return mData
+    }
+
+    private fun logEvent(id:String?,action:String){
+        val event = "$${id}_$action"
+        val likeButton = "card_$action"
+        val str = "app_attribute"
+        fbAnalytics.logEvent(event,event,str)
+        fbAnalytics.logEvent(likeButton,likeButton,str)
 
 
     }

@@ -27,26 +27,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/daily_feed_appbar"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/frameToolbar"
                 android:background="?attr/themeBackground"
-                android:fitsSystemWindows="true">
+                android:layout_height="wrap_content">
 
                 <com.ltthuc.habit.ui.widget.toolbar.BaseToolBar
                     android:id="@+id/toolbarHome"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/feed_daily_toolbar_height"
+                    android:layout_height="wrap_content"
                     app:titleBar='@{@string/feed"}' />
-            </com.google.android.material.appbar.AppBarLayout>
+
+        </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/adContainer"
-                android:layout_below="@id/daily_feed_appbar" />
+                android:layout_below="@id/frameToolbar" />
 
 
             <FrameLayout

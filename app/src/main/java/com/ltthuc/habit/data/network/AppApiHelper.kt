@@ -241,8 +241,13 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
         return firStore.runTransaction {
             val snapshot = it.get(query)
-            val newViewCount = snapshot.getDouble(DatabasePath.VIEW_COUNT)!! + 1
-            it.update(query, DatabasePath.VIEW_COUNT, newViewCount)
+            var count = snapshot.getDouble(DatabasePath.VIEW_COUNT)
+            if(count==null){
+                count=1.0
+            }else{
+                count+=1.0
+            }
+            it.update(query, DatabasePath.VIEW_COUNT, count)
         }
 
 
@@ -254,8 +259,14 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
         return firStore.runTransaction {
             val snapshot = it.get(query)
-            val newViewCount = snapshot.getDouble(DatabasePath.LIKES_COUNT)!! + 1
-            it.update(query, DatabasePath.LIKES_COUNT, newViewCount)
+            var count = snapshot.getDouble(DatabasePath.LIKES_COUNT)
+            if(count==null){
+                count=1.0
+            }else{
+                count+=1.0
+            }
+
+            it.update(query, DatabasePath.LIKES_COUNT, count)
         }
 
 

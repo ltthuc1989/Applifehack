@@ -1,6 +1,7 @@
 package com.ltthuc.habit.ui.activity.quotes
 
 import android.view.View
+import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.ezyplanet.core.ui.base.adapter.MvvmAdapter
@@ -23,7 +24,7 @@ import com.ltthuc.habit.util.extension.shareMessage
 import kotlinx.android.synthetic.main.fragment_daily_feed.*
 
 class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
-        QuoteViewListener, ToolbarQuoteListener ,MvvmAdapter.OnItemClickListener<Post>{
+        QuoteViewListener, ToolbarQuoteListener {
 
     override val viewModel: QuotesVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_quote
@@ -49,21 +50,18 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
         binding.adapter = FeedAdapter(viewModel, false)
         binding.listener = this
         binding.dailyFeedToolbar?.setListner(this)
-        binding?.adapter?.listener = this
+
 
         binding.homeNavigationView.setListner(this)
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
         }
-
+        val event = "explore_quote"
+        fbAnalytics.logEvent(event,event,"app_sections")
 
     }
 
-    override fun onItemClick(view: View, item: Post, position: Int) {
-        val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
-        val quote = view.getQuote()
-        viewModel.generataQuote(this,quote)
-    }
+
 
 
 
@@ -73,10 +71,11 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
 
     }
 
-    override fun share(message: String) {
-        shareMessage(message)
+    override fun shareImage(view: View) {
+        val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
+        val quote = view.getQuote()
+        viewModel.generataQuote(this, quote)
     }
-
     override fun selectCat(item: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -111,5 +110,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
     override fun onCategory() {
         gotoActivity(HomeActivity::class,true)
     }
+
+
 
 }

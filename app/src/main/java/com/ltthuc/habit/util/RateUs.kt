@@ -57,11 +57,12 @@ object RateUs {
         val textView2 = inflate.findViewById(R.id.dialog_neutral_btn) as TextView
         val create = builder.create()
         textView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW).apply {
+            activity.startActivity(
+            Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse(
                         "https://play.google.com/store/apps/details?id=com.example.android")
                 setPackage("com.android.vending")
-            }
+            })
 
         }
         textView2.setOnClickListener {

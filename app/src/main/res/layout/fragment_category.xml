@@ -38,7 +38,6 @@
             android:id="@+id/discover_feed_fragments_wrapper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
             android:overScrollMode="never"
             android:paddingBottom="@dimen/bottom_navigation_height"
             android:touchscreenBlocksFocus="true"

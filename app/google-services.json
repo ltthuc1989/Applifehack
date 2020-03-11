@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:57422513105:android:28a8e61a993b11ff",
+        "mobilesdk_app_id": "1:57422513105:android:85debfbd40bd4f653f16f0",
         "android_client_info": {
           "package_name": "com.ltthuc.habit"
         }
@@ -21,7 +21,44 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBVqH97S23aDEyIS-3DgJroiojKHtKVazA"
+          "current_key": "AIzaSyDg5aYEIxBkUQT0-o6qBMn4eKd5Ke3ODW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "57422513105-ihm2g22g55kmae9p25aat2r6ajq2msrn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:57422513105:android:91e94fd9291e9ac6",
+        "android_client_info": {
+          "package_name": "com.rozdoum.socialcomponents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "57422513105-n479rjgj52iof2p714jjllb98vj820fi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rozdoum.socialcomponents",
+            "certificate_hash": "20928a9a8ab77ee81d645333ee291f8b3db23750"
+          }
+        },
+        {
+          "client_id": "57422513105-ihm2g22g55kmae9p25aat2r6ajq2msrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg5aYEIxBkUQT0-o6qBMn4eKd5Ke3ODW4"
         }
       ],
       "services": {

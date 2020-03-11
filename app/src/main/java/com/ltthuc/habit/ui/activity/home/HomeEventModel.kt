@@ -6,4 +6,5 @@ import com.ltthuc.habit.data.network.response.CatResp
 
 class HomeEventModel : ViewModel(){
     val categoryClick =  SingleEventLiveData<CatResp>()
+    val toolbarTitle = SingleEventLiveData<String>()
 }

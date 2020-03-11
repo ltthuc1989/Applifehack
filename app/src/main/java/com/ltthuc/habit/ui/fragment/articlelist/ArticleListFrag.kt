@@ -1,5 +1,6 @@
 package com.ltthuc.habit.ui.fragment.articlelist
 
+import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.MvvmFragment
 import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter
@@ -7,22 +8,29 @@ import com.ezyplanet.core.util.extension.observe
 import com.ezyplanet.core.util.extension.putArgs
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
+import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.FragArticleListBinding
 import com.ltthuc.habit.databinding.ItemCatTopicBinding
 import com.ltthuc.habit.ui.activity.BaseActivity
+import com.ltthuc.habit.ui.fragment.BaseFragment
 import com.ltthuc.habit.ui.fragment.category.CategoryFrag
+import com.ltthuc.habit.util.extension.openLink
+import javax.inject.Inject
 
 
-class ArticleListFrag : MvvmFragment<ArticleListVM, FragArticleListBinding>(), ArticleListNav {
+class ArticleListFrag : BaseFragment< FragArticleListBinding,ArticleListVM>(), ArticleListNav {
 
     override val viewModel: ArticleListVM by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId: Int = R.layout.frag_article_list
+    private var cat:CatResp?=null
+
     override fun setUpNavigator() {
         viewModel.navigator = this
     }
     companion object {
-        fun newInstance(catId:String) = ArticleListFrag().putArgs {
-            putString(CategoryFrag.KEY_CATEGORY_DETAIL,catId)
+        fun newInstance(cat:CatResp) = ArticleListFrag().putArgs {
+            putParcelable(CategoryFrag.KEY_CATEGORY_DETAIL,cat)
         }
     }
     override fun onViewInitialized(binding: FragArticleListBinding) {
@@ -30,8 +38,9 @@ class ArticleListFrag : MvvmFragment<ArticleListVM, FragArticleListBinding>(), A
         binding.viewModel = viewModel
 
 
-           arguments?.getString(CategoryFrag.KEY_CATEGORY_DETAIL)?.let {
-               viewModel.updateModel(it)
+           arguments?.getParcelable<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)?.let {
+               cat = it
+               viewModel.updateModel(it.id)
            }
 
 
@@ -44,15 +53,19 @@ class ArticleListFrag : MvvmFragment<ArticleListVM, FragArticleListBinding>(), A
                 viewModel
         )
 
+
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
         }
+
+        val event = "explore_article"
+        fbAnalyticsHelper.logEvent(event,event,"app_sections")
     }
 
 
 
     override fun gotoPostDetail(post: Post) {
-
+       openLink(post?.webLink)
     }
 
     override fun share(message: String) {

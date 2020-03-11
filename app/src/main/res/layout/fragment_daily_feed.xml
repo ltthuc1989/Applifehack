@@ -42,9 +42,7 @@
                 android:orientation="vertical"
                 android:overScrollMode="always"
                 app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
-                app:onScrolledToBottom="@{(page) -> viewModel.onLoadMore(page)}"
-                app:resetLoadingState="@{viewModel.resetLoadingState}"
-                app:visibleThreshold="@{viewModel.visibleThreshold}" />
+                 />
 
 
             <ProgressBar

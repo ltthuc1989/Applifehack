@@ -125,6 +125,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:text="@{viewModel.model.getPublishedAt(context)}"
+                    android:textSize="14sp"
+                    tools:text="asdfasfa"
 
 
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
@@ -135,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:autoLink="web"
                     android:textColor="@android:color/white"
-                    app:htmlText="@{viewModel.model.desc}"
+                    android:text="@{viewModel.model.desc}"
 
                     android:paddingTop="@dimen/material_card_gutter"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />

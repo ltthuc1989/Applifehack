@@ -12,6 +12,7 @@ import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import com.ltthuc.habit.data.network.response.CatResp
 import java.util.ArrayList
 import javax.inject.Inject
@@ -24,6 +25,8 @@ class CategoryVM @Inject constructor(val appDataManager: AppDataManager, schedul
     val banners = NonNullLiveData<List<Post>>(emptyList())
     private var dotsCount: Int = 0
     private var dots: Array<ImageView?>? = null
+
+    @Inject lateinit var fbAnalyticsHelper: FirebaseAnalyticsHelper
 
 
     override fun updateModel(data: String?) {
@@ -52,10 +55,16 @@ class CategoryVM @Inject constructor(val appDataManager: AppDataManager, schedul
 
     fun onItemClicked(item: CatResp){
         navigator?.gotoCatDetailScreen(item)
+        val event = "category_${item.name}"
+        fbAnalyticsHelper.logEvent(event,event,"app_sections")
+        fbAnalyticsHelper.logEvent("category_appview","category_appview","app_attribute")
     }
 
     fun postPopularClick(post: Post){
         navigator?.gotoPostDetail(post)
+        val event = "popular_${post.id}"
+        fbAnalyticsHelper.logEvent(event,event,"app_sections")
+        fbAnalyticsHelper.logEvent("popular_appview","popular_appview","app_attribute")
     }
 
     private fun getPopularPost() {

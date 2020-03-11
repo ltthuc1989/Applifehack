@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Habit</string>
+    <string name="app_name">Knowledge</string>
     <string name="home">Home</string>
     <string name="category">Category</string>
     <string name="setting">Setting</string>
@@ -26,14 +26,14 @@
     <string name="video">Video</string>
     <string name="publish_on">Published on  %s</string>
     <string name="save">Saved</string>
-    <string name="knowlege_sologan">Knowlege Gives You Power\n Power Gives you control\nControl gives you freedom\nFreedom gives you potential\nPotential gives you endles possibilities</string>
+    <string name="knowlege_sologan">Knowledge Gives You Power\n Power Gives you control\nControl gives you freedom\nFreedom gives you potential\nPotential gives you endless possibilities</string>
     <string name="share_info_message"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it. \n Sent from %1$s.]]></string>
     <string name="download">Download:</string>
     <string name="app_link">link_app</string>
     <string name="Notifications">Notification</string>
     <string name="off">Off</string>
     <string name="on">On</string>
-    <string name="privacy">Privicy</string>
+    <string name="privacy">Privacy</string>
     <string name="restart_to_update">Restart to update</string>
     <string name="transition_project_photo">project_photo</string>
     <string name="night_mode">Night Mode</string>
@@ -44,6 +44,10 @@
     <string name="rating_dialog_not_now">Not now</string>
     <string name="rating_dialog_title">Are you enjoying life hacks? \n Please rate us.</string>
     <string name="readMore">Read More</string>
+    <string name="choose_email_app">Choose Email App</string>
+    <string name="send_feedback">Send FeedBack</string>
+    <string name="channel_name" translatable="false">Knowledge</string>
+    <string name="notification_channel_id">knowledge</string>
 
 
 </resources>

@@ -26,7 +26,7 @@ object AlertDialogUtils{
         dialog.show()
     }
 
-    fun showSingleChoice(context:Context,  title:String?,@ArrayRes array:Int,action:(String)->Unit={}){
+    fun showSingleChoice(context:Context,  title:String?,@ArrayRes array:Int,position:Int=0,action:(String)->Unit={}){
 
         lateinit var dialog: AlertDialog
 
@@ -35,7 +35,7 @@ object AlertDialogUtils{
         val builder = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle_Dark)
         builder.setTitle(title)
 
-        builder.setSingleChoiceItems(array,-1){_,which->
+        builder.setSingleChoiceItems(array,position){_,which->
             action(array[which])
             dialog.dismiss()
         }

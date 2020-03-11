@@ -1,31 +1,35 @@
 package com.ltthuc.habit.data.firebase
 
 import android.os.Bundle
+import androidx.annotation.WorkerThread
+import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class FirebaseAnalyticsHelper @Inject constructor() {
-    @Inject
-    lateinit var firebaseAnalytics: FirebaseAnalytics
+@Singleton
+class FirebaseAnalyticsHelper @Inject constructor(val connectionManager: BaseConnectionManager){
 
+   @Inject lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    fun log(eventType: AnalyticsEventType?, value: String) {
-
-        val bundle = Bundle()
-       // bundle.putString(eventType?.event + extraInfo, valueType?.name + " " + extraInfo)
-       // firebaseAnalytics.logEvent(eventType?.event!! + extraInfo, bundle)
+    fun logEvent(str: String, str2: String, str3: String): Boolean {
+        if (connectionManager.isNetworkConnected()==true) {
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, str)
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, str2)
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, str3)
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+        }
+        return true
     }
 
 
 }
 
-enum class AnalyticsEventType(val event: String?) {
-    VIEW_POST("")
-
-
+object ParamItemName {
+    val OPEN_APP_COUNT="open_app_count"
 
 }
-
-enum class AnalyticsValueType(val value: String?) {
-
+object ParamContentType{
+    val OPEN_APP_BY_USER = "Open_app_by_user"
 }

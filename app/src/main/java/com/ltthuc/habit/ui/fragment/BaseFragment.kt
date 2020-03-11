@@ -8,13 +8,16 @@ import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.MvvmFragment
 import com.ezyplanet.core.util.extension.addExtra
 import com.ezyplanet.core.util.extension.finishActivity
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import com.ltthuc.habit.ui.activity.BaseActivity
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
 abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel<*, *>> :MvvmFragment<V,B>(){
 
 
-
+    @Inject
+    lateinit var fbAnalyticsHelper: FirebaseAnalyticsHelper
 
   fun gotoActivity(cls: KClass<out Activity>, finish: Boolean = false) {
 

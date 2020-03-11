@@ -25,11 +25,10 @@ class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>()
         binding.viewModel = viewModel
         setToolBar(binding.viewToolbar, "")
         viewModel.navigator = this
-        val youtubeUrl = getExtraParcel<Post>(AppBundleKey.YOUTUBE_URL)
-        viewModel.getYtDetail(youtubeUrl?.video_url)
-        doTransition {
-            viewModel.youtubeUrl.value =youtubeUrl?.imgLink
-        }
+        val youtubeUrl = intent.getStringExtra(AppBundleKey.YOUTUBE_URL)
+        viewModel.getYtDetail(youtubeUrl)
+        val event = "explore_article"
+        fbAnalytics.logEvent(event,event,"app_sections")
 
     }
 
@@ -37,15 +36,7 @@ class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>()
         MediaUtil.openYoutube(this,BuildConfig.API_YOUTUBE,url,0,true,true)
     }
 
-    private fun setToolBar(toolbar: Toolbar, title: String) {
-        toolbar.setTitle(title)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setNavigationOnClickListener{
-            onBackPressed()
-        }
-    }
+
 
 
 

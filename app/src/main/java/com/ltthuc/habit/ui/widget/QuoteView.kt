@@ -124,6 +124,11 @@ class QuoteView : FrameLayout{
         binding.background.setImageBitmap(bitmap)
         this.bitmap = bitmap
         setBackground(context,bitmap)
+        if(_model?.author.isNullOrEmpty()){
+            binding.authorCard.visibility = View.GONE
+        }else{
+            binding.authorCard.visibility = View.VISIBLE
+        }
         binding.quote.text = _model?.description
         binding.author.text = _model?.author
 

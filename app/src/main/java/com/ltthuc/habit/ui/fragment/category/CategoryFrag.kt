@@ -12,6 +12,7 @@ import com.ezyplanet.core.util.extension.observe
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.entity.Post
 import com.ltthuc.habit.data.entity.PostType
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.FragmentCategoryBinding
 import com.ltthuc.habit.databinding.ItemCategoryBinding
@@ -22,6 +23,7 @@ import com.ltthuc.habit.ui.activity.quotes.QuotesActivity
 import com.ltthuc.habit.ui.fragment.BaseFragment
 import com.ltthuc.habit.ui.fragment.slidepost.SlidePostFrag
 import java.util.*
+import javax.inject.Inject
 
 class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), CategoryNav,
         ViewPager.OnPageChangeListener {
@@ -35,6 +37,7 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
     private var timer: Timer? = null
     private var count: Int = 0
     private var banners: List<Post>? = null
+
 
     companion object {
         val KEY_CATEGORY_DETAIL = "category_detail"
@@ -81,6 +84,8 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
         }
+        val event = "explore_article"
+        fbAnalyticsHelper.logEvent(event,event,"app_sections")
 
     }
 

@@ -38,4 +38,8 @@ class FeedAdapter(viewModel: BaseViewModel<*, *>,private val isInFeed:Boolean=tr
         private val ITEM_QUOTES = R.layout.item_quotes_list
     }
 
+    fun getRowData(position: Int):Post{
+        return items?.get(position)
+    }
+
 }

@@ -10,6 +10,7 @@ import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.util.extension.getExtraParcel
 import com.ezyplanet.core.util.extension.putArgs
 import com.ltthuc.habit.R
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import com.ltthuc.habit.data.network.response.CatResp
 
 import com.ltthuc.habit.databinding.FragmentCategoryDetailBinding
@@ -21,28 +22,31 @@ import com.ltthuc.habit.ui.fragment.videolist.VideoListFrag
 import com.ltthuc.habit.ui.widget.listener.ToolbarListener
 import kotlinx.android.synthetic.main.view_category_detail.*
 import kotlinx.android.synthetic.main.view_category_detail.view.*
+import javax.inject.Inject
 
 class CategoryDetailFrag : MvvmActivity<FragmentCategoryDetailBinding, CategoryDetailVM>(),
         CategoryDetailNav {
 
     override val viewModel: CategoryDetailVM by getLazyViewModel()
     override val layoutId: Int = R.layout.fragment_category_detail
-    lateinit var catId:String
-
+    lateinit var cat:CatResp
+    @Inject lateinit var fbAnalyticsHelper: FirebaseAnalyticsHelper
 
     override fun onViewInitialized(binding: FragmentCategoryDetailBinding) {
         super.onViewInitialized(binding)
         viewModel.navigator = this
         setToolBar(binding.tagFeedLayout.view_toolbar, "")
         binding.viewModel = viewModel
-        val catResp =intent.getParcelableExtra<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)
-        catId = catResp?.id!!
-        viewModel.updateModel(catResp)
+        cat=intent.getParcelableExtra<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)
+
+        viewModel.updateModel(cat)
 
         binding.viewPager.offscreenPageLimit = 1
         binding.viewPager.adapter = TabAdapter(supportFragmentManager)
 
         tabs.setupWithViewPager(binding.viewPager)
+        val event = "explore_category_detail"
+        fbAnalyticsHelper.logEvent(event,event,"app_sections")
 
 
     }
@@ -63,8 +67,8 @@ class CategoryDetailFrag : MvvmActivity<FragmentCategoryDetailBinding, CategoryD
 
         private fun getItemFragment(position: Int): Fragment {
 
-            return if (position == 0) ArticleListFrag.newInstance(catId)
-            else return VideoListFrag.newInstance(catId)
+            return if (position == 0) ArticleListFrag.newInstance(cat)
+            else return VideoListFrag.newInstance(cat)
 
         }
 

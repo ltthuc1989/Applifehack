@@ -1,6 +1,5 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+   >
 
     <data>
 
@@ -11,28 +10,36 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/darkest_gray"
+        android:background="@color/black_60"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <com.ltthuc.habit.ui.widget.toolbar.BaseToolBar
+
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/setting_toolbar"
+                android:background="@color/dark_gray"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:titleBar='@{@string/setting}' />
-        </com.google.android.material.appbar.AppBarLayout>
+                 >
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/setting"
+                android:textColor="@color/white_50"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:layout_height="wrap_content" />
+            </androidx.appcompat.widget.Toolbar>
+
 
         <RelativeLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
+            android:layout_height="match_parent">
 
 
 
@@ -49,6 +56,7 @@
                 android:textColor="@color/white_50"
                 android:gravity="bottom"
                 android:padding="@dimen/padding"
+                android:textSize="18sp"
                 android:text="@string/Notifications"
                 />
 
@@ -82,7 +90,9 @@
                 android:textColor="@color/white_50"
                 android:gravity="bottom"
                 android:padding="@dimen/padding"
+                android:textSize="18sp"
                 android:text="@string/night_mode"
+                android:visibility="gone"
                 />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -100,42 +110,17 @@
                 android:gravity="center"
                 android:textOff="@string/off"
                 android:textOn="@string/on"
+                android:visibility="gone"
                 />
 
 
-            <TextView
-                android:id="@+id/lbRateUse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lbNightMode"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/padding"
-                android:layout_marginRight="@dimen/padding"
-                android:fontFamily="@font/cabin_condensed_regular"
-                android:textColor="@color/white_50"
-                android:onClick="@{()->viewModel.openPolicy()}"
-                android:padding="@dimen/padding"
-                android:text="@string/rate_us" />
-            <TextView
-                android:id="@+id/lbTermCondition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lbRateUse"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/padding"
-                android:layout_marginRight="@dimen/padding"
-                android:fontFamily="@font/cabin_condensed_regular"
-                android:textColor="@color/white_50"
-                android:onClick="@{()->viewModel.openPolicy()}"
-                android:padding="@dimen/padding"
-                android:text="@string/term_condition" />
+
+
             <TextView
                 android:id="@+id/lbPrivacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lbTermCondition"
+                android:layout_below="@+id/lb_notification"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding"
@@ -144,10 +129,41 @@
                 android:textColor="@color/white_50"
                 android:onClick="@{()->viewModel.openPolicy()}"
                 android:padding="@dimen/padding"
+                android:textSize="18sp"
                 android:text="@string/privacy_policy" />
+
+            <TextView
+                android:id="@+id/lbSendFeedBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbPrivacy"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.feedbackClick()}"
+                android:padding="@dimen/padding"
+                android:textSize="18sp"
+                android:text="@string/send_feedback" />
+            <TextView
+                android:id="@+id/lbRateUse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbSendFeedBack"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.rateUs()}"
+                android:padding="@dimen/padding"
+                android:textSize="18sp"
+                android:text="@string/rate_us" />
 
 
         </RelativeLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 </layout>

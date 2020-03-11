@@ -16,7 +16,10 @@ class YtModel(val id:String?,val video: Item){
         return video?.snippet?.description
     }
     fun thumnail():String?{
-        return video?.snippet?.thumbnails?.high?.url
+        val temp=video?.snippet?.thumbnails?.medium?.url
+       return if(temp!=null) temp else video?.snippet?.thumbnails?.high?.url
+
+
     }
     fun title():String?{
         return video?.snippet?.title

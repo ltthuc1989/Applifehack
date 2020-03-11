@@ -14,7 +14,7 @@ class Post(var id: String? = "",
            var title: String? = "",
            var description: String? = "",
            var createdDate: Timestamp? = null,
-           var likesCount: Long? = 0,
+           var likesCount: Int? = 0,
            var imgLink: String? = "",
            var catId: String? = "",
            var contentId: String? = "",
@@ -65,6 +65,7 @@ class Post(var id: String? = "",
         }
         return ""
     }
+    fun formatLikes() :String = "$likesCount"
 
 }
 

@@ -32,11 +32,14 @@ import androidx.core.content.ContextCompat.startActivity
 import com.google.common.io.Flushables.flush
 import android.R.attr.bitmap
 import android.R
+import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ltthuc.habit.BuildConfig
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import java.io.FileOutputStream
 
 
 fun MvvmActivity<*,*>.openLink(url: String?, customTabHelper: CustomTabHelper) {
+    if(url ==null) return
     val builder = CustomTabsIntent.Builder()
 
     // modify toolbar color
@@ -80,7 +83,8 @@ fun MvvmActivity<*,*>.openLink(url: String?, customTabHelper: CustomTabHelper) {
 
     if (packageName == null) {
         // if chrome not available open in web view
-        gotoActivity(WebViewActivity::class, mapOf(WebViewActivity.URL to url))
+        var browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     } else {
         customTabsIntent.intent.setPackage(packageName)
         customTabsIntent.launchUrl(this, Uri.parse(url))
@@ -132,6 +136,12 @@ fun MvvmActivity<*,*>.shareImage(bitmap: Bitmap?=null){
             continuation.resumeWithException(task.exception ?: RuntimeException("Unknown task exception"))
         }
     }
+}
+
+fun BaseViewModel<*,*>.logEvent(id:String,fbAnalyticsHelper: FirebaseAnalyticsHelper){
+    val param = "${id}_tap"
+    fbAnalyticsHelper.logEvent(param,param,"knowledge_attribute")
+
 }
 
 

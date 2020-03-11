@@ -64,5 +64,6 @@
     <color name="grey_200">#b0bec5</color>
     <color name="bg_app">#0C2B62</color>
     <color name="app_22222">#222222</color>
+    <color name="red">#FF0000</color>
 </resources>
 

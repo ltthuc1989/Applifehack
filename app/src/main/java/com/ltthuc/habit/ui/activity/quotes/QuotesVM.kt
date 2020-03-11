@@ -2,6 +2,7 @@ package com.ltthuc.habit.ui.activity.quotes
 
 import android.content.Context
 import android.util.Log
+import android.view.View
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.SchedulerProvider
@@ -12,6 +13,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.ltthuc.habit.R
 import com.ltthuc.habit.data.AppDataManager
 import com.ltthuc.habit.data.entity.Post
+import com.ltthuc.habit.data.firebase.FirebaseAnalyticsHelper
 import com.ltthuc.habit.util.SortBy
 import com.ltthuc.habit.util.extension.await
 import com.ltthuc.habit.util.extension.shareImage
@@ -33,6 +35,8 @@ class QuotesVM @Inject constructor(val appDataManager: AppDataManager, scheduler
     private var currentPage=0
     private var sortBy :SortBy = SortBy.NEWEST
     private var quoteType :String?= null
+    private var currentItem = 0
+    @Inject lateinit var fbAnalytics:FirebaseAnalyticsHelper
 
     fun getQuotes(nextPage: Boolean? = false,sort: SortBy?=null) {
         if(sort!=null) this.sortBy = sort
@@ -82,17 +86,19 @@ class QuotesVM @Inject constructor(val appDataManager: AppDataManager, scheduler
     }
 
 
-    fun shareClick(context: Context, data: Post){
-        val download = context.getString(R.string.download)
-        val applink = context.getString(R.string.app_link)
-        val messge = String.format(context.getString(R.string.share_info_message),
-                context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
-        navigator?.share(messge)
+    fun shareClick(data:Post,view: View){
+        navigator?.shareImage(view)
+        logEvent(data?.id,"share")
 
 
     }
     fun likeClick(data: Post){
+        uiScope?.launch {
 
+            results.value = updateRow(currentItem)
+            appDataManager.updateViewCount(data.id)
+            logEvent(data?.id,"like")
+        }
     }
 
 
@@ -115,6 +121,23 @@ class QuotesVM @Inject constructor(val appDataManager: AppDataManager, scheduler
 
 
         }
+
+    }
+
+    private fun updateRow(position: Int):List<Post>{
+
+        mData[position]?.likesCount?.plus(1)
+
+        return mData
+    }
+
+    private fun logEvent(id:String?,action:String){
+        val event = "$${id}_$action"
+        val likeButton = "card_$action"
+        val str = "app_attribute"
+        fbAnalytics.logEvent(event,event,str)
+        fbAnalytics.logEvent(likeButton,likeButton,str)
+
 
     }
 

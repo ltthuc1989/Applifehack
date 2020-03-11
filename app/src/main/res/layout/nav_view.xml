@@ -69,6 +69,7 @@
         android:textColor="@color/white_50"
         android:textSize="18sp"
         android:padding="10dp"
+        android:visibility="gone"
         android:onClick="@{()->listener.onSaved()}"
         android:text="@string/save"/>
 

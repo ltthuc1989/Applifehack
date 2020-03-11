@@ -15,11 +15,14 @@ import com.ltthuc.habit.data.network.response.CatResp
 import com.ltthuc.habit.databinding.ActivityHomeBinding
 import com.ltthuc.habit.ui.activity.BaseActivity
 import com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailFrag
+import com.ltthuc.habit.ui.activity.quotes.QuotesActivity
 import com.ltthuc.habit.ui.fragment.category.CategoryFrag
 import com.ltthuc.habit.ui.activity.setting.SettingActivity
+import com.ltthuc.habit.ui.activity.ytDetail.YtDetailActivity
 import com.ltthuc.habit.ui.fragment.feed.FeedFrag
 import com.ltthuc.habit.ui.widget.listener.NavListener
 import com.ltthuc.habit.ui.widget.listener.ToolbarListener
+import com.ltthuc.habit.util.AppBundleKey
 import com.ltthuc.habit.util.helper.AppUpdateHelper
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,ToolbarListener {
@@ -30,6 +33,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
     lateinit var appUpdateHelper: AppUpdateHelper
     lateinit var homeEventModel: HomeEventModel
+
+
 
     override fun onViewInitialized(binding: ActivityHomeBinding) {
         super.onViewInitialized(binding)
@@ -46,6 +51,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
             gotoActivity(CategoryDetailFrag::class, mapOf(CategoryFrag.KEY_CATEGORY_DETAIL to (it as CatResp)))
         })
         viewModel.showRateUse(this)
+        homeEventModel?.toolbarTitle?.observe(this, Observer {
+            binding.toolbarHome.titleBar = it
+        })
+        viewModel.handleIntent(intent)
+
 
 
 
@@ -72,12 +82,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
 
     override fun onSetting() {
+        val str = "icon_setting"
+        fbAnalytics.logEvent(str,str,icon)
         onMenu()
         gotoActivity(SettingActivity::class)
+
     }
 
     override fun onHome() {
-
+        val str = "icon_home"
+        fbAnalytics.logEvent(str,str,icon)
         updateToolBarTitle(R.string.feed)
         replaceFragment(FeedFrag())
 
@@ -87,7 +101,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
     override fun onCategory() {
-
+        val str = "icon_category"
+        fbAnalytics.logEvent(str,str,icon)
         updateToolBarTitle(R.string.category)
         replaceFragment(CategoryFrag())
 
@@ -134,5 +149,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
 
+    override fun openArtilce(link: String?) {
+       openBrowser(link)
+    }
 
+    override fun openVideo(id: String?) {
+       gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to id))
+    }
+
+    override fun openQuote() {
+       gotoActivity(QuotesActivity::class)
+    }
 }
