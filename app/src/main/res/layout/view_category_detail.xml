@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVM" />
+            type="com.applifehack.knowledge.ui.activity.BaseBottomVM" />
     </data>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -26,7 +26,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:collapsedTitleTextAppearance="?attr/feedCollapsedToolbarStyle"
             app:contentScrim="@android:color/black"
-            app:title="@{viewModel.model.name}"
+            app:title="@{viewModel.getCatMD().cat_name}"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout
@@ -39,7 +39,7 @@
 
                 <ImageView
                     android:id="@+id/feed_hero_image"
-                    srcImageUrl="@{viewModel.model.image}"
+                    srcImageUrl="@{viewModel.getCatMD().cat_thumb_url}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"

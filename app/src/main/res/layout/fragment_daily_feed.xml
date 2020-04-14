@@ -4,14 +4,14 @@
 
     <data>
 
-        <import type="com.ltthuc.habit.databinding.ItemFeedListBinding" />
+        <import type="com.applifehack.knowledge.databinding.ItemFeedListBinding" />
 
-        <import type="com.ltthuc.habit.data.entity.Post" />
+        <import type="com.applifehack.knowledge.data.entity.Post" />
 
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.feed.FeedVM" />
+            type="com.applifehack.knowledge.ui.fragment.feed.FeedVM" />
 
         <variable
             name="adapter"

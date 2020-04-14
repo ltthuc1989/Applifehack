@@ -6,65 +6,62 @@
 
         <variable
             name="listener"
-            type="com.ltthuc.habit.ui.widget.listener.NavListener" />
+            type="com.applifehack.knowledge.ui.widget.listener.NavListener" />
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.activity.home.HomeVM" />
+            type="com.applifehack.knowledge.ui.activity.BaseBottomVM" />
 
     </data>
 
-    <androidx.drawerlayout.widget.DrawerLayout
 
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/linHome"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:background="?attr/themeBackground"
             android:orientation="vertical">
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:id="@+id/frameToolbar"
-                android:background="?attr/themeBackground"
+
                 android:layout_height="wrap_content">
 
-                <com.ltthuc.habit.ui.widget.toolbar.BaseToolBar
+                <com.applifehack.knowledge.ui.widget.toolbar.BaseToolBar
                     android:id="@+id/toolbarHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleBar='@{@string/feed"}' />
+                    app:titleBar="@{viewModel.toolbarTitle}" />
 
         </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_above="@id/adContainer"
-                android:layout_below="@id/frameToolbar" />
+                />
 
 
-            <FrameLayout
-                android:id="@+id/adContainer"
-                android:layout_width="match_parent"
+
+
+            <include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"
+                app:listener="@{listener}"
+                android:layout_width="wrap_content"
+                android:id="@+id/iclBottom"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true" />
+                app:viewModel="@{viewModel}"
+                layout="@layout/bottom_navigation"/>
+        </LinearLayout>
 
 
-        </RelativeLayout>
-
-        <com.ltthuc.habit.ui.widget.NavigationViewApp
-            android:id="@+id/home_navigation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start" />
 
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
 
 </layout>

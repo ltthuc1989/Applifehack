@@ -4,8 +4,12 @@
     <data>
     <variable
         name="listener"
-        type="com.ltthuc.habit.ui.widget.listener.BottomBarListener"/>
+        type="com.applifehack.knowledge.ui.widget.listener.NavListener"/>
+        <variable
+            name="viewModel"
+            type="com.applifehack.knowledge.ui.activity.BaseBottomVM" />
     </data>
+
 
 <LinearLayout
     
@@ -34,34 +38,36 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-
             android:layout_gravity="center"
             android:gravity="center"
-            android:onClick="@{()->listener.onHomeClick()}"
+            android:onClick="@{()->listener.onHome()}"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/bottom_navigation_icon"
                 android:layout_marginBottom="@dimen/bottom_navigation_icon_marginBottom"
-                android:tint="@color/white_75"
+                android:tint="@color/bottom_item_bg"
                 android:src="@drawable/ic_home_black_36dp"
+                viewSelected="@{viewModel.homeSelected}"
+
+
                 android:scaleType="centerInside" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_light"
-                android:textColor="@color/bottom_navigation_color"
+                android:textColor="@color/bottom_item_text_bg"
                 android:textSize="@dimen/bottom_navigation_title_textSize"
-
+                viewSelected="@{viewModel.homeSelected}"
                 android:text="@string/home" />
         </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:onClick="@{()->listener.onCategoryClick()}"
+                android:onClick="@{()->listener.onCategory()}"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -70,8 +76,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/bottom_navigation_icon"
                     android:layout_marginBottom="@dimen/bottom_navigation_icon_marginBottom"
-                    android:tint="@color/white_75"
-
+                    android:tint="@color/bottom_item_bg"
+                    viewSelected="@{viewModel.catSelected}"
                     android:src="@drawable/ic_search_black_36dp"
                     android:scaleType="centerInside" />
 
@@ -79,16 +85,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
-                    android:textColor="@color/bottom_navigation_color"
+                    android:textColor="@color/bottom_item_text_bg"
                     android:textSize="@dimen/bottom_navigation_title_textSize"
+                    viewSelected="@{viewModel.catSelected}"
                     android:gravity="center"
-                    android:text="discovery" />
+                    android:text="@string/category" />
             </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:onClick="@{()->listener.onSettingClick()}"
+                    android:onClick="@{()->listener.onSetting()}"
 
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -98,7 +105,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/bottom_navigation_icon"
                         android:layout_marginBottom="@dimen/bottom_navigation_icon_marginBottom"
-                        android:tint="@color/white_75"
+                        android:tint="@color/bottom_item_bg"
+                        viewSelected="@{viewModel.settingSelected}"
                         android:src="@drawable/ic_settings_black_36dp"
                         android:scaleType="centerInside" />
 
@@ -106,9 +114,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_light"
-                        android:textColor="@color/bottom_navigation_color"
+                        android:textColor="@color/bottom_item_text_bg"
+                        viewSelected="@{viewModel.settingSelected}"
                         android:textSize="@dimen/bottom_navigation_title_textSize"
-
                         android:text="@string/setting" />
                 </LinearLayout>
     </LinearLayout>

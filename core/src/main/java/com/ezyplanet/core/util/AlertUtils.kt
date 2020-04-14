@@ -10,6 +10,7 @@ import com.ezyplanet.core.R
 import android.widget.LinearLayout
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.listener.RetryCallback
+import java.lang.System.exit
 
 
 /**
@@ -122,6 +123,8 @@ class AlertUtils {
 
             alertDialog.show()
         }
+
+
 
         fun showYesNoAlertDialog(context: Context, message: String?,
                                  plistener: (DialogInterface)->Unit, nlistener: (DialogInterface)->Unit={}) {

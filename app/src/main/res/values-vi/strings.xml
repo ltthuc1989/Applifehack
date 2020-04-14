@@ -21,4 +21,9 @@
     <string name="readMore">Read More</string>
     <string name="choose_email_app">Choose Email App</string>
     <string name="send_feedback">Send FeedBack</string>
+    <string name="no_result">No results found</string>
+    <string name="connection_fail">Connection Failed</string>
+    <string name="please_check_your_internet">Please Check Your Internet Connection</string>
+    <string name="exit">Exit</string>
+    <string name="try_again">Try Again</string>
 </resources>

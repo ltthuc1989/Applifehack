@@ -6,4 +6,18 @@
         <item>Oldest</item>
     </string-array>
 
+    <string-array name="quote_type">
+        <item>All</item>
+        <item>Motivational</item>
+        <item>Love</item>
+        <item>Positive</item>
+        <item>Inspiration</item>
+        <item>Life</item>
+        <item>Hope</item>
+        <item>Attitude</item>
+
+
+    </string-array>
+
+
 </resources>

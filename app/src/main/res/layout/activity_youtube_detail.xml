@@ -8,11 +8,11 @@
 
         <variable
             name="listener"
-            type="com.ltthuc.habit.ui.widget.listener.BottomBarListener" />
+            type="com.applifehack.knowledge.ui.widget.listener.BottomBarListener" />
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.activity.ytDetail.YtDetailVM" />
+            type="com.applifehack.knowledge.ui.activity.ytDetail.YtDetailVM" />
 
 
     </data>

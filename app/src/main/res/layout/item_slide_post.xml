@@ -5,11 +5,11 @@
 
         <variable
             name="item"
-            type="com.ltthuc.habit.data.entity.Post" />
+            type="com.applifehack.knowledge.data.entity.Post" />
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.slidepost.SlidePostVM" />
+            type="com.applifehack.knowledge.ui.fragment.slidepost.SlidePostVM" />
     </data>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
@@ -28,7 +28,7 @@
         android:alpha="@dimen/feed_carousel_slide_alpha"
         android:gravity="center"
         android:src="@drawable/bg_exploremore_en"
-        srcImageUrl="@{item.imgLink}"
+        srcImageUrl="@{item.imageUrl}"
         android:scaleType="centerCrop" />
 
     <LinearLayout

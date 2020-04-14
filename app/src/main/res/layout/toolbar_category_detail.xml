@@ -7,7 +7,7 @@
 
         <variable
             name="listener"
-            type="com.ltthuc.habit.ui.widget.listener.ToolbarListener">
+            type="com.applifehack.knowledge.ui.widget.listener.ToolbarListener">
 
         </variable>
 

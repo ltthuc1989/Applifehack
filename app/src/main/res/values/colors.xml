@@ -36,11 +36,12 @@
     <color name="dark_gray">#3e3f45</color>
     <color name="darker_gray">#ff282930</color>
     <color name="darkest_gray">#ff222222</color>
-
+    <color name="deep_blue_lighter_75">#bf82adbd</color>
     <color name="bottom_navigation_color">@color/light_gray</color>
     <color name="light_gray">#ffa9a9ac</color>
     <color name="deep_blue_dark">#ff1c292e</color>
     <color name="bright_blue">#ff1d7ec2</color>
+    <color name="bright_blue_50">#801d7ec2</color>
     <color name="brighter_blue">#ff19b5fe</color>
     <color name="primary_text_inverse">@color/material_typography_primary_text_color_light</color>
     <color name="material_typography_secondary_text_color_dark">@color/material_color_black_54_percent</color>

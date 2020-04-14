@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.viewer.video.VideoViewerVM" />
+            type="com.applifehack.knowledge.ui.viewer.video.VideoViewerVM" />
     </data>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"

@@ -8,11 +8,11 @@
 
         <variable
             name="listener"
-            type="com.ltthuc.habit.ui.widget.listener.BottomBarListener" />
+            type="com.applifehack.knowledge.ui.widget.listener.NavListener"/>
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.activity.categorydetail.CategoryDetailVM" />
+            type="com.applifehack.knowledge.ui.activity.BaseBottomVM" />
 
 
     </data>
@@ -39,14 +39,22 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:paddingBottom="@dimen/bottom_navigation_height"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
 
 
-<!--<include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"-->
-        <!--layout="@layout/bottom_navigation"/>-->
+
+    <include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"
+        app:listener="@{listener}"
+        android:layout_width="wrap_content"
+        android:id="@+id/iclBottom"
+        android:layout_height="wrap_content"
+        app:viewModel="@{viewModel}"
+        android:layout_gravity="bottom"
+        layout="@layout/bottom_navigation"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

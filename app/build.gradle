@@ -17,7 +17,7 @@ android {
     }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.ltthuc.habit"
+        applicationId "com.applifehack.knowledge"
         minSdkVersion rootProject.androidMinSdkVersion
         targetSdkVersion rootProject.androidTargetSdkVersion
         versionCode 1
@@ -65,14 +65,14 @@ android {
         mockup {
             // minSdkVersion 21
            // ext.enableCrashlytics = false
-            applicationId "com.ltthuc.habit"
+            applicationId "com.applifehack.knowledge.staging"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
-
 
         }
         production {
-            applicationId "com.ltthuc.habit"
+            applicationId "com.applifehack.knowledge"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
+
         }
     }
     buildTypes {

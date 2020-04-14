@@ -7,7 +7,7 @@
 
         <variable
             name="listener"
-            type="com.ltthuc.habit.ui.widget.listener.ToolbarQuoteListener">
+            type="com.applifehack.knowledge.ui.widget.listener.ToolbarQuoteListener">
 
         </variable>
 
@@ -24,7 +24,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/color_transparent"
+        android:background="@color/black"
         android:contentInsetStart="0dp"
         android:contentInsetEnd="0dp"
         android:contentInsetRight="0dp"
@@ -33,6 +33,7 @@
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp"
         style="?attr/toolbarStyle"
+
 
 
         >
@@ -49,25 +50,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
-                android:tint="@color/white"
-
-                app:srcCompat="@drawable/ic_menu" />
-            <TextView
-                android:layout_width="wrap_content"
-                style="?attr/toolBarTextStyle"
-                tools:text="All"
-                android:id="@+id/tvCategory"
-                android:layout_toRightOf="@id/imMenu"
-                android:layout_marginLeft="50dp"
-                android:drawablePadding="8dp"
-                android:layout_centerInParent="true"
-                android:text="@{category}"
                 android:visibility="gone"
-                android:drawableRight="@drawable/ic_arrow_drop_down_white_24dp"
-                android:layout_height="wrap_content"
-
-
+                android:src="@drawable/ic_arrow_back_white_24dp"
+                android:onClick="@{()->listener.back()}"
                 />
+
+
             <TextView
                 android:layout_width="wrap_content"
                 style="?attr/toolBarTextStyle"
@@ -80,6 +68,7 @@
                 android:drawablePadding="8dp"
                 android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white_75"
 
                 />
 

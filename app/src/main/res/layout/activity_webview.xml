@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.activity.webview.WebViewVM"
+            type="com.applifehack.knowledge.ui.activity.webview.WebViewVM"
             />
     </data>
 
@@ -15,7 +15,7 @@
       android:layout_width="match_parent"
       android:orientation="vertical"
       android:layout_height="wrap_content">
-      <com.ltthuc.habit.ui.widget.toolbar.BaseToolBar
+      <com.applifehack.knowledge.ui.widget.toolbar.BaseToolBar
           android:id="@+id/toolbar_webview"
           android:layout_width="match_parent"
           android:layout_height="?attr/actionBarSize"

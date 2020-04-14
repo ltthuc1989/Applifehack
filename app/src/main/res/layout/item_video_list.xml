@@ -5,11 +5,11 @@
 
         <variable
             name="item"
-            type="com.ltthuc.habit.data.entity.Post" />
+            type="com.applifehack.knowledge.data.entity.Post" />
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.feed.FeedVM" />
+            type="com.applifehack.knowledge.ui.fragment.feed.FeedVM" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,11 +32,11 @@
                 android:id="@+id/quoteView"
                 android:transitionName="@string/shareView"
                 android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
-                srcImageUrl="@{item.imgLink}"
+                srcImageUrl="@{item.imageUrl}"
                 />
             <ImageView
                 android:layout_width="wrap_content"
-                 android:layout_gravity="center"
+                android:layout_gravity="center"
 
                 android:src="@drawable/ic_play_circle_outline_black_24dp"
                 android:layout_height="wrap_content" />
@@ -126,7 +126,7 @@
                 android:paddingTop="3dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="3dp"
-                android:text="@{item.webLink}"
+                android:text="@{item.redirect_link}"
                 android:textAllCaps="true"
                 android:textColor="@color/bright_blue"
                 android:visibility="gone"
@@ -142,7 +142,7 @@
 
                 android:fontFamily="@font/cabin_condensed_regular"
                 android:gravity="center"
-                android:text="@{item.webLink}"
+                android:text="@{item.redirect_link}"
                 android:textColor="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
 

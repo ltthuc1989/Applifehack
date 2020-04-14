@@ -9,7 +9,7 @@
 
         <variable
             name="data"
-            type="com.ltthuc.habit.ui.activity.webview.WebViewVM" />
+            type="com.applifehack.knowledge.ui.activity.webview.WebViewVM" />
 
     </data>
 

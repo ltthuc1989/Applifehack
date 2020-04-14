@@ -7,11 +7,11 @@
 
         <variable
             name="item"
-            type="com.ltthuc.habit.data.entity.Post" />
+            type="com.applifehack.knowledge.data.entity.Post" />
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.feed.FeedVM" />
+            type="com.applifehack.knowledge.ui.fragment.feed.FeedVM" />
     </data>
 
     <RelativeLayout
@@ -42,7 +42,7 @@
                 android:alpha="0.8"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                srcImageUrl="@{item.imgLink}"
+                srcImageUrl="@{item.imageUrl}"
                 android:cropToPadding="true"
                 android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
 
@@ -91,7 +91,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tvReadMore"
                 app:layout_constraintTop_toTopOf="parent"
-                 />
+                />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -122,25 +122,7 @@
                 android:layout_height="wrap_content" />
 
 
-            <TextView
-                android:id="@+id/tvPageLink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/cabin_condensed_regular"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingTop="3dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="3dp"
-                android:text="@{item.webLink}"
-                android:textAllCaps="true"
-                android:textColor="@color/bright_blue"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPostedDate"
-                tools:text="Productive" />
+
 
             <TextView
                 android:id="@+id/tvPostedDate"
@@ -150,7 +132,7 @@
 
                 android:fontFamily="@font/cabin_condensed_regular"
                 android:gravity="center"
-                android:text="@{item.webLink}"
+                android:text="@{item.author}"
                 android:textColor="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
 

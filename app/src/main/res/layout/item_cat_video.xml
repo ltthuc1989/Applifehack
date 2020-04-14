@@ -5,65 +5,65 @@
 
         <variable
             name="item"
-            type="com.ltthuc.habit.data.entity.Post" />
+            type="com.applifehack.knowledge.data.entity.Post" />
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.videolist.VideoListVM" />
+            type="com.applifehack.knowledge.ui.fragment.videolist.VideoListVM" />
     </data>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/search_tab_results_video_row_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/feed_simple_list_item_dark_background"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingStart="@dimen/padding_base_2x"
-    android:paddingTop="@dimen/padding_base_2x"
-    android:paddingEnd="@dimen/padding_base_2x"
-    android:paddingBottom="@dimen/padding_base_3x"
-    android:onClick="@{()->viewModel.onItemClicked(item)}"
-    >
-
-    <ImageView
-        android:id="@+id/search_tab_results_video_row_image"
-        android:layout_width="@dimen/search_result_video_item_image_width"
-        android:layout_height="@dimen/search_result_video_item_image_height"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/margin_base_2x"
-
-        srcImageUrl="@{item.imgLink}"
-        android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/search_tab_results_video_row_title"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/search_tab_results_video_row_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/search_tab_results_video_row_image"
-        android:layout_toRightOf="@+id/search_tab_results_video_row_image"
-        android:ellipsize="end"
-        android:lineSpacingMultiplier="1.1"
-        android:maxLines="2"
-        android:text="@{item.title}"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/search_result_video_item_title_textSize" />
+        android:background="@drawable/feed_simple_list_item_dark_background"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingStart="@dimen/padding_base_2x"
+        android:paddingTop="@dimen/padding_base_2x"
+        android:paddingEnd="@dimen/padding_base_2x"
+        android:paddingBottom="@dimen/padding_base_3x"
+        android:onClick="@{()->viewModel.onItemClicked(item)}"
+        >
 
-    <TextView
-        android:id="@+id/search_tab_results_video_row_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/search_tab_results_video_row_image"
+            android:layout_width="@dimen/search_result_video_item_image_width"
+            android:layout_height="@dimen/search_result_video_item_image_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_base_2x"
+
+            srcImageUrl="@{item.imageUrl}"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/search_tab_results_video_row_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/search_tab_results_video_row_image"
+            android:layout_toRightOf="@+id/search_tab_results_video_row_image"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxLines="2"
+            android:text="@{item.title}"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/search_result_video_item_title_textSize" />
+
+        <TextView
+            android:id="@+id/search_tab_results_video_row_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
 
-        android:layout_toRightOf="@+id/search_tab_results_video_row_image"
-        android:drawableLeft="@drawable/ic_time"
-        android:drawablePadding="@dimen/padding_base_h"
-        android:letterSpacing="0.1"
-        android:text="@{item.duration}"
-        tools:text="1:45"
-        android:textColor="@color/light_gray"
-        android:layout_alignBottom="@id/search_tab_results_video_row_image"
-        android:textSize="@dimen/search_result_video_item_subtitle_textSize" />
+            android:layout_toRightOf="@+id/search_tab_results_video_row_image"
+            android:drawableLeft="@drawable/ic_time"
+            android:drawablePadding="@dimen/padding_base_h"
+            android:letterSpacing="0.1"
+            android:text="@{item.duration}"
+            tools:text="1:45"
+            android:textColor="@color/light_gray"
+            android:layout_alignBottom="@id/search_tab_results_video_row_image"
+            android:textSize="@dimen/search_result_video_item_subtitle_textSize" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
 </layout>

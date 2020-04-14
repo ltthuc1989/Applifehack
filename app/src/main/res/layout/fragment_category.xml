@@ -4,17 +4,17 @@
 
     <data>
 
-        <import type="com.ltthuc.habit.databinding.ItemCategoryBinding" />
+        <import type="com.applifehack.knowledge.databinding.ItemCategoryBinding" />
 
-        <import type="com.ltthuc.habit.data.network.response.CatResp" />
+        <import type="com.applifehack.knowledge.data.network.response.CatResp" />
 
         <variable
             name="listener"
-            type="com.ltthuc.habit.ui.widget.listener.BottomBarListener" />
+            type="com.applifehack.knowledge.ui.widget.listener.BottomBarListener" />
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.category.CategoryVM" />
+            type="com.applifehack.knowledge.ui.fragment.category.CategoryVM" />
 
         <variable
             name="adapter"
@@ -39,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
-            android:paddingBottom="@dimen/bottom_navigation_height"
+            android:fillViewport="true"
+
             android:touchscreenBlocksFocus="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -56,6 +57,7 @@
                     android:layout_gravity="left"
                     android:fontFamily="@font/open_sans_light"
                     android:gravity="left"
+                    android:paddingTop="8dp"
 
                     android:text="@string/most_popular_last_week" />
 
@@ -100,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:gravity="left"
-                    android:fontFamily="@font/cabin_condensed_regular"
+                    android:fontFamily="@font/open_sans_light"
                     android:text="@string/category" />
 
                 <View

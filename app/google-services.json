@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:57422513105:android:85debfbd40bd4f653f16f0",
+        "mobilesdk_app_id": "1:57422513105:android:485ee1d1b2cd3bd23f16f0",
         "android_client_info": {
-          "package_name": "com.ltthuc.habit"
+          "package_name": "com.applifehack.knowledge.staging"
         }
       },
       "oauth_client": [

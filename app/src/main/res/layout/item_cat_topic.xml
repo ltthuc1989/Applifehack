@@ -5,98 +5,98 @@
 
         <variable
             name="item"
-            type="com.ltthuc.habit.data.entity.Post" />
+            type="com.applifehack.knowledge.data.entity.Post" />
 
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.articlelist.ArticleListVM" />
+            type="com.applifehack.knowledge.ui.fragment.articlelist.ArticleListVM" />
     </data>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:id="@+id/search_tab_results_topic_row_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/feed_simple_list_item_dark_background"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingStart="@dimen/padding_base_2x"
-    android:paddingTop="@dimen/padding_base"
-    android:paddingEnd="@dimen/padding_base_2x"
-    android:paddingBottom="@dimen/padding_base"
-    android:onClick="@{()->viewModel.onItemClicked(item)}"
-    >
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="@dimen/search_result_topic_item_image_width"
-        android:layout_height="@dimen/search_result_topic_item_image_height"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/margin_base_2x"
-        android:adjustViewBounds="true"
-        srcImageUrl="@{item.imgLink}"
-        android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/search_tab_results_topic_row_title"
+        android:id="@+id/search_tab_results_topic_row_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/margin_base_2x"
-        android:layout_marginBottom="@dimen/margin_base_h"
-        android:layout_toRightOf="@+id/img"
-        android:ellipsize="end"
-        android:lineSpacingMultiplier="1.1"
-        android:maxLines="3"
-        android:text="@{item.title}"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/search_result_topic_item_title_textSize" />
+        android:background="@drawable/feed_simple_list_item_dark_background"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingStart="@dimen/padding_base_2x"
+        android:paddingTop="@dimen/padding_base"
+        android:paddingEnd="@dimen/padding_base_2x"
+        android:paddingBottom="@dimen/padding_base"
+        android:onClick="@{()->viewModel.onItemClicked(item)}"
+        >
 
-    <TextView
-        android:id="@+id/search_tab_results_topic_row_likes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/search_tab_results_topic_row_title"
-        android:layout_marginTop="@dimen/margin_base"
-        android:layout_toRightOf="@+id/img"
-        android:drawableLeft="@drawable/ic_home_black_36dp"
-        android:drawablePadding="@dimen/padding_base_h"
-        android:gravity="left|center_vertical|center_horizontal|center|start"
-        android:letterSpacing="0.1"
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/search_result_topic_item_image_width"
+            android:layout_height="@dimen/search_result_topic_item_image_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_base_2x"
+            android:adjustViewBounds="true"
+            srcImageUrl="@{item.imageUrl}"
+            android:scaleType="centerCrop" />
 
-        android:textColor="@color/light_gray"
-        android:textSize="@dimen/search_result_topic_item_subtitle_textSize"
+        <TextView
+            android:id="@+id/search_tab_results_topic_row_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/margin_base_2x"
+            android:layout_marginBottom="@dimen/margin_base_h"
+            android:layout_toRightOf="@+id/img"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxLines="3"
+            android:text="@{item.title}"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/search_result_topic_item_title_textSize" />
 
-        android:visibility="gone" />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:id="@+id/imgShare"
-        android:layout_toRightOf="@+id/tvLinkCount"
+        <TextView
+            android:id="@+id/search_tab_results_topic_row_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_tab_results_topic_row_title"
+            android:layout_marginTop="@dimen/margin_base"
+            android:layout_toRightOf="@+id/img"
+            android:drawableLeft="@drawable/ic_home_black_36dp"
+            android:drawablePadding="@dimen/padding_base_h"
+            android:gravity="left|center_vertical|center_horizontal|center|start"
+            android:letterSpacing="0.1"
 
-        android:background="@drawable/ic_share"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
-        android:onClick="@{()->viewModel.shareClick(context,item)}"
-        android:layout_alignBottom="@+id/img"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:id="@+id/imgLike"
-        android:layout_width="wrap_content"
-        android:layout_toRightOf="@+id/img"
-        android:background="@drawable/ic_like"
-        android:onClick="@{()->viewModel.likeClick(item)}"
-        android:layout_alignBottom="@id/img"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/tvLinkCount"
-        android:layout_toRightOf="@id/imgLike"
-        android:layout_marginStart="8dp"
-        android:text="@{item.formatLikes}"
-        android:textColor="@color/light_gray"
-        android:textSize="@dimen/textSize_h4"
-        android:gravity="center"
-        tools:text="16"
-        android:layout_alignBottom="@+id/img"
-        android:layout_height="wrap_content" />
-</RelativeLayout>
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/search_result_topic_item_subtitle_textSize"
+
+            android:visibility="gone" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/imgShare"
+            android:layout_toRightOf="@+id/tvLinkCount"
+
+            android:background="@drawable/ic_share"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:onClick="@{()->viewModel.shareClick(context,item)}"
+            android:layout_alignBottom="@+id/img"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/imgLike"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/img"
+            android:background="@drawable/ic_like"
+            android:onClick="@{()->viewModel.likeClick(item)}"
+            android:layout_alignBottom="@id/img"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tvLinkCount"
+            android:layout_toRightOf="@id/imgLike"
+            android:layout_marginStart="8dp"
+            android:text="@{item.formatLikes}"
+            android:textColor="@color/light_gray"
+            android:textSize="@dimen/textSize_h4"
+            android:gravity="center"
+            tools:text="16"
+            android:layout_alignBottom="@+id/img"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </layout>

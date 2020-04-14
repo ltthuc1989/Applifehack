@@ -4,11 +4,11 @@
     >
 
     <data>
-        <import type="com.ltthuc.habit.databinding.ItemCatVideoBinding" />
-        <import type="com.ltthuc.habit.data.entity.Post" />
+        <import type="com.applifehack.knowledge.databinding.ItemCatVideoBinding" />
+        <import type="com.applifehack.knowledge.data.entity.Post" />
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.videolist.VideoListVM" />
+            type="com.applifehack.knowledge.ui.fragment.videolist.VideoListVM" />
         <variable
             name="adapter"
             type="com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter&lt;Post, ItemCatVideoBinding&gt;" />

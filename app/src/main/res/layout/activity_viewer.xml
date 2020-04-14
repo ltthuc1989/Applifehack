@@ -4,7 +4,7 @@
         
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.activity.viewer.ViewerVM" />
+            type="com.applifehack.knowledge.ui.activity.viewer.ViewerVM" />
     </data>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

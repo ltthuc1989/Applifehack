@@ -4,11 +4,11 @@
     >
 
     <data>
-        <import type="com.ltthuc.habit.databinding.ItemCatTopicBinding" />
-        <import type="com.ltthuc.habit.data.entity.Post" />
+        <import type="com.applifehack.knowledge.databinding.ItemCatTopicBinding" />
+        <import type="com.applifehack.knowledge.data.entity.Post" />
         <variable
             name="viewModel"
-            type="com.ltthuc.habit.ui.fragment.articlelist.ArticleListVM" />
+            type="com.applifehack.knowledge.ui.fragment.articlelist.ArticleListVM" />
         <variable
             name="adapter"
             type="com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter&lt;Post, ItemCatTopicBinding&gt;" />
