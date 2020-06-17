@@ -17,6 +17,8 @@ open class BaseBottomVM<T, U> @Inject constructor(val appDataManager: AppDataMan
 
     val catSelected  = MutableLiveData<Boolean>()
     val settingSelected = MutableLiveData<Boolean>()
+    val favoriteSeleted = MutableLiveData<Boolean>()
+
 
     open fun onLoadMore(page: Int) {
 

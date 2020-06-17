@@ -1,30 +1,29 @@
 package com.applifehack.knowledge.ui.activity.quotes
 
-import android.view.View
-import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.observe
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.databinding.ActivityQuoteBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
+import com.applifehack.knowledge.ui.fragment.favorite.FavoriteFragment
 import com.applifehack.knowledge.ui.activity.home.HomeActivity
 import com.applifehack.knowledge.ui.activity.setting.SettingActivity
 import com.applifehack.knowledge.ui.adapter.FeedAdapter
-import com.applifehack.knowledge.ui.widget.QuoteView
+import com.applifehack.knowledge.ui.widget.listener.NavListener
 import com.applifehack.knowledge.ui.widget.listener.QuoteViewListener
 import com.applifehack.knowledge.ui.widget.listener.ToolbarQuoteListener
-import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.openLink
-import com.ezyplanet.core.util.extension.gotoActivityClearTask
+import com.ezyplanet.core.ui.listener.OnSnapPositionChangeListener
+import com.ezyplanet.core.ui.widget.pager.SnapOnScrollListener
+import com.ezyplanet.core.util.extension.attachSnapHelperWithListener
 import kotlinx.android.synthetic.main.fragment_daily_feed.*
 
 class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
-        QuoteViewListener, ToolbarQuoteListener {
+    QuoteViewListener, ToolbarQuoteListener, NavListener {
 
     override val viewModel: QuotesVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_quote
-
 
 
     override fun onViewInitialized(binding: ActivityQuoteBinding) {
@@ -37,7 +36,15 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
 
             val snapHelper = PagerSnapHelper()
             snapHelper.attachToRecyclerView(daily_feed_recyclerview)
+            daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper,
+                SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
+                object : OnSnapPositionChangeListener {
+                    override fun onSnapPositionChange(position: Int) {
 
+
+                        viewModel.onLoadMore(position)
+                    }
+                })
 
         } catch (ex: Exception) {
 
@@ -53,13 +60,9 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
             binding.adapter?.swapItems(it)
         }
         val event = "explore_quote"
-        fbAnalytics.logEvent(event,event,"app_sections")
+        fbAnalytics.logEvent(event, event, "app_sections")
 
     }
-
-
-
-
 
 
     override fun openAuthorWiki(link: String?) {
@@ -67,21 +70,17 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
 
     }
 
-    override fun shareImage(view: View) {
-        val view = view.rootView.findViewById<QuoteView>(R.id.quoteViews)
-        val quote = view.getQuote()
-        viewModel.generataQuote(this, quote)
-    }
+
     override fun selectCat(item: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun sortBy(item: String) {
-        viewModel.getQuotes(false,item.toLowerCase())
+        viewModel.getQuotes(false, item.toLowerCase())
     }
 
     override fun back() {
-       finish()
+        finish()
     }
 
     override fun onMenu() {
@@ -93,16 +92,22 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
     }
 
     override fun onHome() {
-        gotoActivity(HomeActivity::class,true)
+        gotoActivity(HomeActivity::class, mapOf(HomeActivity.KEY_GO_HOME to true), true)
 
     }
 
     override fun onSaved() {
-    }
 
-    override fun onCategory() {
-        gotoActivity(HomeActivity::class,true)
-    }
+
+        gotoActivity(HomeActivity::class, mapOf(HomeActivity.KEY_GO_HOME to true), true)
+       // gotoActivity(FavoriteFragment::class)
+
+
+}
+
+override fun onCategory() {
+    gotoActivity(HomeActivity::class, true)
+}
 
 
 

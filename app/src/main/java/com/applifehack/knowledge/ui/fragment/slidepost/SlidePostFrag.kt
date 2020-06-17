@@ -1,5 +1,6 @@
 package com.applifehack.knowledge.ui.fragment.slidepost
 
+import androidx.lifecycle.ViewModelProviders
 import com.ezyplanet.core.ui.base.MvvmFragment
 import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.util.extension.lazyFast
@@ -8,6 +9,7 @@ import com.ezyplanet.core.util.extension.putArgs
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.databinding.ItemSlidePostBinding
+import com.applifehack.knowledge.ui.fragment.category.CategoryShareEvent
 import com.applifehack.knowledge.ui.fragment.category.CategoryVM
 
 class SlidePostFrag :MvvmFragment<SlidePostVM,ItemSlidePostBinding>(),SlidePostNav{
@@ -18,7 +20,7 @@ class SlidePostFrag :MvvmFragment<SlidePostVM,ItemSlidePostBinding>(),SlidePostN
     }
     override val viewModel :SlidePostVM by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId :Int= R.layout.item_slide_post
-    val catVM:CategoryVM by getLazyViewModel(ViewModelScope.ACTIVITY)
+     lateinit var categoryShareEvent: CategoryShareEvent
     fun newInstance(post:Post)=putArgs {
 
         putParcelable(key,post)
@@ -33,6 +35,7 @@ class SlidePostFrag :MvvmFragment<SlidePostVM,ItemSlidePostBinding>(),SlidePostN
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         binding.item = arguments?.getParcelable(key)
+        categoryShareEvent = ViewModelProviders.of(activity!!).get(CategoryShareEvent::class.java)
 
 
 
@@ -40,10 +43,11 @@ class SlidePostFrag :MvvmFragment<SlidePostVM,ItemSlidePostBinding>(),SlidePostN
     }
 
     override fun gotoPostDetail(post: Post) {
-        catVM.postPopularClick(post)
+        categoryShareEvent.postClickEvent.postValue(post)
     }
 
     override fun gotoCatDetail(catId: String) {
+        categoryShareEvent.catClickEvent.postValue(catId)
 
     }
 }

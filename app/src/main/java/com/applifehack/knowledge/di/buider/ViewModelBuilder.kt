@@ -3,6 +3,7 @@ package com.applifehack.knowledge.di.buider
 import androidx.lifecycle.ViewModelProvider
 import com.ezyplanet.core.viewmodel.ArchViewModelFactory
 import com.applifehack.knowledge.ui.activity.categorydetail.CategoryDetailVMBuilder
+import com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkVMBuilder
 import com.applifehack.knowledge.ui.activity.home.HomeVMBuilder
 import com.applifehack.knowledge.ui.fragment.category.CategoryVMBuilder
 import com.applifehack.knowledge.ui.fragment.feed.FeedVMBuilder
@@ -13,6 +14,7 @@ import com.applifehack.knowledge.ui.activity.viewer.ViewerVMBuilder
 import com.applifehack.knowledge.ui.activity.viewer.YtDetailVMBuilder
 import com.applifehack.knowledge.ui.activity.webview.WebViewVMBuilder
 import com.applifehack.knowledge.ui.fragment.articlelist.ArticleListVMBuilder
+import com.applifehack.knowledge.ui.fragment.favorite.FavoriteVMBuilder
 import com.applifehack.knowledge.ui.fragment.slidepost.SlidePostVMBuilder
 import com.applifehack.knowledge.ui.fragment.videolist.VideoListVMBuilder
 import com.applifehack.knowledge.ui.viewer.video.VideoViewerVMBuilder
@@ -41,7 +43,9 @@ import dagger.Module
     (YtDetailVMBuilder::class),
     (QuotesVMBuilder::class),
     (SettingVMBuilder::class),
-    (HomeVMBuilder::class)
+    (HomeVMBuilder::class),
+    (DynamicLinkVMBuilder::class),
+    (FavoriteVMBuilder::class)
 ])
 abstract class ViewModelBuilder {
 

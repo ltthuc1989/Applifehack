@@ -27,7 +27,7 @@
     <string name="publish_on">Published on  %s</string>
     <string name="save">Saved</string>
     <string name="knowlege_sologan">Knowledge Gives You Power\n Power Gives you control\nControl gives you freedom\nFreedom gives you potential\nPotential gives you endless possibilities</string>
-    <string name="share_info_message"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it. \n Sent from %1$s.]]></string>
+    <string name="share_info_message"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it. \n Check out this link : %1$s]]></string>
     <string name="download">Download:</string>
     <string name="app_link">link_app</string>
     <string name="Notifications">Notification</string>
@@ -54,6 +54,21 @@
     <string name="please_check_your_internet">Please Check Your Internet Connection</string>
     <string name="exit">Exit</string>
     <string name="try_again">Try Again</string>
+
+    <string name="post">Post</string>
+    <string name="admin">Admin</string>
+    <string name="pick_cat">Pick Category</string>
+    <string name="pick_post_type">Pick Post Type</string>
+    <string name="pick_media_type">Pick Media Type</string>
+    <string name="please_enter_title">Please Enter Title</string>
+    <string name="please_enter_author_name">Please Enter Author Name</string>
+    <string name="please_pick_cat">Please Pick Category</string>
+    <string name="please_pick_post_type">Please Pick Post Type</string>
+    <string name="please_pick_quote_type">Please Pick Quote Type</string>
+    <string name="please_enter_content_url">Please Enter redirect Url</string>
+    <string name="please_enter_image_url" > Please Enter Image Url</string>
+    <string name="favorite">favorite</string>
+    <string name="sorry_nothing_found">Sorry, nothing found</string>
 
 
 </resources>

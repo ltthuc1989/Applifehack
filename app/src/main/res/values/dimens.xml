@@ -31,7 +31,7 @@
     <dimen name="feed_hero_elevation">8dp</dimen>
     <dimen name="feed_hero_follow_button_translationY">-85dp</dimen>
     <dimen name="feed_hero_maxHeight">320dp</dimen>
-    <dimen name="feed_hero_minHeight">240dp</dimen>
+    <dimen name="feed_hero_minHeight">260dp</dimen>
     <dimen name="feed_hero_share_button_translationY">-1dp</dimen>
     <dimen name="feed_hero_stats_textSize">13sp</dimen>
     <dimen name="feed_hero_subtitle_textSize">15sp</dimen>
@@ -129,7 +129,7 @@
     <dimen name="material_card_supporting_text_padding_top">@dimen/material_baseline_grid_2x</dimen>
     <dimen name="padding">8dp</dimen>
     <dimen name="status_bar_height_half">12.5dp</dimen>
-    <dimen name="youtube_details_photo_height">250dp</dimen>
+    <dimen name="youtube_details_photo_height">270dp</dimen>
     <dimen name="status_bar_height">25dip</dimen>
     <dimen name="titles_container_margin_top">132dp</dimen>
 
@@ -151,4 +151,8 @@
     <dimen name="project_details_total_scroll_margin">380dp</dimen>
 
     <dimen name="button_size">56dp</dimen>
+    <dimen name="ten__dp">10dp</dimen>
+    <dimen name="sixteen">16</dimen>
+    <dimen name="eight">8dp</dimen>
+    <dimen name="fourDp">4</dimen>
 </resources>

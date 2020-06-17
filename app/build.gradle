@@ -9,10 +9,10 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('../habit.jks')
-            storePassword 'habit@prod'
-            keyAlias 'habit'
-            keyPassword 'habit@prod'
+            storeFile file('../knowledge.jks')
+            storePassword 'knowledge@prod'
+            keyAlias 'knowledge'
+            keyPassword 'knowledge@prod'
         }
     }
     compileSdkVersion 28
@@ -67,12 +67,13 @@ android {
            // ext.enableCrashlytics = false
             applicationId "com.applifehack.knowledge.staging"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
+            buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
 
         }
         production {
             applicationId "com.applifehack.knowledge"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
-
+            buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
         }
     }
     buildTypes {
@@ -139,6 +140,9 @@ dependencies {
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
 
     implementation 'com.byoutline.observablecachedfield:observablecachedfield:1.7.0'
+
+       implementation 'org.sufficientlysecure:html-textview:3.9'
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx:19.1.0'
 
 
 

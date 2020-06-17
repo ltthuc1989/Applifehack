@@ -136,9 +136,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="web"
-                    android:textColor="@android:color/white"
-                    android:text="@{viewModel.model.desc}"
-
+                    android:textColor="@color/white"
+                    android:textColorLink="@color/bright_blue"
+                    android:text="@{viewModel.model.desc()}"
+                    android:textColorHighlight="@color/white"
                     android:paddingTop="@dimen/material_card_gutter"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
             </LinearLayout>

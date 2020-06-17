@@ -40,6 +40,7 @@ class SettingVM @Inject constructor(val appDataManager: AppDataManager, schedule
         navigator?.rateUs()
     }
 
+
     fun subcribePush() {
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { it1 ->
 

@@ -65,6 +65,7 @@
                         android:scaleType="fitXY"
 
 
+
                         srcImageUrl="@{viewModel.model.thumnail()}"
 
                         />

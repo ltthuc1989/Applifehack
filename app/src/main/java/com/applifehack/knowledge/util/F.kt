@@ -24,21 +24,24 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.annotation.NonNull
 import androidx.core.graphics.toColorInt
 import androidx.core.view.setMargins
+import com.applifehack.knowledge.data.entity.Post
+import com.applifehack.knowledge.util.setGradient
 import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.applifehack.knowledge.util.setGradient
 import kotlinx.android.synthetic.main.inflator_quote_empty.view.*
-
+import kotlinx.android.synthetic.main.inflator_quote_empty.view.card
+import kotlinx.android.synthetic.main.inflator_quote_empty.view.image
+import kotlinx.android.synthetic.main.item_share_post.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.sourcei.kowts.utils.pojo.ObjectGradient
 import org.sourcei.kowts.utils.pojo.QuoteResp
 import org.sourcei.kowts.utils.reusables.Gradients
-
 import kotlin.random.Random
 
 
@@ -60,7 +63,7 @@ import kotlin.random.Random
 object F {
 
     // generate bitmap from view
-    private fun getBitmapFromView(view: View): Bitmap {
+    fun getBitmapFromView(view: View): Bitmap {
 
         val bitmap =
             Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
@@ -69,6 +72,7 @@ object F {
         view.draw(canvas)
         return bitmap
     }
+
 
     // Generating random color
     private fun randomColor(): String {
@@ -142,7 +146,8 @@ object F {
 
     // read gradients
     fun readGradients(context: Context): List<ObjectGradient> {
-        val string = context.resources.openRawResource(com.applifehack.knowledge.R.raw.gradients).bufferedReader()
+        val string = context.resources.openRawResource(com.applifehack.knowledge.R.raw.gradients)
+            .bufferedReader()
             .use { it.readText() }
         val json = JSONArray(string)
 
@@ -152,8 +157,28 @@ object F {
         )!!
     }
 
+    @NonNull
+    fun createBitmapFromView(context: Context,post: Post,bitmap: Bitmap): Bitmap? {
+        val view = LayoutInflater.from(context)
+            .inflate(com.applifehack.knowledge.R.layout.item_share_post, null)
+        view.title.text = post.title
+        view.image.setImageBitmap(bitmap)
+        val point = displayDimensions(context)
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(point.x, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(point.x+100, View.MeasureSpec.EXACTLY)
+        )
+        val bitmap =
+            Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+        view.draw(canvas)
+        return bitmap
+    }
+
     fun generateBitmap(context: Context, quoteObject: QuoteResp): Bitmap {
-        val layout = LayoutInflater.from(context).inflate(com.applifehack.knowledge.R.layout.inflator_quote_empty, null)
+        val layout = LayoutInflater.from(context)
+            .inflate(com.applifehack.knowledge.R.layout.inflator_quote_empty, null)
         val card = layout.card
         val quote = layout.quote
         val authorText = layout.author
@@ -180,10 +205,13 @@ object F {
         // new params
         val paramsNQ = RelativeLayout.LayoutParams(x, 3 * y / 4)
         val paramsNA = RelativeLayout.LayoutParams(
-                authorLayout.layoutParams.width,
-                authorLayout.layoutParams.height
+            authorLayout.layoutParams.width,
+            authorLayout.layoutParams.height
         )
-        val paramsL = RelativeLayout.LayoutParams(dpToPx(48, context), dpToPx(48, context))
+        val paramsL = RelativeLayout.LayoutParams(
+            logo.layoutParams.width,
+            logo.layoutParams.height
+        )
 
         // alignment quote
         quote.gravity = when (quoteObject.quoteAlign) {
@@ -222,8 +250,8 @@ object F {
 
         // prepare for export
         layout.measure(
-                View.MeasureSpec.makeMeasureSpec(x, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(y, View.MeasureSpec.EXACTLY)
+            View.MeasureSpec.makeMeasureSpec(x, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(y, View.MeasureSpec.EXACTLY)
         )
         layout.layout(0, 0, layout.measuredWidth, layout.measuredHeight)
 

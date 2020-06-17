@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_item_share"
+        android:id="@+id/card"
+        android:layout_height="match_parent">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            app:riv_corner_radius_top_left="4dp"
+            app:riv_corner_radius_top_right="4dp"
+            android:alpha="0.8"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            srcImageUrl="@{item.imageUrl}"
+            tools:src="@drawable/bg_exploremore_en"
+            android:cropToPadding="true"
+            android:layout_above="@id/imgAppLogo"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+
+            android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
+
+            />
+
+        <TextView
+            style="@style/text_roboto_bold_h1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"
+            android:id="@+id/title"
+            tools:text="hello abc" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/imgGoolePlay"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/ic_google_play"
+                android:cropToPadding="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:id="@+id/imgAppLogo"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/ic_launcher_round"
+            android:layout_toLeftOf="@+id/tvAppName"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+
+            android:layout_height="24dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tvAppName"
+            android:text="Knowledge"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_alignBottom="@id/imgAppLogo"
+            android:layout_alignTop="@+id/imgAppLogo"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/cabin_condensed_bold"
+            android:textColor="@color/app_logo_color"
+            android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
+
+
+</FrameLayout>

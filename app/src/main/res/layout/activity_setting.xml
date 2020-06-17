@@ -164,6 +164,7 @@
                 android:text="@string/rate_us" />
 
 
+
         </RelativeLayout>
     </LinearLayout>
 </layout>

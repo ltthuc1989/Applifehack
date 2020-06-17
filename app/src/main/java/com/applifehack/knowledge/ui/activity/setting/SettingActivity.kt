@@ -9,6 +9,7 @@ import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.databinding.ActivitySettingBinding
 import com.applifehack.knowledge.util.CustomTabHelper
 import com.applifehack.knowledge.util.extension.openLink
+import com.ezyplanet.core.util.extension.gotoActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 import javax.inject.Inject
 
@@ -47,6 +48,9 @@ class SettingActivity : MvvmActivity<ActivitySettingBinding, SettingVM>(), Setti
             setPackage("com.android.vending")
         })
     }
+
+
+
     private fun setToolBar(toolbar: Toolbar, title: String?="") {
         toolbar.setTitle(title)
         setSupportActionBar(toolbar)

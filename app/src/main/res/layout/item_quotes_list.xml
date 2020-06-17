@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_like"
+                android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
                 android:tint="@color/white_75"
                 android:id="@+id/imglike"
                 android:onClick="@{()->viewModel.likeClick(item)}"

@@ -16,7 +16,8 @@ class YtDetailVM @Inject constructor(val appDataManager: AppDataManager, schedul
 
         apiSingle(appDataManager.getYtDetail(youtubeId),{
               if(it.items?.isEmpty()!=true) {
-                  updateModel(YtModel(youtubeId, it.items[0]))
+                  val temp=YtModel(youtubeId, it.items[0])
+                  updateModel(temp)
               }
 
         },true)

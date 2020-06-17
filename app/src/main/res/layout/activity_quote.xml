@@ -56,9 +56,6 @@
                     android:paddingLeft="6dp"
                     android:paddingRight="6dp"
                     app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
-                    app:onScrolledToBottom="@{(page) -> viewModel.onLoadMore(page)}"
-                    app:resetLoadingState="@{viewModel.resetLoadingState}"
-                    app:visibleThreshold="@{viewModel.visibleThreshold}"
                     android:overScrollMode="always" />
 
 

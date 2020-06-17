@@ -30,6 +30,12 @@
         android:src="@drawable/bg_exploremore_en"
         srcImageUrl="@{item.imageUrl}"
         android:scaleType="centerCrop" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="@{()->viewModel.postClick(item)}"
+        android:src="@drawable/ic_play_circle_outline_black_24dp"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/feed_carousel_slide_wrapper"
@@ -51,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_base"
             android:text="@{item.catName}"
-            android:onClick="@{()->viewModel.catClick(item.id)}"
+            android:onClick="@{()->viewModel.catClick(item.catId)}"
             android:textSize="@dimen/feed_carousel_slide_tag_textSize" />
 
         <TextView

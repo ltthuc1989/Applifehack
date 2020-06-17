@@ -10,7 +10,7 @@ interface FeedNav : MvvmNav{
     fun gotoCatDetail(id:String?)
     fun gotoPageUrl(post: Post)
     fun share(message:String)
-    fun shareImage(view: View)
+    fun shareArticle(view:View)
     fun gotoYoutubeDetail(post: Post,shareView:View)
 
 }

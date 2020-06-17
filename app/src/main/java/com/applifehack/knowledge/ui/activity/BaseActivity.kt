@@ -8,13 +8,12 @@ import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.applifehack.knowledge.KnowledgeApp
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
-import com.applifehack.knowledge.ui.widget.listener.NavListener
 import com.applifehack.knowledge.util.CustomTabHelper
 import com.applifehack.knowledge.util.extension.openLink
 import com.applifehack.knowledge.util.extension.shareMessage
 import javax.inject.Inject
 
-abstract class BaseActivity<B : ViewDataBinding, V : BaseViewModel<*, *>> : MvvmActivity<B,V>(),NavListener{
+abstract class BaseActivity<B : ViewDataBinding, V : BaseViewModel<*, *>> : MvvmActivity<B,V>(){
 
     protected var isTransitionEnd = false
     override fun onViewInitialized(binding: B) {
@@ -83,5 +82,7 @@ abstract class BaseActivity<B : ViewDataBinding, V : BaseViewModel<*, *>> : Mvvm
         super.onStop()
         (application as KnowledgeApp).isBackGround = true
     }
+
+
 
 }

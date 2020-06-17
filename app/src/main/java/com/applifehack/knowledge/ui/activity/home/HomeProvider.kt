@@ -2,6 +2,7 @@ package com.applifehack.knowledge.ui.activity.home
 
 import com.applifehack.knowledge.ui.fragment.articlelist.ArticleListFrag
 import com.applifehack.knowledge.ui.fragment.category.CategoryFrag
+import com.applifehack.knowledge.ui.fragment.favorite.FavoriteFragment
 import com.applifehack.knowledge.ui.fragment.feed.FeedFrag
 import com.applifehack.knowledge.ui.fragment.slidepost.SlidePostFrag
 import com.applifehack.knowledge.ui.fragment.videolist.VideoListFrag
@@ -24,6 +25,9 @@ abstract class HomeProvider {
 
     @ContributesAndroidInjector
     abstract fun provideSlideFragment(): SlidePostFrag
+
+    @ContributesAndroidInjector
+    abstract fun provideFavoriteFragment(): FavoriteFragment
 
 
 

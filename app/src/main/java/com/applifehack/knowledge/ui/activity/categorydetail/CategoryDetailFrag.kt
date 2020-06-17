@@ -4,6 +4,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.ViewModelProviders
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
@@ -15,7 +16,9 @@ import com.applifehack.knowledge.ui.activity.home.HomeActivity
 import com.applifehack.knowledge.ui.activity.setting.SettingActivity
 import com.applifehack.knowledge.ui.fragment.category.CategoryFrag
 import com.applifehack.knowledge.ui.fragment.articlelist.ArticleListFrag
+import com.applifehack.knowledge.ui.fragment.category.CategoryShareEvent
 import com.applifehack.knowledge.ui.fragment.videolist.VideoListFrag
+import com.applifehack.knowledge.ui.widget.listener.NavListener
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.gotoActivityClearTask
 import kotlinx.android.synthetic.main.view_category_detail.*
@@ -23,12 +26,13 @@ import kotlinx.android.synthetic.main.view_category_detail.view.*
 import javax.inject.Inject
 
 class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryDetailVM>(),
-        CategoryDetailNav {
+        CategoryDetailNav ,NavListener{
 
     override val viewModel: CategoryDetailVM by getLazyViewModel()
     override val layoutId: Int = R.layout.fragment_category_detail
     lateinit var cat:CatResp
     @Inject lateinit var fbAnalyticsHelper: FirebaseAnalyticsHelper
+
 
     override fun onViewInitialized(binding: FragmentCategoryDetailBinding) {
         super.onViewInitialized(binding)
@@ -36,7 +40,6 @@ class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryD
         setToolBar(binding.tagFeedLayout.view_toolbar, "")
         binding.viewModel = viewModel
         cat=intent.getParcelableExtra<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)
-
         viewModel.updateModel(cat)
         binding.listener = this
 
@@ -46,6 +49,7 @@ class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryD
         tabs.setupWithViewPager(binding.viewPager)
         val event = "explore_category_detail"
         fbAnalyticsHelper.logEvent(event,event,"app_sections")
+
 
 
     }
@@ -87,7 +91,7 @@ class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryD
     }
 
     override fun onHome() {
-        gotoActivity(HomeActivity::class,true)
+        gotoActivity(HomeActivity::class, mapOf(HomeActivity.KEY_GO_HOME to true),true)
 
     }
 

@@ -18,8 +18,10 @@ import com.applifehack.knowledge.databinding.ItemCategoryBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.activity.home.HomeEventModel
 import com.applifehack.knowledge.ui.activity.quotes.QuotesActivity
+import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
 import com.applifehack.knowledge.ui.fragment.BaseFragment
 import com.applifehack.knowledge.ui.fragment.slidepost.SlidePostFrag
+import com.applifehack.knowledge.util.AppBundleKey
 import java.util.*
 
 class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), CategoryNav,
@@ -34,7 +36,7 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
     private var timer: Timer? = null
     private var count: Int = 0
     private var banners: List<Post>? = null
-
+    lateinit var categoryShareEvent: CategoryShareEvent
 
     companion object {
         val KEY_CATEGORY_DETAIL = "category_detail"
@@ -52,7 +54,13 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
         viewModel.navigator = this
 
         homeEventModel = ViewModelProviders.of(activity!!).get(HomeEventModel::class.java)
-
+        categoryShareEvent = ViewModelProviders.of(activity!!).get(CategoryShareEvent::class.java)
+        categoryShareEvent.catClickEvent.observe(this, androidx.lifecycle.Observer {
+            viewModel.catDetailClick(it)
+        })
+        categoryShareEvent.postClickEvent.observe(this, androidx.lifecycle.Observer {
+            viewModel.postPopularClick(it)
+        })
         viewModel.updateModel(null)
 
 
@@ -68,7 +76,7 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
         observe(viewModel.banners) {
 
             if (it != null && !it.isEmpty()) { // Avoid unnecessary recreation.
-                viewPager.adapter = SlidePostAdapter(fragmentManager!!, it)
+                viewPager.adapter = SlidePostAdapter(childFragmentManager!!, it)
                 this.banners = it
                 viewModel.setUiPageViewController(binding.viewPagerCountDots, context)
                 if (timer == null) {
@@ -103,11 +111,12 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
         } else if (post?.getPostType() == PostType.QUOTE) {
             gotoActivity(QuotesActivity::class)
         } else {
-            openYoutube(post?.video_url)
+            openYoutube(post)
         }
     }
 
-    override fun openYoutube(link: String?) {
+    override fun openYoutube(post:Post) {
+        gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post))
 
     }
 

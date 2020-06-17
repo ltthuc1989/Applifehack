@@ -72,6 +72,12 @@ class CategoryVM @Inject constructor(val appDataManager: AppDataManager, schedul
         fbAnalyticsHelper.logEvent(event,event,"app_sections")
         fbAnalyticsHelper.logEvent("popular_appview","popular_appview","app_attribute")
     }
+    fun catDetailClick(catId:String){
+        navigator?.gotoCatDetailScreen(getCat(catId))
+        val event = "popular_cat_${catId}"
+        fbAnalyticsHelper.logEvent(event,event,"app_sections")
+        fbAnalyticsHelper.logEvent("popular_cat_appview","popular_cat_appview","app_attribute")
+    }
 
     private fun getPopularPost() {
         navigator?.showProgress()
@@ -111,7 +117,7 @@ class CategoryVM @Inject constructor(val appDataManager: AppDataManager, schedul
     }
 
     fun clearDot() {
-        if (dots != null) {
+        if (dots != null&&dots!![0]!=null) {
             (dots!![0]?.parent as LinearLayout).removeAllViews()
         }
     }
@@ -165,6 +171,15 @@ class CategoryVM @Inject constructor(val appDataManager: AppDataManager, schedul
         }
 
         dots!![position]?.setImageDrawable(context?.resources?.getDrawable(R.drawable.selecteditem_dot))
+    }
+
+    private fun getCat(catId: String):CatResp{
+         mData.forEach {
+             if(it.cat_id==catId){
+                 return it
+             }
+         }
+        return CatResp()
     }
 
 

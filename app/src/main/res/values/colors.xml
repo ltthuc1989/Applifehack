@@ -66,5 +66,11 @@
     <color name="bg_app">#0C2B62</color>
     <color name="app_22222">#222222</color>
     <color name="red">#FF0000</color>
+
+    <color name="color_f2f2f2">#f2f2f2</color>
+    <color name="app_f2f2f2">#f2f2f2</color>
+    <color name="app_cecece">#cecece</color>
+    <color name="app_logo_color">#f05623</color>
+
 </resources>
 

@@ -11,17 +11,17 @@ import java.lang.System.exit
 
 object AlertDialogUtils{
 
-    fun showSingleChoice(context:Context, @StringRes titleId:Int,@ArrayRes array:Int,action:(String)->Unit={}){
+    fun showSingleChoice(context:Context,  title:String?,array:Array<String>,position:Int=0,action:(Int)->Unit={}){
 
         lateinit var dialog: AlertDialog
 
-        val array = context.resources.getStringArray(array)
+        // val array = context.resources.getStringArray(array)
 
         val builder = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle_Dark)
-        builder.setTitle(context.getString(titleId))
+        builder.setTitle(title)
 
-        builder.setSingleChoiceItems(array,-1){_,which->
-            action(array[which])
+        builder.setSingleChoiceItems(array,position){_,which->
+            action(which)
             dialog.dismiss()
         }
         dialog = builder.create()
@@ -46,25 +46,8 @@ object AlertDialogUtils{
 
         dialog.show()
     }
-    fun showSingleChoice(context:Context,  title:String?,array:Array<String>,position:Int=0,action:(Int)->Unit={}){
 
-        lateinit var dialog: AlertDialog
-
-       // val array = context.resources.getStringArray(array)
-
-        val builder = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle_Dark)
-        builder.setTitle(title)
-
-        builder.setSingleChoiceItems(array,position){_,which->
-            action(which)
-            dialog.dismiss()
-        }
-        dialog = builder.create()
-
-        dialog.show()
-    }
-
-    fun showSingleChoice(context:Context, @StringRes titleId:Int,array:Array<String>,action:(String)->Unit={}){
+    fun showSingleChoice(context:Context, @StringRes titleId:Int,array:Array<String>,action:(Int)->Unit={}){
 
         lateinit var dialog: AlertDialog
 
@@ -72,7 +55,7 @@ object AlertDialogUtils{
         builder.setTitle(context.getString(titleId))
 
         builder.setSingleChoiceItems(array,-1){_,which->
-            action(array[which])
+            action(which)
             dialog.dismiss()
         }
         dialog = builder.create()

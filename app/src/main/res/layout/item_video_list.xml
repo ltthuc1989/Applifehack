@@ -17,7 +17,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/feed_hero_gradient_background"
+        android:background="@color/black"
         >
 
         <FrameLayout
@@ -26,10 +26,12 @@
 
             android:layout_above="@id/linBottom">
 
+
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/quoteView"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
                 android:transitionName="@string/shareView"
                 android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
                 srcImageUrl="@{item.imageUrl}"
@@ -90,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
 
-                android:src="@drawable/ic_like"
+                android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
                 android:tint="@color/white_75"
                 android:id="@+id/imglike"
                 android:onClick="@{()->viewModel.likeClick(item)}"
@@ -142,7 +144,7 @@
 
                 android:fontFamily="@font/cabin_condensed_regular"
                 android:gravity="center"
-                android:text="@{item.redirect_link}"
+                android:text="@{item.author}"
                 android:textColor="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
 

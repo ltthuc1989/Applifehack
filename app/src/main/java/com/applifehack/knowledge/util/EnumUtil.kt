@@ -18,3 +18,6 @@ enum class PostDatabaseKey(val type:String){
 
 }
 
+enum class PostStatus(val type:String){
+    POSTED("posted"),PARSED("parsed")
+}

@@ -1,8 +1,12 @@
 package com.applifehack.knowledge.ui.activity.quotes
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import android.view.View
+import com.applifehack.knowledge.BuildConfig
+import com.applifehack.knowledge.R
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
@@ -12,9 +16,14 @@ import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
+import com.applifehack.knowledge.ui.widget.QuoteView
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.await
 import com.applifehack.knowledge.util.extension.shareImage
+import com.google.firebase.dynamiclinks.ktx.androidParameters
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -36,9 +45,14 @@ class QuotesVM @Inject constructor(
     private var currentPage = 0
     private var quoteType: String? = null
     private var currentItem = 0
+    private var hasMore = false
+
     @Inject
     lateinit var fbAnalytics: FirebaseAnalyticsHelper
 
+    init {
+        visibleThreshold = 10
+    }
 
     fun getQuotes(nextPage: Boolean? = false, quoteType: String? = null) {
         if (quoteType != null) this.quoteType = quoteType
@@ -63,9 +77,7 @@ class QuotesVM @Inject constructor(
                         lastItem = it.documents[it.size() - 1]
                         val rs = snapshot.await()
                         mData.addAll(rs)
-                        rs.forEach {
-                            Log.d("PostTitle", it.title)
-                        }
+                        hasMore = (rs.size > visibleThreshold - 1)
 
 
                         currentPage += 1
@@ -73,7 +85,7 @@ class QuotesVM @Inject constructor(
                     results.value = mData
                     resetLoadingState = false
                     navigator?.hideProgress()
-                    showEmptyView.value = (mData?.size==0)
+                    showEmptyView.value = (mData?.size == 0)
 
                 }
 
@@ -89,7 +101,9 @@ class QuotesVM @Inject constructor(
 
 
     fun shareClick(data: Post, view: View) {
-        (navigator as QuotesNav).shareImage(view)
+        val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
+        val quote = view.getQuote()
+        generataQuote(view.context, quote, data.id)
         logEvent(data?.id, "share")
 
 
@@ -104,19 +118,21 @@ class QuotesVM @Inject constructor(
         }
     }
 
-    override fun onLoadMore(page: Int) {
-        if (page == 1) return
-        getQuotes(true)
+    override fun onLoadMore(position: Int) {
+        currentItem = position
+        if (hasMore && position + 5 > mData.size) {
+            getQuotes(true)
+        }
+
     }
 
-    fun generataQuote(context: Context, quoteResp: QuoteResp) {
+    fun generataQuote(context: Context, quoteResp: QuoteResp, postId: String?) {
         uiScope?.launch {
             try {
                 navigator?.showProgress()
 
                 val result = F.generateBitmap(context, quoteResp)
-                navigator?.hideProgress()
-                (context as MvvmActivity<*, *>).shareImage(result)
+                createDynamicLink(context, postId, result!!)
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }
@@ -124,11 +140,15 @@ class QuotesVM @Inject constructor(
 
         }
 
+
     }
 
     private fun updateRow(position: Int): List<Post> {
 
-        mData[position]?.likesCount?.plus(1)
+        mData[position]?.apply {
+            likesCount = likesCount!! + 1
+        }
+
 
         return mData
     }
@@ -143,10 +163,26 @@ class QuotesVM @Inject constructor(
 
     }
 
-    fun authorClick(url:String?){
+    fun authorClick(url: String?) {
         (navigator as QuotesNav).openAuthorWiki(url)
     }
 
+    private fun createDynamicLink(context: Context, postId: String?, bitmap: Bitmap) {
+        Firebase.dynamicLinks.shortLinkAsync {
+            link = Uri.parse("https://www.applifehack.com/$postId")
+            domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
+            androidParameters("com.applifehack.knowledge.staging") {
 
+            }
+            // Open links with this app on Android
+
+        }.addOnSuccessListener {
+            navigator?.hideProgress()
+            (context as MvvmActivity<*, *>).shareImage(bitmap, it.shortLink.toString())
+        }.addOnFailureListener {
+            navigator?.hideProgress()
+            it.printStackTrace()
+        }
+    }
 
 }

@@ -9,6 +9,7 @@ import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.network.response.youtube.YoutubeResp
+import com.applifehack.knowledge.util.AppConstans
 import com.applifehack.knowledge.util.AppConstants
 import com.rx2androidnetworking.Rx2AndroidNetworking
 import io.reactivex.Completable
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.AppConstants.DatabasePath
+import com.google.firebase.FirebaseApp
 
 
 /**
@@ -41,14 +43,6 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.GET_RSS_CATEGORY))
     }
 
-    override fun createPost(post: Post): Completable {
-        val postValues = post.toMap()
-
-        return RxFirebaseFirestore.set(
-            firStore.collection(ApiEndPoint.POST_DB_KEY).document(generatePostId()), postValues
-        )
-
-    }
 
     override fun getPost(loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
         if (loadMore == true) {
@@ -266,4 +260,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
 
+    override fun getPostDetail(postId: String): Task<DocumentSnapshot> {
+        return firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!).get()
+    }
 }

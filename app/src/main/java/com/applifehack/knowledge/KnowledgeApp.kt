@@ -7,6 +7,7 @@ import androidx.multidex.MultiDexApplication
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.applifehack.knowledge.di.component.DaggerAppComponent
+import com.applifehack.knowledge.util.AppConstans
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
@@ -34,12 +35,10 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-       // FacebookSdk.sdkInitialize(this)
         MultiDex.install(this)
         FirebaseApp.initializeApp(this)
         FirebaseApp.getInstance()
 
-        initOneSignal()
         DaggerAppComponent.builder()
                 .application(this)
                 .build()
@@ -59,6 +58,7 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
             AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
         }
         Gradients = F.readGradients(this)
+        initLiveDatabase()
 
     }
 
@@ -74,14 +74,17 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
     }
 
 
-    internal fun initOneSignal() {
-    }
 
-    private fun initCrashLytics() {
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, Crashlytics())
-        }
-    }
 
+    private fun initLiveDatabase(){
+        val options= FirebaseOptions.Builder()
+            .setProjectId(AppConstans.databse_live_id)
+            .setApplicationId(AppConstans.database_live_app_id) // Required for Analytics.
+            .setApiKey(AppConstans.database_live_key) // Required for Auth.
+            .setDatabaseUrl(AppConstans.database_live_url) // Required for RTDB.
+            .build()
+
+        FirebaseApp.initializeApp(this /* Context */, options, AppConstans.database_live_name)
+    }
 
 }

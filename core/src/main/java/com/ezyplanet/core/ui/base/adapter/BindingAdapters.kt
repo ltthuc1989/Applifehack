@@ -9,7 +9,10 @@ import android.text.Html
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.View
-import android.webkit.*
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,14 +26,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.Request
+import com.bumptech.glide.request.target.CustomViewTarget
+import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.SizeReadyCallback
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
-import  com.ezyplanet.core.ui.widget.pager.*
 import com.ezyplanet.core.GlideApp
 import com.ezyplanet.core.ui.listener.OneClickListener
 import com.ezyplanet.core.ui.widget.decoration.GridSpacingItemDecoration
 import com.ezyplanet.core.ui.widget.decoration.SpaceItemDecoration
+import com.ezyplanet.core.ui.widget.pager.RVPagerSnapFancyDecorator
 import com.ezyplanet.core.widgets.scoll.RecyclerViewScrollCallback
 import com.google.firebase.storage.FirebaseStorage
 
@@ -175,7 +180,16 @@ class BindingAdapters {
         fun setImageSrc(imageView: ImageView, url: String?) {
             if (!url.isNullOrEmpty()) {
                 GlideApp.with(imageView.context).load(url).diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(imageView)
+                    .into(imageView)
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("srcImageBitmapUrl")
+        fun setImageBitmapSrc(imageView: ImageView, url: String?) {
+            if (!url.isNullOrEmpty()) {
+                GlideApp.with(imageView.context).asBitmap().load(url).diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageView)
             }
         }
 

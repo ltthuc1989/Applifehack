@@ -2,11 +2,13 @@ package com.applifehack.knowledge.ui.activity.ytDetail
 
 import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.R
+import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.databinding.ActivityYoutubeDetailBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.widget.listener.ToolbarListener
 import com.applifehack.knowledge.util.AppBundleKey
 import com.applifehack.knowledge.util.MediaUtil
+import kotlinx.android.synthetic.main.view_youtube_appbar.*
 
 class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>(),YtDetailNav,ToolbarListener{
 
@@ -18,10 +20,11 @@ class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>()
         binding.viewModel = viewModel
         setToolBar(binding.viewToolbar, "")
         viewModel.navigator = this
-        val youtubeUrl = intent.getStringExtra(AppBundleKey.YOUTUBE_URL)
-        viewModel.getYtDetail(youtubeUrl)
+        val post = intent.getParcelableExtra<Post>(AppBundleKey.YOUTUBE_URL)
+        viewModel.getYtDetail(post.video_url)
         val event = "explore_article"
         fbAnalytics.logEvent(event,event,"app_sections")
+
 
     }
 
@@ -31,28 +34,11 @@ class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>()
 
 
 
-
-
-
     override fun onMenu() {
 
     }
 
-    override fun onSetting() {
 
-    }
-
-    override fun onHome() {
-
-    }
-
-    override fun onSaved() {
-
-    }
-
-    override fun onCategory() {
-
-    }
 
     override fun onBackPress() {
         finishAfterTransition()

@@ -1,34 +1,51 @@
 package com.applifehack.knowledge.ui.fragment.feed
 
 import android.content.Context
-import android.util.Log
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.view.View
-import com.ezyplanet.core.ui.base.BaseViewModel
-import com.ezyplanet.core.ui.base.MvvmActivity
-import com.ezyplanet.core.util.SchedulerProvider
-import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
-import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
-import com.google.firebase.firestore.DocumentSnapshot
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
+import com.applifehack.knowledge.ui.widget.QuoteView
 import com.applifehack.knowledge.util.extension.await
 import com.applifehack.knowledge.util.extension.shareImage
+import com.ezyplanet.core.ui.base.BaseViewModel
+import com.ezyplanet.core.ui.base.MvvmActivity
+import com.ezyplanet.core.util.SchedulerProvider
+import com.ezyplanet.supercab.data.local.db.DbHelper
+import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
+import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
+import com.google.firebase.dynamiclinks.ShortDynamicLink
+import com.google.firebase.dynamiclinks.ktx.androidParameters
+import com.google.firebase.dynamiclinks.ktx.dynamicLink
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.ktx.Firebase
+import com.makeramen.roundedimageview.RoundedDrawable
+import com.makeramen.roundedimageview.RoundedImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.sourcei.kowts.utils.functions.F
 import org.sourcei.kowts.utils.pojo.QuoteResp
-import java.util.ArrayList
+import java.util.*
 import javax.inject.Inject
 
-class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, connectionManager: BaseConnectionManager
+
+open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, var dbHelper: DbHelper, connectionManager: BaseConnectionManager
 ) : BaseViewModel<FeedNav, String>(schedulerProvider, connectionManager) {
 
     val results = NonNullLiveData<List<Post>>(emptyList())
-    private val mData = ArrayList<Post>()
+    protected val mData = ArrayList<Post>()
 
     private var lastItem: DocumentSnapshot?=null
      var currentPage=0
@@ -36,11 +53,11 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
         visibleThreshold = 10
     }
 
-    private var hasMore = false
-    private var currentItem = 0
+    protected var hasMore = false
+    protected var currentItem = 0
     @Inject lateinit var fbAnalytics: FirebaseAnalyticsHelper
 
-    fun getPost(nextPage: Boolean? = false) {
+   open fun getPost(nextPage: Boolean? = false) {
 
         if (nextPage == false) navigator?.showProgress()
         resetLoadingState = true
@@ -69,8 +86,7 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
                     resetLoadingState = false
                     navigator?.hideProgress()
 
-                    Log.d("currentPage","$currentPage")
-                    Log.d("Post size:","${mData.size}")
+
                 }
 
             } catch (ex: Exception) {
@@ -114,15 +130,16 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
     }
     fun shareClick(view: View, data:Post){
         if(data.getPostType()==PostType.QUOTE){
-            navigator?.shareImage(view)
+            val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
+            val quote = view.getQuote()
+            generataQuote(view.context,quote,data.id)
 
         }else{
-            val context = view.context
-            val download = context.getString(R.string.download)
-            val applink = context.getString(R.string.app_link)
-            val messge = String.format(context.getString(R.string.share_info_message),
-                    context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
-            navigator?.share(messge)
+//
+
+             val image = ((view.parent.parent as RelativeLayout).findViewById<RoundedImageView>(R.id.feed_hero_image))
+            val bitmap = (image.drawable as RoundedDrawable).sourceBitmap
+            generateArticle(view.context,data,bitmap)
         }
         logEvent(data?.id,"share")
 
@@ -133,7 +150,12 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
         uiScope?.launch {
             results.value = updateRow(currentItem)
             appDataManager.updateLikeCount(data.id)
-            logEvent(data?.id,"like")
+            withContext(Dispatchers.IO) {
+                dbHelper.insertFavoritePost(data.apply {
+                    likedDate = Date()
+                    liked = true })
+                logEvent(data?.id, "like")
+            }
         }
     }
 
@@ -147,14 +169,13 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
 
     }
 
-    fun generataQuote(context: Context,quoteResp: QuoteResp){
+    fun generataQuote(context: Context,quoteResp: QuoteResp,postId: String?){
         uiScope?.launch {
             try {
                 navigator?.showProgress()
 
                 val result = F.generateBitmap(context, quoteResp)
-                navigator?.hideProgress()
-                ( context as MvvmActivity<*, *>).shareImage(result)
+                createDynamicLink(context,postId,result!!)
             }catch (ex:Exception){
                 ex.printStackTrace()
             }
@@ -163,6 +184,22 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
         }
 
 
+    }
+    fun generateArticle(context: Context,post: Post,bitmap:Bitmap){
+        uiScope?.launch {
+            try {
+                navigator?.showProgress()
+
+                val result = F.createBitmapFromView(context,post,bitmap)
+
+                createDynamicLink(context,post.id!!,result!!)
+
+            }catch (ex:Exception){
+                ex.printStackTrace()
+            }
+
+
+        }
     }
 
     private fun updateRow(position: Int):List<Post>{
@@ -182,6 +219,38 @@ class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerPr
         fbAnalytics.logEvent(likeButton,likeButton,str)
 
 
+    }
+
+    private fun createDynamicLink(context: Context,postId:String?,bitmap:Bitmap){
+        Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
+            link = Uri.parse("https://www.applifehack.com/?postId=$postId")
+            domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
+            androidParameters("com.applifehack.knowledge.staging"){
+
+            }
+
+            // Open links with this app on Android
+
+        }.addOnSuccessListener {
+            navigator?.hideProgress()
+            ( context as MvvmActivity<*, *>).shareImage(bitmap,it.shortLink.toString())
+        }.addOnFailureListener{
+            navigator?.hideProgress()
+            it.printStackTrace()
+        }
+    }
+    open fun myFavoritePost(position:Int){
+        uiScope?.launch {
+          val temp =  async(Dispatchers.IO) {
+                dbHelper.getPostById(mData[position].id)
+            }.await()
+            if(temp!=null){
+                results.value = mData?.apply {
+                     get(position).liked = true
+                }
+            }
+
+        }
     }
 
 

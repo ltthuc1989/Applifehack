@@ -1,4 +1,4 @@
-package com.ltthuc.habit
+package com.applifehack.knowledge
 
 import org.junit.Test
 

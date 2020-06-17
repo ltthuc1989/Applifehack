@@ -13,16 +13,19 @@ import com.applifehack.knowledge.data.network.response.CatResp
 import com.applifehack.knowledge.databinding.ActivityHomeBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.activity.categorydetail.CategoryDetailFrag
+import com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkActivity
+import com.applifehack.knowledge.ui.fragment.favorite.FavoriteFragment
 import com.applifehack.knowledge.ui.activity.quotes.QuotesActivity
 import com.applifehack.knowledge.ui.fragment.category.CategoryFrag
 import com.applifehack.knowledge.ui.activity.setting.SettingActivity
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
 import com.applifehack.knowledge.ui.fragment.feed.FeedFrag
+import com.applifehack.knowledge.ui.widget.listener.NavListener
 import com.applifehack.knowledge.ui.widget.listener.ToolbarListener
 import com.applifehack.knowledge.util.AppBundleKey
 import com.applifehack.knowledge.util.helper.AppUpdateHelper
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,ToolbarListener {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,ToolbarListener,NavListener {
 
     override val viewModel: HomeVM by getLazyViewModel()
 
@@ -30,6 +33,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
     lateinit var appUpdateHelper: AppUpdateHelper
     lateinit var homeEventModel: HomeEventModel
+     companion object{
+         val KEY_GO_HOME="GO_HOME"
+         val KEY_GO_FAVORITE ="GO_FAVORITE"
+     }
 
 
 
@@ -44,7 +51,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
         initAppUpdate()
         homeEventModel = ViewModelProviders.of(this).get(HomeEventModel::class.java)
         homeEventModel?.categoryClick?.observe(this, Observer {
-            binding.toolbarHome.titleBar = it.cat_name
             gotoActivity(CategoryDetailFrag::class, mapOf(CategoryFrag.KEY_CATEGORY_DETAIL to (it as CatResp)))
         })
         viewModel.showRateUse(this)
@@ -52,12 +58,25 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
             binding.toolbarHome.titleBar = it
         })
         viewModel.handleIntent(intent)
+        viewModel.getDynamicLink(intent,this)
 
 
 
 
 
 
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if(intent?.getBooleanExtra(KEY_GO_HOME,false)==true){
+            onHome()
+        }else if(intent?.getBooleanExtra(KEY_GO_FAVORITE,false)==true){
+            onSaved()
+        }
+        else{
+            updateToolBarTitle(R.string.category)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -99,6 +118,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
     override fun onSaved() {
+        if(viewModel.favoriteSeleted.value!=true) {
+            val str = "icon_favorite"
+            fbAnalytics.logEvent(str, str, icon)
+            updateToolBarTitle(R.string.favorite)
+            replaceFragment(FavoriteFragment())
+            viewModel.favoriteClick()
+        }
     }
 
     override fun onCategory() {
@@ -156,5 +182,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
     override fun openQuote() {
        gotoActivity(QuotesActivity::class)
+    }
+
+    override fun openDynamicLink(postId: String) {
+       gotoActivity(DynamicLinkActivity::class, mapOf(AppBundleKey.KEY_POST_ID to postId))
     }
 }

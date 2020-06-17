@@ -19,6 +19,7 @@ import androidx.core.content.FileProvider
 import java.io.File
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.applifehack.knowledge.BuildConfig
+import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import java.io.FileOutputStream
 
@@ -87,12 +88,13 @@ fun MvvmActivity<*,*>.shareMessage(message:String){
     intent2.putExtra(Intent.EXTRA_TEXT, message)
     startActivity(Intent.createChooser(intent2, "Share via"))
 }
-fun MvvmActivity<*,*>.shareImage(bitmap: Bitmap?=null){
+fun MvvmActivity<*,*>.shareImage(bitmap: Bitmap?=null,shortLink:String?){
 
 
     try {
     var CODE_FOR_RESULT = 981
-        val file = File(this.externalCacheDir, "quote.png")
+        val shareTitle = String.format(getString(R.string.share_info_message,shortLink))
+        val file = File(this.externalCacheDir, "image.png")
         val fOut = FileOutputStream(file)
         bitmap?.compress(Bitmap.CompressFormat.PNG, 100, fOut)
         fOut.flush()
@@ -100,12 +102,13 @@ fun MvvmActivity<*,*>.shareImage(bitmap: Bitmap?=null){
         file.setReadable(true, false)
         val intent = Intent(android.content.Intent.ACTION_SEND)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        val photoURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file)
-        // intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file.getC));
-        intent.putExtra(Intent.EXTRA_STREAM, photoURI)
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        intent.type = "image/png"
-        //startActivity(Intent.createChooser(intent, "Share image via"));
+        val photoURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file)
+        intent.putExtra(Intent.EXTRA_STREAM, photoURI)
+        intent.putExtra(Intent.EXTRA_TEXT,shareTitle)
+
+        intent.type = "*/*"
+
         startActivityForResult(Intent.createChooser(intent, "Share image via"), CODE_FOR_RESULT)
     } catch (e: Exception) {
         e.printStackTrace()

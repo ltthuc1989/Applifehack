@@ -41,7 +41,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
         resetLoadingState = true
         uiScope?.launch {
             try {
-                val data = appDataManager.getVideoPostByCat(catId, SortBy.NEWEST, nextPage,lastItem)
+                val data = appDataManager.getPostByCat(catId, SortBy.NEWEST, nextPage,lastItem)
 
                 data?.await().let {
                     if(!it.isEmpty) {

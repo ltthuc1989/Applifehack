@@ -58,7 +58,7 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
                     Log.d("onSnapPosition","$position")
                     homeEventModel.toolbarTitle.value = (binding?.adapter as FeedAdapter)?.getRowData(position)?.catName
-
+                    viewModel.myFavoritePost(position)
                     viewModel.onLoadMore(position)
                 }
             })
@@ -99,13 +99,13 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
     }
 
 
-    override fun shareImage(view: View) {
-        val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
-        val quote = view.getQuote()
-        viewModel.generataQuote(context!!, quote)
+
+
+    override fun shareArticle(view: View) {
+
     }
 
-    override fun gotoYoutubeDetail(post: Post,shareView:View) {
+    override fun gotoYoutubeDetail(post: Post, shareView:View) {
         (activity as MvvmActivity<*, *>).transitionActivity(YtDetailActivity::class,
                 mapOf(AppBundleKey.YOUTUBE_URL to post),shareView)
        // gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post.video_url))

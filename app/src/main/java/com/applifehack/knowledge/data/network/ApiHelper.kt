@@ -16,17 +16,19 @@ interface ApiHelper {
 
     fun getApiHeader(): ApiHeader
     fun getRssCat():Single<Value<QuerySnapshot>>
-    fun createPost(postContent: Post) : Completable
     fun getPost(loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getCatgories(): Single<Value<QuerySnapshot>>
     fun getPostByCat(catId:String?, sortBy:SortBy?=SortBy.NEWEST, loadMore:Boolean?=false, lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getPopularPost():Task<QuerySnapshot>
+    fun getPostDetail(postId:String):Task<DocumentSnapshot>
 
     fun getVideoPostByCat(catId:String?,sortBy:SortBy?=SortBy.NEWEST,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getPostByQuote(typeQuote:String?,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getYtDetail(youtubeId:String?):Single<YoutubeResp>
      fun updateViewCount(postId:String?):Task<Transaction>
     fun updateLikeCount(postId:String?):Task<Transaction>
+
+
 
 
 }

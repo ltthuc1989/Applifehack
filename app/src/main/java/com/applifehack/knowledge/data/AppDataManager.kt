@@ -40,11 +40,9 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
         return apiHelper.getRssCat()
     }
 
-    override fun createPost(postContent: Post): Completable {
-        return apiHelper.createPost(postContent)
-    }
 
-    override fun getPost(loadMore:Boolean?,lastItem:DocumentSnapshot?): Task<QuerySnapshot> {
+
+    override fun getPost(loadMore:Boolean?, lastItem:DocumentSnapshot?): Task<QuerySnapshot> {
         return apiHelper.getPost(loadMore,lastItem)
     }
 
@@ -78,5 +76,10 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
 
     override   fun updateLikeCount(postId: String?): Task<Transaction> {
         return  apiHelper.updateLikeCount(postId)
+    }
+
+    override fun getPostDetail(postId: String): Task<DocumentSnapshot> {
+
+        return apiHelper.getPostDetail(postId)
     }
 }

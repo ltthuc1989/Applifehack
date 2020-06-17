@@ -9,7 +9,8 @@ import kotlinx.android.parcel.Parcelize
 data class RssCatResp constructor(val feed:String?="",
                                   val thumb_url:String?="",
                                   val title:String?="",
-                                  val domain:String?=""):Parcelable
+                                  val domain:String?="",
+var author_name:String=""):Parcelable
 
 @Parcelize
 @IgnoreExtraProperties
