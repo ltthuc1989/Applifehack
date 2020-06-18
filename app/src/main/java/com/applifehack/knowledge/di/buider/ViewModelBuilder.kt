@@ -1,6 +1,7 @@
 package com.applifehack.knowledge.di.buider
 
 import androidx.lifecycle.ViewModelProvider
+import com.applifehack.knowledge.ui.activity.RSSVMBuilder
 import com.ezyplanet.core.viewmodel.ArchViewModelFactory
 import com.applifehack.knowledge.ui.activity.categorydetail.CategoryDetailVMBuilder
 import com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkVMBuilder
@@ -13,6 +14,8 @@ import com.applifehack.knowledge.ui.activity.splash.SplashVMBuilder
 import com.applifehack.knowledge.ui.activity.viewer.ViewerVMBuilder
 import com.applifehack.knowledge.ui.activity.viewer.YtDetailVMBuilder
 import com.applifehack.knowledge.ui.activity.webview.WebViewVMBuilder
+import com.applifehack.knowledge.ui.admin.manualpost.ManualPostVMBuilder
+import com.applifehack.knowledge.ui.admin.rssposts.RssListPostVMBuilder
 import com.applifehack.knowledge.ui.fragment.articlelist.ArticleListVMBuilder
 import com.applifehack.knowledge.ui.fragment.favorite.FavoriteVMBuilder
 import com.applifehack.knowledge.ui.fragment.slidepost.SlidePostVMBuilder
@@ -30,6 +33,9 @@ import dagger.Module
  *
  */
 @Module(includes = [
+    (RSSVMBuilder::class),
+    (RssListPostVMBuilder::class),
+    (ManualPostVMBuilder::class),
     (SplashVMBuilder::class),
     (FeedVMBuilder::class),
     (WebViewVMBuilder::class),

@@ -1,5 +1,6 @@
 package com.applifehack.knowledge.di.buider
 
+import com.applifehack.knowledge.ui.activity.RSSActivity
 import com.applifehack.knowledge.ui.activity.categorydetail.CategoryDetailFrag
 import com.applifehack.knowledge.ui.activity.categorydetail.CategoryDetailProvider
 import com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkActivity
@@ -14,6 +15,8 @@ import com.applifehack.knowledge.ui.activity.viewer.ViewerActivity
 import com.applifehack.knowledge.ui.activity.viewer.ViewerProvider
 import com.applifehack.knowledge.ui.activity.webview.WebViewActivity
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
+import com.applifehack.knowledge.ui.admin.manualpost.ManualPostActivity
+import com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -23,6 +26,13 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module
 abstract class ActivityBuilder {
+
+    @ContributesAndroidInjector
+    internal abstract fun bindRssPostActivity(): RssListPostActivity
+    @ContributesAndroidInjector
+    internal abstract fun bindRssActivity(): RSSActivity
+    @ContributesAndroidInjector
+    internal abstract fun bindManualActivity(): ManualPostActivity
 
     @ContributesAndroidInjector
     internal abstract fun bindWebViewActivity(): WebViewActivity
@@ -45,6 +55,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     internal abstract fun bindDynamicLinkActivity(): DynamicLinkActivity
+
 
 
 

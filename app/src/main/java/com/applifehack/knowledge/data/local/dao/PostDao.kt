@@ -8,6 +8,14 @@ import java.util.*
 
 @Dao
 interface PostDao {
+
+    @Query("SELECT * FROM post WHERE status =:status ")
+    fun loadAll(status:String?): List<Post>
+
+    @Query("SELECT * FROM post WHERE post_author_name =:author AND status =:status   limit 1 ")
+    fun getPostByAuthor(author:String?,status :String? = PostStatus.PARSED.type) : List<Post>
+    @Query("UPDATE post SET status=:status Where id=:id")
+    fun updatePost(id:String?,status: String?)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(post: List<Post>)
     @Insert(onConflict = OnConflictStrategy.REPLACE)

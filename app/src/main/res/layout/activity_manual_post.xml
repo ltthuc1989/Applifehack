@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <data>
+        <variable
+            name="viewModel"
+            type="com.applifehack.knowledge.ui.admin.manualpost.ManualPostVM"/>
+        <import type="com.applifehack.knowledge.data.entity.PostType"/>
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/dark_gray">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarPost"
+        android:background="@color/dark_gray"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="?attr/actionBarSize"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/post"
+        android:textColor="@color/white_50"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:layout_height="wrap_content" />
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:id="@+id/lbCat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:text="Category"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvCategory" />
+
+    <TextView
+        android:id="@+id/tvCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:text="@={viewModel.textCat.text}"
+        android:drawableRight="@drawable/ic_arrow_drop_down_white_24dp"
+        android:drawableTint="@color/dark_gray"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="@{()->viewModel.pickCat(context)}"
+        app:layout_constraintTop_toBottomOf="@id/toolbarPost" />
+
+    <TextView
+        android:id="@+id/lbPostType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+
+        android:text="Post Type"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvPostType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvPostType" />
+
+    <TextView
+        android:id="@+id/tvPostType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:drawableRight="@drawable/ic_arrow_drop_down_white_24dp"
+        android:drawableTint="@color/dark_gray"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@={viewModel.textPostType.text}"
+        android:onClick="@{()->viewModel.pickPostType(context)}"
+        app:layout_constraintTop_toBottomOf="@id/tvCategory" />
+    <TextView
+        android:id="@+id/lbContentType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+        goneUnless="@{viewModel.postTypeSelected.postType()==PostType.QUOTE}"
+        android:text="Media Type"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvContentType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvContentType" />
+
+    <TextView
+        android:id="@+id/tvContentType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/cabin_condensed_bold"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:drawableRight="@drawable/ic_arrow_drop_down_white_24dp"
+        android:drawableTint="@color/dark_gray"
+        android:text="@={viewModel.textQuoteType.text}"
+        android:onClick="@{()->viewModel.pickMediaType(context)}"
+        app:layout_constraintTop_toBottomOf="@id/tvPostType"
+        goneUnless="@{viewModel.postTypeSelected.postType()==PostType.QUOTE}"
+        />
+
+    <TextView
+        android:id="@+id/lbTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+
+        android:text="Title"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvTitle" />
+
+    <EditText
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:text="@={viewModel.textTitle.text}"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvContentType" />
+
+    <TextView
+        android:id="@+id/lbAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+
+        android:text="Author"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvAuthor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvAuthor" />
+
+    <EditText
+        android:id="@+id/tvAuthor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:text="@={viewModel.textAuthorName.text}"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <TextView
+        android:id="@+id/lbAuthorUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+
+        android:text="Author Url"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvAuthorUrl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvAuthorUrl" />
+
+    <EditText
+        android:id="@+id/tvAuthorUrl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:text="@={viewModel.textAuthorUrl.text}"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAuthor" />
+
+    <TextView
+        android:id="@+id/lbContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:text="Content Url"
+        android:enabled="@{viewModel.postTypeSelected.postType()!=PostType.QUOTE}"
+
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvContent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvContent" />
+
+    <EditText
+        android:id="@+id/tvContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:enabled="@{viewModel.postTypeSelected.postType()!=PostType.QUOTE}"
+
+        android:text="@={viewModel.textContentUrl.text}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@id/tvAuthorUrl" />
+
+    <TextView
+        android:id="@+id/lbImageUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:enabled="@{viewModel.postTypeSelected.postType()!=PostType.QUOTE}"
+
+        android:text="Image Url"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvImage" />
+
+    <EditText
+        android:id="@+id/tvImage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        android:enabled="@{viewModel.postTypeSelected.postType()!=PostType.QUOTE}"
+        android:fontFamily="@font/cabin_condensed_bold"
+        android:text="@={viewModel.textImageUrl.text}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lbImageUrl"
+        app:layout_constraintTop_toBottomOf="@id/tvContent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="tvContent,tvImage"
+        />
+
+    <Button
+        android:layout_width="0dp"
+        android:background="@color/bright_blue"
+        android:id="@+id/btPostStaging"
+        app:layout_constraintTop_toBottomOf="@id/tvImage"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toLeftOf="@id/btPostLive"
+
+        app:layout_constraintHorizontal_weight="1"
+        android:text="Post Staging"
+        android:onClick="@{()->viewModel.post(false)}"
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_width="0dp"
+        android:id="@+id/btPostLive"
+        android:background="@color/bright_blue"
+        app:layout_constraintTop_toBottomOf="@id/tvImage"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintHorizontal_weight="1"
+        android:textColor="@color/white"
+        android:text="Post Live"
+        android:onClick="@{()->viewModel.post(true)}"
+        android:fontFamily="@font/roboto_bold"
+        app:layout_constraintLeft_toRightOf="@id/btPostStaging"
+
+       app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -37,6 +37,7 @@ import javax.inject.Inject
         val PREF_KEY_NOTIFICATION = "notification"
         val PREF_KEY_VERSIION_CODE = "version_code"
         val PREF_KEY_APP_LAUNCH_COUNT = "app_launch_count"
+        val PREF_KEY_POST_AUTHOR_NAME = "POST_AUTHOR"
 
     }
 
@@ -67,7 +68,7 @@ import javax.inject.Inject
     var enableNotification:Boolean? by PreferenceDelegate(mPrefs, PREF_KEY_NOTIFICATION,true)
     var versionUpdate:Int? by PreferenceDelegate(mPrefs, PREF_KEY_VERSIION_CODE,0)
     var appLaunchCount :Int? by PreferenceDelegate(mPrefs, PREF_KEY_APP_LAUNCH_COUNT,0)
-
+    var postAuthor : String? by PreferenceDelegate(mPrefs, PREF_KEY_POST_AUTHOR_NAME,"")
 }
 
 

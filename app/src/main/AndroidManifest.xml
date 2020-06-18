@@ -45,7 +45,10 @@
         <meta-data
             android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
-
+        <activity android:name="com.applifehack.knowledge.ui.activity.RSSActivity"/>
+        <activity android:name="com.applifehack.knowledge.ui.admin.manualpost.ManualPostActivity"/>
+        <activity android:name="com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity"/>
+        <activity android:name=".ui.admin.localpost.LocalPostActivity"/>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

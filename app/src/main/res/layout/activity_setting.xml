@@ -162,8 +162,36 @@
                 android:padding="@dimen/padding"
                 android:textSize="18sp"
                 android:text="@string/rate_us" />
-
-
+            <TextView
+                android:id="@+id/lbAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbRateUse"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.adminClick()}"
+                android:padding="@dimen/padding"
+                android:textSize="18sp"
+                android:text="Admin" />
+            <TextView
+                android:id="@+id/lbLocalPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbAdmin"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.localPostClick()}"
+                android:padding="@dimen/padding"
+                android:textSize="18sp"
+                android:text="Admin" />
 
         </RelativeLayout>
     </LinearLayout>

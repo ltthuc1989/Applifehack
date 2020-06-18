@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+
+        <import type="com.applifehack.knowledge.databinding.ItemListPostBinding"/>
+        <import type="com.applifehack.knowledge.data.entity.Post"/>
+        <variable
+            name="viewModel"
+            type="com.applifehack.knowledge.ui.admin.rssposts.RssListPostVM"/>
+
+        <variable
+            name="adapter"
+
+            type="com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter&lt;Post,ItemListPostBinding&gt;"/>
+    </data>
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:background="@color/color_f2f2f2"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarRssPost"
+            android:background="@color/dark_gray"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            >
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="RSS"
+            android:textColor="@color/white_50"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:layout_height="wrap_content" />
+        </androidx.appcompat.widget.Toolbar>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_below="@+id/toolbarRssPost"
+            android:layout_above="@id/nextPage"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+
+            android:padding="10dp"
+            android:background="@color/white"
+            android:adapter="@{adapter}"
+
+
+            app:layoutManager="com.ezyplanet.core.ui.widget.scroll.LinearLayoutManagerWrapper"
+            app:dividerItemDecoration="@{1}"
+            app:spaceItemDecoration='@{@dimen/space_very_low}'
+            app:itemDecorationBackGround="@{@drawable/item_divider}"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/nextPage"
+            android:background="@color/app_cecece"
+
+            android:layout_alignParentBottom="true"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="Prev"
+                android:layout_centerVertical="true"
+                style="@style/text_roboto"
+                android:onClick="@{()->viewModel.prePage()}"
+                android:gravity="center"
+
+
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"/>
+            <EditText android:layout_width="50dp"
+                android:background="@drawable/bg_edt_border_gray"
+                android:hint="1"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                style="@style/text_roboto"
+                android:text="@={viewModel.pageText.text}"
+                android:inputType="number"
+                android:layout_centerHorizontal="true"
+                android:layout_height="30dp"/>
+            <TextView android:layout_width="wrap_content"
+                android:text="Next"
+                style="@style/text_roboto"
+
+                android:onClick="@{()->viewModel.nextPage()}"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

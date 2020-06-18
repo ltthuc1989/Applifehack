@@ -14,8 +14,13 @@ import com.applifehack.knowledge.data.network.ApiHeader
 import com.applifehack.knowledge.data.network.ApiHelper
 import com.applifehack.knowledge.data.network.response.youtube.YoutubeResp
 import com.applifehack.knowledge.util.SortBy
+import com.ezyplanet.core.util.extension.ToJson
+import com.ezyplanet.core.util.extension.fromJson
+import com.google.firebase.storage.UploadTask
+import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.Single
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -82,4 +87,40 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
 
         return apiHelper.getPostDetail(postId)
     }
+
+    fun saveAuthors(authors : List<String>){
+        appPreferenceHelper.postAuthor = Gson().ToJson(authors)
+
+    }
+    fun getAuthors():ArrayList<String>? {
+        return Gson().fromJson(appPreferenceHelper.postAuthor)
+    }
+
+    override fun uploadDatabase(file: File): UploadTask {
+        return apiHelper.uploadDatabase(file)
+    }
+
+    override fun downloadDatabase(path: String,action :(File)->Unit) {
+        return  apiHelper.downloadDatabase(path,action)
+    }
+
+    override fun getHtmlDoc(url: String): Single<String> {
+        return  apiHelper.getHtmlDoc(url)
+    }
+
+    override fun createPost(generateId: String, postContent: Post): Task<Transaction> {
+        return apiHelper.createPost(generateId,postContent)
+    }
+
+    override fun createPostLive(generateId: String, postContent: Post): Task<Transaction> {
+        return apiHelper.createPostLive(generateId,postContent)
+    }
+
+    override fun createMultiplePost(posts: List<Post>): Task<Void> {
+        return  apiHelper.createMultiplePost(posts)
+    }
+
+
+
+
 }

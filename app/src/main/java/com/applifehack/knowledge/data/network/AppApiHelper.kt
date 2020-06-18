@@ -21,6 +21,10 @@ import com.google.firebase.Timestamp
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.AppConstants.DatabasePath
 import com.google.firebase.FirebaseApp
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import java.io.File
+import java.io.FileInputStream
 
 
 /**
@@ -262,5 +266,66 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun getPostDetail(postId: String): Task<DocumentSnapshot> {
         return firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!).get()
+    }
+
+    override fun uploadDatabase(file: File): UploadTask {
+        var storage = FirebaseStorage.getInstance()
+        val storageRef = storage.reference.child("Database/posts.db")
+        val stream = FileInputStream(file)
+        return storageRef.putStream(stream)
+
+    }
+
+    override fun downloadDatabase(path: String,action :(File)->Unit) {
+        var storage = FirebaseStorage.getInstance()
+        val localFile = File.createTempFile("file", "db")
+        val storageRef = storage.reference.child("Database/posts.db")
+        storageRef.getFile(localFile).addOnSuccessListener {
+            action.invoke(localFile)
+        }.addOnFailureListener{
+            action.invoke(localFile)
+        }
+
+    }
+
+    override fun getHtmlDoc(url: String): Single<String> {
+        return Rx2AndroidNetworking.get(url).build().stringSingle
+    }
+
+    override fun createPostLive(generateId: String, post: Post): Task<Transaction> {
+        val postValues = post.toMap()
+        val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+        val firebseStore = FirebaseFirestore.getInstance(firebaseApp)
+        val query = firebseStore.collection(ApiEndPoint.POST_DB_KEY).document(generateId)
+
+        return firebseStore?.runTransaction {
+            it.set(query,postValues)
+            // val snapshot = it.get(query)
+            // it.update(query,DatabasePath.ID,snapshot.id)
+
+        }
+    }
+
+    override fun createMultiplePost(posts: List<Post>): Task<Void> {
+
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document()
+        var batch = firStore.batch()
+        posts.forEach {
+            query
+            batch.set(query,it.toMap())
+        }
+        return batch.commit()
+    }
+
+    override fun createPost(generateId: String, post: Post): Task<Transaction> {
+        val postValues = post.toMap()
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(generateId)
+        val query1 = firStore.collection(ApiEndPoint.POST_DB_KEY)
+        return firStore?.runTransaction {
+            it.set(query,postValues)
+            // val snapshot = it.get(query)
+            // it.update(query,DatabasePath.ID,snapshot.id)
+
+        }
     }
 }

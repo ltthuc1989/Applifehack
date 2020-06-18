@@ -16,6 +16,18 @@ import javax.inject.Singleton
 class AppDbHelper @Inject constructor( val addressesDao: PostDao) : DbHelper {
 
 
+    override fun insertPost(address: List<Post>) {
+
+
+        addressesDao.insertAll(address)
+
+
+    }
+
+    override fun loadAllPost(): List<Post>{
+        return addressesDao.loadAll(PostStatus.PARSED.type)
+
+    }
     override fun insertFavoritePost(post: Post) {
 
 
@@ -40,6 +52,15 @@ class AppDbHelper @Inject constructor( val addressesDao: PostDao) : DbHelper {
 
     }
 
+    override fun getPostByAuthor(author: String?): List<Post> {
+
+        return addressesDao.getPostByAuthor(author)
+
+    }
+
+    override suspend fun updatePost(id:String?,status: String?) = withContext(Dispatchers.IO){
+        addressesDao.updatePost(id,status)
+    }
 
 
 }

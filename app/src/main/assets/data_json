@@ -1,4 +1,38 @@
-[
+{
+  "category": [
+    {
+      "id": 0,
+      "name": "Living& Healthy"
+    },
+    {
+      "id": 1,
+      "name": "Self Improvement"
+    },
+    {
+      "id": 2,
+      "name": "Happiness"
+    },
+    {
+      "id": 3,
+      "name": "Inspiration"
+    },
+    {
+      "id": 4,
+      "name": "Life Quotes"
+    }
+  ],
+  "post_type": [
+    {
+      "name": "article"
+    },
+    {
+      "name": "video"
+    },
+    {
+      "name": "quote"
+    }
+  ],
+  "quote_type": [
     {
       "name": "Motivational"
     },
@@ -14,19 +48,13 @@
     {
       "name": "Life"
     },
-    {
-      "name": "Nature"
-    },
+
     {
       "name": "Hope"
     },
     {
       "name": "Attitude"
-    },
-    {
-      "name": "Funny"
-    },
-    {
-      "name": "Smile"
     }
-]
+
+  ]
+}
