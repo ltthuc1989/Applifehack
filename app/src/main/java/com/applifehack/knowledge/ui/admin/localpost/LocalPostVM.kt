@@ -8,8 +8,10 @@ import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.network.response.RssCatResp
+import com.applifehack.knowledge.util.PostStatus
 import com.applifehack.knowledge.util.extension.await
 import com.ezyplanet.core.ui.base.BaseViewModel
+import com.ezyplanet.core.util.CoreConstants
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.supercab.data.local.db.DbHelper
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
@@ -145,14 +147,26 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
        if (isRandom.value!=true) return
 
            navigator?.showProgress()
-           appDataManager.createMultiplePost(results.value).addOnFailureListener {
+          var ids = mutableListOf<String>()
+          val temp = results.value.apply {
+              forEach {
+                  it.post_status = PostStatus.PUBLISH.type
+                  ids.add(it.id)
+              }
+          }
+           appDataManager.createMultiplePost(temp).addOnFailureListener {
                navigator?.hideProgress()
                navigator?.showAlert(it.message)
 
            }.addOnSuccessListener {
-               navigator?.hideProgress()
-               mData.clear()
-               bindToUI()
+
+               uiScope?.launch {
+                   dbHelper.updatePosts(ids)
+                   mData.clear()
+                   navigator?.hideProgress()
+                   bindToUI()
+               }
+
            }
 
 
@@ -189,7 +203,18 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
 
 
 
-
+    fun exportDatabse(){
+        if(mData?.isNullOrEmpty()) return
+        navigator?.showProgress()
+        val context = appDataManager.context
+        val file = context.getDatabasePath(CoreConstants.APP_DB_NAME)
+        appDataManager.uploadDatabase(file).addOnSuccessListener {
+            navigator?.hideProgress()
+        }.addOnFailureListener{
+            navigator?.showAlert(it.message)
+            navigator?.hideProgress()
+        }
+    }
 
 
 }

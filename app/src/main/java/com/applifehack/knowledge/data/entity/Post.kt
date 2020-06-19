@@ -2,6 +2,7 @@ package com.applifehack.knowledge.data.entity
 
 import android.os.Parcelable
 import androidx.annotation.NonNull
+import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -111,7 +112,7 @@ data class Post(
     @set:PropertyName("liked_date")
     @get:PropertyName("liked_date")
     @ColumnInfo(name = "liked_date")
-    var likedDate: Date?=null
+    var likedDate: Date?= Date()
 ) : Parcelable {
 
 
@@ -131,6 +132,13 @@ data class Post(
         result["post_type"] = type!!
         if(quote_type?.isEmpty()!=true){
             result["post_quote_type"] = quote_type!!
+        }
+        if(type == PostType.VIDEO.type){
+            result["post_video_id"] = video_url!!
+            duration?.let {
+                result["post_video_duration"] = it
+            }
+
         }
 
         return result

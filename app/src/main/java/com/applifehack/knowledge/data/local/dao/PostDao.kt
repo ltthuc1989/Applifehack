@@ -9,8 +9,10 @@ import java.util.*
 @Dao
 interface PostDao {
 
-    @Query("SELECT * FROM post WHERE status =:status ")
-    fun loadAll(status:String?): List<Post>
+    @Query("SELECT * FROM post WHERE status =:status")
+    fun loadLocalPosts(status:String?): List<Post>
+    @Query("UPDATE post SET status=:status Where id in (:ids)")
+    fun updatePosts(ids:List<String>?,status: String?)
 
     @Query("SELECT * FROM post WHERE post_author_name =:author AND status =:status   limit 1 ")
     fun getPostByAuthor(author:String?,status :String? = PostStatus.PARSED.type) : List<Post>

@@ -104,6 +104,7 @@ data class RssCatResp constructor(
                     var id = parseYoutubeId(it)
                     var mediaElement = formatYoutubeThumbnail(id)
                     var viewCount = parseViewCounts(it)
+                    var duration = parseDuration(it)
 
                     var titleElement = parseYoutubeTitle(it)
                     if (mediaElement.isNotEmpty()  && titleElement.isNotEmpty()) {
@@ -121,6 +122,7 @@ data class RssCatResp constructor(
                                         authorUrl = "https://www.drsamrobbins.com/"
                                         video_url = id
                                         this.viewCount = viewCount
+                                        this.duration = duration
 
                                         catId = cat.cat_id
                                         catName = cat.cat_name
@@ -172,6 +174,21 @@ data class RssCatResp constructor(
             temp.split("\\s+".toRegex())[0].replace(".","").toInt()
         }catch (ex:Exception){
             0
+        }
+    }
+
+    private fun parseDuration(el:Element) : String {
+        return try {
+            var duration = ""
+        val temp = el.select("span.accessible-description").text()
+            temp.split("\\s+".toRegex())?.forEach {
+                if(it.matches(".*\\d.*".toRegex()))  duration=it.replace(".","")
+            }
+             duration
+
+
+        }catch (ex:Exception){
+            ""
         }
     }
 }

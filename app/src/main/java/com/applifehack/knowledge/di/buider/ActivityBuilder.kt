@@ -15,6 +15,7 @@ import com.applifehack.knowledge.ui.activity.viewer.ViewerActivity
 import com.applifehack.knowledge.ui.activity.viewer.ViewerProvider
 import com.applifehack.knowledge.ui.activity.webview.WebViewActivity
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
+import com.applifehack.knowledge.ui.admin.localpost.LocalPostActivity
 import com.applifehack.knowledge.ui.admin.manualpost.ManualPostActivity
 import com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity
 import dagger.Module
@@ -33,7 +34,8 @@ abstract class ActivityBuilder {
     internal abstract fun bindRssActivity(): RSSActivity
     @ContributesAndroidInjector
     internal abstract fun bindManualActivity(): ManualPostActivity
-
+    @ContributesAndroidInjector
+    internal abstract fun bindLocalPostActivity(): LocalPostActivity
     @ContributesAndroidInjector
     internal abstract fun bindWebViewActivity(): WebViewActivity
 

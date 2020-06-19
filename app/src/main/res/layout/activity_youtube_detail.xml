@@ -42,7 +42,7 @@
                     android:layout_height="@dimen/youtube_details_photo_height"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
 
-                    app:expandedTitleMarginEnd="10dp"
+
                     app:collapsedTitleTextAppearance="?attr/feedCollapsedToolbarStyle"
                     app:contentScrim="@android:color/black"
                     app:expandedTitleMarginBottom="0dp"
@@ -60,6 +60,7 @@
                     <ImageView
                         android:id="@+id/feed_hero_image"
                         android:layout_width="match_parent"
+
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"

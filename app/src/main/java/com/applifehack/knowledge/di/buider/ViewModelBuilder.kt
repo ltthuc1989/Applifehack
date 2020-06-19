@@ -14,6 +14,7 @@ import com.applifehack.knowledge.ui.activity.splash.SplashVMBuilder
 import com.applifehack.knowledge.ui.activity.viewer.ViewerVMBuilder
 import com.applifehack.knowledge.ui.activity.viewer.YtDetailVMBuilder
 import com.applifehack.knowledge.ui.activity.webview.WebViewVMBuilder
+import com.applifehack.knowledge.ui.admin.localpost.LocalPostVMBuilder
 import com.applifehack.knowledge.ui.admin.manualpost.ManualPostVMBuilder
 import com.applifehack.knowledge.ui.admin.rssposts.RssListPostVMBuilder
 import com.applifehack.knowledge.ui.fragment.articlelist.ArticleListVMBuilder
@@ -36,6 +37,7 @@ import dagger.Module
     (RSSVMBuilder::class),
     (RssListPostVMBuilder::class),
     (ManualPostVMBuilder::class),
+    (LocalPostVMBuilder::class),
     (SplashVMBuilder::class),
     (FeedVMBuilder::class),
     (WebViewVMBuilder::class),

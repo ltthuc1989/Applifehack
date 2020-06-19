@@ -134,8 +134,7 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
             val quote = view.getQuote()
             generataQuote(view.context,quote,data.id)
 
-        }else{
-//
+        } else{
 
              val image = ((view.parent.parent as RelativeLayout).findViewById<RoundedImageView>(R.id.feed_hero_image))
             val bitmap = (image.drawable as RoundedDrawable).sourceBitmap

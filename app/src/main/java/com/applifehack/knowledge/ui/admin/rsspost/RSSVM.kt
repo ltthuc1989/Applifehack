@@ -96,7 +96,6 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
                }
            }
-           exportDatabse()
            navigator?.hideProgress()
            Log.d("updateDatabase","updated")
 
@@ -105,16 +104,7 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
    }
 
 
-    fun exportDatabse(){
-        val context = appDataManager.context
-        val file = context.getDatabasePath(CoreConstants.APP_DB_NAME)
-        appDataManager.uploadDatabase(file).addOnSuccessListener {
-            navigator?.hideProgress()
-        }.addOnFailureListener{
-            navigator?.showAlert(it.message)
-            navigator?.hideProgress()
-        }
-    }
+
 
 
 

@@ -17,6 +17,7 @@ interface DbHelper{
     fun getPostById(id:String?) : Post
     fun getPostByAuthor(author:String?) : List<Post>
     suspend fun updatePost(id:String?,status:String? = PostStatus.PUBLISH.type)
+    suspend fun updatePosts(ids:List<String>,status: String? = PostStatus.PUBLISH.type)
     fun insertPost(address: List<Post>)
 
     fun loadAllPost(): List<Post>

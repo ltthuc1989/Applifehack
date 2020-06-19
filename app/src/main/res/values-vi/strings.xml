@@ -41,4 +41,5 @@
     <string name="please_enter_image_url" > Please Enter Image Url</string>
     <string name="favorite">favorite</string>
     <string name="sorry_nothing_found">Sorry, nothing found</string>
+    <string name="confirm_to_exit_app">Please click Back Again to exit app!</string>
 </resources>

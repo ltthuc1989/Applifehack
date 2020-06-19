@@ -12,8 +12,8 @@ object CoreConstants {
 
 
 
-     val APP_DB_NAME = "posts.db"
-     val PREF_NAME = "mindorks_pref"
+     val APP_DB_NAME = "applifehack.db"
+     val PREF_NAME = "applifehack_pref"
 
 
 

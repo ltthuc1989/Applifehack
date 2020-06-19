@@ -191,7 +191,7 @@
                 android:onClick="@{()->viewModel.localPostClick()}"
                 android:padding="@dimen/padding"
                 android:textSize="18sp"
-                android:text="Admin" />
+                android:text="Local Post" />
 
         </RelativeLayout>
     </LinearLayout>

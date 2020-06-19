@@ -2,6 +2,8 @@ package com.applifehack.knowledge.ui.activity.home
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
+import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ezyplanet.core.util.extension.gotoActivity
@@ -24,6 +26,7 @@ import com.applifehack.knowledge.ui.widget.listener.NavListener
 import com.applifehack.knowledge.ui.widget.listener.ToolbarListener
 import com.applifehack.knowledge.util.AppBundleKey
 import com.applifehack.knowledge.util.helper.AppUpdateHelper
+import java.util.logging.Handler
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,ToolbarListener,NavListener {
 
@@ -33,6 +36,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
     lateinit var appUpdateHelper: AppUpdateHelper
     lateinit var homeEventModel: HomeEventModel
+    private var doubleBackToExitPressedOnce = false
      companion object{
          val KEY_GO_HOME="GO_HOME"
          val KEY_GO_FAVORITE ="GO_FAVORITE"
@@ -186,5 +190,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
     override fun openDynamicLink(postId: String) {
        gotoActivity(DynamicLinkActivity::class, mapOf(AppBundleKey.KEY_POST_ID to postId))
+    }
+
+    override fun exitApp() {
+        if (doubleBackToExitPressedOnce) {
+
+            finish()
+            return
+        }
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, getString(R.string.confirm_to_exit_app), Toast.LENGTH_SHORT).show()
+         android.os.Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        exitApp()
     }
 }

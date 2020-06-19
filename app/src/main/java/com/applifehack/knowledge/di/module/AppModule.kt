@@ -52,6 +52,7 @@ class AppModule {
     internal fun provideAppDatabase(context: Context): AppDatabase =
 
         Room.databaseBuilder(context, AppDatabase::class.java, CoreConstants.APP_DB_NAME)
+            .createFromAsset("posts.db")
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onOpen(db: SupportSQLiteDatabase) {
                     Log.e("Database", "open")
@@ -64,7 +65,7 @@ class AppModule {
                     Log.e("Database", "create")
                 }
 
-            }).fallbackToDestructiveMigration().build()
+            }).build()
 
     @Provides
     @Singleton

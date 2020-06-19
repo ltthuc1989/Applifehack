@@ -25,7 +25,7 @@ class AppDbHelper @Inject constructor( val addressesDao: PostDao) : DbHelper {
     }
 
     override fun loadAllPost(): List<Post>{
-        return addressesDao.loadAll(PostStatus.PARSED.type)
+        return addressesDao.loadLocalPosts(PostStatus.PARSED.type)
 
     }
     override fun insertFavoritePost(post: Post) {
@@ -62,5 +62,7 @@ class AppDbHelper @Inject constructor( val addressesDao: PostDao) : DbHelper {
         addressesDao.updatePost(id,status)
     }
 
-
+    override suspend fun updatePosts(ids: List<String>, status: String?) = withContext(Dispatchers.IO){
+        addressesDao.updatePosts(ids,status)
+    }
 }
