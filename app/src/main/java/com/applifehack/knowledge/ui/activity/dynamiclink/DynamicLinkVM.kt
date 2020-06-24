@@ -35,7 +35,7 @@ import org.sourcei.kowts.utils.pojo.QuoteResp
 import javax.inject.Inject
 
 class DynamicLinkVM  @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, connectionManager: BaseConnectionManager
-) : BaseViewModel<FeedNav, Post>(schedulerProvider, connectionManager) {
+) : BaseViewModel<DynamicLinkNav, Post>(schedulerProvider, connectionManager) {
 
     @Inject lateinit var fbAnalytics: FirebaseAnalyticsHelper
 
@@ -63,111 +63,112 @@ class DynamicLinkVM  @Inject constructor(val appDataManager: AppDataManager, sch
                     }
 
 
-                _model.value = snapshot.await()
-                resetLoadingState = false
+                val post = snapshot.await()
+
                 navigator?.hideProgress()
+                navigator?.openFeedFragment(post)
 
             }
         }
 
     }
-    fun openPostDetail(data: Post,shareView: View) {
-        uiScope?.launch {
-            try {
-
-                if(data?.getPostType()== PostType.VIDEO){
-                    navigator?.gotoYoutubeDetail(data,shareView)
-
-                }else{
-                    navigator?.gotoFeedDetail(data)
-                }
-                logEvent(data?.id,"readmore")
-
-                val resul = appDataManager.updateViewCount(data.id)
-                resul.await()
-
-            } catch (ex: Exception) {
-
-            }
-
-
-        }
-
-    }
-    fun generataQuote(context: Context,quoteResp: QuoteResp,postId: String?){
-        uiScope?.launch {
-            try {
-                navigator?.showProgress()
-
-                val result = F.generateBitmap(context, quoteResp)
-                createDynamicLink(context,postId,result!!)
-            }catch (ex:Exception){
-                ex.printStackTrace()
-            }
-
-
-        }
-
-
-    }
-    fun generateArticle(context: Context,post: Post,bitmap:Bitmap){
-        uiScope?.launch {
-            try {
-                navigator?.showProgress()
-
-                val result = F.createBitmapFromView(context,post,bitmap)
-
-                createDynamicLink(context,post.id!!,result!!)
-
-            }catch (ex:Exception){
-                ex.printStackTrace()
-            }
-
-
-        }
-    }
-
-    fun likeClick(data:Post){
-        val temp = model
-        uiScope?.launch {
-            _model.value = temp.value?.apply { likesCount=+1 }
-            appDataManager.updateLikeCount(data.id)
-            logEvent(data?.id,"like")
-        }
-    }
-
-
-    fun shareClick(view: View, data:Post){
-        if(data.getPostType()==PostType.QUOTE){
-            val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
-            val quote = view.getQuote()
-            generataQuote(view.context,quote,data.id)
-
-        }else{
-
-
-            val image = ((view.parent.parent as RelativeLayout).findViewById<RoundedImageView>(R.id.feed_hero_image))
-            val bitmap = (image.drawable as RoundedDrawable).sourceBitmap
-            generateArticle(view.context,data,bitmap)
-        }
-        logEvent(data?.id,"share")
-
-
-
-    }
-
-
-    private fun createDynamicLink(context: Context, postId:String?, bitmap: Bitmap){
-        val dynamicLink = Firebase.dynamicLinks.shortLinkAsync {
-            link = Uri.parse("https://www.applifehack.com/$postId")
-            domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
-
-            // Open links with this app on Android
-
-        }.addOnSuccessListener {
-            ( context as MvvmActivity<*, *>).shareImage(bitmap,it.shortLink.toString())
-        }.addOnFailureListener{
-            it.printStackTrace()
-        }
-    }
+//    fun openPostDetail(data: Post,shareView: View) {
+//        uiScope?.launch {
+//            try {
+//
+//                if(data?.getPostType()== PostType.VIDEO){
+//                    navigator?.gotoYoutubeDetail(data,shareView)
+//
+//                }else{
+//                    navigator?.gotoFeedDetail(data)
+//                }
+//                logEvent(data?.id,"readmore")
+//
+//                val resul = appDataManager.updateViewCount(data.id)
+//                resul.await()
+//
+//            } catch (ex: Exception) {
+//
+//            }
+//
+//
+//        }
+//
+//    }
+//    fun generataQuote(context: Context,quoteResp: QuoteResp,postId: String?){
+//        uiScope?.launch {
+//            try {
+//                navigator?.showProgress()
+//
+//                val result = F.generateBitmap(context, quoteResp)
+//                createDynamicLink(context,postId,result!!)
+//            }catch (ex:Exception){
+//                ex.printStackTrace()
+//            }
+//
+//
+//        }
+//
+//
+//    }
+//    fun generateArticle(context: Context,post: Post,bitmap:Bitmap){
+//        uiScope?.launch {
+//            try {
+//                navigator?.showProgress()
+//
+//                val result = F.createBitmapFromView(context,post,bitmap)
+//
+//                createDynamicLink(context,post.id!!,result!!)
+//
+//            }catch (ex:Exception){
+//                ex.printStackTrace()
+//            }
+//
+//
+//        }
+//    }
+//
+//    fun likeClick(data:Post){
+//        val temp = model
+//        uiScope?.launch {
+//            _model.value = temp.value?.apply { likesCount=+1 }
+//            appDataManager.updateLikeCount(data.id)
+//            logEvent(data?.id,"like")
+//        }
+//    }
+//
+//
+//    fun shareClick(view: View, data:Post){
+//        if(data.getPostType()==PostType.QUOTE){
+//            val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
+//            val quote = view.getQuote()
+//            generataQuote(view.context,quote,data.id)
+//
+//        }else{
+//
+//
+//            val image = ((view.parent.parent as RelativeLayout).findViewById<RoundedImageView>(R.id.feed_hero_image))
+//            val bitmap = (image.drawable as RoundedDrawable).sourceBitmap
+//            generateArticle(view.context,data,bitmap)
+//        }
+//        logEvent(data?.id,"share")
+//
+//
+//
+//    }
+//
+//
+//    private fun createDynamicLink(context: Context, postId:String?, bitmap: Bitmap){
+//        val dynamicLink = Firebase.dynamicLinks.shortLinkAsync {
+//            link = Uri.parse("https://www.applifehack.com/$postId")
+//            domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
+//
+//            // Open links with this app on Android
+//
+//        }.addOnSuccessListener {
+//            ( context as MvvmActivity<*, *>).shareImage(bitmap,it.shortLink.toString())
+//        }.addOnFailureListener{
+//            it.printStackTrace()
+//        }
+//    }
 }

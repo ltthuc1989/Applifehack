@@ -30,3 +30,6 @@ enum class CategoryType(val type:String){
 
 
 }
+enum class ShareType(val type:Int){
+    NONE(-1),SHARING(0),SHARED(1)
+}

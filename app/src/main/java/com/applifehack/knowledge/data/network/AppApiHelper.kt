@@ -20,11 +20,14 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.AppConstants.DatabasePath
+import com.applifehack.knowledge.util.TimeUtil
 import com.google.firebase.FirebaseApp
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import java.io.File
 import java.io.FileInputStream
+import java.time.LocalDate
+import java.util.*
 
 
 /**
@@ -70,11 +73,23 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun getPopularPost(): Task<QuerySnapshot> {
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY)
-            .whereIn(DatabasePath.TYPE, mutableListOf(PostType.ARTICLE.type,PostType.VIDEO.type))
-           // .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
+        val dates = TimeUtil.getFirsAndLastDateOfLastWeek()
+        val startAt = Timestamp(dates[0])
+        val endAt = Timestamp(dates[1])
 
-        return query.limit(8).get()
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY)
+
+
+
+          //  .whereGreaterThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT,startAt)
+          // .whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT,endAt)
+
+            .orderBy(DatabasePath.CREATED_DATE_TEXT,Query.Direction.ASCENDING)
+           .startAt(startAt)
+          //  .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
+
+
+        return query.get()
     }
 
     override fun getPostByCat(

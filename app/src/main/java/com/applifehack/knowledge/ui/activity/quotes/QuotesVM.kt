@@ -5,6 +5,11 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.RecyclerView
 import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.R
 import com.ezyplanet.core.ui.base.MvvmActivity
@@ -17,6 +22,7 @@ import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
 import com.applifehack.knowledge.ui.widget.QuoteView
+import com.applifehack.knowledge.util.ShareType
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.await
 import com.applifehack.knowledge.util.extension.shareImage
@@ -46,12 +52,14 @@ class QuotesVM @Inject constructor(
     private var quoteType: String? = null
     private var currentItem = 0
     private var hasMore = false
+    val shareType = MutableLiveData<ShareType>()
 
     @Inject
     lateinit var fbAnalytics: FirebaseAnalyticsHelper
 
     init {
         visibleThreshold = 10
+        shareType.value = ShareType.NONE
     }
 
     fun getQuotes(nextPage: Boolean? = false, quoteType: String? = null) {
@@ -101,9 +109,10 @@ class QuotesVM @Inject constructor(
 
 
     fun shareClick(data: Post, view: View) {
-        val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
-        val quote = view.getQuote()
-        generataQuote(view.context, quote, data.id)
+       // val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
+       // val quote = view.getQuote()
+        //generataQuote(view.context, quote, data.id)
+        generateArticle(view,data.id)
         logEvent(data?.id, "share")
 
 
@@ -126,21 +135,67 @@ class QuotesVM @Inject constructor(
 
     }
 
-    fun generataQuote(context: Context, quoteResp: QuoteResp, postId: String?) {
+//    fun generataQuote(context: Context, quoteResp: QuoteResp, postId: String?) {
+//        uiScope?.launch {
+//            try {
+//                navigator?.showProgress()
+//
+//                val result = F.generateBitmap(context, quoteResp)
+//                createDynamicLink(context, postId, result!!)
+//            } catch (ex: Exception) {
+//                ex.printStackTrace()
+//            }
+//
+//
+//        }
+//
+//
+//    }
+
+    fun generateArticle(view: View,id:String?){
         uiScope?.launch {
             try {
                 navigator?.showProgress()
 
-                val result = F.generateBitmap(context, quoteResp)
-                createDynamicLink(context, postId, result!!)
-            } catch (ex: Exception) {
+                val parentView = view.parent.parent as RelativeLayout
+                val vBottom  = parentView.findViewById<View>(R.id.vBottom)
+                val linBottom = parentView.findViewById<ConstraintLayout>(R.id.linBottom)
+                val linShare = parentView.findViewById<LinearLayout>(R.id.shareLayout)
+                parentView.run {
+
+                    linBottom.visibility = View.GONE
+                    linShare.visibility = View.VISIBLE
+                    (vBottom.layoutParams as RelativeLayout.LayoutParams ).apply {
+                        height = 0
+                    }
+                    (parentView.layoutParams as RecyclerView.LayoutParams).apply {
+                        setMargins(8,8,8,8)
+                    }
+                    postDelayed({
+                        val result = F.viewToBitmap(parentView)
+
+                        linBottom.visibility = View.VISIBLE
+                        linShare.visibility = View.GONE
+                        (vBottom.layoutParams as RelativeLayout.LayoutParams ).apply {
+                            height = view.resources.getDimension(R.dimen.dp_16).toInt()
+                        }
+                        (parentView.layoutParams as RecyclerView.LayoutParams).apply {
+                            setMargins(0,0,0,0)
+                        }
+                        createDynamicLink(view.context,id,result!!)
+                    },15)
+
+                }
+
+
+
+
+            }catch (ex:Exception){
                 ex.printStackTrace()
             }
 
 
         }
-
-
     }
 
     private fun updateRow(position: Int): List<Post> {

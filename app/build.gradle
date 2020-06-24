@@ -68,12 +68,14 @@ android {
             applicationId "com.applifehack.knowledge.staging"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
+            buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge.staging\""
 
         }
         production {
             applicationId "com.applifehack.knowledge"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
+            buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge\""
         }
     }
     buildTypes {

@@ -4,6 +4,8 @@ import android.content.Context
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.network.response.youtube.Item
 import com.applifehack.knowledge.util.TimeUtil
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 class YtModel(val id:String?,val video: Item){
 
@@ -24,13 +26,17 @@ class YtModel(val id:String?,val video: Item){
         return video?.snippet?.title
     }
     fun disLikeCount():String?{
-        return video?.statistics?.dislikeCount
+        val dFormat = DecimalFormat("####,###")
+        return dFormat.format(video?.statistics?.dislikeCount)
     }
     fun likeCount():String?{
-        return video?.statistics.likeCount
+        val dFormat = DecimalFormat("####,###")
+        return dFormat.format(video?.statistics.likeCount)
     }
     fun viewCount():String?{
-        return  video?.statistics?.viewCount
+        val dFormat = DecimalFormat("####,###")
+       return "${dFormat.format(video?.statistics?.viewCount)} Views"
+
     }
 
 

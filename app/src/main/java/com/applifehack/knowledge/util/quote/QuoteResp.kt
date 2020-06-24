@@ -29,9 +29,9 @@ data class QuoteResp (
     var quote:String?,
     var gradient: IntArray?,
     var angle:Float?,
-    var author:String?,
-    var authorGradient:IntArray?,
+  //  var author:String?,
+   // var authorGradient:IntArray?,
     var image: Bitmap?,
-    var quoteAlign:Int?,
-    var authorAlign:Int?
+    var quoteAlign:Int?
+   // var authorAlign:Int?
 )

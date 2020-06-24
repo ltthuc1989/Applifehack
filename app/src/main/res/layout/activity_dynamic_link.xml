@@ -13,167 +13,47 @@
             name="viewModel"
             type="com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkVM" />
     </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_60"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/dynLinkToolbar"
+        android:background="@color/dark_gray"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:id="@+id/tvTitle"
+            android:textColor="@color/white_75"
+            android:layout_marginRight="?android:attr/actionBarSize"
+            android:textSize="18sp"
+            android:layout_height="wrap_content" />
+    </androidx.appcompat.widget.Toolbar>
     <RelativeLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         android:background="@drawable/feed_hero_gradient_background">
-
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/feed_hero_layout"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-
-            android:layout_above="@id/linBottom"
-
             android:layout_alignParentTop="true"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            />
 
 
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/feed_hero_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                app:riv_corner_radius_top_left="4dp"
-                app:riv_corner_radius_top_right="4dp"
-                android:alpha="0.8"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                app:srcImageBitmapUrl="@{item.imageUrl}"
-                android:cropToPadding="true"
-                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
-
-                />
-
-            <TextView
-                style="@style/text_roboto_bold_h1"
-                android:text="@{item.title}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:textColor="@color/white"
-                tools:text="hello abc" />
-
-
-        </FrameLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/vBottom"
-            android:layout_marginTop="-5dp"
-            android:background="@color/darker_gray"
-            android:layout_height="16dp"/>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linBottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/vBottom"
-            android:background="@drawable/bg_item_feed_bottom"
-            android:orientation="horizontal"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
-
-
-
-            <ImageView
-                android:id="@+id/imgShare"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="8dp"
-                android:onClick="@{(view)->viewModel.shareClick(view,item)}"
-                android:src="@drawable/ic_share"
-                android:tint="@color/white_75"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tvReadMore"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-
-                android:src="@drawable/ic_like"
-                android:tint="@color/white_75"
-                android:id="@+id/imglike"
-                android:onClick="@{()->viewModel.likeClick(item)}"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvLinkCount"
-
-                app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:id="@+id/tvLinkCount"
-                app:layout_constraintEnd_toStartOf="@id/imgShare"
-                tools:text="22"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:text="@{item.formatLikes}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:textColor="@color/light_gray"
-                android:layout_height="wrap_content" />
-
-
-
-
-            <TextView
-                android:id="@+id/tvPostedDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-
-                android:fontFamily="@font/cabin_condensed_regular"
-                android:gravity="center"
-                android:text="@{item.author}"
-                android:textColor="@color/white_75"
-                app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
-
-                app:layout_constraintStart_toEndOf="@+id/ic_calendar"
-                app:layout_constraintTop_toTopOf="@id/ic_calendar"
-                tools:text="7 days ago" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ic_calendar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="8dp"
-                app:civ_fill_color="@color/white_75"
-
-                android:src="@drawable/ic_author_black_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-
-                app:layout_constraintStart_toStartOf="parent"
-
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvReadMore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_readmore"
-                android:fontFamily="@font/cabin_condensed_regular"
-                android:gravity="center"
-                android:paddingLeft="8dp"
-                android:paddingTop="4dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="4dp"
-                android:text="@string/readMore"
-                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
-                android:textColor="@color/white_75"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
+    </LinearLayout>
 </layout>

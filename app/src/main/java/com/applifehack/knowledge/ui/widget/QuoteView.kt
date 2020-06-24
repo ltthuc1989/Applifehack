@@ -105,7 +105,7 @@ class QuoteView : FrameLayout{
     private fun setQuote(bitmap: Bitmap?,context: Context?){
 
         val colors = F.randomGradient().toIntArray()
-        val colorsAuthor = F.randomGradient().toIntArray()
+       // val colorsAuthor = F.randomGradient().toIntArray()
         val angle = Angles.random().toFloat()
 
         // create quote object
@@ -113,29 +113,27 @@ class QuoteView : FrameLayout{
                 _model?.description,
                 colors,
                 angle,
-                _model?.author,
-                colorsAuthor,
                 bitmap,
-                getAlignment((0..2).random()),
                 getAlignment((0..2).random())
+
         )
 
 
         binding.background.setImageBitmap(bitmap)
         this.bitmap = bitmap
         setBackground(context,bitmap)
-        if(_model?.author.isNullOrEmpty()){
-            binding.authorCard.visibility = View.GONE
-        }else{
-            binding.authorCard.visibility = View.VISIBLE
-        }
+//        if(_model?.author.isNullOrEmpty()){
+//            binding.authorCard.visibility = View.GONE
+//        }else{
+//            binding.authorCard.visibility = View.VISIBLE
+//        }
 
 
         binding.gradient.setGradient(colors, 0, angle)
         blurMask.setGradient(colors, 0, angle)
-        authorLayout.setGradient(colorsAuthor, 16)
+       // authorLayout.setGradient(colorsAuthor, 16)
 
-        changeAuthorAlignment((0..2).random())
+       // changeAuthorAlignment((0..2).random())
         binding.progress.visibility = View.GONE
         binding.card.visibility = View.VISIBLE
 
@@ -178,7 +176,7 @@ class QuoteView : FrameLayout{
         }
 
         authorCard.layoutParams = params
-        quoteObject.authorAlign = align
+       // quoteObject.authorAlign = align
     }
 
 
@@ -209,18 +207,18 @@ class QuoteView : FrameLayout{
 
         // original params
         val paramsT = quote.layoutParams // original params for quote
-        val paramsA = authorCard.layoutParams // original params for author
+      //  val paramsA = authorCard.layoutParams // original params for author
 
         // new params
         val paramsNQ = RelativeLayout.LayoutParams(paramsT.width, 3 * y / 4)
-        val paramsNA = RelativeLayout.LayoutParams(paramsA.width, paramsA.height)
+       // val paramsNA = RelativeLayout.LayoutParams(paramsA.width, paramsA.height)
 
         paramsNQ.setMargins(margin)
-        paramsNA.setMargins(margin, 0, margin, margin)
-        paramsNA.addRule(RelativeLayout.BELOW, R.id.quote)
+      //  paramsNA.setMargins(margin, 0, margin, margin)
+      //  paramsNA.addRule(RelativeLayout.BELOW, R.id.quote)
 
         // set params
-        binding.authorCard.layoutParams = paramsNA
+       // binding.authorCard.layoutParams = paramsNA
         binding.quote.layoutParams = paramsNQ
     }
 

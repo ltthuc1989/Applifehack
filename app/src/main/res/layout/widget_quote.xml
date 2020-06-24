@@ -89,6 +89,7 @@
                 android:layout_below="@id/quote"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:visibility="gone"
                 android:onClick="@{()->listener.openAuthorWiki(model.authorUrl)"
                 app:cardCornerRadius="16dp">
 

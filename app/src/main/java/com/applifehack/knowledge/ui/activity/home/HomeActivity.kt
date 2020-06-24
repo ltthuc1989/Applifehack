@@ -204,7 +204,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         exitApp()
     }
 }
