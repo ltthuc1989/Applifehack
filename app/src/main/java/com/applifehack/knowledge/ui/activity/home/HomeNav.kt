@@ -8,5 +8,6 @@ interface HomeNav : MvvmNav{
     fun openVideo(id:String?)
     fun openQuote()
     fun openDynamicLink(postId:String)
+    fun exitApp()
 
 }

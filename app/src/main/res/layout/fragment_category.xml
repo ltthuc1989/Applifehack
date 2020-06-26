@@ -38,10 +38,8 @@
             android:id="@+id/discover_feed_fragments_wrapper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:fillViewport="true"
 
-            android:touchscreenBlocksFocus="true"
+
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -121,6 +119,7 @@
                     android:layout_marginBottom="8dp"
                     android:adapter="@{adapter}"
                     android:padding="16dp"
+                    android:nestedScrollingEnabled="false"
                     app:layoutManager="com.ezyplanet.core.ui.widget.scroll.GridLayoutManagerWrapper"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     app:layout_constraintBottom_toBottomOf="parent"

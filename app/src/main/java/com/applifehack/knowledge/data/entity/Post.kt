@@ -111,7 +111,7 @@ data class Post(
     @set:PropertyName("liked_date")
     @get:PropertyName("liked_date")
     @ColumnInfo(name = "liked_date")
-    var likedDate: Date?=null
+    var likedDate: Date?= Date()
 ) : Parcelable {
 
 

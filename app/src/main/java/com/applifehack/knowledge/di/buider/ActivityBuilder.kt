@@ -3,6 +3,7 @@ package com.applifehack.knowledge.di.buider
 import com.applifehack.knowledge.ui.activity.categorydetail.CategoryDetailFrag
 import com.applifehack.knowledge.ui.activity.categorydetail.CategoryDetailProvider
 import com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkActivity
+import com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkProvider
 import com.applifehack.knowledge.ui.fragment.favorite.FavoriteFragment
 import com.applifehack.knowledge.ui.activity.home.HomeActivity
 import com.applifehack.knowledge.ui.activity.home.HomeProvider
@@ -43,8 +44,9 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [(CategoryDetailProvider::class)])
     internal abstract fun bindCategoryDetailActivity(): CategoryDetailFrag
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [DynamicLinkProvider::class])
     internal abstract fun bindDynamicLinkActivity(): DynamicLinkActivity
+
 
 
 

@@ -11,7 +11,7 @@
         android:name="com.applifehack.knowledge.KnowledgeApp"
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -46,14 +46,7 @@
             android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        <activity
-            android:name="com.facebook.accountkit.ui.AccountKitActivity"
-            android:theme="@style/Theme.AccountKit"
-            tools:replace="android:theme" />
+
         <activity
             android:name="com.applifehack.knowledge.ui.activity.splash.SplashActivity"
             android:noHistory="true"

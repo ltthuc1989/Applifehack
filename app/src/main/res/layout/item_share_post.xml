@@ -3,13 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@drawable/bg_item_share"
+        android:background="@drawable/feed_hero_gradient_background"
         android:id="@+id/card"
+
         android:layout_height="match_parent">
+
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/image"
@@ -24,11 +28,8 @@
             srcImageUrl="@{item.imageUrl}"
             tools:src="@drawable/bg_exploremore_en"
             android:cropToPadding="true"
-            android:layout_above="@id/imgAppLogo"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_above="@id/shareLayout"
+
 
             android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
 
@@ -44,40 +45,46 @@
             android:id="@+id/title"
             tools:text="hello abc" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:id="@+id/imgGoolePlay"
-                android:layout_alignParentBottom="true"
-                android:src="@mipmap/ic_google_play"
-                android:cropToPadding="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:id="@+id/shareLayout"
 
-        <ImageView
-            android:layout_width="24dp"
-            android:id="@+id/imgAppLogo"
+
+            android:padding="@dimen/eight"
+            android:background="@drawable/bg_item_feed_bottom"
             android:layout_alignParentBottom="true"
-            android:src="@mipmap/ic_launcher_round"
-            android:layout_toLeftOf="@+id/tvAppName"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-            android:layout_height="24dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tvAppName"
-            android:text="Knowledge"
-            android:textAllCaps="true"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:layout_alignBottom="@id/imgAppLogo"
-            android:layout_alignTop="@+id/imgAppLogo"
-            android:layout_alignParentRight="true"
-            android:fontFamily="@font/cabin_condensed_bold"
-            android:textColor="@color/app_logo_color"
-            android:layout_marginEnd="8dp"
-            android:layout_height="wrap_content"/>
+
+
+
+
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+
+                app:srcCompat="@drawable/play_store" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_height="wrap_content"
+
+
+                app:srcCompat="@drawable/web_app_icon" />
+        </LinearLayout>
+
 
     </RelativeLayout>
 

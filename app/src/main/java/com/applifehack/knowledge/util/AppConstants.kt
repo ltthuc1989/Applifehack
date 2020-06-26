@@ -21,4 +21,7 @@ object AppConstants {
         const val QUOTE_TYPE = "post_quote_type"
 
     }
+    object Google{
+        const val PLAY_URL_DETAIL ="https://play.google.com/store/apps/details"
+    }
 }

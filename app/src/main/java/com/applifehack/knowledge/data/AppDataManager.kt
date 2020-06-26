@@ -1,7 +1,6 @@
 package com.applifehack.knowledge.data
 
 import android.content.Context
-import com.androidhuman.rxfirebase2.firestore.model.Value
 import com.ezyplanet.thousandhands.shipper.data.preferences.AppPreferenceHelper
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
@@ -36,9 +35,6 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getRssCat(): Single<Value<QuerySnapshot>> {
-        return apiHelper.getRssCat()
-    }
 
 
 
@@ -50,7 +46,7 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
         return apiHelper.getPopularPost()
     }
 
-    override fun getCatgories(): Single<Value<QuerySnapshot>> {
+    override fun getCatgories(): Task<QuerySnapshot> {
         return apiHelper.getCatgories()
     }
 

@@ -1,18 +1,13 @@
 package com.applifehack.knowledge.data.network
 
-import com.androidhuman.rxfirebase2.firestore.RxFirebaseFirestore
-import com.androidhuman.rxfirebase2.firestore.model.Value
+
 
 
 import com.google.firebase.firestore.*
 import com.applifehack.knowledge.BuildConfig
-import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.network.response.youtube.YoutubeResp
-import com.applifehack.knowledge.util.AppConstans
-import com.applifehack.knowledge.util.AppConstants
 import com.rx2androidnetworking.Rx2AndroidNetworking
-import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 import com.google.api.services.youtube.YouTube
@@ -20,7 +15,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.AppConstants.DatabasePath
-import com.google.firebase.FirebaseApp
+import com.applifehack.knowledge.util.TimeUtil
 
 
 /**
@@ -37,10 +32,6 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun getApiHeader(): ApiHeader {
         return apiHeader
-    }
-
-    override fun getRssCat(): Single<Value<QuerySnapshot>> {
-        return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.GET_RSS_CATEGORY))
     }
 
 
@@ -61,14 +52,22 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     }
 
-    override fun getCatgories(): Single<Value<QuerySnapshot>> {
-        return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.GET_CATEGORIES))
+    override fun getCatgories(): Task<QuerySnapshot> {
+       return firStore.collection(ApiEndPoint.GET_CATEGORIES).get()
     }
 
     override fun getPopularPost(): Task<QuerySnapshot> {
+        val dates = TimeUtil.getFirsAndLastDateOfLastWeek()
+        val startAt = Timestamp(dates[0])
+        val endAt = Timestamp(dates[1])
+
         val query = firStore.collection(ApiEndPoint.POST_DB_KEY)
-            .whereIn(DatabasePath.TYPE, mutableListOf(PostType.ARTICLE.type,PostType.VIDEO.type))
-           // .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
+
+
+            .orderBy(DatabasePath.CREATED_DATE_TEXT,Query.Direction.ASCENDING)
+           .startAt(startAt).endAt(endAt)
+
+
 
         return query.limit(8).get()
     }

@@ -25,6 +25,7 @@ import com.applifehack.knowledge.ui.adapter.FeedAdapter
 import com.applifehack.knowledge.ui.fragment.BaseFragment
 import com.applifehack.knowledge.ui.widget.QuoteView
 import com.applifehack.knowledge.util.AppBundleKey
+import com.ezyplanet.core.util.extension.putArgs
 import kotlinx.android.synthetic.main.fragment_daily_feed.*
 
 
@@ -33,6 +34,9 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
     override val viewModel: FeedVM by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId: Int = R.layout.fragment_daily_feed
     lateinit var homeEventModel: HomeEventModel
+    fun newInstance(post :Post)= putArgs {
+        putParcelable(AppBundleKey.KEY_POST_ID,post)
+    }
 
     override fun setUpNavigator() {
         viewModel.navigator = this
@@ -42,29 +46,38 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         viewModel.navigator = this
+        val post =arguments?.getParcelable<Post>(AppBundleKey.KEY_POST_ID)
+
+
 
         homeEventModel = ViewModelProviders.of(activity!!).get(HomeEventModel::class.java)
 
-        viewModel.getPost()
+        if(post ==null) {
+            viewModel.getPost()
 
-        try {
+            try {
 
-            val snapHelper = PagerSnapHelper()
-            snapHelper.attachToRecyclerView(daily_feed_recyclerview)
+                val snapHelper = PagerSnapHelper()
+                snapHelper.attachToRecyclerView(daily_feed_recyclerview)
 
-            daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
-                     object:OnSnapPositionChangeListener{
-                override fun onSnapPositionChange(position: Int) {
+                daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper,
+                    SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
+                    object : OnSnapPositionChangeListener {
+                        override fun onSnapPositionChange(position: Int) {
 
-                    Log.d("onSnapPosition","$position")
-                    homeEventModel.toolbarTitle.value = (binding?.adapter as FeedAdapter)?.getRowData(position)?.catName
-                    viewModel.myFavoritePost(position)
-                    viewModel.onLoadMore(position)
-                }
-            })
+                            Log.d("onSnapPosition", "$position")
+                            homeEventModel.toolbarTitle.value =
+                                (binding?.adapter as FeedAdapter)?.getRowData(position)?.catName
+                            viewModel.myFavoritePost(position)
+                            viewModel.onLoadMore(position)
+                        }
+                    })
 
-        } catch (ex: Exception) {
+            } catch (ex: Exception) {
 
+            }
+        }else {
+            viewModel.getDynamicLinkInfo(post)
         }
 
 
@@ -107,8 +120,8 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
     override fun gotoYoutubeDetail(post: Post, shareView:View) {
         (activity as MvvmActivity<*, *>).transitionActivity(YtDetailActivity::class,
-                mapOf(AppBundleKey.YOUTUBE_URL to post),shareView)
-       // gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post.video_url))
+            mapOf(AppBundleKey.YOUTUBE_URL to post),shareView)
+        // gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post.video_url))
     }
 
 

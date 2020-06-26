@@ -19,5 +19,17 @@ enum class PostDatabaseKey(val type:String){
 }
 
 enum class PostStatus(val type:String){
-    POSTED("posted"),PARSED("parsed")
+    POSTED("posted"),PARSED("parsed"),PUBLISH("publish")
+}
+enum class CategoryType(val type:String){
+    HAPPINESS("happiness"),
+    QUOTE("quote"),
+    INSPIRATION("inspiration"),
+    LIVING_HEALTHY("living_healthy"),
+    SELF_IMPROVEMENT("self_improvement")
+
+
+}
+enum class ShareType(val type:Int){
+    NONE(-1),SHARING(0),SHARED(1)
 }

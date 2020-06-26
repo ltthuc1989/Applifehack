@@ -155,4 +155,5 @@
     <dimen name="sixteen">16</dimen>
     <dimen name="eight">8dp</dimen>
     <dimen name="fourDp">4</dimen>
+    <dimen name="dp_16">16dp</dimen>
 </resources>

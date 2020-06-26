@@ -2,6 +2,7 @@ package com.applifehack.knowledge.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 
 
 import com.google.android.youtube.player.YouTubeApiServiceUtil;
@@ -10,6 +11,9 @@ import com.google.android.youtube.player.YouTubeIntents;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,5 +65,15 @@ public abstract class MediaUtil {
         }
         return null;
     }
-
+    public static void getOutputMediaFile(Context context,Bitmap bitmap) {
+        try {
+            File file = new File(context.getCacheDir(), "images");
+            file.mkdirs();
+            FileOutputStream fileOutputStream = new FileOutputStream(file + "/image.png");
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

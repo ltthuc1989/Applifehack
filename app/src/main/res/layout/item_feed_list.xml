@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="com.applifehack.knowledge.util.ShareType"/>
         <variable
             name="item"
             type="com.applifehack.knowledge.data.entity.Post" />
@@ -18,7 +18,6 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:background="@drawable/feed_hero_gradient_background">
 
         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -64,9 +63,13 @@
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
             android:id="@+id/vBottom"
+
             android:layout_marginTop="-5dp"
             android:background="@color/darker_gray"
-            android:layout_height="16dp"/>
+            android:layout_height="16dp"
+
+            />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linBottom"
             android:layout_width="match_parent"
@@ -75,6 +78,7 @@
             android:background="@drawable/bg_item_feed_bottom"
             android:orientation="horizontal"
             android:paddingTop="8dp"
+
             android:paddingBottom="8dp">
 
 
@@ -175,6 +179,42 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:id="@+id/shareLayout"
+
+
+            android:padding="@dimen/eight"
+            android:background="@drawable/bg_item_feed_bottom"
+            android:layout_above="@id/vBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+
+
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                app:srcCompat="@drawable/play_store" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+
+                app:srcCompat="@drawable/web_app_icon" />
+        </LinearLayout>
 
     </RelativeLayout>
 </layout>

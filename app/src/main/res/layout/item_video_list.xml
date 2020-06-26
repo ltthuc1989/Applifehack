@@ -2,7 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+       <import type="android.text.TextUtils"/>
         <variable
             name="item"
             type="com.applifehack.knowledge.data.entity.Post" />
@@ -77,25 +77,32 @@
                 android:id="@+id/imgShare"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="32dp"
                 android:layout_marginStart="8dp"
-                android:onClick="@{(view)->viewModel.shareClick(view,item)}"
-                android:src="@drawable/ic_share"
+
+                tools:src="@drawable/ic_like"
                 android:tint="@color/white_75"
+                android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
+
+                android:onClick="@{()->viewModel.likeClick(item)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imglike"
                 />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="16dp"
 
-                android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
+                android:src="@drawable/ic_time"
                 android:tint="@color/white_75"
                 android:id="@+id/imglike"
-                android:onClick="@{()->viewModel.likeClick(item)}"
+
+                goneUnless="@{!TextUtils.isEmpty(item.duration)}"
+
+
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvLinkCount"
@@ -104,12 +111,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:id="@+id/tvLinkCount"
-                app:layout_constraintEnd_toStartOf="@id/imgShare"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:text="22"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
-                android:text="@{item.formatLikes}"
+                android:text="@{item.duration}"
+                goneUnless="@{!TextUtils.isEmpty(item.duration)}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textColor="@color/light_gray"

@@ -29,7 +29,7 @@ import androidx.core.graphics.toColorInt
 import androidx.core.view.setMargins
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.util.setGradient
-import com.crashlytics.android.Crashlytics
+
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.inflator_quote_empty.view.*
@@ -62,6 +62,12 @@ import kotlin.random.Random
  */
 object F {
 
+    fun viewToBitmap(view: View): Bitmap? {
+        val createBitmap =
+            Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        view.draw(Canvas(createBitmap))
+        return createBitmap
+    }
     // generate bitmap from view
     fun getBitmapFromView(view: View): Bitmap {
 
@@ -91,7 +97,7 @@ object F {
         return try {
             Gradients.random().colors.map { it.toColorInt() }
         } catch (e: Exception) {
-            Crashlytics.logException(e)
+
             e.printStackTrace()
             randomGradient()
         }
@@ -122,7 +128,7 @@ object F {
                 try {
                     callback(b1.sameAs(b2)) // callback with compare
                 } catch (e: Exception) {
-                    Crashlytics.logException(e)
+
                     e.printStackTrace()
                     callback(false)
                 }
@@ -165,14 +171,17 @@ object F {
         view.image.setImageBitmap(bitmap)
         val point = displayDimensions(context)
         view.measure(
-            View.MeasureSpec.makeMeasureSpec(point.x, View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(point.x+100, View.MeasureSpec.EXACTLY)
+            View.MeasureSpec.makeMeasureSpec(point.x-50, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(point.y-300, View.MeasureSpec.EXACTLY)
         )
         val bitmap =
             Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         view.layout(0, 0, view.measuredWidth, view.measuredHeight)
         view.draw(canvas)
+//        val createBitmap =
+//            Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+//        view.draw(Canvas(createBitmap))
         return bitmap
     }
 
@@ -189,7 +198,7 @@ object F {
 
         // set values
         image.setImageBitmap(quoteObject.image)
-        authorText.text = quoteObject.author
+        // authorText.text = quoteObject.author
         quote.text = quoteObject.quote
 
         // set dimensions for card
@@ -204,10 +213,10 @@ object F {
 
         // new params
         val paramsNQ = RelativeLayout.LayoutParams(x, 3 * y / 4)
-        val paramsNA = RelativeLayout.LayoutParams(
-            authorLayout.layoutParams.width,
-            authorLayout.layoutParams.height
-        )
+//        val paramsNA = RelativeLayout.LayoutParams(
+//            authorLayout.layoutParams.width,
+//            authorLayout.layoutParams.height
+//        )
         val paramsL = RelativeLayout.LayoutParams(
             logo.layoutParams.width,
             logo.layoutParams.height
@@ -221,32 +230,32 @@ object F {
         }
 
         // align author
-        when (quoteObject.authorAlign) {
-            0 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-            1 -> paramsNA.addRule(RelativeLayout.CENTER_HORIZONTAL)
-            2 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-        }
+//        when (quoteObject.authorAlign) {
+//            0 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+//            1 -> paramsNA.addRule(RelativeLayout.CENTER_HORIZONTAL)
+//            2 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+//        }
 
         // align logo
-        when (quoteObject.authorAlign) {
-            0, 1 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            2 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-        }
+//        when (quoteObject.authorAlign) {
+//            0, 1 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+//            2 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+//        }
 
         // set new params
         paramsNQ.setMargins(margin)
         paramsL.setMargins(margin, 0, margin, margin)
-        paramsNA.setMargins(margin, 0, margin, margin)
-        paramsNA.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
+        //paramsNA.setMargins(margin, 0, margin, margin)
+        // paramsNA.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
         paramsL.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
 
         quote.layoutParams = paramsNQ
-        authorLayout.layoutParams = paramsNA
+        // authorLayout.layoutParams = paramsNA
         logo.layoutParams = paramsL
 
         // set gradients
         gradient.setGradient(quoteObject.gradient!!, 0, quoteObject.angle!!)
-        authorLayout.setGradient(quoteObject.authorGradient!!, 16)
+        // authorLayout.setGradient(quoteObject.authorGradient!!, 16)
 
         // prepare for export
         layout.measure(

@@ -82,7 +82,8 @@
             android:id="@+id/imgLike"
             android:layout_width="wrap_content"
             android:layout_toRightOf="@+id/img"
-            android:background="@drawable/ic_like"
+            android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
+            android:tint="@color/white_75"
             android:onClick="@{()->viewModel.likeClick(item)}"
             android:layout_alignBottom="@id/img"
             android:layout_height="wrap_content" />
@@ -96,6 +97,7 @@
             android:textSize="@dimen/textSize_h4"
             android:gravity="center"
             tools:text="16"
+            android:visibility="gone"
             android:layout_alignBottom="@+id/img"
             android:layout_height="wrap_content" />
     </RelativeLayout>

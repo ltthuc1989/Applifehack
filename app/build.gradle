@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
-apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
 
@@ -64,16 +64,18 @@ android {
     productFlavors {
         mockup {
             // minSdkVersion 21
-           // ext.enableCrashlytics = false
+
             applicationId "com.applifehack.knowledge.staging"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
+            buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge.staging\""
 
         }
         production {
             applicationId "com.applifehack.knowledge"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
+            buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge\""
         }
     }
     buildTypes {
@@ -88,20 +90,19 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':core')
     def appDependencies = rootProject.ext.dependencies
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.8@aar') {
-        transitive = true;
-    }
+
     implementation appDependencies.play_services.analytics
     implementation appDependencies.play_services.gcm
     implementation appDependencies.play_services.auth
-    implementation appDependencies.firebase.core
     implementation appDependencies.firebase.iid
     implementation appDependencies.firebase.messaging
     implementation appDependencies.firebase.jobdispatcher
     implementation appDependencies.firebase.database
     implementation appDependencies.firebase.fireStorage
-    implementation appDependencies.facebook.facebookSdk
-    implementation appDependencies.facebook.accountKit
+    implementation appDependencies.firebase.fireCrash
+    implementation appDependencies.firebase.fireAnalytic
+    //implementation appDependencies.facebook.facebookSdk
+    //implementation appDependencies.facebook.accountKit
     implementation appDependencies.facebook.stetho
     implementation appDependencies.facebook.stetho_okhttp3
     implementation appDependencies.circleImageView
@@ -116,12 +117,7 @@ dependencies {
     kapt appDependencies.daggerCompiler
     kapt appDependencies.daggerAndroidCompiler
     // firebase-firestore
-    implementation 'com.androidhuman.rxfirebase2:firebase-firestore-kotlin:17.0.4.0'
-    implementation 'com.androidhuman.rxfirebase2:firebase-firestore:17.0.4.0'
-    implementation 'com.google.firebase:firebase-firestore:17.0.4'
-    implementation 'com.androidhuman.rxfirebase2:firebase-core:16.0.1.0'
-    implementation 'com.androidhuman.rxfirebase2:firebase-database:16.0.1.1'
-    implementation 'com.prof.rssparser:rssparser:2.0.4'
+
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'androidx.browser:browser:1.0.0'
     //room
@@ -136,7 +132,7 @@ dependencies {
     }
     implementation 'jp.wasabeef:blurry:3.0.0' //blur library
 
-    implementation appDependencies.play_services.ads
+    //implementation appDependencies.play_services.ads
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
 
     implementation 'com.byoutline.observablecachedfield:observablecachedfield:1.7.0'

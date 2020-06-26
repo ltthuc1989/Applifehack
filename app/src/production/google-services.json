@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1001799017080",
+    "firebase_url": "https://lifehack-pro.firebaseio.com",
+    "project_id": "lifehack-pro",
+    "storage_bucket": "lifehack-pro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001799017080:android:d75f2d7bf8a630f59c838d",
+        "android_client_info": {
+          "package_name": "com.applifehack.knowledge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001799017080-740sa391dqtfio9bslsij7b03sediaq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_AE1cHK8cUBc9IIG09bwloMqWF07scHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001799017080-740sa391dqtfio9bslsij7b03sediaq9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
