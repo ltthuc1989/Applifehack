@@ -47,31 +47,37 @@ class CategoryVM @Inject constructor(
 
     fun getRssCat() {
         navigator?.showProgress()
-        compositeDisposable.add(appDataManager.getCatgories()
-            .compose(schedulerProvider?.ioToMainSingleScheduler())
-            .map {
-                it.value().toObjects(CatResp::class.java)
-            }.subscribe({
+        uiScope.launch {
+            val data = appDataManager.getCatgories()
+            try {
+                data?.await().let {
+                    if (!it.isEmpty) {
+                        val snapshot = async(Dispatchers.Default) {
+                            it.toObjects(CatResp::class.java)
+                        }
 
-                mData.addAll(it)
-                results.value = mData
+                        mData.addAll(snapshot.await())
+                        results.value = mData
+                    }
+                    navigator?.hideProgress()
 
+                }
+            }catch (ex:Exception){
                 navigator?.hideProgress()
+            }
+        }
 
-
-            }, {
-                navigator?.hideProgress()
-                navigator?.showAlert(it.message)
-            })
-        )
 
     }
 
     fun onItemClicked(item: CatResp) {
-        navigator?.gotoCatDetailScreen(item)
         val event = "category_${item.cat_name}"
         fbAnalyticsHelper.logEvent(event, event, "app_sections")
         fbAnalyticsHelper.logEvent("category_appview", "category_appview", "app_attribute")
+        navigator?.gotoCatDetailScreen(item)
+        Log.d("onItemClicked","cat click")
+
+
     }
 
     fun postPopularClick(post: Post) {

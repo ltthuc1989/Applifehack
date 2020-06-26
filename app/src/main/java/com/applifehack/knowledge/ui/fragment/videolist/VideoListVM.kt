@@ -11,13 +11,17 @@ import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.await
+import com.ezyplanet.supercab.data.local.db.DbHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
-class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, connectionManager: BaseConnectionManager
+class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider,val dbHelper: DbHelper, connectionManager: BaseConnectionManager
 ) : BaseViewModel<VideoListNav, String>(schedulerProvider, connectionManager) {
 
     val results = NonNullLiveData<List<Post>>(emptyList())
@@ -60,7 +64,7 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
                         currentPage += 1
                     }
-                    results.value = mData
+                    results.value = myFavoritePost(mData)
                     resetLoadingState = false
                     navigator?.hideProgress()
 
@@ -76,6 +80,36 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
         }
 
 
+    }
+
+    fun likeClick(data:Post){
+        uiScope?.launch {
+            results.value = updateRow(data)
+            try {
+                appDataManager.updateLikeCount(data.id)
+            }catch (ex:Exception){
+                ex.printStackTrace()
+            }
+            withContext(Dispatchers.IO) {
+                dbHelper.insertFavoritePost(data.apply {
+                    likedDate = Date()
+                    liked = true })
+                logEvent(data?.id)
+            }
+        }
+    }
+
+    private fun updateRow(data: Post):List<Post>{
+        val size = mData?.size
+        for(i in 0..size){
+            var p = mData.get(i)
+            if(p.id==data.id){
+                p.likesCount=+1
+                mData[i] = p
+                return mData
+            }
+        }
+        return mData
     }
 
     fun onItemClicked(item: Post){
@@ -96,5 +130,20 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
         fbAnalytics.logEvent("video_appview","video_appview","app_attribute")
 
     }
+    suspend fun  myFavoritePost(data:List<Post>) = withContext(Dispatchers.Default){
+        data.forEach {
 
+
+            val temp =  async(Dispatchers.IO) {
+                dbHelper.getPostById(it.id)
+            }.await()
+            if(temp!=null){
+
+                it.liked = true
+            }
+
+        }
+        data
+
+    }
 }

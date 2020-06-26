@@ -1,25 +1,37 @@
 package com.applifehack.knowledge.ui.fragment.articlelist
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
+import com.applifehack.knowledge.BuildConfig
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.google.firebase.firestore.DocumentSnapshot
-import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
+import com.applifehack.knowledge.util.AppConstants
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.await
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.util.ArrayList
+import com.applifehack.knowledge.util.extension.shareImage
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.ezyplanet.core.GlideApp
+import com.ezyplanet.core.ui.base.MvvmActivity
+import com.ezyplanet.supercab.data.local.db.DbHelper
+import com.google.firebase.dynamiclinks.ShortDynamicLink
+import com.google.firebase.dynamiclinks.ktx.androidParameters
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
+import org.sourcei.kowts.utils.functions.F
+import java.util.*
 import javax.inject.Inject
 
-class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, connectionManager: BaseConnectionManager
+class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider,val dbHelper: DbHelper, connectionManager: BaseConnectionManager
 ) : BaseViewModel<ArticleListNav, String>(schedulerProvider, connectionManager) {
 
     val results = NonNullLiveData<List<Post>>(emptyList())
@@ -60,7 +72,9 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
 
                         currentPage += 1
                     }
-                    results.value = mData
+
+
+                    results.value = myFavoritePost(mData)
                     resetLoadingState = false
                     navigator?.hideProgress()
 
@@ -88,30 +102,49 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
         getPost(catId,true)
     }
 
-    fun shareClick(context:Context, data:Post){
+    fun shareClick(context: Context, data:Post){
 
-            val download = context.getString(R.string.download)
-            val applink = context.getString(R.string.app_link)
-            val messge = String.format(context.getString(R.string.share_info_message),
-                    context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
-            navigator?.share(messge)
+//            val download = context.getString(R.string.download)
+//            val applink = context.getString(R.string.app_link)
+//            val messge = String.format(context.getString(R.string.share_info_message),
+//                    context.getString(R.string.app_name))+"\n ${data.title}\n ${data.redirect_link} \n $download\n $applink"
+//            navigator?.share(messge)
         logEvent(data?.id,"share")
+
+
+        generateArticle(context,data)
 
 
 
 
     }
+//    fun likeClick(data:Post){
+//
+//        uiScope?.launch {
+//
+//           results.value = updateRow(data)
+//            appDataManager.updateViewCount(data.id)
+//            logEvent(data?.id,"like")
+//        }
+//
+//
+//
+//    }
     fun likeClick(data:Post){
-
         uiScope?.launch {
-
-           results.value = updateRow(data)
-            appDataManager.updateViewCount(data.id)
-            logEvent(data?.id,"like")
+            results.value = updateRow(data)
+            try {
+                appDataManager.updateLikeCount(data.id)
+            }catch (ex:Exception){
+                ex.printStackTrace()
+            }
+            withContext(Dispatchers.IO) {
+                dbHelper.insertFavoritePost(data.apply {
+                    likedDate = Date()
+                    liked = true })
+                logEvent(data?.id, "like")
+            }
         }
-
-
-
     }
 
     private fun updateRow(data: Post):List<Post>{
@@ -144,5 +177,77 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
 
     }
 
+
+    fun generateArticle(context: Context,post: Post){
+        uiScope?.launch {
+            try {
+                navigator?.showProgress()
+                val bitmap = getBitmap(context,post.imageUrl)
+                val result = F.createBitmapFromView(context,post,bitmap!!)
+
+                createDynamicLink(context,post.id!!,result!!)
+
+            }catch (ex:Exception){
+                ex.printStackTrace()
+            }
+
+
+        }
+    }
+    private fun createDynamicLink(context: Context,postId:String?,bitmap: Bitmap){
+        Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
+            link = Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=$postId")
+            domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
+            androidParameters(BuildConfig.DYNAMIC_PACKAGE_NAME){
+
+            }
+
+            // Open links with this app on Android
+
+        }.addOnSuccessListener {
+            navigator?.hideProgress()
+            ( context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
+        }.addOnFailureListener{
+            navigator?.hideProgress()
+            it.printStackTrace()
+        }
+    }
+
+  suspend fun  myFavoritePost(data:List<Post>) = withContext(Dispatchers.Default){
+        data.forEach {
+
+
+            val temp =  async(Dispatchers.IO) {
+                dbHelper.getPostById(it.id)
+            }.await()
+            if(temp!=null){
+
+                it.liked = true
+            }
+
+        }
+      data
+
+    }
+   suspend fun getBitmap( context: Context,url:String?) = withContext(Dispatchers.IO){
+
+           var bitmap :Bitmap?=null
+            val future = GlideApp.with(context)
+                .asBitmap()
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .submit()
+
+            try {
+               bitmap = future.get()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+
+            }
+       bitmap
+
+    }
 
 }

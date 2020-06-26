@@ -22,38 +22,38 @@
 
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/dynLinkToolbar"
-        android:background="@color/dark_gray"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        >
-        <TextView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/dynLinkToolbar"
+            android:background="@color/dark_gray"
             android:layout_width="match_parent"
-            android:gravity="center"
-            android:id="@+id/tvTitle"
-            android:textColor="@color/white_75"
-            android:layout_marginRight="?android:attr/actionBarSize"
-            android:textSize="18sp"
-            android:layout_height="wrap_content" />
-    </androidx.appcompat.widget.Toolbar>
-    <RelativeLayout
+            android:layout_height="?attr/actionBarSize"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:id="@+id/tvTitle"
+                android:textColor="@color/white_75"
+                android:layout_marginRight="?android:attr/actionBarSize"
+                android:textSize="18sp"
+                android:layout_height="wrap_content" />
+        </androidx.appcompat.widget.Toolbar>
+        <RelativeLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:background="@drawable/feed_hero_gradient_background">
-        <FrameLayout
-            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:fitsSystemWindows="true"
-            />
+
+            android:background="@drawable/feed_hero_gradient_background">
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:fitsSystemWindows="true"
+                />
 
 
 
-    </RelativeLayout>
+        </RelativeLayout>
     </LinearLayout>
 </layout>

@@ -30,16 +30,18 @@ ext {
     final roomVersion = "2.2.5"
 
     //firebase
-    final firebaseCoreVersion = '16.0.0'
-    final firebaseIidVersion = '17.0.4'
-    final firebaseMessagingVersion = '17.3.4'
+    final firebaseIidVersion = '20.1.0'
+    final firebaseMessagingVersion = '20.1.5'
     final firebaseJobdispatcherVersion = '0.8.5'
     final fireBasseDataBaseVersion = '19.2.0'
     final fireBasseStorageVersion = '19.1.0'
     final firebseFirebaseStorage= '21.3.0'
+    final firebaseCrashVersion = "17.1.0"
+    final firebaseAnalyticVersion = "17.4.3"
     //play-service
-    final play_serviceVersion = '16.0.0'
-    final play_service_authVersion = '16.0.1'
+    final play_serviceVersion = '17.0.0'
+    final play_service_authVersion = '18.0.0'
+    final play_service_ad_version = "19.1.0"
 
     //Test
     final junitVersion = '1.0.0-beta02'
@@ -137,14 +139,16 @@ ext {
             multipleDex          : "androidx.multidex:multidex:$multipleDexVersion",
             //firebase
             firebase             : [
-                    'core'         : "com.google.firebase:firebase-core:$firebaseCoreVersion",
+
                     'iid'          : "com.google.firebase:firebase-iid:$firebaseIidVersion",
                     'messaging'    : "com.google.firebase:firebase-messaging:$firebaseMessagingVersion",
                     'jobdispatcher': "com.firebase:firebase-jobdispatcher:$firebaseJobdispatcherVersion",
                     'database'     :"com.google.firebase:firebase-database:$fireBasseDataBaseVersion",
                     'storage'      :"com.google.firebase:firebase-storage:$fireBasseStorageVersion",
                     'fireStorage' : "com.google.firebase:firebase-firestore:$firebseFirebaseStorage",
-                    'fireUiStorage': "com.firebaseui:firebase-ui-storage:6.2.0"
+                    'fireUiStorage': "com.firebaseui:firebase-ui-storage:6.2.0",
+                    'fireCrash'    : "com.google.firebase:firebase-crashlytics:$firebaseCrashVersion",
+                    'fireAnalytic' : "com.google.firebase:firebase-analytics:$firebaseAnalyticVersion"
 
             ],
             //map
@@ -159,7 +163,7 @@ ext {
                     'location'      : "com.google.android.gms:play-services-location:$play_serviceVersion",
                     'places'        : "com.google.android.gms:play-services-places:$play_serviceVersion",
                     'auth'           : "com.google.android.gms:play-services-auth:$play_service_authVersion",
-                    'ads'   : "com.google.android.gms:play-services-ads:$play_serviceVersion"
+                    'ads'   : "com.google.android.gms:play-services-ads:$play_service_ad_version"
 
 
 

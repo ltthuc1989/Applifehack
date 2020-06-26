@@ -19,7 +19,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/subject_card_radius"
     app:cardElevation="@dimen/subject_card_elevation"
-    android:onClick="@{()->viewModel.onItemClicked(item)}"
+
     app:cardUseCompatPadding="true">
 
     <ImageView
@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:onClick="@{()->viewModel.onItemClicked(item)}"
         android:alpha="0.8"
         android:maxWidth="@dimen/subject_card_height"
         android:minHeight="@dimen/subject_card_height"

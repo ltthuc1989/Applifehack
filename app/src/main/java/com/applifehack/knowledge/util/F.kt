@@ -29,7 +29,7 @@ import androidx.core.graphics.toColorInt
 import androidx.core.view.setMargins
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.util.setGradient
-import com.crashlytics.android.Crashlytics
+
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.inflator_quote_empty.view.*
@@ -97,7 +97,7 @@ object F {
         return try {
             Gradients.random().colors.map { it.toColorInt() }
         } catch (e: Exception) {
-            Crashlytics.logException(e)
+
             e.printStackTrace()
             randomGradient()
         }
@@ -128,7 +128,7 @@ object F {
                 try {
                     callback(b1.sameAs(b2)) // callback with compare
                 } catch (e: Exception) {
-                    Crashlytics.logException(e)
+
                     e.printStackTrace()
                     callback(false)
                 }
@@ -171,8 +171,8 @@ object F {
         view.image.setImageBitmap(bitmap)
         val point = displayDimensions(context)
         view.measure(
-            View.MeasureSpec.makeMeasureSpec(point.x-10, View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(point.y-10, View.MeasureSpec.EXACTLY)
+            View.MeasureSpec.makeMeasureSpec(point.x-50, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(point.y-300, View.MeasureSpec.EXACTLY)
         )
         val bitmap =
             Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
@@ -198,7 +198,7 @@ object F {
 
         // set values
         image.setImageBitmap(quoteObject.image)
-       // authorText.text = quoteObject.author
+        // authorText.text = quoteObject.author
         quote.text = quoteObject.quote
 
         // set dimensions for card
@@ -246,16 +246,16 @@ object F {
         paramsNQ.setMargins(margin)
         paramsL.setMargins(margin, 0, margin, margin)
         //paramsNA.setMargins(margin, 0, margin, margin)
-       // paramsNA.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
+        // paramsNA.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
         paramsL.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
 
         quote.layoutParams = paramsNQ
-       // authorLayout.layoutParams = paramsNA
+        // authorLayout.layoutParams = paramsNA
         logo.layoutParams = paramsL
 
         // set gradients
         gradient.setGradient(quoteObject.gradient!!, 0, quoteObject.angle!!)
-       // authorLayout.setGradient(quoteObject.authorGradient!!, 16)
+        // authorLayout.setGradient(quoteObject.authorGradient!!, 16)
 
         // prepare for export
         layout.measure(

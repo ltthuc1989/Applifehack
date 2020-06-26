@@ -120,8 +120,8 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
     override fun gotoYoutubeDetail(post: Post, shareView:View) {
         (activity as MvvmActivity<*, *>).transitionActivity(YtDetailActivity::class,
-                mapOf(AppBundleKey.YOUTUBE_URL to post),shareView)
-       // gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post.video_url))
+            mapOf(AppBundleKey.YOUTUBE_URL to post),shareView)
+        // gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post.video_url))
     }
 
 

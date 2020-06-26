@@ -22,6 +22,7 @@ import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
 import com.applifehack.knowledge.ui.widget.QuoteView
+import com.applifehack.knowledge.util.AppConstants
 import com.applifehack.knowledge.util.ShareType
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.await
@@ -109,8 +110,8 @@ class QuotesVM @Inject constructor(
 
 
     fun shareClick(data: Post, view: View) {
-       // val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
-       // val quote = view.getQuote()
+        // val view = view.rootView.findViewById<QuoteView>(R.id.quoteView)
+        // val quote = view.getQuote()
         //generataQuote(view.context, quote, data.id)
         generateArticle(view,data.id)
         logEvent(data?.id, "share")
@@ -224,16 +225,16 @@ class QuotesVM @Inject constructor(
 
     private fun createDynamicLink(context: Context, postId: String?, bitmap: Bitmap) {
         Firebase.dynamicLinks.shortLinkAsync {
-            link = Uri.parse("https://www.applifehack.com/$postId")
+            link = Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=$postId")
             domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
-            androidParameters("com.applifehack.knowledge.staging") {
+            androidParameters(BuildConfig.DYNAMIC_PACKAGE_NAME) {
 
             }
             // Open links with this app on Android
 
         }.addOnSuccessListener {
             navigator?.hideProgress()
-            (context as MvvmActivity<*, *>).shareImage(bitmap, it.shortLink.toString())
+            (context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
         }.addOnFailureListener {
             navigator?.hideProgress()
             it.printStackTrace()

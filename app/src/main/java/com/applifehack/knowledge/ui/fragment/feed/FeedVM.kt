@@ -19,6 +19,8 @@ import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.ui.widget.QuoteView
+import com.applifehack.knowledge.util.AppConstants
+import com.applifehack.knowledge.util.MediaUtil
 import com.applifehack.knowledge.util.ShareType
 import com.applifehack.knowledge.util.extension.await
 import com.applifehack.knowledge.util.extension.shareImage
@@ -54,7 +56,7 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
     protected val mData = ArrayList<Post>()
 
     private var lastItem: DocumentSnapshot?=null
-     var currentPage=0
+    var currentPage=0
     val shareType = MutableLiveData<ShareType>()
     init {
         visibleThreshold = 10
@@ -66,14 +68,14 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
     @Inject lateinit var fbAnalytics: FirebaseAnalyticsHelper
 
     fun getDynamicLinkInfo(post:Post?){
-                mData.add(post!!)
-                results.value = mData
-                resetLoadingState = false
+        mData.add(post!!)
+        results.value = mData
+        resetLoadingState = false
 
 
     }
 
-   open fun getPost(nextPage: Boolean? = false) {
+    open fun getPost(nextPage: Boolean? = false) {
 
         if (nextPage == false) navigator?.showProgress()
         resetLoadingState = true
@@ -199,19 +201,25 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
                     (parentView.layoutParams as RecyclerView.LayoutParams).apply {
                         setMargins(8,8,8,8)
                     }
-                    postDelayed({
-                        val result = F.viewToBitmap(parentView)
 
-                         linBottom.visibility = View.VISIBLE
-                          linShare.visibility = View.GONE
-                        (vBottom.layoutParams as RelativeLayout.LayoutParams ).apply {
-                            height = view.resources.getDimension(R.dimen.dp_16).toInt()
-                        }
-                        (parentView.layoutParams as RecyclerView.LayoutParams).apply {
-                            setMargins(0,0,0,0)
-                        }
-                        createDynamicLink(view.context,id,result!!)
-                    },15)
+                    postDelayed({
+                        MediaUtil.getOutputMediaFile(view.context,F.viewToBitmap(parentView))
+                        postDelayed({
+
+
+                            linBottom.visibility = View.VISIBLE
+                            linShare.visibility = View.GONE
+                            (vBottom.layoutParams as RelativeLayout.LayoutParams ).apply {
+                                height = view.resources.getDimension(R.dimen.dp_16).toInt()
+                            }
+                            (parentView.layoutParams as RecyclerView.LayoutParams).apply {
+                                setMargins(0,0,0,0)
+                            }
+                            createDynamicLink(view.context,id)
+                        },100)
+
+                    },100)
+
 
                 }
 
@@ -228,9 +236,9 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
     private fun updateRow(position: Int):List<Post>{
 
-       mData[position]?.apply {
-           likesCount =likesCount!!+1
-       }
+        mData[position]?.apply {
+            likesCount =likesCount!!+1
+        }
 
         return mData
     }
@@ -245,19 +253,17 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
     }
 
-    private fun createDynamicLink(context: Context,postId:String?,bitmap:Bitmap){
+    private fun createDynamicLink(context: Context,postId:String?){
         Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
-            link = Uri.parse("https://www.applifehack.com/?postId=$postId")
+            link = Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=$postId")
             domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
             androidParameters(BuildConfig.DYNAMIC_PACKAGE_NAME){
 
             }
 
-            // Open links with this app on Android
-
         }.addOnSuccessListener {
             navigator?.hideProgress()
-            ( context as MvvmActivity<*, *>).shareImage(bitmap,it.shortLink.toString())
+            ( context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
         }.addOnFailureListener{
             navigator?.hideProgress()
             it.printStackTrace()
@@ -265,12 +271,12 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
     }
     open fun myFavoritePost(position:Int){
         uiScope?.launch {
-          val temp =  async(Dispatchers.IO) {
+            val temp =  async(Dispatchers.IO) {
                 dbHelper.getPostById(mData[position].id)
             }.await()
             if(temp!=null){
                 results.value = mData?.apply {
-                     get(position).liked = true
+                    get(position).liked = true
                 }
             }
 

@@ -1,9 +1,9 @@
 package com.applifehack.knowledge.data.network
 
+
+
+
 import com.androidhuman.rxfirebase2.firestore.RxFirebaseFirestore
-import com.androidhuman.rxfirebase2.firestore.model.Value
-
-
 import com.google.firebase.firestore.*
 import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.data.entity.Post
@@ -22,12 +22,6 @@ import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.AppConstants.DatabasePath
 import com.applifehack.knowledge.util.TimeUtil
 import com.google.firebase.FirebaseApp
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
-import java.io.File
-import java.io.FileInputStream
-import java.time.LocalDate
-import java.util.*
 
 
 /**
@@ -63,14 +57,14 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             return firStore.collection(ApiEndPoint.POST_DB_KEY)
                 .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                 .limit(10).get()
-            
+
         }
 
 
     }
 
-    override fun getCatgories(): Single<Value<QuerySnapshot>> {
-        return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.GET_CATEGORIES))
+    override fun getCatgories(): Task<QuerySnapshot> {
+       return firStore.collection(ApiEndPoint.GET_CATEGORIES).get()
     }
 
     override fun getPopularPost(): Task<QuerySnapshot> {
@@ -81,16 +75,12 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         val query = firStore.collection(ApiEndPoint.POST_DB_KEY)
 
 
-
-          //  .whereGreaterThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT,startAt)
-          // .whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT,endAt)
-
             .orderBy(DatabasePath.CREATED_DATE_TEXT,Query.Direction.ASCENDING)
-           .startAt(startAt)
-          //  .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
+           .startAt(startAt).endAt(endAt)
 
 
-        return query.get()
+
+        return query.limit(8).get()
     }
 
     override fun getPostByCat(

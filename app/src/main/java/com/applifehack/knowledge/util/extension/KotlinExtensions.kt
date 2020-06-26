@@ -5,23 +5,18 @@ import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
-import com.ezyplanet.core.ui.base.MvvmActivity
-import com.google.android.gms.tasks.Task
-
-import com.applifehack.knowledge.util.CustomTabHelper
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
-
-import android.graphics.Bitmap
-
 import androidx.core.content.FileProvider
-import java.io.File
-import com.ezyplanet.core.ui.base.BaseViewModel
 import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
-import java.io.FileOutputStream
+import com.applifehack.knowledge.util.CustomTabHelper
+import com.ezyplanet.core.ui.base.BaseViewModel
+import com.ezyplanet.core.ui.base.MvvmActivity
+import com.google.android.gms.tasks.Task
+import java.io.File
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 
 fun MvvmActivity<*,*>.openLink(url: String?, customTabHelper: CustomTabHelper) {
@@ -88,26 +83,22 @@ fun MvvmActivity<*,*>.shareMessage(message:String){
     intent2.putExtra(Intent.EXTRA_TEXT, message)
     startActivity(Intent.createChooser(intent2, "Share via"))
 }
-fun MvvmActivity<*,*>.shareImage(bitmap: Bitmap?=null,shortLink:String?){
+fun MvvmActivity<*,*>.shareImage(shortLink:String?){
 
 
     try {
     var CODE_FOR_RESULT = 981
         val shareTitle = String.format(getString(R.string.share_info_message,shortLink))
-        val file = File(this.externalCacheDir, "image.png")
-        val fOut = FileOutputStream(file)
-        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, fOut)
-        fOut.flush()
-        fOut.close()
-        file.setReadable(true, false)
+       val  file = File(File(cacheDir, "images"), "image.png")
         val intent = Intent(android.content.Intent.ACTION_SEND)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         val photoURI = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file)
+        intent.setDataAndType(photoURI,contentResolver.getType(photoURI))
         intent.putExtra(Intent.EXTRA_STREAM, photoURI)
         intent.putExtra(Intent.EXTRA_TEXT,shareTitle)
 
-        intent.type = "*/*"
+
 
         startActivityForResult(Intent.createChooser(intent, "Share image via"), CODE_FOR_RESULT)
     } catch (e: Exception) {
