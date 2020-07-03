@@ -111,7 +111,11 @@ data class Post(
     @set:PropertyName("liked_date")
     @get:PropertyName("liked_date")
     @ColumnInfo(name = "liked_date")
-    var likedDate: Date?= Date()
+    var likedDate: Date?= Date(),
+    @set:PropertyName("video_views")
+    @get:PropertyName("video_views")
+    @ColumnInfo(name = "video_views")
+    var video_views : Int?=0
 ) : Parcelable {
 
 
@@ -162,6 +166,7 @@ data class Post(
     }
 
     fun formatLikes(): String = "$likesCount"
+    fun formatViews():String = "$video_views"
 
 
 }

@@ -3,10 +3,10 @@
     android:shape="oval" android:useLevel="true"
     android:dither="true">
 
-    <size android:height="7dip" android:width="7dip"/>
+    <size android:height="5dip" android:width="5dip"/>
     <stroke android:color="@color/app_808080"
         android:width="0.3dip"/>
-
-    <solid android:color="@color/white"/>
+    <solid android:color="@color/white"
+        />
 
 </shape>

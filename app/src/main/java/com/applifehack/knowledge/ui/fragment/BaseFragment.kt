@@ -17,6 +17,7 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel<*, *>> :MvvmF
     @Inject
     lateinit var fbAnalyticsHelper: FirebaseAnalyticsHelper
 
+
   fun gotoActivity(cls: KClass<out Activity>, finish: Boolean = false) {
 
         val intent = Intent(context, cls.java)
@@ -39,6 +40,7 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel<*, *>> :MvvmF
         startActivity(intent)
         if (finish) activity?.finish()
     }
+
 
     fun openLink(url:String?){
         (activity as BaseActivity<*,*>).openBrowser(url)

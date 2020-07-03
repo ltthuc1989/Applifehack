@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval" android:useLevel="true"
-    android:dither="true">
-    <size android:height="7dip" android:width="7dip"/>
-    <solid android:color="@color/app_444444"/>
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:shape="oval" android:useLevel="true"-->
+<!--    android:dither="true">-->
+<!--    <size android:height="20dip" android:width="20dip"/>-->
+<!--    <solid android:color="@color/app_444444"/>-->
 
-</shape>
+<!--</shape>-->
+
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+<!--&lt;!&ndash;    <shape&ndash;&gt;-->
+<!--&lt;!&ndash;        android:shape="oval" android:useLevel="true"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:dither="true">&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <size android:height="7dip" android:width="7dip"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <stroke android:color="@color/app_808080"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:width="0.3dip"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <solid android:color="@color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;            />&ndash;&gt;-->
+
+<!--&lt;!&ndash;    </shape>&ndash;&gt;-->
+
+
+<item
+    android:drawable="@drawable/ic_notification"
+    android:width="20dip"
+    android:height="20dip"
+    />
+</layer-list>

@@ -4,6 +4,7 @@ object AppConstants {
 
     object DatabasePath {
         const val CAT_ID = "post_cat_id"
+        const val CAT_CREATED_DATE = "created_date"
         const val TYPE = "post_type"
         const val ID = "post_id"
         const val TITLE = "post_title"

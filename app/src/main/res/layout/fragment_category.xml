@@ -51,11 +51,12 @@
                 <TextView
                     style="@style/SubjectTextLabel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="left"
                     android:fontFamily="@font/open_sans_light"
-                    android:gravity="left"
-                    android:paddingTop="8dp"
+                    android:gravity="center"
+
+
 
                     android:text="@string/most_popular_last_week" />
 
@@ -75,14 +76,15 @@
                 <RelativeLayout
                     android:id="@+id/viewPagerIndicator"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/banner_dot_height"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="35dp"
                     android:layout_alignBottom="@+id/view_pager"
                     android:gravity="center">
 
                     <LinearLayout
                         android:id="@+id/viewPagerCountDots"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/banner_dot_height"
+                        android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"

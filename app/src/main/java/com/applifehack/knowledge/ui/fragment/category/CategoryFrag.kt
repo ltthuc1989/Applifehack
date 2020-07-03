@@ -1,5 +1,7 @@
 package com.applifehack.knowledge.ui.fragment.category
 
+import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -37,6 +39,7 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
     private var count: Int = 0
     private var banners: List<Post>? = null
     lateinit var categoryShareEvent: CategoryShareEvent
+     var isFirstCreated = false
 
     companion object {
         val KEY_CATEGORY_DETAIL = "category_detail"
@@ -47,6 +50,8 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
     override fun setUpNavigator() {
         viewModel.navigator = this
     }
+
+
 
     override fun onViewInitialized(binding: FragmentCategoryBinding) {
         super.onViewInitialized(binding)
@@ -61,7 +66,12 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
         categoryShareEvent.postClickEvent.observe(this, androidx.lifecycle.Observer {
             viewModel.postPopularClick(it)
         })
-        viewModel.updateModel(null)
+        if(!isFirstCreated) {
+            viewModel.updateModel(null)
+            isFirstCreated = true
+        }else{
+            autoSlide()
+        }
 
 
 
@@ -167,14 +177,16 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         viewPager.setOnPageChangeListener(null)
         viewModel.clearDot()
         if (timer != null) {
             timer?.cancel()
         }
     }
+
+
 
 
 }

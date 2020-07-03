@@ -71,6 +71,7 @@ abstract class BaseViewModel<n : MvvmNav, m : Any?>(private val connectionManage
     val model: LiveData<m> = _model
     protected var isInBackGround = false
     val showEmptyView=MutableLiveData<Boolean>()
+    var isNoMoreDataLoad = false
 
 
     var isLogIn = MutableLiveData<Boolean>()

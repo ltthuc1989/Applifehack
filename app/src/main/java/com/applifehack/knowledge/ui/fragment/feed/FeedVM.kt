@@ -1,12 +1,8 @@
 package com.applifehack.knowledge.ui.fragment.feed
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +14,6 @@ import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
-import com.applifehack.knowledge.ui.widget.QuoteView
 import com.applifehack.knowledge.util.AppConstants
 import com.applifehack.knowledge.util.MediaUtil
 import com.applifehack.knowledge.util.ShareType
@@ -32,32 +27,33 @@ import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.google.firebase.dynamiclinks.ShortDynamicLink
 import com.google.firebase.dynamiclinks.ktx.androidParameters
-import com.google.firebase.dynamiclinks.ktx.dynamicLink
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.ktx.Firebase
-import com.makeramen.roundedimageview.RoundedDrawable
-import com.makeramen.roundedimageview.RoundedImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.sourcei.kowts.utils.functions.F
-import org.sourcei.kowts.utils.pojo.QuoteResp
 import java.util.*
 import javax.inject.Inject
 
 
-open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, var dbHelper: DbHelper, connectionManager: BaseConnectionManager
+open class FeedVM @Inject constructor(
+    val appDataManager: AppDataManager,
+    schedulerProvider: SchedulerProvider,
+    var dbHelper: DbHelper,
+    connectionManager: BaseConnectionManager
 ) : BaseViewModel<FeedNav, String>(schedulerProvider, connectionManager) {
 
     val results = NonNullLiveData<List<Post>>(emptyList())
     protected val mData = ArrayList<Post>()
 
-    private var lastItem: DocumentSnapshot?=null
-    var currentPage=0
+    private var lastItem: DocumentSnapshot? = null
+    var currentPage = 0
     val shareType = MutableLiveData<ShareType>()
+
     init {
         visibleThreshold = 10
         shareType.value = ShareType.NONE
@@ -65,9 +61,12 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
     protected var hasMore = false
     protected var currentItem = 0
-    @Inject lateinit var fbAnalytics: FirebaseAnalyticsHelper
+    private var currentLoadMorePosition = 0
+    var onStop = false
+    @Inject
+    lateinit var fbAnalytics: FirebaseAnalyticsHelper
 
-    fun getDynamicLinkInfo(post:Post?){
+    fun getDynamicLinkInfo(post: Post?) {
         mData.add(post!!)
         results.value = mData
         resetLoadingState = false
@@ -81,10 +80,10 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
         resetLoadingState = true
         uiScope?.launch {
             try {
-                val data = appDataManager.getPost( nextPage,lastItem)
+                val data = appDataManager.getPost(nextPage, lastItem)
 
                 data?.await().let {
-                    if(!it.isEmpty) {
+                    if (!it.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
                             it.toObjects(Post::class.java)
                         }
@@ -93,13 +92,13 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
                         lastItem = it.documents[it.size() - 1]
                         val rs = snapshot.await()
                         mData.addAll(rs)
-                        hasMore=(rs.size>visibleThreshold-1)
+                        hasMore = (rs.size > visibleThreshold - 1)
 
 
 
 
                         currentPage += 1
-                    }
+                    } else hasMore = false
                     results.value = mData
                     resetLoadingState = false
                     navigator?.hideProgress()
@@ -117,17 +116,17 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
     }
 
-    fun openPostDetail(data: Post,shareView:View) {
+    fun openPostDetail(data: Post, shareView: View) {
         uiScope?.launch {
             try {
 
-                if(data?.getPostType()==PostType.VIDEO){
-                    navigator?.gotoYoutubeDetail(data,shareView)
+                if (data?.getPostType() == PostType.VIDEO) {
+                    navigator?.gotoYoutubeDetail(data, shareView)
 
-                }else{
+                } else {
                     navigator?.gotoFeedDetail(data)
                 }
-                logEvent(data?.id,"readmore")
+                logEvent(data?.id, "readmore")
 
                 val resul = appDataManager.updateViewCount(data.id)
                 resul.await()
@@ -140,93 +139,100 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
         }
 
     }
-    fun openCatDetail(data: Post){
+
+    fun openCatDetail(data: Post) {
         navigator?.gotoCatDetail(data?.catId)
     }
-    fun openPageUrl(data: Post){
+
+    fun openPageUrl(data: Post) {
         navigator?.gotoPageUrl(data)
     }
-    fun shareClick(view: View, data:Post){
 
-        generateArticle(view,data.id)
-        logEvent(data?.id,"share")
+    fun shareClick(view: View, data: Post) {
 
+        generateArticle(view, data.id)
+        logEvent(data?.id, "share")
 
 
     }
-    fun likeClick(data:Post){
+
+    fun likeClick(data: Post) {
         uiScope?.launch {
             results.value = updateRow(currentItem)
             try {
                 appDataManager.updateLikeCount(data.id)
-            }catch (ex:Exception){
+            } catch (ex: Exception) {
                 ex.printStackTrace()
             }
             withContext(Dispatchers.IO) {
                 dbHelper.insertFavoritePost(data.apply {
                     likedDate = Date()
-                    liked = true })
+                    liked = true
+                })
                 logEvent(data?.id, "like")
             }
         }
     }
 
 
-
     fun onLoadMore(position: Int) {
+
         currentItem = position
-        if(hasMore&&position+5>mData.size){
-            getPost(true)
+        if (hasMore && position + 5 > mData.size) {
+            if (position>currentLoadMorePosition) {
+                currentLoadMorePosition = position+5
+
+                getPost(true)
+            }
         }
+
 
     }
 
 
-    fun generateArticle(view: View,id:String?){
+    fun generateArticle(view: View, id: String?) {
         uiScope?.launch {
             try {
                 navigator?.showProgress()
 
                 val parentView = view.parent.parent as RelativeLayout
-                val vBottom  = parentView.findViewById<View>(R.id.vBottom)
+                val vBottom = parentView.findViewById<View>(R.id.vBottom)
                 val linBottom = parentView.findViewById<ConstraintLayout>(R.id.linBottom)
                 val linShare = parentView.findViewById<LinearLayout>(R.id.shareLayout)
                 parentView.run {
 
                     linBottom.visibility = View.GONE
                     linShare.visibility = View.VISIBLE
-                    (vBottom.layoutParams as RelativeLayout.LayoutParams ).apply {
+                    (vBottom.layoutParams as RelativeLayout.LayoutParams).apply {
                         height = 0
                     }
                     (parentView.layoutParams as RecyclerView.LayoutParams).apply {
-                        setMargins(8,8,8,8)
+                        setMargins(8, 8, 8, 8)
                     }
 
                     postDelayed({
-                        MediaUtil.getOutputMediaFile(view.context,F.viewToBitmap(parentView))
+                        MediaUtil.getOutputMediaFile(view.context, F.viewToBitmap(parentView))
                         postDelayed({
 
 
                             linBottom.visibility = View.VISIBLE
                             linShare.visibility = View.GONE
-                            (vBottom.layoutParams as RelativeLayout.LayoutParams ).apply {
+                            (vBottom.layoutParams as RelativeLayout.LayoutParams).apply {
                                 height = view.resources.getDimension(R.dimen.dp_16).toInt()
                             }
                             (parentView.layoutParams as RecyclerView.LayoutParams).apply {
-                                setMargins(0,0,0,0)
+                                setMargins(0, 0, 0, 0)
                             }
-                            createDynamicLink(view.context,id)
-                        },100)
+                            createDynamicLink(view.context, id)
+                        }, 100)
 
-                    },100)
+                    }, 100)
 
 
                 }
 
 
-
-
-            }catch (ex:Exception){
+            } catch (ex: Exception) {
                 ex.printStackTrace()
             }
 
@@ -234,47 +240,51 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
         }
     }
 
-    private fun updateRow(position: Int):List<Post>{
+    private fun updateRow(position: Int): List<Post> {
 
         mData[position]?.apply {
-            likesCount =likesCount!!+1
+            likesCount = likesCount!! + 1
         }
 
         return mData
     }
 
-    private fun logEvent(id:String?,action:String){
+    private fun logEvent(id: String?, action: String) {
         val event = "$${id}_$action"
         val likeButton = "card_$action"
         val str = "app_attribute"
-        fbAnalytics.logEvent(event,event,str)
-        fbAnalytics.logEvent(likeButton,likeButton,str)
+        fbAnalytics.logEvent(event, event, str)
+        fbAnalytics.logEvent(likeButton, likeButton, str)
 
 
     }
 
-    private fun createDynamicLink(context: Context,postId:String?){
+    private fun createDynamicLink(context: Context, postId: String?) {
         Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
-            link = Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=$postId")
+            link =
+                Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=$postId")
             domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
-            androidParameters(BuildConfig.DYNAMIC_PACKAGE_NAME){
+            androidParameters(BuildConfig.DYNAMIC_PACKAGE_NAME) {
 
             }
 
         }.addOnSuccessListener {
             navigator?.hideProgress()
-            ( context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
-        }.addOnFailureListener{
+            (context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
+        }.addOnFailureListener {
             navigator?.hideProgress()
             it.printStackTrace()
         }
     }
-    open fun myFavoritePost(position:Int){
+
+
+    open fun myFavoritePost(position: Int) {
+
         uiScope?.launch {
-            val temp =  async(Dispatchers.IO) {
+            val temp = async(Dispatchers.IO) {
                 dbHelper.getPostById(mData[position].id)
             }.await()
-            if(temp!=null){
+            if (temp != null) {
                 results.value = mData?.apply {
                     get(position).liked = true
                 }
@@ -283,7 +293,20 @@ open class FeedVM @Inject constructor(val appDataManager: AppDataManager, schedu
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        onStop = true
+    }
 
+    fun onPageChange(position: Int) {
+        if (!onStop) {
+            myFavoritePost(position)
+            onLoadMore(position)
+
+        } else {
+            onStop = false
+        }
+    }
 
 
 }

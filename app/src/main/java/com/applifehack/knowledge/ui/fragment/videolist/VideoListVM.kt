@@ -61,8 +61,10 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
                             Log.d("PostTitle",it.title)
                         }
 
-
+                        isNoMoreDataLoad = false
                         currentPage += 1
+                    }else{
+                        isNoMoreDataLoad = true
                     }
                     results.value = myFavoritePost(mData)
                     resetLoadingState = false
@@ -119,7 +121,7 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
     }
 
     fun onLoadMore(page: Int) {
-        if(page==1) return
+        if(isNoMoreDataLoad) return
         getPost(catId,true)
     }
 

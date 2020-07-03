@@ -50,7 +50,7 @@ abstract class MvvmAdapter<T, B : ViewDataBinding>(
 
 
     override fun getItemCount(): Int{
-        if(items.size>0&&items.size% CoreConstants.LIMIT_ITEM_PER_PAGE==0 ) {
+        if(items.size>0&&items.size% CoreConstants.LIMIT_ITEM_PER_PAGE==0 &&viewModel?.isNoMoreDataLoad==false) {
             return items.size + 1
         }else{
             if(items.isEmpty()&&viewModel?.resetLoadingState!=true){

@@ -3,7 +3,6 @@ package com.applifehack.knowledge.ui.activity.quotes
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -21,12 +20,11 @@ import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
-import com.applifehack.knowledge.ui.widget.QuoteView
 import com.applifehack.knowledge.util.AppConstants
 import com.applifehack.knowledge.util.ShareType
-import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.await
 import com.applifehack.knowledge.util.extension.shareImage
+import com.ezyplanet.supercab.data.local.db.DbHelper
 import com.google.firebase.dynamiclinks.ktx.androidParameters
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
@@ -35,14 +33,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.sourcei.kowts.utils.functions.F
-import org.sourcei.kowts.utils.pojo.QuoteResp
 import java.util.ArrayList
 import javax.inject.Inject
 
 class QuotesVM @Inject constructor(
     appDataManager: AppDataManager,
     schedulerProvider: SchedulerProvider,
-    connectionManager: BaseConnectionManager
+    connectionManager: BaseConnectionManager,val dbHelper: DbHelper
 ) : BaseBottomVM<QuotesNav, String>(appDataManager, schedulerProvider, connectionManager) {
 
     val results = NonNullLiveData<List<Post>>(emptyList())
@@ -54,6 +51,8 @@ class QuotesVM @Inject constructor(
     private var currentItem = 0
     private var hasMore = false
     val shareType = MutableLiveData<ShareType>()
+    private var currentLoadMorePosition = 0
+    var onStop = false
 
     @Inject
     lateinit var fbAnalytics: FirebaseAnalyticsHelper
@@ -90,6 +89,8 @@ class QuotesVM @Inject constructor(
 
 
                         currentPage += 1
+                    }else{
+                        hasMore = false
                     }
                     results.value = mData
                     resetLoadingState = false
@@ -130,28 +131,15 @@ class QuotesVM @Inject constructor(
 
     override fun onLoadMore(position: Int) {
         currentItem = position
-        if (hasMore && position + 5 > mData.size) {
+        if (position>currentLoadMorePosition) {
+            currentLoadMorePosition = position+5
+
             getQuotes(true)
         }
 
     }
 
-//    fun generataQuote(context: Context, quoteResp: QuoteResp, postId: String?) {
-//        uiScope?.launch {
-//            try {
-//                navigator?.showProgress()
-//
-//                val result = F.generateBitmap(context, quoteResp)
-//                createDynamicLink(context, postId, result!!)
-//            } catch (ex: Exception) {
-//                ex.printStackTrace()
-//            }
-//
-//
-//        }
-//
-//
-//    }
+
 
     fun generateArticle(view: View,id:String?){
         uiScope?.launch {
@@ -238,6 +226,36 @@ class QuotesVM @Inject constructor(
         }.addOnFailureListener {
             navigator?.hideProgress()
             it.printStackTrace()
+        }
+    }
+
+    fun onPageChange(position: Int) {
+        if (!onStop) {
+            myFavoritePost(position)
+            onLoadMore(position)
+
+        } else {
+            onStop = false
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        onStop = true
+    }
+
+     fun myFavoritePost(position: Int) {
+
+        uiScope?.launch {
+            val temp = async(Dispatchers.IO) {
+                dbHelper.getPostById(mData[position].id)
+            }.await()
+            if (temp != null) {
+                results.value = mData?.apply {
+                    get(position).liked = true
+                }
+            }
+
         }
     }
 

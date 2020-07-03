@@ -40,24 +40,16 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
         }
     }
 
-    fun handleIntent(intend:Intent){
-        subcribePush()
-        val payloadResult = intend?.getParcelableExtra<PayloadResult>(AppBundleKey.KEY_NOTIFICATION)
-        if(payloadResult!=null){
-            when(payloadResult.getPostType()){
-                PostType.ARTICLE->{
+    override fun handleIntent(intent: Intent?, isOnNewIntent: Boolean?) {
+        if(isOnNewIntent!=true) subcribePush()
 
-                    (navigator as HomeNav).openArtilce(payloadResult?.link)
-                }
-                PostType.VIDEO->{
-                    (navigator as HomeNav).openVideo(payloadResult?.link)
-                }
-                PostType.QUOTE->{
-                    (navigator as HomeNav).openQuote()
-                }
-            }
+        val payloadResult = intent?.getParcelableExtra<PayloadResult>(AppBundleKey.KEY_NOTIFICATION)
+        if(payloadResult!=null){
+            (navigator as HomeNav).openDynamicLink(payloadResult.postId!!)
         }
     }
+
+
 
     fun subcribePush() {
         if (appDataManager.appPreferenceHelper.enableNotification == true) {
@@ -118,6 +110,10 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
 
             }
             .addOnFailureListener(context) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
+    }
+
+    fun openPostFromNoti(){
+
     }
 
 }

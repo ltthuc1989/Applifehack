@@ -23,7 +23,6 @@ import com.applifehack.knowledge.ui.activity.home.HomeEventModel
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
 import com.applifehack.knowledge.ui.adapter.FeedAdapter
 import com.applifehack.knowledge.ui.fragment.BaseFragment
-import com.applifehack.knowledge.ui.widget.QuoteView
 import com.applifehack.knowledge.util.AppBundleKey
 import com.ezyplanet.core.util.extension.putArgs
 import kotlinx.android.synthetic.main.fragment_daily_feed.*
@@ -34,6 +33,7 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
     override val viewModel: FeedVM by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId: Int = R.layout.fragment_daily_feed
     lateinit var homeEventModel: HomeEventModel
+  var isFirstCreated = false
     fun newInstance(post :Post)= putArgs {
         putParcelable(AppBundleKey.KEY_POST_ID,post)
     }
@@ -53,36 +53,42 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
         homeEventModel = ViewModelProviders.of(activity!!).get(HomeEventModel::class.java)
 
         if(post ==null) {
-            viewModel.getPost()
 
-            try {
+                if(!isFirstCreated) {
+                    isFirstCreated = true
+                    viewModel.getPost()
 
-                val snapHelper = PagerSnapHelper()
-                snapHelper.attachToRecyclerView(daily_feed_recyclerview)
+                }
 
-                daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper,
-                    SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
-                    object : OnSnapPositionChangeListener {
-                        override fun onSnapPositionChange(position: Int) {
+                try {
 
-                            Log.d("onSnapPosition", "$position")
-                            homeEventModel.toolbarTitle.value =
-                                (binding?.adapter as FeedAdapter)?.getRowData(position)?.catName
-                            viewModel.myFavoritePost(position)
-                            viewModel.onLoadMore(position)
-                        }
-                    })
+                    val snapHelper = PagerSnapHelper()
+                    snapHelper.attachToRecyclerView(daily_feed_recyclerview)
 
-            } catch (ex: Exception) {
+                    daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper,
+                        SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
+                        object : OnSnapPositionChangeListener {
+                            override fun onSnapPositionChange(position: Int) {
 
-            }
+                                Log.d("onSnapPosition", "$position")
+                                homeEventModel.toolbarTitle.value =
+                                    (binding?.adapter as FeedAdapter)?.getRowData(position)?.catName
+                                viewModel.onPageChange(position)
+
+                            }
+                        })
+
+                } catch (ex: Exception) {
+
+                }
+
         }else {
             viewModel.getDynamicLinkInfo(post)
         }
 
 
-        binding.adapter = FeedAdapter(viewModel)
 
+        binding.adapter = FeedAdapter(viewModel)
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
         }

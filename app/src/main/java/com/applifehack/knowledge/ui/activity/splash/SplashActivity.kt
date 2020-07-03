@@ -3,6 +3,7 @@ package com.applifehack.knowledge.ui.activity.splash
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.applifehack.knowledge.R
+import com.applifehack.knowledge.data.entity.ArticleType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.firebase.ParamContentType
 import com.applifehack.knowledge.data.firebase.ParamItemName
@@ -39,13 +40,11 @@ class SplashActivity : MvvmActivity<ActivitySplashBinding,SplashVM>(),SplashNav{
         }else{
             val bundle = intent.extras
             var payload: PayloadResult? = null
-            if(bundle!=null&&bundle?.containsKey("postType")){
+            if(bundle!=null&&bundle?.containsKey("postId")){
                 payload = PayloadResult()
                 bundle.keySet().forEach { it1 ->
-                    if(it1.equals("postType")){
-                        payload.postType = bundle.getString("postType")
-                    }
-                    if(it1.equals("link")) payload.link = bundle.getString("link")
+
+                    if(it1.equals("postId")) payload.postId = bundle.getString("postId")
 
 
                 }

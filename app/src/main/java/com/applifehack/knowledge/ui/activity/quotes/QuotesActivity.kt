@@ -42,7 +42,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
                     override fun onSnapPositionChange(position: Int) {
 
 
-                        viewModel.onLoadMore(position)
+                        viewModel.onPageChange(position)
                     }
                 })
 

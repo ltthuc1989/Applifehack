@@ -40,7 +40,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
             return firStore.collection(ApiEndPoint.POST_DB_KEY)
                 .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
-                ?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                ?.whereLessThan(DatabasePath.CREATED_DATE_TEXT, createdAt)
                 .startAfter(lastItem).limit(10).get()
         } else {
 
@@ -53,7 +53,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun getCatgories(): Task<QuerySnapshot> {
-       return firStore.collection(ApiEndPoint.GET_CATEGORIES).get()
+       return firStore.collection(ApiEndPoint.GET_CATEGORIES).orderBy(DatabasePath.CAT_CREATED_DATE,Query.Direction.DESCENDING).get()
     }
 
     override fun getPopularPost(): Task<QuerySnapshot> {
@@ -69,7 +69,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
 
 
-        return query.limit(8).get()
+        return query.get()
     }
 
     override fun getPostByCat(
@@ -87,7 +87,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
                     .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                 if (lastItem != null) {
                     val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
-                    temp?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                    temp?.whereLessThan(DatabasePath.CREATED_DATE_TEXT, createdAt)
                 } else {
                     temp
                 }
@@ -102,7 +102,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
                     .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
                 if (lastItem != null) {
                     val viewCount = lastItem!![DatabasePath.VIEW_COUNT] as Int
-                    temp?.whereLessThanOrEqualTo(DatabasePath.VIEW_COUNT, viewCount)
+                    temp?.whereLessThan(DatabasePath.VIEW_COUNT, viewCount)
                 } else temp
             }
             else -> {
@@ -112,15 +112,15 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
                     .whereEqualTo(DatabasePath.CAT_ID, catId)
                     .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)
                 if (lastItem != null) {
-                    temp?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                    temp?.whereLessThan(DatabasePath.CREATED_DATE_TEXT, createdAt)
                 } else {
                     temp
                 }
             }
         }
         return if (loadMore == true) {
-            query.startAfter(lastItem).limit(10).get()
-        } else query.limit(10).get()
+            query.startAfter(lastItem).limit(20).get()
+        } else query.limit(20).get()
 
 
     }

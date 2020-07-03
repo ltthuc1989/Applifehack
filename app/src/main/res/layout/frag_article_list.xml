@@ -35,6 +35,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:dividerItemDecoration="@{1}"
+            app:onScrolledToBottom="@{(page)->viewModel.onLoadMore(page)}"
+            app:visibleThreshold="@{viewModel.visibleThreshold}"
             app:itemDecorationBackGround="@{@drawable/item_divider}"
 
              />

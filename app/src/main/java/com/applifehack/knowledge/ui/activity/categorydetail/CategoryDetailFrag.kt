@@ -96,6 +96,8 @@ class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryD
     }
 
     override fun onSaved() {
+        gotoActivity(HomeActivity::class, mapOf(HomeActivity.KEY_GO_FAVORITE to true),true)
+
     }
 
     override fun onCategory() {

@@ -21,7 +21,7 @@
         android:paddingTop="@dimen/padding_base_2x"
         android:paddingEnd="@dimen/padding_base_2x"
         android:paddingBottom="@dimen/padding_base_3x"
-        android:onClick="@{()->viewModel.onItemClicked(item)}"
+
         >
 
         <ImageView
@@ -31,6 +31,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_base_2x"
+            android:onClick="@{()->viewModel.onItemClicked(item)}"
 
             srcImageUrl="@{item.imageUrl}"
             android:scaleType="centerCrop" />
@@ -45,32 +46,71 @@
             android:lineSpacingMultiplier="1.1"
             android:maxLines="2"
             android:text="@{item.title}"
+            android:onClick="@{()->viewModel.onItemClicked(item)}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/search_result_video_item_title_textSize" />
         <ImageView
             android:id="@+id/imgLike"
-            android:layout_width="20dp"
+            android:layout_width="18dp"
+
             android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
             android:tint="@color/white_75"
+            tools:src="@drawable/ic_like"
 
             android:onClick="@{()->viewModel.likeClick(item)}"
 
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="16dp"
+            android:padding="2dp"
 
             android:layout_toRightOf="@+id/search_tab_results_video_row_image"
             android:layout_alignBottom="@id/search_tab_results_video_row_image"
-            android:layout_height="20dp" />
+            android:layout_height="18dp" />
 
         <ImageView
-            android:id="@+id/imgTime"
-            android:layout_width="20dp"
+            android:id="@+id/imgView"
+            android:layout_width="18dp"
+            android:padding="2dp"
 
             android:src="@drawable/ic_time"
             android:tint="@color/white_75"
 
             android:layout_toRightOf="@+id/imgLike"
             android:layout_alignBottom="@id/search_tab_results_video_row_image"
-            android:layout_height="20dp" />
+            android:layout_height="18dp" />
+        <TextView
+            android:id="@+id/tvViewCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+
+            android:layout_toRightOf="@+id/imgView"
+            android:layout_alignTop="@id/imgView"
+            android:layout_marginStart="8dp"
+
+
+
+
+
+            android:text="@{item.duration}"
+            goneUnless="@{!TextUtils.isEmpty(item.duration)}"
+            tools:text="1:45"
+            android:textColor="@color/light_gray"
+            android:layout_alignBottom="@id/imgTime"
+            android:textSize="@dimen/search_result_header_textSize" />
+
+        <ImageView
+            android:id="@+id/imgTime"
+            android:layout_width="18dp"
+
+            android:src="@drawable/ic_visibility"
+            android:tint="@color/white_75"
+            android:layout_marginStart="8dp"
+
+
+            android:layout_toRightOf="@+id/tvViewCount"
+            android:layout_alignBottom="@id/search_tab_results_video_row_image"
+            android:layout_height="18dp" />
         <TextView
             android:id="@+id/search_tab_results_video_row_duration"
             android:layout_width="wrap_content"
@@ -85,8 +125,8 @@
 
 
 
-            android:text="@{item.duration}"
-            goneUnless="@{!TextUtils.isEmpty(item.duration)}"
+            android:text="@{item.formatViews()}"
+            goneUnless="@{!TextUtils.isEmpty(item.formatViews())}"
             tools:text="1:45"
             android:textColor="@color/light_gray"
             android:layout_alignBottom="@id/imgTime"

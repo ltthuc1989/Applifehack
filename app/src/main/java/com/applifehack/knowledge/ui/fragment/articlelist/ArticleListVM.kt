@@ -69,8 +69,11 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
                             Log.d("PostTitle",it.title)
                         }
 
+                        isNoMoreDataLoad = false
 
-                        currentPage += 1
+                        currentPage +=1
+                    }else{
+                        isNoMoreDataLoad = true
                     }
 
 
@@ -98,7 +101,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
     }
 
     fun onLoadMore(page: Int) {
-        if(page==1) return
+        if(isNoMoreDataLoad) return
         getPost(catId,true)
     }
 

@@ -48,7 +48,9 @@ class VideoListFrag : MvvmFragment<VideoListVM, FragVideoListBinding>(), VideoLi
        cat = arguments?.getParcelable(CategoryFrag.KEY_CATEGORY_DETAIL)
 
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            if(isDataLoaded) {
+                binding.adapter?.swapItems(it)
+            }
         }
         val event = "explore_video"
         fbAnalyticsHelper.logEvent(event,event,"app_sections")
@@ -60,9 +62,10 @@ class VideoListFrag : MvvmFragment<VideoListVM, FragVideoListBinding>(), VideoLi
 
         if (!isDataLoaded) {
             val  cat = arguments?.getParcelable<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)
+            isDataLoaded = true
             viewModel.getPost(cat?.cat_id)
 
-            isDataLoaded = true
+
         }
     }
 
