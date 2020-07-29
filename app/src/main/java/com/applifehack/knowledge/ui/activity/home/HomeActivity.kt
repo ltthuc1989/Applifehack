@@ -2,6 +2,7 @@ package com.applifehack.knowledge.ui.activity.home
 
 import android.app.Activity
 import android.content.Intent
+import android.view.View
 import android.widget.Toast
 import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.Observer
@@ -135,7 +136,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
         if(viewModel.catSelected.value!=true) {
             val str = "icon_category"
             fbAnalytics.logEvent(str, str, icon)
-            updateToolBarTitle(R.string.category)
+           // updateToolBarTitle(R.string.category)
+            binding.toolbarHome.visibility = View.GONE
             replaceFragment(CategoryFrag())
             viewModel.catClick()
         }
@@ -143,6 +145,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
     private fun updateToolBarTitle(title: Int) {
+        binding.toolbarHome.visibility = View.VISIBLE
         binding.toolbarHome.titleBar = getString(title)
 
 
@@ -172,7 +175,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
     override fun onMenu() {
-
+      homeEventModel.refreshClick.value = true
     }
 
 
@@ -191,6 +194,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     override fun openDynamicLink(postId: String) {
        gotoActivity(DynamicLinkActivity::class, mapOf(AppBundleKey.KEY_POST_ID to postId))
     }
+
+
 
     override fun exitApp() {
         if (doubleBackToExitPressedOnce) {

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="Thank You!!"
-        android:textColor="@color/textColor"
+        android:textColor="@color/lightest_gray"
         android:textSize="22sp"
         android:textStyle="normal" />
 
@@ -23,7 +23,7 @@
         android:layout_below="@+id/dialog_titile"
         android:padding="6dp"
         android:text="Please rate us on Google Playstore to support us."
-        android:textColor="@color/textColor"
+        android:textColor="@color/lightest_gray"
         android:textSize="17sp" />
 
     <TextView

@@ -37,7 +37,9 @@
         android:layout_width="wrap_content"
         android:indeterminate="true"
         android:layout_gravity="center"
+
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:theme="@style/CustomProgressBarTheme"
         android:layout_height="wrap_content" />
     </FrameLayout>
 

@@ -21,4 +21,5 @@ interface DbHelper{
     fun insertPost(address: List<Post>)
 
     fun loadAllPost(): List<Post>
+    suspend fun randomPost() : List<Post>
 }

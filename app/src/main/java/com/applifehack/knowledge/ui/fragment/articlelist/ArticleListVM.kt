@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import com.applifehack.knowledge.BuildConfig
+import com.applifehack.knowledge.R
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
@@ -17,6 +18,7 @@ import com.applifehack.knowledge.util.AppConstants
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.await
 import com.applifehack.knowledge.util.extension.shareImage
+import com.applifehack.knowledge.util.extension.shareMessage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ezyplanet.core.GlideApp
 import com.ezyplanet.core.ui.base.MvvmActivity
@@ -69,8 +71,11 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
                             Log.d("PostTitle",it.title)
                         }
 
+                        isNoMoreDataLoad = false
 
-                        currentPage += 1
+                        currentPage +=1
+                    }else{
+                        isNoMoreDataLoad = true
                     }
 
 
@@ -98,7 +103,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
     }
 
     fun onLoadMore(page: Int) {
-        if(page==1) return
+        if(isNoMoreDataLoad) return
         getPost(catId,true)
     }
 
@@ -182,10 +187,10 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
         uiScope?.launch {
             try {
                 navigator?.showProgress()
-                val bitmap = getBitmap(context,post.imageUrl)
-                val result = F.createBitmapFromView(context,post,bitmap!!)
+               // val bitmap = getBitmap(context,post.imageUrl)
+                //val result = F.createBitmapFromView(context,post,bitmap!!)
 
-                createDynamicLink(context,post.id!!,result!!)
+                createDynamicLink(context,post)
 
             }catch (ex:Exception){
                 ex.printStackTrace()
@@ -194,9 +199,9 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
 
         }
     }
-    private fun createDynamicLink(context: Context,postId:String?,bitmap: Bitmap){
+    private fun createDynamicLink(context: Context,post:Post){
         Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
-            link = Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=$postId")
+            link = Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=${post.id}")
             domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
             androidParameters(BuildConfig.DYNAMIC_PACKAGE_NAME){
 
@@ -206,7 +211,8 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
 
         }.addOnSuccessListener {
             navigator?.hideProgress()
-            ( context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
+            val message = String.format(context.getString(R.string.share_info_text," '${post?.title}'",it.shortLink.toString()))
+            ( context as MvvmActivity<*, *>).shareMessage(message)
         }.addOnFailureListener{
             navigator?.hideProgress()
             it.printStackTrace()
@@ -214,7 +220,8 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
     }
 
   suspend fun  myFavoritePost(data:List<Post>) = withContext(Dispatchers.Default){
-        data.forEach {
+
+        data?.forEach {
 
 
             val temp =  async(Dispatchers.IO) {

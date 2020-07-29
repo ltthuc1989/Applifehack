@@ -20,18 +20,64 @@
         android:background="@drawable/feed_hero_gradient_background"
         >
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/linBottom">
+            android:layout_above="@id/linBottom"
+            android:layout_height="match_parent">
 
-            <com.applifehack.knowledge.ui.widget.QuoteView
+            <!--Background-->
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/feed_hero_image"
                 android:layout_width="match_parent"
-                android:id="@+id/quoteViews"
                 android:layout_height="match_parent"
-                app:model="@{item}" />
+                android:adjustViewBounds="true"
+                app:riv_corner_radius_top_left="4dp"
+                app:riv_corner_radius_top_right="4dp"
+                android:alpha="0.8"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:srcImageUrl="@{item.imageUrl}"
 
-        </FrameLayout>
+
+                />
+
+            <!--Gradient-->
+            <FrameLayout
+                android:id="@+id/gradient"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:gradient="@{true}"
+                android:alpha="0.5" />
+
+            <!--Quote-->
+            <TextView
+                android:id="@+id/quote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_margin="16dp"
+                android:letterSpacing="0.05"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:fontFamily="@font/cabin_condensed_regular"
+                app:autoResizeTextMax="@{30}"
+                app:autoResizeTextMin="@{14}"
+                android:text="@{item.title}"
+                app:autoSizeTextType="uniform" />
+
+            <!--Author-->
+
+
+            <!--Progress Image-->
+            <ProgressBar
+                android:id="@+id/progressImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
+
+        </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"

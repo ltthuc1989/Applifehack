@@ -8,26 +8,26 @@ import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.databinding.ItemFeedListBinding
 
 class FeedAdapter(viewModel: BaseViewModel<*, *>,private val isInFeed:Boolean=true) : SingleLayoutAdapter<Post, ItemFeedListBinding>(R.layout.item_feed_list,
-        emptyList(),
-        viewModel) {
+emptyList(),
+viewModel) {
 
     override fun getItemCount(): Int {
         return items.size
     }
 
     override fun getItemViewType(position: Int): Int =
-            when (items[position].getPostType()) {
-                PostType.ARTICLE -> {
-                    ITEM_ARTICLE
-                }
-                PostType.QUOTE -> {
-                    if(isInFeed) ITEM_QUOTE else ITEM_QUOTES
-                }
-                PostType.VIDEO -> {
-                    ITEM_VIDEO
-                }
-
+        when (items[position].getPostType()) {
+            PostType.ARTICLE -> {
+                ITEM_ARTICLE
             }
+            PostType.QUOTE -> {
+                if(isInFeed) ITEM_QUOTE else ITEM_QUOTES
+            }
+            PostType.VIDEO -> {
+                ITEM_VIDEO
+            }
+
+        }
 
 
     companion object {

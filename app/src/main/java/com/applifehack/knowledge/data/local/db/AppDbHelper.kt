@@ -65,4 +65,8 @@ class AppDbHelper @Inject constructor( val addressesDao: PostDao) : DbHelper {
     override suspend fun updatePosts(ids: List<String>, status: String?) = withContext(Dispatchers.IO){
         addressesDao.updatePosts(ids,status)
     }
+
+    override suspend fun randomPost(): List<Post> {
+       return  addressesDao.getRandomPost()
+    }
 }

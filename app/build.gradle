@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
+apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.google.firebase.crashlytics'
 
 android {
 
@@ -13,6 +13,13 @@ android {
             storePassword 'knowledge@prod'
             keyAlias 'knowledge'
             keyPassword 'knowledge@prod'
+        }
+        release {
+            storeFile file('../knowledge.jks')
+            storePassword 'knowledge@prod'
+            keyAlias 'knowledge'
+            keyPassword 'knowledge@prod'
+
         }
     }
     compileSdkVersion 28
@@ -24,6 +31,7 @@ android {
         multiDexEnabled true
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     dexOptions {
         javaMaxHeapSize "2g"
@@ -64,24 +72,36 @@ android {
     productFlavors {
         mockup {
             // minSdkVersion 21
-
+           // ext.enableCrashlytics = false
             applicationId "com.applifehack.knowledge.staging"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
             buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge.staging\""
+            resValue "string","app_name","Staging"
 
+
+        }
+        admin{
+            applicationId "com.applifehack.knowledge.admin"
+            buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
+            buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
+            buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge.staging\""
+            resValue "string","app_name","Admid"
         }
         production {
             applicationId "com.applifehack.knowledge"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
             buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge\""
+            resValue "string","app_name","Knowledge"
+
         }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -90,19 +110,20 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':core')
     def appDependencies = rootProject.ext.dependencies
-
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.8@aar') {
+        transitive = true;
+    }
     implementation appDependencies.play_services.analytics
     implementation appDependencies.play_services.gcm
     implementation appDependencies.play_services.auth
+    implementation appDependencies.firebase.core
     implementation appDependencies.firebase.iid
     implementation appDependencies.firebase.messaging
     implementation appDependencies.firebase.jobdispatcher
     implementation appDependencies.firebase.database
     implementation appDependencies.firebase.fireStorage
-    implementation appDependencies.firebase.fireCrash
-    implementation appDependencies.firebase.fireAnalytic
-    //implementation appDependencies.facebook.facebookSdk
-    //implementation appDependencies.facebook.accountKit
+    implementation appDependencies.facebook.facebookSdk
+    implementation appDependencies.facebook.accountKit
     implementation appDependencies.facebook.stetho
     implementation appDependencies.facebook.stetho_okhttp3
     implementation appDependencies.circleImageView
@@ -117,7 +138,12 @@ dependencies {
     kapt appDependencies.daggerCompiler
     kapt appDependencies.daggerAndroidCompiler
     // firebase-firestore
-
+    implementation 'com.androidhuman.rxfirebase2:firebase-firestore-kotlin:17.0.4.0'
+    implementation 'com.androidhuman.rxfirebase2:firebase-firestore:17.0.4.0'
+    implementation 'com.google.firebase:firebase-firestore:17.0.4'
+    implementation 'com.androidhuman.rxfirebase2:firebase-core:16.0.1.0'
+    implementation 'com.androidhuman.rxfirebase2:firebase-database:16.0.1.1'
+    implementation 'com.prof.rssparser:rssparser:2.0.4'
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'androidx.browser:browser:1.0.0'
     //room
@@ -132,7 +158,7 @@ dependencies {
     }
     implementation 'jp.wasabeef:blurry:3.0.0' //blur library
 
-    //implementation appDependencies.play_services.ads
+    implementation appDependencies.play_services.ads
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
 
     implementation 'com.byoutline.observablecachedfield:observablecachedfield:1.7.0'
@@ -140,7 +166,8 @@ dependencies {
        implementation 'org.sufficientlysecure:html-textview:3.9'
     implementation 'com.google.firebase:firebase-dynamic-links-ktx:19.1.0'
     implementation  'org.jsoup:jsoup:1.13.1'
-
+    implementation("com.github.skrapeit:skrape.it:master-SNAPSHOT")
+    implementation 'com.prof.youtubeparser:youtubeparser:3.0.0'
 
 
 

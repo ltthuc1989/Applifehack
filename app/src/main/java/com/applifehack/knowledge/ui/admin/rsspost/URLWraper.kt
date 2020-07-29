@@ -10,7 +10,7 @@ class URLWraper (var rssCatResp: RssCatResp,var pageIndex:Int) {
 
     fun pageUrl() :String? = if(pageIndex==1) rssCatResp.feed else
         "${rssCatResp.feedPageUrl}$pageIndex"
-    fun cssQuery (document: Document):List<Post>{
+    suspend fun cssQuery (document: Document):List<Post>{
         return rssCatResp.cSSQuery(document)
     }
 }

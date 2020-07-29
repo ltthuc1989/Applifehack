@@ -36,9 +36,9 @@ fun MvvmActivity<*,*>.openLink(url: String?, customTabHelper: CustomTabHelper) {
     intent.setData(Uri.parse(url))
 
     val pendingIntent = PendingIntent.getActivity(this,
-            requestCode,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT)
+        requestCode,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT)
 
     // add menu item to oveflow
     builder.addMenuItem("Sample item", pendingIntent)
@@ -87,9 +87,9 @@ fun MvvmActivity<*,*>.shareImage(shortLink:String?){
 
 
     try {
-    var CODE_FOR_RESULT = 981
+        var CODE_FOR_RESULT = 981
         val shareTitle = String.format(getString(R.string.share_info_message,shortLink))
-       val  file = File(File(cacheDir, "images"), "image.png")
+        val  file = File(File(cacheDir, "images"), "image.png")
         val intent = Intent(android.content.Intent.ACTION_SEND)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -107,7 +107,7 @@ fun MvvmActivity<*,*>.shareImage(shortLink:String?){
 
 
 }
- suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
+suspend fun <T> Task<T>.await(): T = suspendCoroutine { continuation ->
     addOnCompleteListener { task ->
         if (task.isSuccessful) {
             continuation?.resume(task.result as T)

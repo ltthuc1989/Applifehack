@@ -7,6 +7,7 @@ import com.applifehack.knowledge.R.string.please_enter_image_url
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
+import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.data.network.response.json.CategoryItem
 import com.applifehack.knowledge.data.network.response.json.PostMD
 import com.applifehack.knowledge.data.network.response.json.PostTypeItem
@@ -84,24 +85,25 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
 
     fun post(isLive:Boolean=false){
         if(!validPost()) return
-//        uiScope?.launch {
-//            val generateId = async(Dispatchers.IO) {
-//                appDataManager.getGeneratePostId()
-//            }
-//            generateId?.await()?.let {
-//                val post = getPostData(it)
-//                navigator?.showProgress()
-//                val postApi = if(!isLive) appDataManager.createPost(it,post) else appDataManager.createPostLive(it,post)
-//                postApi.addOnSuccessListener {
-//                    navigator?.hideProgress()
-//                    resetData()
-//                }.addOnFailureListener {
-//                    navigator?.showAlert(it.message)
-//                }
-//
-//
-//            }
-//        }
+        uiScope?.launch {
+
+                val post = getPostData()
+                navigator?.showProgress()
+                val postApi = if(!isLive){
+                    appDataManager.createRss(post)
+                } else {
+                    appDataManager.createRss(post)
+                }
+                postApi.addOnSuccessListener {
+                    navigator?.hideProgress()
+                    resetData()
+                }.addOnFailureListener {
+                    navigator?.showAlert(it.message)
+                }
+
+
+
+        }
     }
     private fun validPost():Boolean{
         var isQuoteType=false
@@ -146,29 +148,29 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
 
     }
 
-    private fun getPostData(postId:String): Post {
-       return Post().apply {
+    private fun getPostData(): RssCatResp {
+       return RssCatResp().apply {
            title = textTitle.text
 
-           author = textAuthorName.text
-           authorUrl = textAuthorUrl.text
-           imageUrl = textImageUrl.text
-           type = postTypeSelected?.value?.name
+           author_name = textAuthorName.text
+
+           type = postTypeSelected?.value?.name!!
+           title = textTitle.text
            when(type){
                PostType.VIDEO.type-> {
-                   video_url = textContentUrl.text
+                   author_name = textAuthorName.text
+                   feed = "https://www.youtube.com/results?search_query=${author_name?.replace(" ","+")}"
+                   feedPageUrl = "https://www.youtube.com/results?search_query=${author_name?.replace(" ","+")}&sp=CAISAhAB&page=1"
+                   title = "Video$type${textAuthorUrl.text}"
                }
                PostType.ARTICLE.type->{
-                   redirect_link = textContentUrl.text
+
                }
                PostType.QUOTE.type->{
-                   quote_type = textQuoteType.text.toLowerCase()
+
                }
            }
-           id =postId
 
-            catId = catSelected?.id
-           catName = catSelected?.name
 
         }
     }

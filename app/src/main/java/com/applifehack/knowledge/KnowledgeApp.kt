@@ -7,12 +7,16 @@ import androidx.multidex.MultiDexApplication
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.applifehack.knowledge.di.component.DaggerAppComponent
+import com.applifehack.knowledge.util.AppConstans
+import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import io.fabric.sdk.android.Fabric
 import okhttp3.OkHttpClient
 import org.sourcei.kowts.utils.functions.F
 import org.sourcei.kowts.utils.reusables.Gradients
@@ -73,7 +77,25 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
 
 
     private fun initLiveDatabase(){
+        val options= FirebaseOptions.Builder()
+            .setProjectId(AppConstans.databse_live_id)
+            .setApplicationId(AppConstans.database_live_app_id) // Required for Analytics.
+            .setApiKey(AppConstans.database_live_key) // Required for Auth.
+            .setDatabaseUrl(AppConstans.database_live_url) // Required for RTDB.
+            .build()
 
+        FirebaseApp.initializeApp(this /* Context */, options, AppConstans.database_live_name)
+    }
+
+    private fun initStagingDatabase(){
+        val options= FirebaseOptions.Builder()
+            .setProjectId(AppConstans.databse_live_id)
+            .setApplicationId(AppConstans.database_live_app_id) // Required for Analytics.
+            .setApiKey(AppConstans.database_live_key) // Required for Auth.
+            .setDatabaseUrl(AppConstans.database_live_url) // Required for RTDB.
+            .build()
+
+        FirebaseApp.initializeApp(this /* Context */, options, AppConstans.database_live_name)
     }
 
 }

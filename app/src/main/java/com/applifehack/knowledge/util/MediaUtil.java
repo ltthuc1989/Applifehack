@@ -65,7 +65,8 @@ public abstract class MediaUtil {
         }
         return null;
     }
-    public static void getOutputMediaFile(Context context,Bitmap bitmap) {
+
+    public static void getOutputMediaFile(Context context, Bitmap bitmap) {
         try {
             File file = new File(context.getCacheDir(), "images");
             file.mkdirs();
@@ -76,4 +77,5 @@ public abstract class MediaUtil {
             e.printStackTrace();
         }
     }
+
 }

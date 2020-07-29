@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <import type="com.applifehack.knowledge.databinding.ItemRssLinkBinding" />
+        <import type="com.applifehack.knowledge.data.network.response.RssCatResp" />
+        <variable
+            name="viewModel"
+            type="com.applifehack.knowledge.ui.activity.RSSVM" />
+        <variable
+            name="adapter"
+            type="com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter&lt;RssCatResp, ItemRssLinkBinding&gt;" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarRss"
+            android:background="@color/dark_gray"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="RSS"
+                android:textColor="@color/white_50"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_width="wrap_content"
+                android:text="@string/save"
+                android:layout_gravity="right"
+                android:layout_marginEnd="8dp"
+                android:onClick="@{()->viewModel.fetchAndSaveDatabase()}"
+                android:layout_height="wrap_content"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+
+            android:layout_marginBottom="8dp"
+            android:adapter="@{adapter}"
+            android:padding="16dp"
+            app:layoutManager="com.ezyplanet.core.ui.widget.scroll.GridLayoutManagerWrapper"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:spanCount="2" />
+
+
+
+    </LinearLayout>
+</layout>

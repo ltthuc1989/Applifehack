@@ -6,17 +6,26 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Transaction
 import com.applifehack.knowledge.data.entity.Post
+import com.applifehack.knowledge.data.network.response.CatResp
+import com.applifehack.knowledge.data.network.response.QuoteResp
+import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.data.network.response.youtube.YoutubeResp
 import com.applifehack.knowledge.util.SortBy
 import com.google.firebase.storage.UploadTask
 import io.reactivex.Completable
 import io.reactivex.Single
+
 import java.io.File
 
 
 interface ApiHelper {
 
     //
+    fun createRss(rssCatResp: RssCatResp) : Task<Transaction>
+    fun getQuoteCat(): Task<QuerySnapshot>
+    fun transferCrawlData(rssCat:List<RssCatResp>):Task<Void>
+    fun transferCat(cats:List<CatResp>) : Task<Void>
+    fun transferQuoteCat(quotes:List<QuoteResp>) :Task<Void>
     fun createPostLive(generateId:String,postContent: Post) : Task<Transaction>
     fun createMultiplePost(posts:List<Post>) : Task<Void>
     fun uploadDatabase(file: File) : UploadTask
@@ -26,7 +35,7 @@ interface ApiHelper {
     fun getApiHeader(): ApiHeader
     fun getRssCat():Single<Value<QuerySnapshot>>
     fun getPost(loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
-    fun getCatgories(): Single<Value<QuerySnapshot>>
+    fun getCatgories(): Task<QuerySnapshot>
     fun getPostByCat(catId:String?, sortBy:SortBy?=SortBy.NEWEST, loadMore:Boolean?=false, lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getPopularPost():Task<QuerySnapshot>
     fun getPostDetail(postId:String):Task<DocumentSnapshot>
@@ -36,6 +45,7 @@ interface ApiHelper {
     fun getYtDetail(youtubeId:String?):Single<YoutubeResp>
      fun updateViewCount(postId:String?):Task<Transaction>
     fun updateLikeCount(postId:String?):Task<Transaction>
+
 
 
 

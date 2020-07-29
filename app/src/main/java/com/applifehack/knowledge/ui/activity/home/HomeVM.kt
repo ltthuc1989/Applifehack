@@ -12,6 +12,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.ArticleType
 import com.applifehack.knowledge.data.entity.PostType
+import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.firebase.PayloadResult
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
 import com.applifehack.knowledge.util.AppBundleKey
@@ -25,7 +26,8 @@ import javax.inject.Inject
 class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, connectionManager: BaseConnectionManager
 ) : BaseBottomVM<HomeNav, String>(appDataManager,schedulerProvider, connectionManager) {
 
-
+    @Inject
+    lateinit var fbAnalytics: FirebaseAnalyticsHelper
     init {
         homeClick()
     }
@@ -40,24 +42,16 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
         }
     }
 
-    fun handleIntent(intend:Intent){
-        subcribePush()
-        val payloadResult = intend?.getParcelableExtra<PayloadResult>(AppBundleKey.KEY_NOTIFICATION)
-        if(payloadResult!=null){
-            when(payloadResult.getPostType()){
-                PostType.ARTICLE->{
+    override fun handleIntent(intent: Intent?, isOnNewIntent: Boolean?) {
+        if(isOnNewIntent!=true) subcribePush()
 
-                    (navigator as HomeNav).openArtilce(payloadResult?.link)
-                }
-                PostType.VIDEO->{
-                    (navigator as HomeNav).openVideo(payloadResult?.link)
-                }
-                PostType.QUOTE->{
-                    (navigator as HomeNav).openQuote()
-                }
-            }
+        val payloadResult = intent?.getParcelableExtra<PayloadResult>(AppBundleKey.KEY_NOTIFICATION)
+        if(payloadResult!=null){
+            (navigator as HomeNav).openDynamicLink(payloadResult.postId!!)
         }
     }
+
+
 
     fun subcribePush() {
         if (appDataManager.appPreferenceHelper.enableNotification == true) {
@@ -113,11 +107,21 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
                 if (pendingDynamicLinkData != null) {
 
                     val postId=pendingDynamicLinkData.link?.getQueryParameter("postId")
+                    logEvent(postId,"openDynamicLink")
                     ( navigator as HomeNav).openDynamicLink(postId!!)
                 }
 
             }
             .addOnFailureListener(context) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
+    }
+
+    private fun logEvent(id: String?, action: String) {
+        val event = "$${id}_$action"
+        val str = "app_dynamic_link"
+        fbAnalytics.logEvent(event, event, str)
+
+
+
     }
 
 }

@@ -112,7 +112,15 @@ data class Post(
     @set:PropertyName("liked_date")
     @get:PropertyName("liked_date")
     @ColumnInfo(name = "liked_date")
-    var likedDate: Date?= Date()
+    var likedDate: Date?= Date(),
+    @set:PropertyName("video_views")
+    @get:PropertyName("video_views")
+    @ColumnInfo(name = "video_views")
+    var video_views : String? ="",
+    @set:PropertyName("post_author_type")
+    @get:PropertyName("post_author_type")
+    @ColumnInfo(name = "post_author_type")
+    var author_type : String? =""
 ) : Parcelable {
 
 
@@ -137,6 +145,9 @@ data class Post(
             result["post_video_id"] = video_url!!
             duration?.let {
                 result["post_video_duration"] = it
+            }
+            video_views?.let {
+                result["post_video_views"] = it
             }
 
         }
@@ -170,6 +181,18 @@ data class Post(
     }
 
     fun formatLikes(): String = "$likesCount"
+    fun formatViews():String = "$video_views"
+    fun quoteImage():String{
+        return "https://source.unsplash.com/750x500/?$quote_type"
+    }
+
+    fun getVideoViews():String{
+        if(video_views?.isEmpty()==true){
+            return ""
+        }else{
+            return "  $video_views views"
+        }
+    }
 
 
 }

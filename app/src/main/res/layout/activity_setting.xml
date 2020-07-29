@@ -193,6 +193,22 @@
                 android:textSize="18sp"
                 android:text="Local Post" />
 
+            <TextView
+                android:id="@+id/lbTransfer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbLocalPost"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.transferClick()}"
+                android:padding="@dimen/padding"
+                android:textSize="18sp"
+                android:text="Transfer" />
+
         </RelativeLayout>
     </LinearLayout>
 </layout>

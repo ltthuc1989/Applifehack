@@ -10,6 +10,7 @@ import com.applifehack.knowledge.databinding.ActivitySettingBinding
 import com.applifehack.knowledge.ui.activity.RSSActivity
 import com.applifehack.knowledge.ui.admin.localpost.LocalPostActivity
 import com.applifehack.knowledge.ui.admin.manualpost.ManualPostActivity
+import com.applifehack.knowledge.ui.admin.mirgrate.MirgrateActivity
 import com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity
 import com.applifehack.knowledge.util.CustomTabHelper
 import com.applifehack.knowledge.util.extension.openLink
@@ -59,6 +60,10 @@ class SettingActivity : MvvmActivity<ActivitySettingBinding, SettingVM>(), Setti
 
     override fun localPost() {
         gotoActivity(LocalPostActivity::class)
+    }
+
+    override fun transfer() {
+       gotoActivity(MirgrateActivity::class)
     }
 
     private fun setToolBar(toolbar: Toolbar, title: String?="") {

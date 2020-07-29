@@ -18,6 +18,7 @@ import com.applifehack.knowledge.ui.activity.webview.WebViewActivity
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
 import com.applifehack.knowledge.ui.admin.localpost.LocalPostActivity
 import com.applifehack.knowledge.ui.admin.manualpost.ManualPostActivity
+import com.applifehack.knowledge.ui.admin.mirgrate.MirgrateActivity
 import com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -58,6 +59,9 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [DynamicLinkProvider::class])
     internal abstract fun bindDynamicLinkActivity(): DynamicLinkActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun bindMirgrateActivity(): MirgrateActivity
 
 
 

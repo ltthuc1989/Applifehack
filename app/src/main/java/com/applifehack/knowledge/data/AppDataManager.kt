@@ -1,6 +1,7 @@
 package com.applifehack.knowledge.data
 
 import android.content.Context
+import com.androidhuman.rxfirebase2.firestore.model.Value
 import com.ezyplanet.thousandhands.shipper.data.preferences.AppPreferenceHelper
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
@@ -11,13 +12,15 @@ import com.irmansyah.catalogmoviekotlin.data.DataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.network.ApiHeader
 import com.applifehack.knowledge.data.network.ApiHelper
+import com.applifehack.knowledge.data.network.response.CatResp
+import com.applifehack.knowledge.data.network.response.QuoteResp
+import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.data.network.response.youtube.YoutubeResp
 import com.applifehack.knowledge.util.SortBy
 import com.ezyplanet.core.util.extension.ToJson
 import com.ezyplanet.core.util.extension.fromJson
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
-import io.reactivex.Completable
 import io.reactivex.Single
 import java.io.File
 import javax.inject.Inject
@@ -40,6 +43,9 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun getRssCat(): Single<Value<QuerySnapshot>> {
+        return apiHelper.getRssCat()
+    }
 
 
 
@@ -116,7 +122,23 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
         return  apiHelper.createMultiplePost(posts)
     }
 
+    override fun transferCat(cats: List<CatResp>): Task<Void> {
+        return  apiHelper.transferCat(cats)
+    }
 
+    override fun transferQuoteCat(quotes: List<QuoteResp>): Task<Void> {
+        return  apiHelper.transferQuoteCat(quotes)
+    }
 
+    override fun getQuoteCat(): Task<QuerySnapshot> {
+        return  apiHelper.getQuoteCat()
+    }
 
+    override fun transferCrawlData(rssCat: List<RssCatResp>): Task<Void> {
+        return  apiHelper.transferCrawlData(rssCat)
+    }
+
+    override fun createRss(rssCatResp: RssCatResp): Task<Transaction> {
+        return  apiHelper.createRss(rssCatResp)
+    }
 }

@@ -4,4 +4,5 @@ import com.ezyplanet.core.ui.base.MvvmNav
 
 interface RssListPostNav :MvvmNav {
     fun resetState()
+    fun loadYoutubeUrl(url:String?)
 }

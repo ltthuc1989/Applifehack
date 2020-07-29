@@ -11,6 +11,9 @@ import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.databinding.ActivityHomeBinding
 import com.applifehack.knowledge.databinding.ActivtyRssBinding
 import com.applifehack.knowledge.databinding.ItemRssLinkBinding
+import com.applifehack.knowledge.ui.activity.webview.WebViewActivity
+import com.applifehack.knowledge.ui.adapter.FeedAdapter
+import com.applifehack.knowledge.ui.adapter.RssFeedAdapter
 import com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity
 import kotlinx.android.synthetic.main.activty_rss.*
 
@@ -31,11 +34,7 @@ class RSSActivity : MvvmActivity<ActivtyRssBinding,RSSVM>(),RSSNav{
 
 
 
-        binding.adapter = SingleLayoutAdapter<RssCatResp, ItemRssLinkBinding>(
-                R.layout.item_rss_link,
-                emptyList(),
-                viewModel
-        )
+        binding.adapter = RssFeedAdapter(viewModel)
 
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
@@ -44,7 +43,11 @@ class RSSActivity : MvvmActivity<ActivtyRssBinding,RSSVM>(),RSSNav{
     }
 
     override fun gotoListPostScreen(resp: RssCatResp) {
-       gotoActivity(RssListPostActivity::class, mapOf(RssListPostActivity.KEY_FEED_URL to resp))
+        gotoActivity(
+                RssListPostActivity::class,
+                mapOf(RssListPostActivity.KEY_FEED_URL to resp)
+            )
+
     }
 
     private fun setToolBar(toolbar: Toolbar, title: String?="") {

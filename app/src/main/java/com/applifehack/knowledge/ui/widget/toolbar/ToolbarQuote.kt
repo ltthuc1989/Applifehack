@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.databinding.ToolbarQuoteBinding
+import com.applifehack.knowledge.ui.activity.quotes.QuotesVM
 import com.applifehack.knowledge.ui.widget.listener.ToolbarQuoteListener
 import com.applifehack.knowledge.util.AlertDialogUtils
 import com.applifehack.knowledge.util.JsonHelper
@@ -33,6 +34,13 @@ class ToolbarQuote : FrameLayout {
             _sortBy = value
             binding.sortBy = _sortBy
         }
+    var _viewModel :QuotesVM?=null
+    var viewModel :QuotesVM?
+        get() = _viewModel
+        set(value){
+            _viewModel = value
+            binding.viewModel = value
+        }
 
     constructor(context: Context?) : super(context) {
         initInflate()
@@ -52,15 +60,16 @@ class ToolbarQuote : FrameLayout {
     fun initInflate() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = ToolbarQuoteBinding.inflate(inflater, this, true)
-        val array = context.resources.getStringArray(R.array.quote_type)
+
         binding.tvSortBy.setOnClickListener {
-            AlertDialogUtils.showSingleChoice(context,_sortBy, array,indexSortBy){
-               indexSortBy =it
+            val quote= viewModel?.quotes
+            AlertDialogUtils.showSingleChoice(context,_sortBy, quote!!,indexSortBy){
+                indexSortBy =it
                 binding.listener?.sortBy(
-                       array[it]
+                    quote?.get(it)?.toLowerCase()!!
                 )
-                binding.tvSortBy.text = array[it]
-                _sortBy = array[it]
+                binding.tvSortBy.text = quote?.get(it)
+                _sortBy = quote?.get(it)?.toLowerCase()!!
             }
         }
 

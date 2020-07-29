@@ -38,7 +38,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
     // [START receive_message]
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
 
         var event ="notification_receive"
         firebaseAnalyticsHelper?.logEvent(event,event,"notification")
@@ -74,7 +74,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * the previous token had been compromised. Note that this is called when the InstanceID token
      * is initially generated so this is where you would retrieve the token.
      */
-    override fun onNewToken(token: String) {
+    override fun onNewToken(token: String?) {
         super.onNewToken(token)
         Log.d(javaClass.simpleName, "Refreshed token: $token")
 
@@ -126,7 +126,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)

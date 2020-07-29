@@ -1,6 +1,7 @@
 package com.applifehack.knowledge.ui.admin.rssposts
 
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter
 import com.ezyplanet.core.util.extension.getExtraParcel
@@ -10,6 +11,7 @@ import com.applifehack.knowledge.data.entity.Post
 
 import com.applifehack.knowledge.databinding.ActivityRssListPostBinding
 import com.applifehack.knowledge.databinding.ItemListPostBinding
+import com.applifehack.knowledge.ui.activity.webview.WebViewJavaScriptLoad
 import kotlinx.android.synthetic.main.activity_rss_list_post.*
 
 class RssListPostActivity : MvvmActivity<ActivityRssListPostBinding, RssListPostVM>(), RssListPostNav {
@@ -27,12 +29,16 @@ class RssListPostActivity : MvvmActivity<ActivityRssListPostBinding, RssListPost
         viewModel.navigator = this
 
         viewModel.setModel(getExtraParcel(KEY_FEED_URL)!!)
+        viewModel.rssCatResp.event?.observe(this, Observer {
+            viewModel.getFeed(viewModel.pageText.text?.toInt())
+        })
 
         binding.adapter = SingleLayoutAdapter<Post, ItemListPostBinding>(
             R.layout.item_list_post,
             emptyList(),
             viewModel
         )
+
 
         observe(viewModel.results) {
             binding.adapter?.swapItems(it)
@@ -52,5 +58,9 @@ class RssListPostActivity : MvvmActivity<ActivityRssListPostBinding, RssListPost
         toolbar.setNavigationOnClickListener{
             onBackPressed()
         }
+    }
+
+    override fun loadYoutubeUrl(url: String?) {
+        binding.webView.loadUrl(WebViewJavaScriptLoad().loadHtml)
     }
 }

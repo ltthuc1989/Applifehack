@@ -8,8 +8,10 @@
         <variable
             name="listener"
             type="com.applifehack.knowledge.ui.widget.listener.ToolbarQuoteListener">
-
         </variable>
+        <variable
+            name="viewModel"
+            type="com.applifehack.knowledge.ui.activity.quotes.QuotesVM" />
 
         <variable
             name="category"

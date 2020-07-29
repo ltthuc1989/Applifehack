@@ -38,7 +38,7 @@
                 android:text="Random"
                 android:textColor="@color/bright_blue"
                 android:layout_gravity="center_vertical|left"
-                android:onClick="@{()->viewModel.randomPost()}"
+                android:onClick="@{()->viewModel.setPosts()}"
 
                 android:textSize="18sp"
                 android:layout_height="wrap_content" />

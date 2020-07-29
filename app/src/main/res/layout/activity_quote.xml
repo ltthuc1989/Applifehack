@@ -37,6 +37,7 @@
                     android:id="@+id/daily_feed_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/feed_daily_toolbar_height"
+                    app:viewModel="@{viewModel.quoteVM}"
                     />
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -66,6 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:theme="@style/CustomProgressBarTheme"
 
                     android:visibility="gone"
                     android:indeterminate="true" />
@@ -75,11 +77,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:textColor="@color/white_75"
-                    android:text="@string/no_result"
+                    android:text="@string/sorry_nothing_found"
                     goneUnless="@{viewModel.showEmptyView}"
                     android:gravity="center"
                     android:fontFamily="@font/cabin_condensed_regular"
-                    android:textSize="26sp"
+
                     android:layout_height="match_parent"/>
 
             </FrameLayout>

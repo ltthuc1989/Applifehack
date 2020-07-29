@@ -1,13 +1,18 @@
 package com.applifehack.knowledge.ui.activity.webview
 
+import android.util.Log
+import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.MutableLiveData
+import com.applifehack.knowledge.data.network.response.RssCatResp
 
 import com.ezyplanet.core.ui.base.BaseViewModel
 
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
+import kotlinx.coroutines.launch
+import org.jsoup.Jsoup
 import javax.inject.Inject
 
 
@@ -49,6 +54,7 @@ open class WebViewVM @Inject constructor(connectionManager: BaseConnectionManage
 
 
         }
+
     }
 
     private inner class Client : WebViewClient() {
@@ -69,10 +75,21 @@ open class WebViewVM @Inject constructor(connectionManager: BaseConnectionManage
                 return true
             }
         }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+        }
     }
 
 
 
+
+    fun extractData(html: String?){
+        uiScope?.launch {
+            val doc = Jsoup.parse(html)
+            val e = doc.select("video-thumbnail-overlay-bottom-group")
+        }
+    }
 
 
 }

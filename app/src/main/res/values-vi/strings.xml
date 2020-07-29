@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Knowledge</string>
+
     <string name="home">Home</string>
     <string name="category">Category</string>
     <string name="setting">Setting</string>
@@ -39,7 +39,7 @@
     <string name="please_pick_quote_type">Please Pick Quote Type</string>
     <string name="please_enter_content_url">Please Enter redirect Url</string>
     <string name="please_enter_image_url" > Please Enter Image Url</string>
-    <string name="favorite">Favorite</string>
+    <string name="favorite">favorite</string>
     <string name="sorry_nothing_found">Sorry, nothing found</string>
     <string name="confirm_to_exit_app">Please click Back Again to exit app!</string>
 </resources>

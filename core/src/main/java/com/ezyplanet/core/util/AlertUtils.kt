@@ -149,6 +149,29 @@ class AlertUtils {
 
             alertDialog.show()
         }
+        fun showPostAlertDialog(context: Context, message: String?,
+                                 plistener: (DialogInterface)->Unit, nlistener: (DialogInterface)->Unit={}) {
+            if ((context as MvvmActivity<*, *>).isFinishing) {
+                return
+            }
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage(message)
+            builder.setPositiveButton("Post Live"){ dlog, _ ->
+
+                plistener.invoke(dlog)
+                dlog.dismiss()
+            }
+            builder.setNegativeButton("Post Dev"){dlog,_->
+                nlistener.invoke(dlog)
+                dlog.dismiss()
+            }
+            val alertDialog = builder.create()
+            alertDialog.setCanceledOnTouchOutside(false)
+
+            // alertDialog.setOnDismissListener(listener);
+
+            alertDialog.show()
+        }
 
 
         fun showCancelRetryAlertDlg(context: Context, message: String,

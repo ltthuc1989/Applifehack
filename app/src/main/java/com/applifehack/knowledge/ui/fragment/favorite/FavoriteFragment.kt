@@ -29,6 +29,7 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
 
     override val viewModel: FavoriteVM by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId: Int = com.applifehack.knowledge.R.layout.fragment_daily_feed
+    private var isFirstCreated = false
 
 
 
@@ -44,6 +45,7 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
 
 
         viewModel.getPost()
+
 
         try {
 
@@ -89,7 +91,7 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
     }
 
     override fun gotoPageUrl(post: Post) {
-        openLink(post?.redirect_link)
+        openLink(post?.authorUrl)
 
     }
 

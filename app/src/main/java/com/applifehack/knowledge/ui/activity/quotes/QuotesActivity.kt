@@ -30,7 +30,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         viewModel.navigator = this
-        viewModel.getQuotes(false)
+        viewModel.initData()
 
         try {
 
@@ -42,7 +42,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
                     override fun onSnapPositionChange(position: Int) {
 
 
-                        viewModel.onLoadMore(position)
+                        viewModel.onPageChange(position)
                     }
                 })
 
@@ -99,7 +99,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
     override fun onSaved() {
 
 
-        gotoActivity(HomeActivity::class, mapOf(HomeActivity.KEY_GO_HOME to true), true)
+        gotoActivity(HomeActivity::class, mapOf(HomeActivity.KEY_GO_FAVORITE to true), true)
        // gotoActivity(FavoriteFragment::class)
 
 

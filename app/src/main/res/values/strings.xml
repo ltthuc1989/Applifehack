@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Knowledge</string>
+
     <string name="home">Home</string>
     <string name="category">Category</string>
     <string name="setting">Setting</string>
@@ -28,6 +28,7 @@
     <string name="save">Saved</string>
     <string name="knowlege_sologan">Knowledge Gives You Power\n Power Gives you control\nControl gives you freedom\nFreedom gives you potential\nPotential gives you endless possibilities</string>
     <string name="share_info_message"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it. \n Check out this link : %1$s]]></string>
+    <string name="share_info_text"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it.\n %1$s\n Check out this link : %2$s]]></string>
     <string name="download">Download:</string>
     <string name="app_link">link_app</string>
     <string name="Notifications">Notification</string>
@@ -70,6 +71,11 @@
     <string name="favorite">Favorite</string>
     <string name="sorry_nothing_found">Sorry, nothing found</string>
     <string name="confirm_to_exit_app">Please click Back Again to exit app!</string>
-
+    <string name="tranfer_database">"Transfer To Live Database "</string>
+    <string name="quote">Quotes</string>
+    <string name="transfer_successfull">Transfer Successfull</string>
+    <string name="skip">Skip</string>
+    <string name="crawlData">Crawl Data</string>
+    <string name="daily">Daily</string>
 
 </resources>

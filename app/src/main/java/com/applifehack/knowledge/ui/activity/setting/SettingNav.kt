@@ -8,5 +8,6 @@ interface SettingNav : MvvmNav{
     fun rateUs()
     fun admin()
     fun localPost()
+    fun transfer()
 
 }

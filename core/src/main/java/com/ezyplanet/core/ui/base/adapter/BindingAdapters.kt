@@ -33,6 +33,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.ezyplanet.core.GlideApp
 import com.ezyplanet.core.ui.listener.OneClickListener
+import com.ezyplanet.core.ui.webview.WebViewJSInterface
 import com.ezyplanet.core.ui.widget.decoration.GridSpacingItemDecoration
 import com.ezyplanet.core.ui.widget.decoration.SpaceItemDecoration
 import com.ezyplanet.core.ui.widget.pager.RVPagerSnapFancyDecorator
@@ -194,6 +195,16 @@ class BindingAdapters {
         }
 
         @JvmStatic
+        @BindingAdapter("srcImageQuote")
+        fun srcImageQuote(imageView: ImageView, url: String?) {
+            if (!url.isNullOrEmpty()) {
+                GlideApp.with(imageView.context).asBitmap().load(url).diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(imageView)
+            }
+        }
+
+        @JvmStatic
         @BindingAdapter("srcFireStorageUrl")
         fun setFireStorageImageSrc(imageView: ImageView, url: String?) {
             if (!url.isNullOrEmpty()) {
@@ -342,6 +353,7 @@ class BindingAdapters {
                 settings.databasePath = "/data/data/" + view.context.packageName + "/databases/"
             }
             view.webViewClient = client
+
         }
         @JvmStatic
         @BindingAdapter(value = ["webViewChromeClient"],requireAll = false)
@@ -356,6 +368,7 @@ class BindingAdapters {
             settings.setSupportZoom(true)
             settings.builtInZoomControls = true
             settings.loadWithOverviewMode = true
+
 
 //            view.clearHistory();
 //            view.clearFormData();
@@ -374,6 +387,7 @@ class BindingAdapters {
 
 
             view.webChromeClient = client
+
         }
         @JvmStatic
         @BindingAdapter("loadUrl")

@@ -16,6 +16,7 @@ import com.applifehack.knowledge.ui.activity.viewer.YtDetailVMBuilder
 import com.applifehack.knowledge.ui.activity.webview.WebViewVMBuilder
 import com.applifehack.knowledge.ui.admin.localpost.LocalPostVMBuilder
 import com.applifehack.knowledge.ui.admin.manualpost.ManualPostVMBuilder
+import com.applifehack.knowledge.ui.admin.mirgrate.MigrateVMBuilder
 import com.applifehack.knowledge.ui.admin.rssposts.RssListPostVMBuilder
 import com.applifehack.knowledge.ui.fragment.articlelist.ArticleListVMBuilder
 import com.applifehack.knowledge.ui.fragment.favorite.FavoriteVMBuilder
@@ -53,7 +54,8 @@ import dagger.Module
     (SettingVMBuilder::class),
     (HomeVMBuilder::class),
     (DynamicLinkVMBuilder::class),
-    (FavoriteVMBuilder::class)
+    (FavoriteVMBuilder::class),
+    (MigrateVMBuilder::class)
 ])
 abstract class ViewModelBuilder {
 

@@ -140,6 +140,7 @@ class CategoryVM @Inject constructor(
     fun clearDot() {
         if (dots != null && dots!![0] != null) {
             (dots!![0]?.parent as LinearLayout).removeAllViews()
+
         }
     }
 
@@ -164,7 +165,7 @@ class CategoryVM @Inject constructor(
                 )
 
                 params.gravity = Gravity.BOTTOM
-                params.setMargins(4, 0, 4, 10)
+                params.setMargins(30, 0, 30, 10)
 
                 view.addView(dots!![i], params)
             }
@@ -180,7 +181,7 @@ class CategoryVM @Inject constructor(
                 )
 
                 params.gravity = Gravity.BOTTOM
-                params.setMargins(4, 0, 4, 10)
+                params.setMargins(30, 0, 30, 10)
                 view.addView(it, params)
             }
         }
@@ -204,6 +205,10 @@ class CategoryVM @Inject constructor(
     }
 
     private suspend fun sortByViewCount(list: List<Post>): List<Post> {
+        val temp = list.sortedByDescending {it.viewsCount}
+        if(temp.size>5){
+            return temp.subList(0,5)
+        }
         return list.sortedByDescending {it.viewsCount}
     }
 

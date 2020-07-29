@@ -10,15 +10,16 @@
     <application
         android:name="com.applifehack.knowledge.KnowledgeApp"
         android:allowBackup="true"
-        android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.applifehack.knowledge.staging.provider"
             android:grantUriPermissions="true"
+            android:authorities="${applicationId}.provider"
             android:exported="false">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
@@ -45,7 +46,10 @@
         <meta-data
             android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
-
+        <activity android:name="com.applifehack.knowledge.ui.activity.RSSActivity"/>
+        <activity android:name="com.applifehack.knowledge.ui.admin.manualpost.ManualPostActivity"/>
+        <activity android:name="com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity"/>
+        <activity android:name=".ui.admin.localpost.LocalPostActivity"/>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -121,6 +125,9 @@
         <activity android:name="com.applifehack.knowledge.ui.activity.webview.WebViewActivity"/>
 
         <activity android:name=".ui.activity.dynamiclink.DynamicLinkActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.admin.mirgrate.MirgrateActivity"
             android:screenOrientation="portrait"
             />
 

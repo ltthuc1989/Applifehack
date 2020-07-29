@@ -37,10 +37,29 @@
             android:layout_gravity="center"
             android:textSize="18sp"
             android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity = "right"
+                android:tint="@color/white_75"
+                android:padding="5dp"
+                android:onClick="@{()->viewModel.showWeb()}"
+                android:src="@drawable/ic_search_black_36dp"
+                android:layout_height="wrap_content"/>
         </androidx.appcompat.widget.Toolbar>
+        <WebView
+
+            app:loadUrl="@{viewModel.rssCatResp.feed}"
+            app:rssCat="@{viewModel.rssCatResp}"
+            app:webClient="@{viewModel.getWebClient(viewModel.rssCatResp)}"
+            android:layout_width="match_parent"
+            android:id="@+id/web_view"
+            android:layout_below="@id/toolbarRssPost"
+
+            goneUnless="@{viewModel.isVideo()}"
+            android:layout_height="match_parent" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_below="@+id/toolbarRssPost"
+            android:layout_below="@+id/web_view"
             android:layout_above="@id/nextPage"
 
             android:layout_width="match_parent"

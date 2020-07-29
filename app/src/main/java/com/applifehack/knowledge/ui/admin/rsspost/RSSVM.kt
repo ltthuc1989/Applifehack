@@ -2,6 +2,9 @@ package com.applifehack.knowledge.ui.activity
 
 import android.renderscript.ScriptGroup
 import android.util.Log
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -10,17 +13,16 @@ import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.applifehack.knowledge.data.AppDataManager
+import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.local.db.AppDatabase
 import com.applifehack.knowledge.data.network.response.RssCatResp
+import com.applifehack.knowledge.ui.activity.webview.WebViewJavaScriptLoad
 import com.applifehack.knowledge.ui.admin.rsspost.URLWraper
 import com.applifehack.knowledge.util.AppConstans
 import com.ezyplanet.core.util.CoreConstants
 import com.ezyplanet.core.util.FileUtils
 import com.ezyplanet.supercab.data.local.db.DbHelper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileInputStream
@@ -39,6 +41,9 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
 
 
+    fun getWebClient(item: RssCatResp):Client{
+        return Client(item)
+    }
 
     fun getRssCat() {
         navigator?.showProgress()
@@ -63,7 +68,7 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
     fun onItemClicked(item:RssCatResp){
        // scrapData(item)
-
+        val doc = Jsoup.parse(item.youtubeHtml)
        navigator?.gotoListPostScreen(item)
 
     }
@@ -80,24 +85,54 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
    fun fetchAndSaveDatabase(){
        navigator?.showProgress()
+       var sumPost = 0
        uiScope.launch {
+           var asyns = mutableListOf<Deferred<List<Post>>>()
            urlWrapers.forEach {
                val data = async(Dispatchers.IO) {
                    Log.d("updateDatabase","async")
-                   var doc = Jsoup.connect(it.pageUrl()).get()
-                   it.cssQuery(doc)
+//                   var doc = Jsoup.connect(it.pageUrl()).get()
+//                   it.cssQuery(doc)
+                   val rssCatResp = it.rssCatResp
+                   if(!it.rssCatResp.json) {
+                       val doc = if (rssCatResp.type != "video")
+                           Jsoup.connect(it.pageUrl()).header("Content-Type","application/x-www-form-urlencoded").timeout(10*6000).get()
+                       else Jsoup.parse(rssCatResp.youtubeHtml)
+                       rssCatResp.cSSQuery(doc)
+                   }else{
+                       rssCatResp.cSSQuery(null)
+                   }
+
+
 
                }
-               withContext(Dispatchers.IO) {
-                   Log.d("updateDatabase", "updating")
-                   isExport = true
-                   dbHelper.insertPost(data.await())
-                   Log.d("updateDatabase", "update")
+               asyns.add(data)
+
+           }
+           withContext(Dispatchers.IO) {
+               Log.d("updateDatabase", "updating")
+               isExport = true
+               var list = ArrayList<Post>()
+               asyns.forEach {
+                   val temp = it.await()
+                      try {
+                          Log.d("updateDatabase", ":${temp[0].author} -${temp.size}")
+                      }catch (ex:Exception){
+                         ex.printStackTrace()
+
+                      }
+                //  list.plus(temp)
+                   sumPost+=temp.size
+                   dbHelper.insertPost(temp)
+                 //  Log.d("updateDatabase", "ListSize:${temp.size}")
 
                }
+
+
            }
            navigator?.hideProgress()
-           Log.d("updateDatabase","updated")
+           Log.d("updateDatabase", "updated:$sumPost")
+
 
        }
 
@@ -105,6 +140,15 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
 
 
+
+     class Client(val item: RssCatResp) : WebViewClient() {
+
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
+        }
+    }
 
 
 

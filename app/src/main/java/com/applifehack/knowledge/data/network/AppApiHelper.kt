@@ -1,13 +1,18 @@
 package com.applifehack.knowledge.data.network
 
-
-
-
+import android.util.Log
 import com.androidhuman.rxfirebase2.firestore.RxFirebaseFirestore
+import com.androidhuman.rxfirebase2.firestore.model.Value
+
+
 import com.google.firebase.firestore.*
 import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
+import com.applifehack.knowledge.data.network.ApiEndPoint.API_YOUTUBE
+import com.applifehack.knowledge.data.network.response.CatResp
+import com.applifehack.knowledge.data.network.response.QuoteResp
+import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.data.network.response.youtube.YoutubeResp
 import com.applifehack.knowledge.util.AppConstans
 import com.applifehack.knowledge.util.AppConstants
@@ -22,6 +27,12 @@ import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.AppConstants.DatabasePath
 import com.applifehack.knowledge.util.TimeUtil
 import com.google.firebase.FirebaseApp
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import java.io.File
+import java.io.FileInputStream
+import java.time.LocalDate
+import java.util.*
 
 
 /**
@@ -57,14 +68,16 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             return firStore.collection(ApiEndPoint.POST_DB_KEY)
                 .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                 .limit(10).get()
-
+            
         }
 
 
     }
 
     override fun getCatgories(): Task<QuerySnapshot> {
-       return firStore.collection(ApiEndPoint.GET_CATEGORIES).get()
+        return firStore.collection(ApiEndPoint.GET_CATEGORIES).
+        whereEqualTo(DatabasePath.EDITING_DATABASE,true).
+        orderBy(DatabasePath.CAT_CREATED_DATE, Query.Direction.DESCENDING).get()
     }
 
     override fun getPopularPost(): Task<QuerySnapshot> {
@@ -75,12 +88,16 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         val query = firStore.collection(ApiEndPoint.POST_DB_KEY)
 
 
+
+          //  .whereGreaterThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT,startAt)
+          // .whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT,endAt)
+
             .orderBy(DatabasePath.CREATED_DATE_TEXT,Query.Direction.ASCENDING)
-           .startAt(startAt).endAt(endAt)
+           .startAt(startAt)
+          //  .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
 
 
-
-        return query.limit(8).get()
+        return query.get()
     }
 
     override fun getPostByCat(
@@ -278,6 +295,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         var storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference.child("Database/posts.db")
         val stream = FileInputStream(file)
+        Log.d("uploadDatabaseSize","${file.length()/1024} kb")
         return storageRef.putStream(stream)
 
     }
@@ -314,11 +332,10 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun createMultiplePost(posts: List<Post>): Task<Void> {
 
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document()
+        val query = firStore.collection(ApiEndPoint.POST_DB_KEY)
         var batch = firStore.batch()
         posts.forEach {
-            query
-            batch.set(query,it.toMap())
+            batch.set(query.document(it.id),it.toMap())
         }
         return batch.commit()
     }
@@ -327,6 +344,60 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         val postValues = post.toMap()
         val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(generateId)
         val query1 = firStore.collection(ApiEndPoint.POST_DB_KEY)
+        return firStore?.runTransaction {
+            it.set(query,postValues)
+            // val snapshot = it.get(query)
+            // it.update(query,DatabasePath.ID,snapshot.id)
+
+        }
+    }
+
+    override fun transferCat(cats: List<CatResp>): Task<Void> {
+        val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+        val firebseStore = FirebaseFirestore.getInstance(firebaseApp)
+        val query = firebseStore.collection(ApiEndPoint.GET_CATEGORIES)
+        var batch = firebseStore.batch()
+        cats.forEach {
+
+            batch.set(query.document(it.cat_id!!),it.toMap())
+        }
+        return batch.commit()
+    }
+
+    override fun transferQuoteCat(quotes: List<QuoteResp>): Task<Void> {
+        val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+        val firebseStore = FirebaseFirestore.getInstance(firebaseApp)
+        val query = firebseStore.collection(ApiEndPoint.GET_QUOTES)
+        var batch = firebseStore.batch()
+        quotes.forEach {
+
+            batch.set(query.document(it.quote_id!!),it.toMap())
+        }
+        return batch.commit()
+    }
+
+    override fun transferCrawlData(rssCats :List<RssCatResp>): Task<Void> {
+        val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+        val firebseStore = FirebaseFirestore.getInstance(firebaseApp)
+        val query = firebseStore.collection(ApiEndPoint.GET_RSS_CATEGORY)
+        var batch = firebseStore.batch()
+        rssCats.forEach {
+
+            batch.set(query.document(it.title!!),it.toMap())
+        }
+        return batch.commit()
+    }
+
+    override fun getQuoteCat(): Task<QuerySnapshot> {
+        return firStore.collection(ApiEndPoint.GET_QUOTES).
+        orderBy(DatabasePath.QUOTE_NAME,
+            Query.Direction.ASCENDING).get()
+    }
+
+    override fun createRss(rssCatResp: RssCatResp): Task<Transaction> {
+        val postValues = rssCatResp.toMap()
+        val query = firStore.collection(ApiEndPoint.GET_RSS_CATEGORY).document(rssCatResp.title!!)
+
         return firStore?.runTransaction {
             it.set(query,postValues)
             // val snapshot = it.get(query)

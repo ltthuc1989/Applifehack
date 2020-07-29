@@ -1,5 +1,8 @@
 package com.applifehack.knowledge.ui.admin.rssposts
 
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.lifecycle.MutableLiveData
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
@@ -7,17 +10,21 @@ import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.network.response.RssCatResp
+import com.applifehack.knowledge.ui.activity.webview.WebViewJavaScriptLoad
 import com.applifehack.knowledge.ui.widget.TextObserVable
+import com.applifehack.knowledge.util.MeasureTime
+import com.ezyplanet.supercab.data.local.db.DbHelper
 import com.prof.rssparser.Article
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import java.util.ArrayList
 import javax.inject.Inject
 
-class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, connectionManager: BaseConnectionManager
+class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, schedulerProvider: SchedulerProvider,val dbHelper: DbHelper, connectionManager: BaseConnectionManager
 ) : BaseViewModel<RssListPostNav, String>(schedulerProvider, connectionManager) {
 
     val results = NonNullLiveData<List<Post>>(emptyList())
@@ -28,17 +35,21 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
     val pageText = TextObserVable()
     private var isNext=true
     lateinit var rssCatResp: RssCatResp
+    val isVideo = MutableLiveData<Boolean>()
+    private var isFirstLoad = false
 
 
     fun setModel(resp: RssCatResp){
 
         pageText.text = currentPage.toString()
-        rssCatResp = resp
+        rssCatResp = resp.apply {
+            event = MutableLiveData<String>()
+        }
+        isVideo.value = rssCatResp.type =="video"
         URL = resp.feed
         pageUrl = resp.feedPageUrl
 
-       // getFeed(currentPage, false)
-        getYoutubeDoc(currentPage,false)
+        getFeed(currentPage,false)
 
 
 
@@ -49,25 +60,35 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
     }
 
 
-    private fun   getFeed(page:Int?=1,isChange:Boolean=true) {
+   fun   getFeed(page:Int?=1,isChange:Boolean=true) {
         val temUrl=if(page==1) URL else "$pageUrl$page"
         uiScope.launch{
             try {
+                val measureTime = MeasureTime()
+                measureTime.start()
                 navigator?.showProgress()
                 //val articleList = parser?.getArticles("$temUrl")
                // val posts = toPostList(articleList!!)
-              val post=  async(Dispatchers.IO) {
+              val post=  withContext(Dispatchers.IO){
+                    if(rssCatResp.json==false) {
+                        val doc = if (rssCatResp.type != "video") Jsoup.connect(temUrl).get()
+                        else {
 
-                    val doc = if(rssCatResp.type!="video")
-                        Jsoup.connect(temUrl).get()
-                    else Jsoup.parse(rssCatResp.youtubeHtml)
-                   rssCatResp.cSSQuery(doc)
+                            Jsoup.parse(rssCatResp.youtubeHtml)
+                        }
+                        rssCatResp.cSSQuery(doc)
+                    }else{
+                        rssCatResp.cSSQuery(null)
+                    }
                 }
-                mData.addAll(post.await())
+
+
+                mData.addAll(filter(post))
 
                 results.value = mData
 
                 navigator?.hideProgress()
+                isVideo.value = false
                 if(isChange) {
 
                     if(isNext) {
@@ -78,8 +99,11 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
                     isNext = true
                     pageText.text = "$currentPage"
                 }
+                measureTime.end()
             } catch (e: Exception) {
                 e.printStackTrace()
+                navigator?.hideProgress()
+                navigator?.showAlert(e.message)
 
             }
         }
@@ -95,21 +119,29 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
     }
 
     fun nextPage(){
+        if(rssCatResp.type=="video"&& isVideo.value ==false){
+            navigator?.showAlert("meessage","show web")
+            return
+        }
         val page = pageText.text?.toInt()
         if(page==currentPage) {
             val temp = currentPage + 1
             resetData()
             getYoutubeDoc(temp)
-           // getFeed(temp)
+           //getFeed(temp)
         }else{
             resetData()
             getYoutubeDoc(page)
-           // getFeed(page,false)
+            //getFeed(page,false)
         }
 
 
     }
     fun prePage(){
+        if(rssCatResp.type=="video"&& isVideo.value ==false){
+            navigator?.showAlert("meessage","show web")
+            return
+        }
         val page = pageText.text?.toInt()
         if(page==currentPage) {
             val temp= currentPage-1
@@ -127,6 +159,7 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
 
     }
 
+
     private fun resetData(){
         if(!mData.isEmpty()) {
             mData.clear()
@@ -134,49 +167,47 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
         }
     }
 
-//    fun postNow(item:Post){
-//
-//        uiScope?.launch {
-//            val generateId = async(Dispatchers.IO) {
-//                appDataManager.getGeneratePostId()
-//            }
-//            generateId?.await()?.let {
-//
-//                navigator?.showProgress()
-//                appDataManager.createPost(it, item)
-//                navigator?.hideProgress()
-//
-//            }
-//        }
-//
-//    }
     fun postNow(item: Post){
 
+
         uiScope?.launch {
-                navigator?.showProgress()
-                appDataManager.createPost(item.id, item).addOnFailureListener {
-                    navigator?.showAlert(it.message)
-                }
+            navigator?.showProgress()
+            appDataManager.createPost(item.id, item).addOnFailureListener {
                 navigator?.hideProgress()
+                navigator?.showAlert(it.message)
+
+            }.addOnSuccessListener {
+                uiScope.launch {
+
+
+                    withContext(Dispatchers.IO) {
+                        dbHelper.insertPost(arrayListOf(item))
+                    }
+                    mData.remove(item)
+                    bindToUI()
+                    navigator?.hideProgress()
+                }
+
+            }
+
 
 
         }
 
     }
 
-    fun updateToDB(){
 
-    }
+
 
 
     private fun getYoutubeDoc(page: Int?,isChange: Boolean=true){
         if(rssCatResp.type=="video") {
-            val temUrl=if(page==1) URL else "$pageUrl$page"
-            apiSingle(appDataManager.getHtmlDoc(temUrl!!), {
-                rssCatResp.youtubeHtml = it
-                if (isChange) getFeed(page)
-                else getFeed(page, false)
-            },true)
+            val temUrl=if(page==1) URL else {
+                "$pageUrl$page"
+
+            }
+            navigator?.loadYoutubeUrl(temUrl)
+           // getFeed(page, false)
         }else{
             getFeed(page,isChange)
         }
@@ -184,5 +215,47 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
 
     }
 
+   private suspend fun filter(posts:List<Post>) = withContext(Dispatchers.IO){
+        val result = mutableListOf<Post>()
+        posts.forEach {
+            val temp = dbHelper.getPostById(it.id)
+            if (temp == null) {
+                result.add(it)
+            }
+        }
+       result
 
+    }
+    fun skip(item: Post){
+        navigator?.showProgress()
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                dbHelper.insertPost(arrayListOf(item))
+            }
+            mData.remove(item)
+            bindToUI()
+            navigator?.hideProgress()
+        }
+    }
+
+    private fun bindToUI(){
+        results.value = mData
+    }
+
+    fun getWebClient(item: RssCatResp):Client{
+        return Client(item)
+    }
+    class Client(val item: RssCatResp) : WebViewClient() {
+
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+        }
+    }
+    fun showWeb(){
+
+        if(rssCatResp.type=="video") {
+            isVideo.value = isVideo.value != true
+        }
+    }
 }

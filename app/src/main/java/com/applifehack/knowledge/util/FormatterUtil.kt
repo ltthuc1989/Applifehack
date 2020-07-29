@@ -5,6 +5,8 @@ import android.text.format.DateUtils
 import com.applifehack.knowledge.R
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 object FormatterUtil{
 
@@ -73,5 +75,23 @@ object FormatterUtil{
         val flags = DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_ABBREV_MONTH
         val f = Formatter(StringBuilder(50), Locale.getDefault())
         return DateUtils.formatDateRange(context, f, time, time, flags).toString()
+    }
+
+    fun extractUrls(text: String): List<String>? {
+        val containedUrls: MutableList<String> =
+            ArrayList()
+        val urlRegex =
+            "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)"
+        val pattern: Pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE)
+        val urlMatcher: Matcher = pattern.matcher(text)
+        while (urlMatcher.find()) {
+            containedUrls.add(
+                text.substring(
+                    urlMatcher.start(0),
+                    urlMatcher.end(0)
+                )
+            )
+        }
+        return containedUrls
     }
 }

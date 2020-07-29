@@ -22,7 +22,7 @@
         android:paddingTop="@dimen/padding_base"
         android:paddingEnd="@dimen/padding_base_2x"
         android:paddingBottom="@dimen/padding_base"
-        android:onClick="@{()->viewModel.onItemClicked(item)}"
+
         >
 
         <ImageView
@@ -34,6 +34,7 @@
             android:layout_marginRight="@dimen/margin_base_2x"
             android:adjustViewBounds="true"
             srcImageUrl="@{item.imageUrl}"
+            android:onClick="@{()->viewModel.onItemClicked(item)}"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -48,6 +49,7 @@
             android:lineSpacingMultiplier="1.1"
             android:maxLines="3"
             android:text="@{item.title}"
+            android:onClick="@{()->viewModel.onItemClicked(item)}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/search_result_topic_item_title_textSize" />
 

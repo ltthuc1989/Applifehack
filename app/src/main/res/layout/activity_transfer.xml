@@ -1,0 +1,112 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+
+
+        <variable
+            name="viewModel"
+            type="com.applifehack.knowledge.ui.admin.mirgrate.MirgrateVM" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_60"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/setting_toolbar"
+            android:background="@color/dark_gray"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/tranfer_database"
+                android:textColor="@color/white_50"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:layout_height="wrap_content" />
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent">
+
+
+
+
+            <TextView
+                android:id="@+id/lb_notification"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:gravity="bottom"
+                android:padding="@dimen/padding"
+                android:textSize="18sp"
+                android:text="@string/category"
+                android:onClick="@{()->viewModel.getCat()}"
+                />
+
+
+
+            <TextView
+                android:id="@+id/lbNightMode"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/lb_notification"
+
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:gravity="bottom"
+                android:padding="@dimen/padding"
+                android:textSize="18sp"
+                android:text="@string/quote"
+                android:onClick="@{()->viewModel.getQuoteCat()}"
+
+                />
+
+
+
+
+
+
+            <TextView
+                android:id="@+id/lbPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbNightMode"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.getRssCat()}"
+
+                android:padding="@dimen/padding"
+
+                android:textSize="18sp"
+                android:text="@string/crawlData" />
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

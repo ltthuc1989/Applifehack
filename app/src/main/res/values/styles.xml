@@ -163,4 +163,7 @@
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">#3367d6</item>
     </style>
+    <style name="CustomProgressBarTheme">
+        <item name="colorAccent">#46bdbf</item>
+    </style>
 </resources>
