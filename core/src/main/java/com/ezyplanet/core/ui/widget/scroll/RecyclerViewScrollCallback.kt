@@ -61,9 +61,9 @@ class RecyclerViewScrollCallback(private val visibleThreshold: Int, private val 
         // If we do need to reload some more data, we execute onLoadMore to fetch the data.
         // threshold should reflect how many total columns there are too
         if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
-            if((totalItemCount% CoreConstants.LIMIT_ITEM_PER_PAGE)!=1)
+            if((totalItemCount% CoreConstants.LIMIT_ITEM_PER_PAGE)!=1||totalItemCount==1)
                 return
-            currentPage++
+            currentPage+=1
             onScrolledListener.onScrolledToBottom(currentPage)
             loading = true
         }

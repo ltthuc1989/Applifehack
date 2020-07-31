@@ -9,5 +9,6 @@ interface SettingNav : MvvmNav{
     fun admin()
     fun localPost()
     fun transfer()
+    fun openManualPost()
 
 }

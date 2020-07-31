@@ -3,15 +3,19 @@ package com.applifehack.knowledge.util.extension
 import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.util.CustomTabHelper
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.ui.base.MvvmActivity
+import com.ezyplanet.core.util.extension.inTransaction
 import com.google.android.gms.tasks.Task
 import java.io.File
 import kotlin.coroutines.resume
@@ -126,5 +130,7 @@ fun BaseViewModel<*,*>.logEvent(id:String,fbAnalyticsHelper: FirebaseAnalyticsHe
 inline fun <reified T> toArray(list: List<*>): Array<T> {
     return (list as List<T>).toTypedArray()
 }
+
+
 
 

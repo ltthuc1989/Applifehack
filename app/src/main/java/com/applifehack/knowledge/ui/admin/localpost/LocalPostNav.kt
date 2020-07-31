@@ -8,4 +8,5 @@ interface LocalPostNav :MvvmNav{
     fun gotoFeedDetail(post: Post)
     fun gotoYoutubeDetail(post: Post, shareView: View)
     fun scrollToTop()
+    fun openDetail(post:Post)
 }

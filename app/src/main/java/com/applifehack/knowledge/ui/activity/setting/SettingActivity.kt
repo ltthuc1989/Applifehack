@@ -66,6 +66,10 @@ class SettingActivity : MvvmActivity<ActivitySettingBinding, SettingVM>(), Setti
        gotoActivity(MirgrateActivity::class)
     }
 
+    override fun openManualPost() {
+        gotoActivity(ManualPostActivity::class)
+    }
+
     private fun setToolBar(toolbar: Toolbar, title: String?="") {
         toolbar.setTitle(title)
         setSupportActionBar(toolbar)

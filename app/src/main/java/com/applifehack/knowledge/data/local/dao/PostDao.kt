@@ -36,8 +36,8 @@ interface PostDao {
     @Query("SELECT * FROM post WHERE id =:postId ")
     fun getPostById(postId:String?) : Post
 
-    @Query("SELECT * FROM post group by post_author_type")
-    fun getRandomPost() : List<Post>
+    @Query("SELECT * FROM post where status=:status group by post_author_type ")
+    fun getRandomPost(status :String? = PostStatus.PARSED.type) : List<Post>
 
 }
 

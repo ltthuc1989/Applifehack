@@ -85,9 +85,9 @@
 
             <ImageView
                 android:id="@+id/imgShare"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
                 android:layout_marginStart="8dp"
                 android:onClick="@{(view)->viewModel.shareClick(view,item)}"
                 android:src="@drawable/ic_share"
@@ -95,12 +95,18 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tvReadMore"
                 app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:scaleType="fitCenter"
+
                 />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="32dp"
 
                 android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
                 android:tint="@color/white_75"
@@ -109,6 +115,7 @@
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvLinkCount"
+                tools:src="@drawable/ic_like"
 
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView

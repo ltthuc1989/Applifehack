@@ -77,6 +77,8 @@ android {
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
             buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge.staging\""
+            buildConfigField "String", "ENVIRONMENT", "\"mockup\""
+
             resValue "string","app_name","Staging"
 
 
@@ -85,14 +87,16 @@ android {
             applicationId "com.applifehack.knowledge.admin"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
-            buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge.staging\""
-            resValue "string","app_name","Admid"
+            buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge.admin\""
+            buildConfigField "String", "ENVIRONMENT", "\"admin\""
+            resValue "string","app_name","Admin"
         }
         production {
             applicationId "com.applifehack.knowledge"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
             buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge\""
+            buildConfigField "String", "ENVIRONMENT", "\"production\""
             resValue "string","app_name","Knowledge"
 
         }
@@ -145,7 +149,7 @@ dependencies {
     implementation 'com.androidhuman.rxfirebase2:firebase-database:16.0.1.1'
     implementation 'com.prof.rssparser:rssparser:2.0.4'
     implementation 'com.android.support:multidex:1.0.1'
-    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.browser:browser:1.3.0-alpha04'
     //room
     implementation appDependencies.Room
     implementation appDependencies.RxRoom

@@ -2,7 +2,6 @@ package com.applifehack.knowledge.ui.fragment.feed
 
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -52,10 +51,6 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
 
         homeEventModel = ViewModelProviders.of(activity!!).get(HomeEventModel::class.java)
-        homeEventModel.refreshClick.observe(this, Observer {
-              if(it) viewModel.reLoadData()
-        })
-
 
         if(post ==null) {
 
@@ -114,7 +109,7 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
     }
 
     override fun gotoPageUrl(post: Post) {
-        openLink(post?.authorUrl)
+        openLink(post?.redirect_link)
 
     }
 

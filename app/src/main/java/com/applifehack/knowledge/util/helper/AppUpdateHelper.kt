@@ -24,17 +24,18 @@ class AppUpdateHelper :LifecycleObserver,InstallStateUpdatedListener, MutableLiv
         const val REQUEST_CODE_UPDATE = 1000
     }
 
-    fun checkUpdate(context: Context,versionCode:Int) {
+    fun checkUpdate(context: Context) {
 
 
          appUpdateManager = AppUpdateManagerFactory.create(context)
+        appUpdateManager.registerListener(this)
 
         // Returns an intent object that you use to check for an update.
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
 // Checks that the platform will allow the specified type of update.
         appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (isUpdated(appUpdateInfo,versionCode)
+            if (isUpdated(appUpdateInfo)
             ) {
 
 
@@ -51,8 +52,8 @@ class AppUpdateHelper :LifecycleObserver,InstallStateUpdatedListener, MutableLiv
         }
     }
 
-    private fun isUpdated(appUpdateInfo: AppUpdateInfo,versionCode: Int): Boolean {
-        if(appUpdateInfo?.availableVersionCode() == versionCode) return true
+    private fun isUpdated(appUpdateInfo: AppUpdateInfo): Boolean {
+
 
        if(appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                 && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)){

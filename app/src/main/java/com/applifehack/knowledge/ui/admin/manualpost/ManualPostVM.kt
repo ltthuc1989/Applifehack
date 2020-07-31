@@ -46,6 +46,7 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
     private var catSelected :CategoryItem?=null
      var postTypeSelected =MutableLiveData<PostTypeItem>()
     private var quoteTypeSelected :QuoteTypeItem?=null
+    private var mapCat = mutableMapOf<String,String>()
 
 
     fun initData(context: Context){
@@ -55,6 +56,7 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
         }
         postMD?.category?.forEach {
             listCat.add(it.name)
+            mapCat[it.name]= it.type
         }
         postMD?.quoteType?.forEach {
             listQuoteType.add(it.name)
@@ -122,7 +124,7 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
                 return false
             }
         }
-        if(textTitle.text?.isEmpty()){
+        if(textTitle.text?.isEmpty()&&!textPostType.text?.equals(PostType.VIDEO.type)){
             navigator?.showAlert(R.string.please_enter_title)
             return false
         }
@@ -136,7 +138,7 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
         }
         if(isQuoteType) return true
 
-        if(textContentUrl.text.isEmpty()){
+        if(textContentUrl.text.isEmpty()&&!textPostType.text?.equals(PostType.VIDEO.type)){
             navigator?.showAlert(R.string.please_enter_content_url)
             return false
         }
@@ -158,10 +160,11 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
            title = textTitle.text
            when(type){
                PostType.VIDEO.type-> {
-                   author_name = textAuthorName.text
-                   feed = "https://www.youtube.com/results?search_query=${author_name?.replace(" ","+")}"
-                   feedPageUrl = "https://www.youtube.com/results?search_query=${author_name?.replace(" ","+")}&sp=CAISAhAB&page=1"
-                   title = "Video$type${textAuthorUrl.text}"
+                   cat_type = mapCat[textCat.text]!!
+                   author_name = "LifeKnowledge"
+                   feed = textImageUrl.text
+                   title = "Video$cat_type${textAuthorName.text}"
+
                }
                PostType.ARTICLE.type->{
 

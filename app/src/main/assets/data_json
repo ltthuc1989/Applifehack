@@ -2,23 +2,33 @@
   "category": [
     {
       "id": 0,
-      "name": "Living& Healthy"
+      "name": "Living& Healthy",
+      "type": "living_healthy"
     },
     {
       "id": 1,
-      "name": "Self Improvement"
+      "name": "Self Improvement",
+      "type": "personal_growth"
     },
     {
       "id": 2,
-      "name": "Happiness"
+      "name": "Happiness",
+      "type": "happiness"
     },
     {
       "id": 3,
-      "name": "Inspiration"
+      "name": "Inspiration",
+      "type" : "inspiration"
     },
     {
       "id": 4,
-      "name": "Life Quotes"
+      "name": "Life Quotes",
+      "type" : "quote"
+    },
+    {
+      "id": 5,
+      "name": "Discovery",
+      "type" : "discovery"
     }
   ],
   "post_type": [

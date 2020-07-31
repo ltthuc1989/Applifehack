@@ -131,6 +131,7 @@
         android:layout_marginStart="16dp"
         android:fontFamily="@font/cabin_condensed_bold"
 
+
         android:text="Title"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/tvTitle"
@@ -145,6 +146,8 @@
         android:layout_marginEnd="16dp"
         android:background="@color/white"
         android:padding="8dp"
+
+
         android:fontFamily="@font/cabin_condensed_bold"
         android:text="@={viewModel.textTitle.text}"
         app:layout_constraintStart_toEndOf="@id/barrier"

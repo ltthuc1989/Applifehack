@@ -77,5 +77,6 @@
     <string name="skip">Skip</string>
     <string name="crawlData">Crawl Data</string>
     <string name="daily">Daily</string>
+    <string name="product_mode">Production Mode</string>
 
 </resources>

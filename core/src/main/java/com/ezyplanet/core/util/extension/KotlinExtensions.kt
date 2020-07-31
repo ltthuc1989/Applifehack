@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -343,11 +344,26 @@ inline fun <reified T : Parcelable> Activity.getExtraParcel(extra: String): T? {
 inline fun <reified T : Parcelable> Activity.getExtraParcelList(extra: String): ArrayList<T>? {
     return intent.extras?.getParcelableArrayList<T>(extra)
 }
-
+//inline fun <F> AppCompatActivity.replaceFragment(fragment: F) where F : Fragment {
+//    supportFragmentManager.inTransaction {
+//        replace(R.id.fragment_container, fragment)
+//    }
+//}
 inline fun <F> AppCompatActivity.replaceFragment(fragment: F) where F : Fragment {
-    supportFragmentManager.inTransaction {
-        replace(R.id.fragment_container, fragment)
+    val backStackName = fragment.javaClass.simpleName
+    val manager = supportFragmentManager
+    manager.popBackStackImmediate(backStackName,0)?.let {
+        if(!it){
+            Log.d("replace",backStackName)
+            supportFragmentManager.inTransaction {
+                replace(R.id.fragment_container, fragment)
+                    .addToBackStack(backStackName)
+
+            }
+        }
     }
+
+
 }
 
 //view extension

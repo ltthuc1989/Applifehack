@@ -198,6 +198,7 @@ data class RssCatResp constructor(
         result["thumb_url"] = thumb_url
         result["title"] = title
         result["type"] = type
+        result["cat_type"] = cat_type
 
         return result
     }

@@ -6,13 +6,17 @@ package com.applifehack.knowledge.ui.admin.localpost
 import android.view.View
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.entity.Post
+import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.databinding.ActivityLocalPostBinding
 
 import com.applifehack.knowledge.databinding.ItemLocalPostBinding
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
 import com.applifehack.knowledge.util.AppBundleKey
+import com.applifehack.knowledge.util.CustomTabHelper
+import com.applifehack.knowledge.util.extension.openLink
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter
+import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.observe
 import com.ezyplanet.core.util.extension.transitionActivity
 
@@ -21,6 +25,9 @@ class LocalPostActivity : MvvmActivity<ActivityLocalPostBinding,LocalPostVM>(), 
     override val viewModel: LocalPostVM by getLazyViewModel()
 
     override val layoutId: Int = R.layout.activity_local_post
+    protected val customTabHelper: CustomTabHelper by lazy{
+        CustomTabHelper()
+    }
 
     override fun onViewInitialized(binding: ActivityLocalPostBinding) {
         super.onViewInitialized(binding)
@@ -63,4 +70,12 @@ class LocalPostActivity : MvvmActivity<ActivityLocalPostBinding,LocalPostVM>(), 
         binding.dailyFeedRecyclerview.smoothScrollToPosition(0)
     }
 
+    override fun openDetail(post: Post) {
+        if(post.type==PostType.ARTICLE.type){
+            openLink(post.redirect_link,customTabHelper)
+        }
+        else if(post.type == PostType.VIDEO.type){
+            gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post))
+        }
+    }
 }

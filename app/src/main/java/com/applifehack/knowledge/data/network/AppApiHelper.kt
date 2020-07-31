@@ -1,5 +1,6 @@
 package com.applifehack.knowledge.data.network
 
+import android.os.Environment
 import android.util.Log
 import com.androidhuman.rxfirebase2.firestore.RxFirebaseFirestore
 import com.androidhuman.rxfirebase2.firestore.model.Value
@@ -14,8 +15,7 @@ import com.applifehack.knowledge.data.network.response.CatResp
 import com.applifehack.knowledge.data.network.response.QuoteResp
 import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.data.network.response.youtube.YoutubeResp
-import com.applifehack.knowledge.util.AppConstans
-import com.applifehack.knowledge.util.AppConstants
+import com.applifehack.knowledge.util.*
 import com.rx2androidnetworking.Rx2AndroidNetworking
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -23,9 +23,7 @@ import javax.inject.Inject
 import com.google.api.services.youtube.YouTube
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
-import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.AppConstants.DatabasePath
-import com.applifehack.knowledge.util.TimeUtil
 import com.google.firebase.FirebaseApp
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
@@ -43,29 +41,33 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     val limitPage = 20L
     private var youtube: YouTube? = null
 
-    val firStore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private fun generatePostId(): String =
-        firStore.collection(ApiEndPoint.POST_DB_KEY).document().id
+    var firStore: FirebaseFirestore ? = null
+
 
     override fun getApiHeader(): ApiHeader {
         return apiHeader
     }
 
     override fun getRssCat(): Single<Value<QuerySnapshot>> {
-        return RxFirebaseFirestore.data(firStore.collection(ApiEndPoint.GET_RSS_CATEGORY))
+
+
+        return RxFirebaseFirestore.data(getFirebaseStorage().collection(ApiEndPoint.GET_RSS_CATEGORY))
     }
 
 
     override fun getPost(loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
+
+
+
         if (loadMore == true) {
             val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
-            return firStore.collection(ApiEndPoint.POST_DB_KEY)
+            return getFirebaseStorage()?.collection(ApiEndPoint.POST_DB_KEY)
                 .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                 ?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
                 .startAfter(lastItem).limit(10).get()
         } else {
 
-            return firStore.collection(ApiEndPoint.POST_DB_KEY)
+            return getFirebaseStorage()?.collection(ApiEndPoint.POST_DB_KEY)
                 .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                 .limit(10).get()
             
@@ -75,17 +77,20 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun getCatgories(): Task<QuerySnapshot> {
-        return firStore.collection(ApiEndPoint.GET_CATEGORIES).
-        whereEqualTo(DatabasePath.EDITING_DATABASE,true).
+
+        return getFirebaseStorage()?.collection(ApiEndPoint.GET_CATEGORIES).
+        whereEqualTo(DatabasePath.EDITING_DATABASE,false).
         orderBy(DatabasePath.CAT_CREATED_DATE, Query.Direction.DESCENDING).get()
     }
 
     override fun getPopularPost(): Task<QuerySnapshot> {
+
+
         val dates = TimeUtil.getFirsAndLastDateOfLastWeek()
         val startAt = Timestamp(dates[0])
         val endAt = Timestamp(dates[1])
 
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY)
+        val query = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY)
 
 
 
@@ -107,9 +112,11 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         lastItem: DocumentSnapshot?
     ): Task<QuerySnapshot> {
 
+
+
         val query = when (sortBy) {
             SortBy.NEWEST -> {
-                var temp = firStore.collection(ApiEndPoint.POST_DB_KEY)
+                var temp = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY)
                     .whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
                     .whereEqualTo(DatabasePath.CAT_ID, catId)
                     .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
@@ -124,7 +131,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
             SortBy.MOST_POPUPLAR -> {
 
-                val temp = firStore.collection(ApiEndPoint.POST_DB_KEY)
+                val temp = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY)
                     .whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
                     .whereEqualTo(DatabasePath.CAT_ID, catId)
                     .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
@@ -135,7 +142,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             }
             else -> {
                 val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
-                val temp = firStore.collection(ApiEndPoint.POST_DB_KEY)
+                val temp = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY)
                     .whereEqualTo(DatabasePath.TYPE, PostType.ARTICLE.type)
                     .whereEqualTo(DatabasePath.CAT_ID, catId)
                     .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)
@@ -160,10 +167,12 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         lastItem: DocumentSnapshot?
     ): Task<QuerySnapshot> {
 
+
+
         val query = when (sortBy) {
             SortBy.NEWEST -> {
 
-                val temp = firStore.collection(ApiEndPoint.POST_DB_KEY)
+                val temp = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY)
                     .whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
                     .whereEqualTo(DatabasePath.CAT_ID, catId)
                     .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
@@ -178,7 +187,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
             SortBy.MOST_POPUPLAR -> {
 
-                val temp = firStore.collection(ApiEndPoint.POST_DB_KEY)
+                val temp = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY)
                     .whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
                     .whereEqualTo(DatabasePath.CAT_ID, catId)
                     .orderBy(DatabasePath.VIEW_COUNT, Query.Direction.DESCENDING)
@@ -189,7 +198,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             }
             else -> {
 
-                val temp = firStore.collection(ApiEndPoint.POST_DB_KEY)
+                val temp = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY)
                     .whereEqualTo(DatabasePath.TYPE, PostType.VIDEO.type)
                     .whereEqualTo(DatabasePath.CAT_ID, catId)
                     .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.ASCENDING)
@@ -212,7 +221,9 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         lastItem: DocumentSnapshot?
     ): Task<QuerySnapshot> {
 
-        var supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
+
+
+        var supQuery = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
         if (typeQuote != null&&!typeQuote?.equals("All",true)){
 
            supQuery=supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote)
@@ -251,9 +262,13 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun updateViewCount(postId: String?): Task<Transaction> {
 
+        if(BuildConfig.ENVIRONMENT==ENVIRONMENT.ADMIN.type){
+            val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+            firStore = FirebaseFirestore.getInstance(firebaseApp)
+        }
 
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
-        return firStore.runTransaction {
+        val query = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
+        return getFirebaseStorage().runTransaction {
             val snapshot = it.get(query)
             var count = snapshot.getDouble(DatabasePath.VIEW_COUNT)
             if (count == null) {
@@ -270,8 +285,9 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     override fun updateLikeCount(postId: String?): Task<Transaction> {
 
 
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
-        return firStore.runTransaction {
+
+        val query = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
+        return getFirebaseStorage().runTransaction {
             val snapshot = it.get(query)
             var count = snapshot.getDouble(DatabasePath.LIKES_COUNT)
             if (count == null) {
@@ -288,11 +304,21 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
 
     override fun getPostDetail(postId: String): Task<DocumentSnapshot> {
-        return firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!).get()
+        if(BuildConfig.ENVIRONMENT==ENVIRONMENT.ADMIN.type){
+            val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+            firStore = FirebaseFirestore.getInstance(firebaseApp)
+        }
+        return getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).document(postId!!).get()
     }
 
     override fun uploadDatabase(file: File): UploadTask {
         var storage = FirebaseStorage.getInstance()
+        if(BuildConfig.ENVIRONMENT==ENVIRONMENT.ADMIN.type){
+            val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+
+            storage = FirebaseStorage.getInstance(firebaseApp)
+        }
+
         val storageRef = storage.reference.child("Database/posts.db")
         val stream = FileInputStream(file)
         Log.d("uploadDatabaseSize","${file.length()/1024} kb")
@@ -301,6 +327,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun downloadDatabase(path: String,action :(File)->Unit) {
+
         var storage = FirebaseStorage.getInstance()
         val localFile = File.createTempFile("file", "db")
         val storageRef = storage.reference.child("Database/posts.db")
@@ -317,12 +344,13 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun createPostLive(generateId: String, post: Post): Task<Transaction> {
-        val postValues = post.toMap()
-        val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
-        val firebseStore = FirebaseFirestore.getInstance(firebaseApp)
-        val query = firebseStore.collection(ApiEndPoint.POST_DB_KEY).document(generateId)
 
-        return firebseStore?.runTransaction {
+
+        val postValues = post.toMap()
+
+        val query = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).document(generateId)
+
+        return getFirebaseStorage()?.runTransaction {
             it.set(query,postValues)
             // val snapshot = it.get(query)
             // it.update(query,DatabasePath.ID,snapshot.id)
@@ -332,8 +360,8 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun createMultiplePost(posts: List<Post>): Task<Void> {
 
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY)
-        var batch = firStore.batch()
+        val query = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY)
+        var batch = getFirebaseStorage().batch()
         posts.forEach {
             batch.set(query.document(it.id),it.toMap())
         }
@@ -341,10 +369,11 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun createPost(generateId: String, post: Post): Task<Transaction> {
+
         val postValues = post.toMap()
-        val query = firStore.collection(ApiEndPoint.POST_DB_KEY).document(generateId)
-        val query1 = firStore.collection(ApiEndPoint.POST_DB_KEY)
-        return firStore?.runTransaction {
+        val query = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).document(generateId)
+
+        return getFirebaseStorage().runTransaction {
             it.set(query,postValues)
             // val snapshot = it.get(query)
             // it.update(query,DatabasePath.ID,snapshot.id)
@@ -389,20 +418,33 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun getQuoteCat(): Task<QuerySnapshot> {
-        return firStore.collection(ApiEndPoint.GET_QUOTES).
+        return getFirebaseStorage().collection(ApiEndPoint.GET_QUOTES).
         orderBy(DatabasePath.QUOTE_NAME,
             Query.Direction.ASCENDING).get()
     }
 
     override fun createRss(rssCatResp: RssCatResp): Task<Transaction> {
         val postValues = rssCatResp.toMap()
-        val query = firStore.collection(ApiEndPoint.GET_RSS_CATEGORY).document(rssCatResp.title!!)
+        val query = getFirebaseStorage().collection(ApiEndPoint.GET_RSS_CATEGORY).document(rssCatResp.title!!)
 
-        return firStore?.runTransaction {
+        return getFirebaseStorage()?.runTransaction {
             it.set(query,postValues)
             // val snapshot = it.get(query)
             // it.update(query,DatabasePath.ID,snapshot.id)
 
         }
+    }
+    private fun getFirebaseStorage():FirebaseFirestore{
+        if(firStore==null) {
+            if (BuildConfig.ENVIRONMENT == ENVIRONMENT.ADMIN.type) {
+                val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+                firStore = FirebaseFirestore.getInstance(firebaseApp)
+
+            } else {
+                firStore = FirebaseFirestore.getInstance()
+            }
+        }
+        return firStore!!
+
     }
 }

@@ -91,8 +91,9 @@
                 android:gravity="bottom"
                 android:padding="@dimen/padding"
                 android:textSize="18sp"
-                android:text="@string/night_mode"
+                android:text="@string/product_mode"
                 android:visibility="gone"
+
                 />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -106,11 +107,11 @@
                 android:layout_marginLeft="@dimen/padding"
                 android:layout_marginRight="@dimen/padding"
                 android:checked="@={viewModel.switch.click}"
-
+                android:visibility="gone"
                 android:gravity="center"
                 android:textOff="@string/off"
                 android:textOn="@string/on"
-                android:visibility="gone"
+
                 />
 
 
@@ -120,7 +121,7 @@
                 android:id="@+id/lbPrivacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lb_notification"
+                android:layout_below="@+id/lbNightMode"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding"
@@ -192,12 +193,27 @@
                 android:padding="@dimen/padding"
                 android:textSize="18sp"
                 android:text="Local Post" />
+            <TextView
+                android:id="@+id/lbManualPost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lbLocalPost"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding"
+                android:layout_marginRight="@dimen/padding"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:textColor="@color/white_50"
+                android:onClick="@{()->viewModel.manualPost()}"
+                android:padding="@dimen/padding"
+                android:textSize="18sp"
+                android:text="Manual Post" />
 
             <TextView
                 android:id="@+id/lbTransfer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lbLocalPost"
+                android:layout_below="@+id/lbManualPost"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding"

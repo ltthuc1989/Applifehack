@@ -34,8 +34,7 @@ class  Health24Api(val endPoint:String) :BaseCrawler(){
             val request = URL(endPoint).readText()
              Gson().fromJson<Health24>(request)
         }.await()?.ArticleList?.forEach { post->
-           // var temp= doc.select("div.vjs-poster")[0].attr("style")
-             //  val mediaElement = FormatterUtil.extractUrls(temp)?.get(0)
+
                 var idPost = formatId(post.Title)
                 if (idPost?.isEmpty() != true) {
                     result.add(
@@ -87,7 +86,7 @@ class  Health24Api(val endPoint:String) :BaseCrawler(){
                             catId = cat.cat_id
                             catName = cat.cat_name
                             createdDate = Date()
-
+                            author_type = author
 
                         })
 

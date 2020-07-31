@@ -91,7 +91,7 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
     }
 
     override fun gotoPageUrl(post: Post) {
-        openLink(post?.authorUrl)
+        openLink(post?.redirect_link)
 
     }
 

@@ -83,7 +83,7 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
                 }
 
 
-                mData.addAll(filter(post))
+                mData.addAll(async {filter(post)}.await())
 
                 results.value = mData
 

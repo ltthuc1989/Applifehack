@@ -25,11 +25,13 @@ class YoutubeChannel(var titlePost:String?,var author_name:String?,var categoryT
             var mediaElement = formatYoutubeThumbnail(id)
             var viewCount = async {parseViewCounts(it)}
             var duration = async {parseDuration(it)}
-
+            var authoElement = async { parseAuthor(it) }
             var titleElement = async {parseYoutubeTitle(it)}
+            val author = authoElement.await()
             val title = titleElement.await()
             var time = duration.await()
             var vCount = viewCount.await()
+
             if (mediaElement.isNotEmpty()  && title.isNotEmpty()) {
                 var idPost = formatId(title)
                 if (!id.isNullOrEmpty()) {
@@ -41,7 +43,7 @@ class YoutubeChannel(var titlePost:String?,var author_name:String?,var categoryT
                                 imageUrl = mediaElement
                                 this.id = "${titlePost}$idPost"
                                 type = PostType.VIDEO.type
-                                author = author_name
+                                this.author = author
 
                                 video_url = id
                                 this.video_views= vCount
@@ -50,7 +52,7 @@ class YoutubeChannel(var titlePost:String?,var author_name:String?,var categoryT
                                 catId = cat.cat_id
                                 catName = cat.cat_name
                                 createdDate = Date()
-                                author_type =  "Video$categoryType"
+                                author_type =  "Video-$categoryType"
 
                             })
                 }
@@ -61,7 +63,14 @@ class YoutubeChannel(var titlePost:String?,var author_name:String?,var categoryT
     }
 
 
-
+   private fun parseAuthor(el: Element):String{
+      return try{
+         val autho= el.select("div.compact-media-item-byline").text()
+          if(autho?.isEmpty()==true) "LifeKnowledge" else autho
+      }catch (ex:Exception){
+          "LifeKnowledge"
+      }
+   }
     override fun extractImage(el: Element): String? {
         TODO("Not yet implemented")
     }

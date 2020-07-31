@@ -28,7 +28,7 @@ class Thehealthy :BaseCrawler() {
                     result.add(
                         Post()
                             .apply {
-                                title = "How To $titleElement"
+                                title = "$titleElement"
                                 redirect_link = linksElement
                                 imageUrl = mediaElement
                                 id = "$className$idPost"

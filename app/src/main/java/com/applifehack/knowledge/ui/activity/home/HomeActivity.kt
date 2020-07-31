@@ -155,7 +155,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
     fun initAppUpdate() {
         appUpdateHelper = AppUpdateHelper()
-        appUpdateHelper?.checkUpdate(this, viewModel.getVersionCode()!!)
+        appUpdateHelper?.checkUpdate(this)
         lifecycle.addObserver(appUpdateHelper)
         appUpdateHelper?.observe(this, Observer {
             showSnackUpdateBar()
@@ -175,7 +175,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
     override fun onMenu() {
-      homeEventModel.refreshClick.value = true
+
     }
 
 

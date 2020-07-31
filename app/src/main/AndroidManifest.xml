@@ -11,7 +11,7 @@
         android:name="com.applifehack.knowledge.KnowledgeApp"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
@@ -130,6 +130,7 @@
         <activity android:name=".ui.admin.mirgrate.MirgrateActivity"
             android:screenOrientation="portrait"
             />
+
 
 
         <meta-data

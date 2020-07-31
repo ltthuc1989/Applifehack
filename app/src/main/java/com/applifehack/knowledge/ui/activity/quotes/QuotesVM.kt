@@ -18,16 +18,20 @@ import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.google.firebase.firestore.DocumentSnapshot
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
+import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.network.response.CatResp
 import com.applifehack.knowledge.data.network.response.QuoteResp
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
 import com.applifehack.knowledge.util.AppConstants
+import com.applifehack.knowledge.util.MediaUtil
 import com.applifehack.knowledge.util.ShareType
 import com.applifehack.knowledge.util.extension.await
 import com.applifehack.knowledge.util.extension.shareImage
+import com.applifehack.knowledge.util.extension.shareMessage
 import com.applifehack.knowledge.util.extension.toArray
 import com.ezyplanet.supercab.data.local.db.DbHelper
+import com.google.firebase.dynamiclinks.ShortDynamicLink
 import com.google.firebase.dynamiclinks.ktx.androidParameters
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
@@ -181,18 +185,24 @@ class QuotesVM @Inject constructor(
                         setMargins(8,8,8,8)
                     }
                     postDelayed({
-                        val result = F.viewToBitmap(parentView)
+                        MediaUtil.getOutputMediaFile(view.context, F.viewToBitmap(parentView))
+                        postDelayed({
 
-                        linBottom.visibility = View.VISIBLE
-                        linShare.visibility = View.GONE
-                        (vBottom.layoutParams as RelativeLayout.LayoutParams ).apply {
-                            height = view.resources.getDimension(R.dimen.dp_16).toInt()
-                        }
-                        (parentView.layoutParams as RecyclerView.LayoutParams).apply {
-                            setMargins(0,0,0,0)
-                        }
-                        createDynamicLink(view.context,id,result!!)
-                    },15)
+
+                            linBottom.visibility = View.VISIBLE
+                            linShare.visibility = View.GONE
+                            (vBottom.layoutParams as RelativeLayout.LayoutParams).apply {
+                                height = view.resources.getDimension(R.dimen.dp_16).toInt()
+                            }
+                            (parentView.layoutParams as RecyclerView.LayoutParams).apply {
+                                setMargins(0, 0, 0, 0)
+                            }
+                            createDynamicLink(view.context, Post(id!!).apply {
+                                type = PostType.QUOTE.type
+                            })
+                        }, 100)
+
+                    }, 100)
 
                 }
 
@@ -231,18 +241,23 @@ class QuotesVM @Inject constructor(
         (navigator as QuotesNav).openAuthorWiki(url)
     }
 
-    private fun createDynamicLink(context: Context, postId: String?, bitmap: Bitmap) {
-        Firebase.dynamicLinks.shortLinkAsync {
-            link = Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=$postId")
+    private fun createDynamicLink(context: Context, post: Post?) {
+        Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
+            link =
+                Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=${post?.id}")
             domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
             androidParameters(BuildConfig.DYNAMIC_PACKAGE_NAME) {
 
             }
-            // Open links with this app on Android
 
         }.addOnSuccessListener {
             navigator?.hideProgress()
-            (context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
+            if(post?.getPostType()==PostType.QUOTE) {
+                (context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
+            }else{
+                val message = String.format(context.getString(R.string.share_info_text," '${post?.title}'",it.shortLink.toString()))
+                (context as MvvmActivity<*, *>).shareMessage(message)
+            }
         }.addOnFailureListener {
             navigator?.hideProgress()
             it.printStackTrace()

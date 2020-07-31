@@ -62,4 +62,8 @@ class SettingVM @Inject constructor(val appDataManager: AppDataManager, schedule
             appDataManager.appPreferenceHelper?.enableNotification = false
         }
     }
+
+    fun manualPost(){
+        navigator?.openManualPost()
+    }
 }

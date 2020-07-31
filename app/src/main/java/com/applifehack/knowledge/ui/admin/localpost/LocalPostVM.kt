@@ -8,6 +8,7 @@ import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
+import com.applifehack.knowledge.data.local.db.AppDatabase
 import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.util.AlertDialogUtils
 import com.applifehack.knowledge.util.PostStatus
@@ -36,7 +37,7 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
     private var authors  : ArrayList<String>? = appDataManager.getAuthors()
     val isRandom  = MutableLiveData<Boolean>()
 
-
+   @Inject lateinit var appDatabase: AppDatabase
     @Inject lateinit var fbAnalytics: FirebaseAnalyticsHelper
 
     fun getPost() {
@@ -182,6 +183,7 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
     fun exportDatabse(){
         if(mData?.isNullOrEmpty()) return
         navigator?.showProgress()
+         appDatabase?.close()
         val context = appDataManager.context
         val file = context.getDatabasePath(CoreConstants.APP_DB_NAME)
         appDataManager.uploadDatabase(file).addOnSuccessListener {
@@ -190,6 +192,9 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
             navigator?.showAlert(it.message)
             navigator?.hideProgress()
         }
+    }
+    fun onItemClick(item:Post){
+        navigator?.openDetail(item)
     }
 
 

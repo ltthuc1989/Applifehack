@@ -34,3 +34,6 @@ enum class CategoryType(val type:String){
 enum class ShareType(val type:Int){
     NONE(-1),SHARING(0),SHARED(1)
 }
+enum class ENVIRONMENT(val type:String){
+    MOCKUP("mockup"),ADMIN("admin"),PRODUCTION("production")
+}

@@ -75,13 +75,6 @@ open class FeedVM @Inject constructor(
 
     }
 
-    override fun reLoadData() {
-        super.reLoadData()
-        currentPage = 0
-        mData.clear()
-        getPost()
-    }
-
     open fun getPost(nextPage: Boolean? = false) {
 
         if (nextPage == false) navigator?.showProgress()

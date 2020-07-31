@@ -32,7 +32,7 @@ class Marthastewart : BaseCrawler() {
                                 imageUrl = mediaElement
                                 id = "marthastewart$idPost"
                                 type = PostType.ARTICLE.type
-                                author = "marthastewart"
+                                author = "Marthastewart"
                                 authorUrl = "marthastewart.com"
 
                                 catId = cat.cat_id

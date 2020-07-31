@@ -13,7 +13,7 @@ abstract class BaseCrawler {
     var authorName :String?=""
 
     constructor(authorName:String?=""){
-        className = this::class.java.simpleName.toLowerCase()
+        className = this::class.java.simpleName
         this.authorName = authorName
 
     }
