@@ -3,6 +3,7 @@ package com.applifehack.knowledge.ui.widget.toolbar
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import com.applifehack.knowledge.databinding.ToolbarBinding
 
@@ -51,6 +52,10 @@ class BaseToolBar :FrameLayout{
 
     fun setListner(listener: ToolbarListener) {
         binding.listener = listener
+    }
+
+    fun showRefresh(show:Boolean){
+        binding.imMenu.visibility = if(show) View.VISIBLE else View.GONE
     }
 
 

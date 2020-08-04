@@ -20,9 +20,9 @@ android {
         applicationId "com.applifehack.knowledge"
         minSdkVersion rootProject.androidMinSdkVersion
         targetSdkVersion rootProject.androidTargetSdkVersion
-        versionCode 1
+        versionCode 11
         multiDexEnabled true
-        versionName "1.0"
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     dexOptions {
@@ -73,8 +73,8 @@ android {
         }
         production {
             applicationId "com.applifehack.knowledge"
-            buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
-            buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
+            buildConfigField "String", "API_YOUTUBE", "\"AIzaSyBuxGvrbfWiwCPJ2CY4Z_brRk5b4ylhflY\""
+            buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.com/link\""
             buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge\""
         }
     }
@@ -107,7 +107,7 @@ dependencies {
     implementation appDependencies.facebook.stetho_okhttp3
     implementation appDependencies.circleImageView
     implementation 'com.makeramen:roundedimageview:2.2.1'
-    implementation 'com.github.rubensousa:gravitysnaphelper:2.2.0'
+
     // Dagger
     implementation appDependencies.dagger
     implementation appDependencies.daggerAndroid
@@ -119,7 +119,7 @@ dependencies {
     // firebase-firestore
 
     implementation 'com.android.support:multidex:1.0.1'
-    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'androidx.browser:browser:1.2.0'
     //room
     implementation appDependencies.Room
     implementation appDependencies.RxRoom
@@ -135,9 +135,7 @@ dependencies {
     //implementation appDependencies.play_services.ads
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
 
-    implementation 'com.byoutline.observablecachedfield:observablecachedfield:1.7.0'
 
-       implementation 'org.sufficientlysecure:html-textview:3.9'
     implementation 'com.google.firebase:firebase-dynamic-links-ktx:19.1.0'
 
 

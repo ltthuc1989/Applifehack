@@ -8,6 +8,7 @@ object ApiEndPoint {
     const val POST_DB_KEY = "posts"
     const val GET_CATEGORIES = "category"
     const val VIDEO_PATH = "video"
+    const val GET_QUOTES = "quotes"
     const val API_YOUTUBE = "https://www.googleapis.com/youtube/v3/videos"
 
 

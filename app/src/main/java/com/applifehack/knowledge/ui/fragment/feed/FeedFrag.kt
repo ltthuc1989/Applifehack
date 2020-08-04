@@ -2,6 +2,7 @@ package com.applifehack.knowledge.ui.fragment.feed
 
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -15,6 +16,7 @@ import com.ezyplanet.core.util.extension.transitionActivity
 
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.entity.Post
+import com.applifehack.knowledge.data.entity.PostType
 
 
 import com.applifehack.knowledge.databinding.FragmentDailyFeedBinding
@@ -94,7 +96,10 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
         }
         val event = "explore_feed"
         fbAnalyticsHelper.logEvent(event,event,"app_sections")
-
+        homeEventModel.refreshClick.observe(this, Observer {
+            viewModel.reLoadData()
+        })
+        homeEventModel.showRefresh.value = true
     }
 
 
@@ -109,7 +114,11 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
     }
 
     override fun gotoPageUrl(post: Post) {
-        openLink(post?.redirect_link)
+        val url = if(post?.getPostType()==PostType.ARTICLE) post?.redirect_link  else post?.authorUrl
+        url?.let {
+            openLink(it)
+        }
+
 
     }
 
@@ -130,6 +139,8 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
         // gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post.video_url))
     }
 
-
+    override fun scrollToTop() {
+        daily_feed_recyclerview.scrollToPosition(0)
+    }
 
 }

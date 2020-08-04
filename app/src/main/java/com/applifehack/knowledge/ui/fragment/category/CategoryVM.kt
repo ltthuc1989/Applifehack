@@ -182,7 +182,9 @@ class CategoryVM @Inject constructor(
 
                 params.gravity = Gravity.BOTTOM
                 params.setMargins(30, 0, 30, 10)
-                view.addView(it, params)
+                it?.let {
+                    view.addView(it, params)
+                }
             }
         }
     }

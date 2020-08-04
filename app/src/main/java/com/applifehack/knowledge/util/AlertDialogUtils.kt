@@ -18,7 +18,7 @@ object AlertDialogUtils{
         // val array = context.resources.getStringArray(array)
 
         val builder = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle_Dark)
-        builder.setTitle(title)
+      //  builder.setTitle(title)
 
         builder.setSingleChoiceItems(array,position){_,which->
             action(which)

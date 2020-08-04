@@ -19,6 +19,7 @@ import com.applifehack.knowledge.util.MediaUtil
 import com.applifehack.knowledge.util.ShareType
 import com.applifehack.knowledge.util.extension.await
 import com.applifehack.knowledge.util.extension.shareImage
+import com.applifehack.knowledge.util.extension.shareMessage
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.SchedulerProvider
@@ -65,6 +66,16 @@ open class FeedVM @Inject constructor(
     var onStop = false
     @Inject
     lateinit var fbAnalytics: FirebaseAnalyticsHelper
+
+    override fun reLoadData() {
+        super.reLoadData()
+        mData?.clear()
+        currentPage = 0
+        currentLoadMorePosition = 0
+        lastItem = null
+        navigator?.scrollToTop()
+        getPost()
+    }
 
     fun getDynamicLinkInfo(post: Post?) {
         mData.add(post!!)
@@ -149,8 +160,12 @@ open class FeedVM @Inject constructor(
     }
 
     fun shareClick(view: View, data: Post) {
+        if(data.getPostType()==PostType.QUOTE){
+            generateArticle(view, data.id)
+        }else{
+            createDynamicLink(view.context,data)
+        }
 
-        generateArticle(view, data.id)
         logEvent(data?.id, "share")
 
 
@@ -223,7 +238,9 @@ open class FeedVM @Inject constructor(
                             (parentView.layoutParams as RecyclerView.LayoutParams).apply {
                                 setMargins(0, 0, 0, 0)
                             }
-                            createDynamicLink(view.context, id)
+                            createDynamicLink(view.context, Post(id!!).apply {
+                                type = PostType.QUOTE.type
+                            })
                         }, 100)
 
                     }, 100)
@@ -259,10 +276,10 @@ open class FeedVM @Inject constructor(
 
     }
 
-    private fun createDynamicLink(context: Context, postId: String?) {
+    private fun createDynamicLink(context: Context, post: Post?) {
         Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
             link =
-                Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=$postId")
+                Uri.parse("${AppConstants.Google.PLAY_URL_DETAIL}?id=${BuildConfig.DYNAMIC_PACKAGE_NAME}&postId=${post?.id}")
             domainUriPrefix = "${BuildConfig.URL_DYNAMIC_LINK}"
             androidParameters(BuildConfig.DYNAMIC_PACKAGE_NAME) {
 
@@ -270,7 +287,12 @@ open class FeedVM @Inject constructor(
 
         }.addOnSuccessListener {
             navigator?.hideProgress()
-            (context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
+            if(post?.getPostType()==PostType.QUOTE) {
+                (context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
+            }else{
+                val message = String.format(context.getString(R.string.share_info_text," '${post?.title}'",it.shortLink.toString()))
+                (context as MvvmActivity<*, *>).shareMessage(message)
+            }
         }.addOnFailureListener {
             navigator?.hideProgress()
             it.printStackTrace()
@@ -279,7 +301,7 @@ open class FeedVM @Inject constructor(
 
 
     open fun myFavoritePost(position: Int) {
-
+      if(mData.isEmpty()) return
         uiScope?.launch {
             val temp = async(Dispatchers.IO) {
                 dbHelper.getPostById(mData[position].id)

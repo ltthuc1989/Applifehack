@@ -12,6 +12,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.ArticleType
 import com.applifehack.knowledge.data.entity.PostType
+import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.firebase.PayloadResult
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
 import com.applifehack.knowledge.util.AppBundleKey
@@ -25,7 +26,8 @@ import javax.inject.Inject
 class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvider: SchedulerProvider, connectionManager: BaseConnectionManager
 ) : BaseBottomVM<HomeNav, String>(appDataManager,schedulerProvider, connectionManager) {
 
-
+    @Inject
+    lateinit var fbAnalytics: FirebaseAnalyticsHelper
     init {
         homeClick()
     }
@@ -105,6 +107,7 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
                 if (pendingDynamicLinkData != null) {
 
                     val postId=pendingDynamicLinkData.link?.getQueryParameter("postId")
+                    logEvent(postId,"openDynamicLink")
                     ( navigator as HomeNav).openDynamicLink(postId!!)
                 }
 
@@ -112,7 +115,12 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
             .addOnFailureListener(context) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
     }
 
-    fun openPostFromNoti(){
+    private fun logEvent(id: String?, action: String) {
+        val event = "$${id}_$action"
+        val str = "app_dynamic_link"
+        fbAnalytics.logEvent(event, event, str)
+
+
 
     }
 

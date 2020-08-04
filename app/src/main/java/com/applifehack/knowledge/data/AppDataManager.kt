@@ -50,6 +50,10 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
         return apiHelper.getCatgories()
     }
 
+    override fun getQuoteCat(): Task<QuerySnapshot> {
+       return apiHelper.getQuoteCat()
+    }
+
     override fun getPostByCat(catId: String?, sortBy: SortBy?, loadMore: Boolean?, lastItem: DocumentSnapshot?): Task<QuerySnapshot> {
        return  apiHelper.getPostByCat(catId,sortBy,loadMore,lastItem)
     }

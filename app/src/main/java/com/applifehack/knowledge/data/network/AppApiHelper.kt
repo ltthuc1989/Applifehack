@@ -53,7 +53,16 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun getCatgories(): Task<QuerySnapshot> {
-       return firStore.collection(ApiEndPoint.GET_CATEGORIES).orderBy(DatabasePath.CAT_CREATED_DATE,Query.Direction.DESCENDING).get()
+       return firStore.collection(ApiEndPoint.GET_CATEGORIES).
+       whereEqualTo(DatabasePath.EDITING_DATABASE,false).
+       orderBy(DatabasePath.CAT_CREATED_DATE, Query.Direction.DESCENDING).get()
+    }
+
+    override fun getQuoteCat(): Task<QuerySnapshot> {
+        return firStore.collection(ApiEndPoint.GET_QUOTES).
+        orderBy(DatabasePath.QUOTE_NAME,
+            Query.Direction.ASCENDING).
+        whereEqualTo(DatabasePath.EDITING_DATABASE,false).get()
     }
 
     override fun getPopularPost(): Task<QuerySnapshot> {

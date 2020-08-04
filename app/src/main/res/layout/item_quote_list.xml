@@ -61,7 +61,7 @@
                 android:letterSpacing="0.05"
                 android:textColor="@color/white"
                 android:fontFamily="@font/cabin_condensed_regular"
-                app:autoResizeTextMax="@{36}"
+                app:autoResizeTextMax="@{30}"
                 app:autoResizeTextMin="@{14}"
                 android:text="@{item.title}"
                 app:autoSizeTextType="uniform" />
@@ -102,8 +102,8 @@
 
             <ImageView
                 android:id="@+id/imgShare"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="8dp"
                 android:onClick="@{(view)->viewModel.shareClick(view,item)}"
@@ -112,12 +112,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:scaleType="fitCenter"
                 />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="32dp"
                 android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
                 android:tint="@color/white_75"
                 android:id="@+id/imglike"
@@ -125,7 +130,7 @@
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvLinkCount"
-
+                 tools:src="@drawable/ic_like"
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView
                 android:layout_width="wrap_content"
@@ -186,7 +191,7 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 app:civ_fill_color="@color/white_75"
-
+                android:onClick="@{()->viewModel.openPageUrl(item)}"
                 android:src="@drawable/ic_author_black_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
 

@@ -5,6 +5,7 @@
 
     <data>
         <import type="com.applifehack.knowledge.util.ShareType"/>
+        <import type="android.widget.ImageView.ScaleType"/>
         <variable
             name="item"
             type="com.applifehack.knowledge.data.entity.Post" />
@@ -40,7 +41,7 @@
                 app:riv_corner_radius_top_right="4dp"
                 android:alpha="0.8"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
+                android:scaleType='@{item.imageScaleType==0? ScaleType.CENTER_CROP:ScaleType.FIT_XY}'
                 app:srcImageBitmapUrl="@{item.imageUrl}"
                 android:cropToPadding="true"
                 android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
@@ -85,9 +86,9 @@
 
             <ImageView
                 android:id="@+id/imgShare"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
                 android:layout_marginStart="8dp"
                 android:onClick="@{(view)->viewModel.shareClick(view,item)}"
                 android:src="@drawable/ic_share"
@@ -95,12 +96,18 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tvReadMore"
                 app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:scaleType="fitCenter"
+
                 />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="32dp"
 
                 android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
                 android:tint="@color/white_75"
@@ -109,6 +116,7 @@
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvLinkCount"
+                tools:src="@drawable/ic_like"
 
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView
@@ -140,7 +148,7 @@
                 android:text="@{item.author}"
                 android:textColor="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
-
+                android:onClick="@{()->viewModel.openPageUrl(item)}"
                 app:layout_constraintStart_toEndOf="@+id/ic_calendar"
                 app:layout_constraintTop_toTopOf="@id/ic_calendar"
                 tools:text="7 days ago" />
@@ -151,6 +159,7 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 app:civ_fill_color="@color/white_75"
+                android:onClick="@{()->viewModel.openPageUrl(item)}"
 
                 android:src="@drawable/ic_author_black_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"

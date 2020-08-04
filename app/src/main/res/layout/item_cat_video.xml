@@ -51,7 +51,7 @@
             android:textSize="@dimen/search_result_video_item_title_textSize" />
         <ImageView
             android:id="@+id/imgLike"
-            android:layout_width="18dp"
+            android:layout_width="24dp"
 
             android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
             android:tint="@color/white_75"
@@ -60,11 +60,13 @@
             android:onClick="@{()->viewModel.likeClick(item)}"
 
             android:layout_marginEnd="16dp"
-            android:padding="2dp"
+            android:padding="4dp"
+            android:layout_alignParentRight="true"
 
-            android:layout_toRightOf="@+id/search_tab_results_video_row_image"
+
+
             android:layout_alignBottom="@id/search_tab_results_video_row_image"
-            android:layout_height="18dp" />
+            android:layout_height="24dp" />
 
         <ImageView
             android:id="@+id/imgView"
@@ -73,8 +75,8 @@
 
             android:src="@drawable/ic_time"
             android:tint="@color/white_75"
+            android:layout_toRightOf="@+id/search_tab_results_video_row_image"
 
-            android:layout_toRightOf="@+id/imgLike"
             android:layout_alignBottom="@id/search_tab_results_video_row_image"
             android:layout_height="18dp" />
         <TextView

@@ -66,7 +66,7 @@ import javax.inject.Inject
     var date :String? by PreferenceDelegate(mPrefs, PREF_KEY_DATE,"")
     var enableNotification:Boolean? by PreferenceDelegate(mPrefs, PREF_KEY_NOTIFICATION,true)
     var versionUpdate:Int? by PreferenceDelegate(mPrefs, PREF_KEY_VERSIION_CODE,0)
-    var appLaunchCount :Int? by PreferenceDelegate(mPrefs, PREF_KEY_APP_LAUNCH_COUNT,0)
+    var appLaunchCount :Int? by PreferenceDelegate(mPrefs, PREF_KEY_APP_LAUNCH_COUNT,1)
 
 }
 

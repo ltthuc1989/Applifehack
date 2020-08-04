@@ -1,7 +1,9 @@
 package com.applifehack.knowledge.util
 
 import android.view.View
+
 import androidx.databinding.BindingAdapter
+
 import org.sourcei.kowts.utils.functions.F
 import org.sourcei.kowts.utils.reusables.Angles
 
@@ -22,6 +24,8 @@ class BindingAdapters{
             val angle = Angles.random().toFloat()
             view.setGradient(colors, 0, angle)
         }
+
+
     }
 
 

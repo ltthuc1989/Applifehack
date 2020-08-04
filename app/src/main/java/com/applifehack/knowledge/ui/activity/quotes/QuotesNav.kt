@@ -5,4 +5,5 @@ import com.ezyplanet.core.ui.base.MvvmNav
 
 interface QuotesNav :MvvmNav{
     fun openAuthorWiki(link:String?)
+    fun scrollToTop()
 }

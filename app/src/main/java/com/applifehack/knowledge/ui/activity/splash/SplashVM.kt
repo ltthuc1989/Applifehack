@@ -20,6 +20,7 @@ class SplashVM  @Inject constructor(val appDataManager: AppDataManager, schedule
 
 
     fun setData(context: Context,data:PayloadResult?){
+        forceCrash()
         if(isNetworkConnected()!=true){
             AlertDialogUtils.showInternetAlertDialog(context,R.string.connection_fail,R.string.please_check_your_internet,{
                 setData(context,data)
@@ -36,6 +37,10 @@ class SplashVM  @Inject constructor(val appDataManager: AppDataManager, schedule
            navigator?.gotoHomeScreen(data)
 
         }
+    }
+
+    private fun forceCrash(){
+       // throw RuntimeException("Test Crash")
     }
 
 

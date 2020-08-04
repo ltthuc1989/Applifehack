@@ -29,7 +29,8 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
 
     override val viewModel: FavoriteVM by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId: Int = com.applifehack.knowledge.R.layout.fragment_daily_feed
-
+    private var isFirstCreated = false
+    lateinit var homeEventModel: HomeEventModel
 
 
     override fun setUpNavigator() {
@@ -41,9 +42,10 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
         binding.viewModel = viewModel
         viewModel.navigator = this
 
-
+        homeEventModel = ViewModelProviders.of(activity!!).get(HomeEventModel::class.java)
 
         viewModel.getPost()
+
 
         try {
 
@@ -73,7 +75,7 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
             binding.adapter?.swapItems(it)
         }
         val event = "explore_feed"
-
+        homeEventModel.showRefresh.value = false
 
     }
 
@@ -108,6 +110,10 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
             mapOf(AppBundleKey.YOUTUBE_URL to post), shareView
         )
 
+    }
+
+    override fun scrollToTop() {
+        TODO("Not yet implemented")
     }
 }
 

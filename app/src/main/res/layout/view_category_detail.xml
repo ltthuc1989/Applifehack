@@ -22,11 +22,23 @@
 
             android:id="@+id/clp_toolbar"
             android:layout_width="match_parent"
+
             android:layout_height="@dimen/youtube_details_photo_height"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:collapsedTitleTextAppearance="?attr/feedCollapsedToolbarStyle"
             app:contentScrim="@android:color/black"
             app:title="@{viewModel.getCatMD().cat_name}"
+
+
+
+
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:layout_gravity="bottom"
+
+
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout
@@ -53,27 +65,31 @@
 
             </FrameLayout>
 
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/view_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
-            android:background="@null"
+
             android:elevation="6dp"
             app:tabIndicatorColor="@color/brighter_blue"
             app:tabIndicatorHeight="@dimen/tab_indicator_height"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed"
+
+
             app:tabPadding="-1dp"
             app:tabSelectedTextColor="@color/brighter_blue"
             app:tabTextColor="@color/white_50" />
+
     </com.google.android.material.appbar.AppBarLayout>
 </layout>

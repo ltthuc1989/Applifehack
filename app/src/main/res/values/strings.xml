@@ -28,6 +28,7 @@
     <string name="save">Saved</string>
     <string name="knowlege_sologan">Knowledge Gives You Power\n Power Gives you control\nControl gives you freedom\nFreedom gives you potential\nPotential gives you endless possibilities</string>
     <string name="share_info_message"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it. \n Check out this link : %1$s]]></string>
+    <string name="share_info_text"><![CDATA[Here is some information,  that might be useful I love to share with you .I hope you’ll enjoy it.\n %1$s\n Check out this link : %2$s]]></string>
     <string name="download">Download:</string>
     <string name="app_link">link_app</string>
     <string name="Notifications">Notification</string>
@@ -71,6 +72,7 @@
     <string name="sorry_nothing_found">Sorry, nothing found</string>
     <string name="confirm_to_exit_app">Please click Back Again to exit app!</string>
     <string name="daily">Daily</string>
+    <string name="quote">Quote</string>
 
 
 </resources>

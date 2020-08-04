@@ -133,7 +133,7 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
     }
     suspend fun  myFavoritePost(data:List<Post>) = withContext(Dispatchers.Default){
-        data.forEach {
+        data?.forEach {
 
 
             val temp =  async(Dispatchers.IO) {

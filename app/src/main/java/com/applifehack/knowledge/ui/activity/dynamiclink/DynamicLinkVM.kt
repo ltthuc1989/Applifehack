@@ -33,7 +33,7 @@ class DynamicLinkVM  @Inject constructor(val appDataManager: AppDataManager, sch
             val data = appDataManager.getPostDetail(id!!).addOnSuccessListener {
 
             }.addOnFailureListener {
-                Log.d("abc",it.message)
+                navigator?.hideProgress()
             }
             data?.await().let {
 

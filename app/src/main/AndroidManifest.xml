@@ -11,8 +11,8 @@
         android:name="com.applifehack.knowledge.KnowledgeApp"
         android:allowBackup="true"
         android:label="@string/app_name"
-
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
+        android:icon="@mipmap/ic_launcher"
 
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -21,7 +21,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.applifehack.knowledge.staging.provider"
+            android:authorities="${applicationId}.provider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data

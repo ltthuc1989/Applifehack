@@ -44,7 +44,7 @@ class SettingActivity : MvvmActivity<ActivitySettingBinding, SettingVM>(), Setti
     override fun rateUs() {
         startActivity(Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(
-                    "https://play.google.com/store/apps/details?id=com.example.android")
+                    "https://play.google.com/store/apps/details?id=com.applifehack.knowledge")
             setPackage("com.android.vending")
         })
     }

@@ -14,13 +14,18 @@ class YtDetailVM @Inject constructor(val appDataManager: AppDataManager, schedul
 
     fun getYtDetail(youtubeId:String?){
 
-        apiSingle(appDataManager.getYtDetail(youtubeId),{
+        apiSingleException(appDataManager.getYtDetail(youtubeId),true,{
               if(it.items?.isEmpty()!=true) {
                   val temp=YtModel(youtubeId, it.items[0])
                   updateModel(temp)
               }
 
-        },true)
+        },{
+
+            it?.message?.let {
+                navigator?.showAlert(it)
+            }
+        })
 
 
 

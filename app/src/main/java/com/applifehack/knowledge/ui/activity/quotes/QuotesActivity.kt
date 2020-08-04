@@ -17,7 +17,9 @@ import com.applifehack.knowledge.util.extension.openLink
 import com.ezyplanet.core.ui.listener.OnSnapPositionChangeListener
 import com.ezyplanet.core.ui.widget.pager.SnapOnScrollListener
 import com.ezyplanet.core.util.extension.attachSnapHelperWithListener
+import kotlinx.android.synthetic.main.activity_quote.*
 import kotlinx.android.synthetic.main.fragment_daily_feed.*
+import kotlinx.android.synthetic.main.fragment_daily_feed.daily_feed_recyclerview
 
 class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
     QuoteViewListener, ToolbarQuoteListener, NavListener {
@@ -30,7 +32,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         viewModel.navigator = this
-        viewModel.getQuotes(false)
+        viewModel.initData()
 
         try {
 
@@ -40,6 +42,13 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
                 SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
                 object : OnSnapPositionChangeListener {
                     override fun onSnapPositionChange(position: Int) {
+
+                        (binding?.adapter as FeedAdapter)?.getRowData(position)?.let {
+                            it?.quote_type?.let { type->
+                                binding.dailyFeedToolbar.setTitle("$type  ${getString(R.string.quote)}")
+                            }
+
+                        }
 
 
                         viewModel.onPageChange(position)
@@ -76,7 +85,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
     }
 
     override fun sortBy(item: String) {
-        viewModel.getQuotes(false, item.toLowerCase())
+        viewModel.getQuotes(false, item)
     }
 
     override fun back() {
@@ -99,7 +108,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
     override fun onSaved() {
 
 
-        gotoActivity(HomeActivity::class, mapOf(HomeActivity.KEY_GO_HOME to true), true)
+        gotoActivity(HomeActivity::class, mapOf(HomeActivity.KEY_GO_FAVORITE to true), true)
        // gotoActivity(FavoriteFragment::class)
 
 
@@ -109,6 +118,7 @@ override fun onCategory() {
     gotoActivity(HomeActivity::class, true)
 }
 
-
-
+    override fun scrollToTop() {
+        daily_feed_recyclerview?.scrollToPosition(0)
+    }
 }

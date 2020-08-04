@@ -60,16 +60,23 @@
 
             <ImageView
                 android:id="@+id/imMenu"
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="10dp"
+
+
+
                 android:tint="@color/white_75"
-                android:padding="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+
+
+
 
                 android:onClick="@{()->listener.onMenu()}"
-                app:srcCompat="@drawable/ic_menu" />
+                android:src="@drawable/ic_refresh_white_24dp" />
 
 
         </RelativeLayout>

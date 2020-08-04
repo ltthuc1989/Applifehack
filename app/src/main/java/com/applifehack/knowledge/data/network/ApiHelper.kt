@@ -19,6 +19,7 @@ interface ApiHelper {
     fun getPostByCat(catId:String?, sortBy:SortBy?=SortBy.NEWEST, loadMore:Boolean?=false, lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getPopularPost():Task<QuerySnapshot>
     fun getPostDetail(postId:String):Task<DocumentSnapshot>
+    fun getQuoteCat(): Task<QuerySnapshot>
 
     fun getVideoPostByCat(catId:String?,sortBy:SortBy?=SortBy.NEWEST,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getPostByQuote(typeQuote:String?,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>

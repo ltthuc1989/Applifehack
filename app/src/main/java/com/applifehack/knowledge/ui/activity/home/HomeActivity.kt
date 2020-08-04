@@ -2,32 +2,33 @@ package com.applifehack.knowledge.ui.activity.home
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
-import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.ezyplanet.core.util.extension.gotoActivity
-import com.ezyplanet.core.util.extension.replaceFragment
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.play.core.install.model.ActivityResult
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.network.response.CatResp
 import com.applifehack.knowledge.databinding.ActivityHomeBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.activity.categorydetail.CategoryDetailFrag
 import com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkActivity
-import com.applifehack.knowledge.ui.fragment.favorite.FavoriteFragment
 import com.applifehack.knowledge.ui.activity.quotes.QuotesActivity
-import com.applifehack.knowledge.ui.fragment.category.CategoryFrag
 import com.applifehack.knowledge.ui.activity.setting.SettingActivity
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
+import com.applifehack.knowledge.ui.fragment.category.CategoryFrag
+import com.applifehack.knowledge.ui.fragment.favorite.FavoriteFragment
 import com.applifehack.knowledge.ui.fragment.feed.FeedFrag
 import com.applifehack.knowledge.ui.widget.listener.NavListener
 import com.applifehack.knowledge.ui.widget.listener.ToolbarListener
 import com.applifehack.knowledge.util.AppBundleKey
 import com.applifehack.knowledge.util.helper.AppUpdateHelper
-import java.util.logging.Handler
+import com.ezyplanet.core.util.extension.gotoActivity
+import com.ezyplanet.core.util.extension.replaceFragment
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.install.model.ActivityResult
+
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,ToolbarListener,NavListener {
 
@@ -64,6 +65,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
         })
         viewModel.handleIntent(intent)
         viewModel.getDynamicLink(intent,this)
+        homeEventModel.showRefresh.observe(this, Observer {
+            binding.toolbarHome.showRefresh(it)
+        })
 
 
 
@@ -155,27 +159,36 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
     fun initAppUpdate() {
         appUpdateHelper = AppUpdateHelper()
-        appUpdateHelper?.checkUpdate(this, viewModel.getVersionCode()!!)
+        appUpdateHelper?.checkUpdate(this)
         lifecycle.addObserver(appUpdateHelper)
         appUpdateHelper?.observe(this, Observer {
             showSnackUpdateBar()
         })
     }
 
-    fun showSnackUpdateBar() {
-        Snackbar.make(
-                findViewById(R.id.daily_feed_layout),
+   private fun showSnackUpdateBar() {
+        try {
+            val snackbar = Snackbar.make(
+                findViewById(android.R.id.content),
                 "An update has just been downloaded.",
                 Snackbar.LENGTH_INDEFINITE
-        ).apply {
-            setAction("RESTART") { appUpdateHelper.completeUpdate() }
-            setActionTextColor(resources.getColor(R.color.bg_app))
-            show()
+            ).apply {
+                setAction("RESTART") {
+                    appUpdateHelper?.completeUpdate()
+                }
+
+                setActionTextColor(Color.BLACK)
+                show()
+            }.view
+            snackbar.setBackgroundColor(Color.WHITE)
+            snackbar.findViewById<TextView>(R.id.snackbar_text).setTextColor(Color.BLACK)
+        }catch (ex:Exception){
+
         }
     }
 
     override fun onMenu() {
-
+        homeEventModel.refreshClick.postValue(true)
     }
 
 

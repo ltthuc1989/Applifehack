@@ -37,6 +37,7 @@
                     android:id="@+id/daily_feed_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/feed_daily_toolbar_height"
+                    app:viewModel="@{viewModel.quoteVM}"
                     />
             </com.google.android.material.appbar.AppBarLayout>
 

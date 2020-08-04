@@ -10,7 +10,7 @@ import com.applifehack.knowledge.data.local.dao.PostDao
 import com.applifehack.knowledge.util.Converters
 
 
-@Database(entities = [(Post::class)], version = 1)
+@Database(entities = [(Post::class)], version = 3)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao

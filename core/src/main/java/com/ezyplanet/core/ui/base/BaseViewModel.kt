@@ -228,6 +228,25 @@ abstract class BaseViewModel<n : MvvmNav, m : Any?>(private val connectionManage
                 }))
     }
 
+    protected fun <T> apiSingleException(single: Single<T>, isShowLoading: Boolean = true, action: (T) -> Unit = {}, exception: (Throwable) -> Unit = {}) {
+
+        if (isShowLoading) navigator?.showProgress()
+        compositeDisposable.add(single
+            .compose(schedulerProvider?.ioToMainSingleScheduler())
+            .subscribe({
+                navigator?.hideProgress()
+                action(it)
+
+
+            }, {
+
+                navigator?.hideProgress()
+                exception(it)
+
+
+            }))
+    }
+
 
 
 

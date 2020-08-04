@@ -18,4 +18,9 @@ data class CatResp constructor(val cat_name:String?="",
                                val cat_thumb_url:String?="",
                                val cat_id:String?="",
                                val cat_desc:String?="",
-                               val cat_type:String?=""):Parcelable
+                               val cat_type:String?="",
+                               val editing:Boolean = false):Parcelable
+
+@Parcelize
+@IgnoreExtraProperties
+data class QuoteResp constructor(val quote_name:String?=""):Parcelable

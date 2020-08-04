@@ -12,5 +12,6 @@ interface FeedNav : MvvmNav{
     fun share(message:String)
     fun shareArticle(view:View)
     fun gotoYoutubeDetail(post: Post,shareView:View)
+    fun scrollToTop()
 
 }

@@ -4,7 +4,7 @@ object AppConstants {
 
     object DatabasePath {
         const val CAT_ID = "post_cat_id"
-        const val CAT_CREATED_DATE = "created_date"
+        const val CAT_CREATED_DATE = "cat_created_date"
         const val TYPE = "post_type"
         const val ID = "post_id"
         const val TITLE = "post_title"
@@ -20,6 +20,9 @@ object AppConstants {
         const val DURATION = "post_video_duration"
         const val AUTHOR = "post_author_name"
         const val QUOTE_TYPE = "post_quote_type"
+        const val QUOTES = "quotes"
+        const val QUOTE_NAME = "quote_name"
+        const val EDITING_DATABASE = "editing"
 
     }
     object Google{

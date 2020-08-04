@@ -112,10 +112,14 @@ data class Post(
     @get:PropertyName("liked_date")
     @ColumnInfo(name = "liked_date")
     var likedDate: Date?= Date(),
-    @set:PropertyName("video_views")
-    @get:PropertyName("video_views")
-    @ColumnInfo(name = "video_views")
-    var video_views : Int?=0
+    @set:PropertyName("post_video_views")
+    @get:PropertyName("post_video_views")
+    @ColumnInfo(name = "post_video_views")
+    var video_views : String?= "",
+    @set:PropertyName("post_image_scale_type")
+    @get:PropertyName("post_image_scale_type")
+    @ColumnInfo(name = "post_image_scale_type")
+    var imageScaleType : Int? = 0
 ) : Parcelable {
 
 
