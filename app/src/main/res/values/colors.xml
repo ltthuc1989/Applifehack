@@ -72,5 +72,14 @@
     <color name="app_cecece">#cecece</color>
     <color name="app_logo_color">#f05623</color>
 
+    <color name="transparent">#00000000</color>
+    <color name="ultimatefacts_button">#ffffff</color>
+    <color name="ultimatefacts_gray">#655d5d</color>
+    <color name="ultimatefacts_greeen">#397d77</color>
+    <color name="ultimatefacts_greeen_transculent">#5f397d77</color>
+    <color name="ultimatefacts_navigation_bar_color">#8d8d8d</color>
+    <color name="ultimatefacts_orange">#ff5722</color>
+    <color name="ultimatefacts_toolbar">#ffffff</color>
+
 </resources>
 

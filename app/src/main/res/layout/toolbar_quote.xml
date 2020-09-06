@@ -85,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
 
+
                 android:textColor="@color/white_75"
                 android:textSize="14sp"
 

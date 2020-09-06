@@ -173,7 +173,8 @@ ext {
                     'stetho':"com.facebook.stetho:stetho:$stethoVersion",
                     'stetho_okhttp3':"com.facebook.stetho:stetho-okhttp3:$stethoVersion",
                     'facebookSdk': "com.facebook.android:facebook-android-sdk:$facebookVersion",
-                    'accountKit': "com.facebook.android:account-kit-sdk:$accountKitVersion"
+                    'accountKit': "com.facebook.android:account-kit-sdk:$accountKitVersion",
+                    'facebookCore': "com.facebook.android:facebook-core:[5,6)"
 
             ],
             timeAgo : "com.github.marlonlom:timeago:$timeAgoVersion",

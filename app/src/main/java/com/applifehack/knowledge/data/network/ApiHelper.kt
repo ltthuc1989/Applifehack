@@ -20,9 +20,15 @@ interface ApiHelper {
     fun getPopularPost():Task<QuerySnapshot>
     fun getPostDetail(postId:String):Task<DocumentSnapshot>
     fun getQuoteCat(): Task<QuerySnapshot>
+    fun getFactCat(): Task<QuerySnapshot>
+    fun getHackCat(): Task<QuerySnapshot>
+    fun getMeaningCat(): Task<QuerySnapshot>
 
     fun getVideoPostByCat(catId:String?,sortBy:SortBy?=SortBy.NEWEST,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getPostByQuote(typeQuote:String?,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
+    fun getPostByFact(typeFact:String?,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
+    fun getPostByHack(typeHack:String?,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
+    fun getPostByPhoto(typeHack:String?,loadMore:Boolean?=false,lastItem:DocumentSnapshot?=null):Task<QuerySnapshot>
     fun getYtDetail(youtubeId:String?):Single<YoutubeResp>
      fun updateViewCount(postId:String?):Task<Transaction>
     fun updateLikeCount(postId:String?):Task<Transaction>

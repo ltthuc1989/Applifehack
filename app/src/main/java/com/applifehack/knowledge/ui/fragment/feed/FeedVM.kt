@@ -160,7 +160,7 @@ open class FeedVM @Inject constructor(
     }
 
     fun shareClick(view: View, data: Post) {
-        if(data.getPostType()==PostType.QUOTE){
+        if(data.getPostType()!=PostType.ARTICLE){
             generateArticle(view, data.id)
         }else{
             createDynamicLink(view.context,data)
@@ -241,6 +241,9 @@ open class FeedVM @Inject constructor(
                             createDynamicLink(view.context, Post(id!!).apply {
                                 type = PostType.QUOTE.type
                             })
+
+
+
                         }, 100)
 
                     }, 100)
@@ -287,7 +290,7 @@ open class FeedVM @Inject constructor(
 
         }.addOnSuccessListener {
             navigator?.hideProgress()
-            if(post?.getPostType()==PostType.QUOTE) {
+            if(post?.getPostType()!= PostType.ARTICLE) {
                 (context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
             }else{
                 val message = String.format(context.getString(R.string.share_info_text," '${post?.title}'",it.shortLink.toString()))
@@ -315,9 +318,16 @@ open class FeedVM @Inject constructor(
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     override fun onStop() {
         super.onStop()
         onStop = true
+    }
+    fun getcurrentPost():Post{
+       return mData[currentItem]
     }
 
     fun onPageChange(position: Int) {

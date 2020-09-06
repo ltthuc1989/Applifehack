@@ -18,6 +18,7 @@ import com.applifehack.knowledge.data.network.response.CatResp
 import com.applifehack.knowledge.databinding.FragmentCategoryBinding
 import com.applifehack.knowledge.databinding.ItemCategoryBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
+import com.applifehack.knowledge.ui.activity.dynamiclink.DynamicLinkActivity
 import com.applifehack.knowledge.ui.activity.home.HomeEventModel
 import com.applifehack.knowledge.ui.activity.quotes.QuotesActivity
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
@@ -106,11 +107,13 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
 
 
     override fun gotoCatDetailScreen(resp: CatResp) {
-        if (resp?.cat_type != null && resp?.cat_type == "quote") {
-            gotoActivity(QuotesActivity::class)
-        } else {
+       if(resp?.cat_type != null && resp?.cat_type == "article" || resp?.cat_type == "video") {
+
             homeEventModel.categoryClick?.postValue(resp)
 
+        } else{
+
+            gotoActivity(QuotesActivity::class, mapOf(QuotesActivity.KEY_CAT_TYPE to resp.cat_type,QuotesActivity.KEY_CAT_NAME to resp.cat_name))
         }
 
     }
@@ -118,10 +121,11 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
     override fun gotoPostDetail(post: Post) {
         if (post.getPostType() == PostType.ARTICLE) {
             (activity as BaseActivity<*, *>).openBrowser(post.redirect_link)
-        } else if (post?.getPostType() == PostType.QUOTE) {
-            gotoActivity(QuotesActivity::class)
-        } else {
+        } else if (post?.getPostType() == PostType.VIDEO) {
             openYoutube(post)
+        } else {
+
+            gotoActivity(DynamicLinkActivity::class, mapOf(AppBundleKey.KEY_POST_ID to post.id))
         }
     }
 

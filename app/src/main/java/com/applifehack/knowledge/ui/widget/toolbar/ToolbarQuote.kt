@@ -16,6 +16,7 @@ import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.toArray
 import com.ezyplanet.core.util.extension.fromJson
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.item_quote_list.view.*
 import kotlinx.android.synthetic.main.toolbar_quote.*
 
 class ToolbarQuote : FrameLayout {
@@ -66,15 +67,19 @@ class ToolbarQuote : FrameLayout {
         binding = ToolbarQuoteBinding.inflate(inflater, this, true)
 
         binding.tvSortBy.setOnClickListener {
-            val quote= viewModel?.quotes
-            AlertDialogUtils.showSingleChoice(context,_sortBy, quote!!,indexSortBy){
-               indexSortBy =it
-                binding.listener?.sortBy(
-                       quote?.get(it)
-                )
-                binding.tvSortBy.text = quote?.get(it)
-                _sortBy = quote?.get(it)
-                binding.tvTitle.visibility = if(_sortBy.isNullOrEmpty() ||_sortBy=="All") View.VISIBLE else View.GONE
+            val quote= viewModel?.quotes?.value
+
+            if(quote!=null) {
+                AlertDialogUtils.showSingleChoice(context, _sortBy, quote!!, indexSortBy) {
+                    indexSortBy = it
+                    binding.listener?.sortBy(
+                        quote?.get(it)
+                    )
+                    binding.tvSortBy.text = quote?.get(it)
+                    _sortBy = quote?.get(it)
+                    binding.tvTitle.visibility =
+                        if (_sortBy.isNullOrEmpty() || _sortBy == "All") View.VISIBLE else View.GONE
+                }
             }
         }
 

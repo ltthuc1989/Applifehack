@@ -10,24 +10,25 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
+import android.view.View
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
-
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
-import com.google.gson.Gson
-import com.applifehack.knowledge.KnowledgeApp
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.ui.activity.splash.SplashActivity
 import com.applifehack.knowledge.util.AppBundleKey
-import javax.inject.Inject
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.NotificationTarget
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private var payload : String? = null
     private val CHANNEL_ID: String = "Knowledge"
+    private val NOTIFICATION_ID = -1
 
-    @Inject lateinit var firebaseAnalyticsHelper: FirebaseAnalyticsHelper
+
 
 
 
@@ -40,43 +41,26 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        var event ="notification_receive"
-        firebaseAnalyticsHelper?.logEvent(event,event,"notification")
-        if(!(applicationContext as KnowledgeApp).isBackGround){
-            return
-        }
-        Log.d(javaClass.simpleName, "From: ${remoteMessage?.from}")
+
+
+
 
         // Check if message contains a data payload.
         remoteMessage?.data?.isNotEmpty()?.let {
             Log.d(javaClass.simpleName, "Message data payload: " + remoteMessage.data)
-            payload = remoteMessage.data.toString()
+            val  payload = getPayLoad(remoteMessage.data)
+
+
+
+            sendQuoteNotification(applicationContext, payload)
 
         }
 
-        // Check if message contains a notification payload.
-        remoteMessage?.notification?.let {
-            Log.d(javaClass.simpleName, "Message Notification Body: ${it.body}")
-
-
-                sendNotification(applicationContext,it.body.toString(), payload,it?.title)
-
-        }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
-    // [END receive_message]
 
-    // [START on_new_token]
-    /**
-     * Called if InstanceID token is updated. This may occur if the security of
-     * the previous token had been compromised. Note that this is called when the InstanceID token
-     * is initially generated so this is where you would retrieve the token.
-     */
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d(javaClass.simpleName, "Refreshed token: $token")
+       // Log.d(javaClass.simpleName, "Refreshed token: $token")
 
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
@@ -103,39 +87,33 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      */
 
 
-    private fun sendNotification(context: Context, messageBody: String, payload: String?,title:String?="") {
-        var id: Int = -1
+    private fun sendQuoteNotification(context: Context, result: PayloadResult) {
+
         val intent = Intent(context, SplashActivity::class.java)
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-        try {
-
-            Log.e(javaClass.simpleName, "messageBodyJson $payload")
-         //   val json = JsonHelper.hasMapToJson(payload)
-            val result = Gson().fromJson<PayloadResult>(payload, PayloadResult::class.java)
-            intent?.putExtra(AppBundleKey.KEY_NOTIFICATION,result)
-        }catch (ex:Exception){
-             Log.d("pushyExce",ex.message)
-        }
 
 
-
+        intent?.putExtra(AppBundleKey.KEY_NOTIFICATION,result)
+        val remoteView = getRemoveViewArticle(context,result)
         val pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.FLAG_UPDATE_CURRENT)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle(title)
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent)
-                .setWhen(System.currentTimeMillis())
-                .setPriority(Notification.PRIORITY_HIGH)
+            .setSmallIcon(R.mipmap.ic_launcher_foreground)
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
+            .setContentTitle(result.title)
+            .setContentText(result.message)
+            .setContentIntent(pendingIntent)
+            .setWhen(System.currentTimeMillis())
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            .setContent(remoteView)
+            .setPriority(Notification.PRIORITY_HIGH)
         val notificationManager: NotificationManager =
-                context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.channel_name)
             val descriptionText = context.getString(R.string.channel_name)
@@ -146,9 +124,71 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             notificationManager.createNotificationChannel(channel)
         }
+        val notification = notificationBuilder.build()
+        if(result.pushStyle==0) {
+            notificationManager.notify(NOTIFICATION_ID, notification)
+        }else{
+            try {
+                loadImage(context, remoteView, notification, result?.imageUrl!!)
+            }catch (ex:Exception){
+                Log.d("exce",ex.message)
+            }
+        }
 
 
-        notificationManager.notify(id, notificationBuilder.build())
+    }
+
+
+
+
+    private  fun getRemoveViewArticle(context: Context, payload: PayloadResult):RemoteViews{
+
+        val remoteViews =
+            RemoteViews(context.getPackageName(), R.layout.view_push_notification)
+
+
+
+        remoteViews.setTextViewText(R.id.remoteview_notification_headline, payload.message)
+        remoteViews.setTextViewText(R.id.remoteview_notification_short_message, payload.title)
+        if(payload.postType == "quote"){
+            remoteViews.setViewVisibility(R.id.bigPicture,View.GONE)
+        }else if(payload.postType == "article"){
+            if(payload.pushStyle == 1){
+                remoteViews.setViewVisibility(R.id.bigPicture,View.VISIBLE)
+            }
+        } else if(payload.postType == "video"){
+            payload.imageUrl = payload.imageUrl?.replace("hqdefault", "maxresdefault")
+            remoteViews.setViewVisibility(R.id.bigPicture,View.VISIBLE)
+        }
+        return  remoteViews
+    }
+
+    private fun loadImage(context: Context,remoteView: RemoteViews,notification: Notification,url:String){
+        val target = NotificationTarget(
+            context,
+            R.id.bigPicture,
+            remoteView,
+            notification,
+            NOTIFICATION_ID)
+
+        Glide.with(context.applicationContext)
+            .asBitmap()
+            .load(url)
+            .into(target)
+
+    }
+
+    private fun getPayLoad(map:Map<String,String>):PayloadResult{
+
+        return PayloadResult().apply {
+            title = map["title"]
+            postId = map["postId"]
+            imageUrl = map["imageUrl"]
+            message = map["message"]
+            postType = map["postType"]
+            pushStyle = map["pushStyle"]?.toInt()!!
+
+        }
 
     }
 

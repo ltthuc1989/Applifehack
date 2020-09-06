@@ -26,8 +26,10 @@ import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
 import com.applifehack.knowledge.ui.adapter.FeedAdapter
 import com.applifehack.knowledge.ui.fragment.BaseFragment
 import com.applifehack.knowledge.util.AppBundleKey
+import com.applifehack.knowledge.util.TimeUtil
 import com.ezyplanet.core.util.extension.putArgs
 import kotlinx.android.synthetic.main.fragment_daily_feed.*
+import java.text.SimpleDateFormat
 
 
 class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
@@ -35,10 +37,12 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
     override val viewModel: FeedVM by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId: Int = R.layout.fragment_daily_feed
     lateinit var homeEventModel: HomeEventModel
-  var isFirstCreated = false
+    var isFirstCreated = false
+
     fun newInstance(post :Post)= putArgs {
         putParcelable(AppBundleKey.KEY_POST_ID,post)
     }
+
 
     override fun setUpNavigator() {
         viewModel.navigator = this
@@ -73,9 +77,14 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
                             override fun onSnapPositionChange(position: Int) {
 
                                 Log.d("onSnapPosition", "$position")
+                                val post = (binding?.adapter as FeedAdapter)?.getRowData(position)
                                 homeEventModel.toolbarTitle.value =
-                                    (binding?.adapter as FeedAdapter)?.getRowData(position)?.catName
+                                    post?.catName
                                 viewModel.onPageChange(position)
+                                post?.createdDate?.let {
+                                    homeEventModel.datePosted.value = "${TimeUtil.formatDate(activity,it)}"
+                                }
+
 
                             }
                         })
@@ -102,6 +111,11 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
         homeEventModel.showRefresh.value = true
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
 
     override fun gotoFeedDetail(post: Post) {
         openLink(post?.redirect_link!!)
@@ -115,9 +129,8 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
     override fun gotoPageUrl(post: Post) {
         val url = if(post?.getPostType()==PostType.ARTICLE) post?.redirect_link  else post?.authorUrl
-        url?.let {
-            openLink(it)
-        }
+        if(!url.isNullOrEmpty() ) openLink(url)
+
 
 
     }
@@ -141,6 +154,7 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
     override fun scrollToTop() {
         daily_feed_recyclerview.scrollToPosition(0)
+
     }
 
 }

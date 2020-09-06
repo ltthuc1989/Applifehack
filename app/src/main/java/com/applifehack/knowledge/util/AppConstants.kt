@@ -20,8 +20,14 @@ object AppConstants {
         const val DURATION = "post_video_duration"
         const val AUTHOR = "post_author_name"
         const val QUOTE_TYPE = "post_quote_type"
+        const val HACK_TYPE = "post_hack_type"
+        const val FACT_TYPE = "post_fact_type"
+        const val PHOTO_TYPE = "post_photo_type"
         const val QUOTES = "quotes"
         const val QUOTE_NAME = "quote_name"
+        const val FACT_NAME = "fact_name"
+        const val HACK_NAME = "hack_name"
+        const val PHOTO_NAME = "photo_name"
         const val EDITING_DATABASE = "editing"
 
     }

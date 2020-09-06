@@ -44,4 +44,6 @@
     <string name="confirm_to_exit_app">Please click Back Again to exit app!</string>
     <string name="daily">Daily</string>
     <string name="quote">Quote</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

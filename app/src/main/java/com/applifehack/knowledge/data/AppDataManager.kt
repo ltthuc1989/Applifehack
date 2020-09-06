@@ -82,4 +82,40 @@ class AppDataManager @Inject constructor(val context: Context, val appPreference
 
         return apiHelper.getPostDetail(postId)
     }
+
+    override fun getFactCat(): Task<QuerySnapshot> {
+        return  apiHelper.getFactCat()
+    }
+
+    override fun getPostByFact(
+        typeFact: String?,
+        loadMore: Boolean?,
+        lastItem: DocumentSnapshot?
+    ): Task<QuerySnapshot> {
+        return apiHelper.getPostByFact(typeFact,loadMore,lastItem)
+    }
+
+    override fun getHackCat(): Task<QuerySnapshot> {
+        return apiHelper.getHackCat()
+    }
+
+    override fun getPostByHack(
+        typeHack: String?,
+        loadMore: Boolean?,
+        lastItem: DocumentSnapshot?
+    ): Task<QuerySnapshot> {
+        return apiHelper.getPostByHack(typeHack,loadMore,lastItem)
+    }
+
+    override fun getMeaningCat(): Task<QuerySnapshot> {
+        return  apiHelper.getMeaningCat()
+    }
+
+    override fun getPostByPhoto(
+        typeHack: String?,
+        loadMore: Boolean?,
+        lastItem: DocumentSnapshot?
+    ): Task<QuerySnapshot> {
+        return apiHelper.getPostByPhoto(typeHack,loadMore,lastItem)
+    }
 }

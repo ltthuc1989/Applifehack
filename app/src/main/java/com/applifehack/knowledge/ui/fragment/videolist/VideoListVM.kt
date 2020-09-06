@@ -31,7 +31,7 @@ class VideoListVM @Inject constructor(val appDataManager: AppDataManager, schedu
 
     private var lastItem: DocumentSnapshot?=null
     private var currentPage=0
-    lateinit var catId:String
+     var catId:String?=""
     @Inject lateinit var fbAnalytics:FirebaseAnalyticsHelper
     override fun updateModel(data: String?) {
         catId = data!!

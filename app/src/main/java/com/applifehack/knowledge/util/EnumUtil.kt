@@ -26,7 +26,10 @@ enum class CategoryType(val type:String){
     QUOTE("quote"),
     INSPIRATION("inspiration"),
     LIVING_HEALTHY("living_healthy"),
-    SELF_IMPROVEMENT("self_improvement")
+    SELF_IMPROVEMENT("self_improvement"),
+    HACK("hack"),
+    FACTS("fact"),
+    MEANING_PICTURE("picture")
 
 
 }

@@ -150,7 +150,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
                     .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                 if (lastItem != null) {
                     val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
-                    temp?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                    temp?.whereLessThan(DatabasePath.CREATED_DATE_TEXT, createdAt)
 
                 } else temp
 
@@ -182,7 +182,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
             }
         }
-        return if (loadMore == true) query.startAfter(lastItem).limit(10).get() else query.limit(10)
+        return if (loadMore == true) query.startAfter(lastItem).limit(20).get() else query.limit(20)
             .get()
 
     }
@@ -270,5 +270,104 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun getPostDetail(postId: String): Task<DocumentSnapshot> {
         return firStore.collection(ApiEndPoint.POST_DB_KEY).document(postId!!).get()
+    }
+
+    override fun getFactCat(): Task<QuerySnapshot> {
+        return firStore.collection(ApiEndPoint.GET_FACTS).
+        orderBy(DatabasePath.FACT_NAME,
+            Query.Direction.ASCENDING).
+        whereEqualTo(DatabasePath.EDITING_DATABASE,false).get()
+    }
+
+    override fun getPostByFact(
+        typeFact: String?,
+        loadMore: Boolean?,
+        lastItem: DocumentSnapshot?
+    ): Task<QuerySnapshot> {
+        var supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.FACT.type)
+        if (typeFact != null&&!typeFact?.equals("All",true)){
+
+            supQuery=supQuery.whereEqualTo(DatabasePath.FACT_TYPE, typeFact)
+
+        }
+        supQuery=supQuery.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
+
+
+        return if (loadMore == true) {
+            val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+
+            supQuery?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                ?.startAfter(lastItem).limit(10).get()
+
+
+        } else {
+            supQuery.limit(10).get()
+        }
+    }
+
+    override fun getHackCat(): Task<QuerySnapshot> {
+        return firStore.collection(ApiEndPoint.GET_HACKS).
+        orderBy(DatabasePath.HACK_NAME,
+            Query.Direction.ASCENDING).
+        whereEqualTo(DatabasePath.EDITING_DATABASE,false).get()
+    }
+
+    override fun getPostByHack(
+        typeHack: String?,
+        loadMore: Boolean?,
+        lastItem: DocumentSnapshot?
+    ): Task<QuerySnapshot> {
+        var supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.HACK.type)
+        if (typeHack != null&&!typeHack?.equals("All",true)){
+
+            supQuery=supQuery.whereEqualTo(DatabasePath.HACK_TYPE, typeHack)
+
+        }
+        supQuery=supQuery.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
+
+
+        return if (loadMore == true) {
+            val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+
+            supQuery?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                ?.startAfter(lastItem).limit(10).get()
+
+
+        } else {
+            supQuery.limit(10).get()
+        }
+    }
+
+    override fun getMeaningCat(): Task<QuerySnapshot> {
+        return firStore.collection(ApiEndPoint.GET_MEANING_PICTURE).
+        orderBy(DatabasePath.PHOTO_TYPE,
+            Query.Direction.ASCENDING).
+        whereEqualTo(DatabasePath.EDITING_DATABASE,false).get()
+    }
+
+    override fun getPostByPhoto(
+        typePhoto: String?,
+        loadMore: Boolean?,
+        lastItem: DocumentSnapshot?
+    ): Task<QuerySnapshot> {
+        var supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.PICTURE.type)
+        if (typePhoto != null&&!typePhoto?.equals("All",true)){
+
+            supQuery=supQuery.whereEqualTo(DatabasePath.PHOTO_TYPE, typePhoto)
+
+        }
+        supQuery=supQuery.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
+
+
+        return if (loadMore == true) {
+            val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
+
+            supQuery?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
+                ?.startAfter(lastItem).limit(10).get()
+
+
+        } else {
+            supQuery.limit(10).get()
+        }
     }
 }

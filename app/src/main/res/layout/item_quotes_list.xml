@@ -2,7 +2,8 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.widget.ImageView.ScaleType"/>
+        <import type="android.text.TextUtils"/>
         <variable
             name="item"
             type="com.applifehack.knowledge.data.entity.Post" />
@@ -34,8 +35,9 @@
                 app:riv_corner_radius_top_left="4dp"
                 app:riv_corner_radius_top_right="4dp"
                 android:alpha="0.8"
+                android:onClick="@{(view)->viewModel.openPostDetail(false,item)}"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
+                android:scaleType='@{item.imageScaleType==0? ScaleType.CENTER_CROP:ScaleType.FIT_XY}'
                 app:srcImageBitmapUrl="@{item.imageUrl}"
 
 
@@ -47,6 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:gradient="@{true}"
+                android:onClick="@{(view)->viewModel.openPostDetail(false,item)}"
+                goneUnless="@{TextUtils.isEmpty(item.imageUrl)}"
                 android:alpha="0.5" />
 
             <!--Quote-->
@@ -59,6 +63,7 @@
                 android:letterSpacing="0.05"
                 android:gravity="center"
                 android:textColor="@color/white"
+                goneUnless="@{!TextUtils.isEmpty(item.title)}"
                 android:fontFamily="@font/cabin_condensed_regular"
                 app:autoResizeTextMax="@{30}"
                 app:autoResizeTextMin="@{14}"
@@ -111,7 +116,7 @@
                 android:src="@drawable/ic_share"
                 android:tint="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvReadMore"
                 app:layout_constraintTop_toTopOf="parent"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
@@ -202,7 +207,27 @@
 
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/tvReadMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_readmore"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="@string/readMore"
+                android:textSize="16sp"
+                goneUnless="@{!TextUtils.isEmpty(item.redirect_link)}"
+                android:onClick="@{(view)->viewModel.openPostDetail(false,item)}"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout
             android:layout_gravity="bottom"

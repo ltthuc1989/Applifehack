@@ -1,12 +1,16 @@
 package com.applifehack.knowledge.ui.activity.quotes
 
+import android.content.Intent
+import android.view.View
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.observe
 import com.applifehack.knowledge.R
+import com.applifehack.knowledge.data.entity.ArticleType
+import com.applifehack.knowledge.data.entity.Post
+import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.databinding.ActivityQuoteBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
-import com.applifehack.knowledge.ui.fragment.favorite.FavoriteFragment
 import com.applifehack.knowledge.ui.activity.home.HomeActivity
 import com.applifehack.knowledge.ui.activity.setting.SettingActivity
 import com.applifehack.knowledge.ui.adapter.FeedAdapter
@@ -17,22 +21,27 @@ import com.applifehack.knowledge.util.extension.openLink
 import com.ezyplanet.core.ui.listener.OnSnapPositionChangeListener
 import com.ezyplanet.core.ui.widget.pager.SnapOnScrollListener
 import com.ezyplanet.core.util.extension.attachSnapHelperWithListener
-import kotlinx.android.synthetic.main.activity_quote.*
-import kotlinx.android.synthetic.main.fragment_daily_feed.*
 import kotlinx.android.synthetic.main.fragment_daily_feed.daily_feed_recyclerview
+import kotlinx.android.synthetic.main.toolbar_quote.view.*
 
 class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
     QuoteViewListener, ToolbarQuoteListener, NavListener {
 
     override val viewModel: QuotesVM by getLazyViewModel()
     override val layoutId: Int = R.layout.activity_quote
+    companion object {
+        val KEY_CAT_TYPE = "CAT_TYPE"
+        val KEY_CAT_NAME = "CAT_NAME"
+    }
 
 
     override fun onViewInitialized(binding: ActivityQuoteBinding) {
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         viewModel.navigator = this
-        viewModel.initData()
+        var catName = intent.getStringExtra(
+            KEY_CAT_NAME)
+        viewModel.initData(intent.getStringExtra(KEY_CAT_TYPE))
 
         try {
 
@@ -45,7 +54,8 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
 
                         (binding?.adapter as FeedAdapter)?.getRowData(position)?.let {
                             it?.quote_type?.let { type->
-                                binding.dailyFeedToolbar.setTitle("$type  ${getString(R.string.quote)}")
+                                if(catName==null) catName = ""
+                                binding.dailyFeedToolbar.setTitle("$type  $catName")
                             }
 
                         }
@@ -70,6 +80,13 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
         }
         val event = "explore_quote"
         fbAnalytics.logEvent(event, event, "app_sections")
+        viewModel.quotes.observe {
+            if(it.isEmpty()){
+                binding.dailyFeedToolbar.tvSortBy.visibility = View.GONE
+            }else{
+                binding.dailyFeedToolbar.tvSortBy.visibility = View.VISIBLE
+            }
+        }
 
     }
 
@@ -85,7 +102,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
     }
 
     override fun sortBy(item: String) {
-        viewModel.getQuotes(false, item)
+        viewModel.getPosts(false, item)
     }
 
     override fun back() {
@@ -114,11 +131,25 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
 
 }
 
-override fun onCategory() {
+    override fun gotoPageUrl(isAuthor:Boolean,post: Post) {
+        var url :String? = null
+        if(isAuthor &&post.authorUrl.isNullOrEmpty()) return
+        if(isAuthor && !post.authorUrl.isNullOrEmpty()) {
+            url = post.authorUrl
+        }
+        if(!isAuthor) url = post.redirect_link
+
+        if(!url.isNullOrEmpty()) openBrowser(url)
+
+    }
+
+    override fun onCategory() {
     gotoActivity(HomeActivity::class, true)
 }
 
     override fun scrollToTop() {
         daily_feed_recyclerview?.scrollToPosition(0)
     }
+
+
 }

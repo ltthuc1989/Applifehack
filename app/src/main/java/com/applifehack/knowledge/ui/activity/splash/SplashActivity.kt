@@ -3,7 +3,6 @@ package com.applifehack.knowledge.ui.activity.splash
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.applifehack.knowledge.R
-import com.applifehack.knowledge.data.entity.ArticleType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.firebase.ParamContentType
 import com.applifehack.knowledge.data.firebase.ParamItemName
@@ -49,7 +48,7 @@ class SplashActivity : MvvmActivity<ActivitySplashBinding,SplashVM>(),SplashNav{
 
                 }
                 fbAnalytics.logEvent(event,event,"notification")
-                gotoActivity(HomeActivity::class, mapOf(KEY_NOTIFICATION to payload))
+                gotoActivity(HomeActivity::class, mapOf(KEY_NOTIFICATION to payload),true)
             }else{
                     gotoActivity(HomeActivity::class,true)
             }

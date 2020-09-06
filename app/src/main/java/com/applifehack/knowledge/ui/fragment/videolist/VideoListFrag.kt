@@ -61,9 +61,9 @@ class VideoListFrag : MvvmFragment<VideoListVM, FragVideoListBinding>(), VideoLi
         super.onResume()
 
         if (!isDataLoaded) {
-            val  cat = arguments?.getParcelable<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)
+
             isDataLoaded = true
-            viewModel.getPost(cat?.cat_id)
+            viewModel.updateModel(cat?.cat_id)
 
 
         }

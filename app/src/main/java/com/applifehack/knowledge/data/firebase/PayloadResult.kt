@@ -23,9 +23,14 @@ import kotlinx.android.parcel.Parcelize
 //}
 
 @Parcelize
-class PayloadResult(var title:String?=null,var postId:String?=""):Parcelable{
-
-
+class PayloadResult(
+    var title: String? = null,
+    var postId: String? = "",
+    var imageUrl: String? = "",
+    var message: String? = "",
+    var postType:String? = "",
+    var pushStyle: Int = 0
+) : Parcelable {
 
 
 }

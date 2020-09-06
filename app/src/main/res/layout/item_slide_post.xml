@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="com.applifehack.knowledge.data.entity.PostType"/>
+       <import type="android.text.TextUtils"/>
+       <import type="android.widget.ImageView.ScaleType"/>
         <variable
             name="item"
             type="com.applifehack.knowledge.data.entity.Post" />
@@ -27,10 +29,17 @@
             android:adjustViewBounds="true"
             android:alpha="@dimen/feed_carousel_slide_alpha"
             android:gravity="center"
-            android:src="@drawable/bg_exploremore_en"
+            goneUnless="@{!TextUtils.isEmpty(item.imageUrl)}"
             srcImageUrl="@{item.imageUrl}"
-            android:scaleType="centerCrop" />
+            android:scaleType='@{item.imageScaleType==0? ScaleType.CENTER_CROP:ScaleType.FIT_XY}' />
 
+        <FrameLayout
+            android:id="@+id/gradient"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:gradient="@{true}"
+            goneUnless="@{TextUtils.isEmpty(item.imageUrl)}"
+            android:alpha="0.5" />
 
         <LinearLayout
             android:id="@+id/feed_carousel_slide_wrapper"

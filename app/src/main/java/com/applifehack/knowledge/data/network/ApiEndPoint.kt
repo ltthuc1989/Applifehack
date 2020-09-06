@@ -9,6 +9,9 @@ object ApiEndPoint {
     const val GET_CATEGORIES = "category"
     const val VIDEO_PATH = "video"
     const val GET_QUOTES = "quotes"
+    const val GET_MEANING_PICTURE = "pictures"
+    const val GET_FACTS = "facts"
+    const val GET_HACKS = "hacks"
     const val API_YOUTUBE = "https://www.googleapis.com/youtube/v3/videos"
 
 

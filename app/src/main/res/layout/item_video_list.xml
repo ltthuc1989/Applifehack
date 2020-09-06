@@ -183,16 +183,21 @@
 
             <TextView
                 android:id="@+id/tvPostedDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
 
                 android:fontFamily="@font/cabin_condensed_regular"
-                android:gravity="center"
+                android:gravity="left|center"
                 android:text="@{item.author}"
                 android:textColor="@color/white_75"
-                app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
+                android:layout_marginEnd="16dp"
 
+                app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
+                app:layout_constraintEnd_toStartOf="@id/imgShare"
+                app:autoResizeTextMax="@{16}"
+                app:autoResizeTextMin="@{10}"
+                app:autoSizeTextType="uniform"
                 app:layout_constraintStart_toEndOf="@+id/ic_calendar"
                 app:layout_constraintTop_toTopOf="@id/ic_calendar"
                 tools:text="7 days ago" />

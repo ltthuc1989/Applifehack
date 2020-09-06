@@ -1,6 +1,8 @@
 package com.applifehack.knowledge.util
 
+import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 
 import androidx.databinding.BindingAdapter
 
@@ -25,7 +27,14 @@ class BindingAdapters{
             view.setGradient(colors, 0, angle)
         }
 
+        @JvmStatic
+        @BindingAdapter("textGravity")
+        fun setTextGravity(view: View, isBottom: Boolean) {
 
+            ( view.layoutParams as FrameLayout.LayoutParams).apply {
+                if(isBottom) this.gravity = Gravity.BOTTOM else this.gravity = Gravity.TOP
+            }
+        }
     }
 
 

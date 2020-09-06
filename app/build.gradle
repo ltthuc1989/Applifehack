@@ -20,9 +20,9 @@ android {
         applicationId "com.applifehack.knowledge"
         minSdkVersion rootProject.androidMinSdkVersion
         targetSdkVersion rootProject.androidTargetSdkVersion
-        versionCode 11
+        versionCode 16
         multiDexEnabled true
-        versionName "1.1.0"
+        versionName "1.1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     dexOptions {
@@ -101,6 +101,7 @@ dependencies {
     implementation appDependencies.firebase.fireStorage
     implementation appDependencies.firebase.fireCrash
     implementation appDependencies.firebase.fireAnalytic
+    implementation appDependencies.facebook.facebookCore
     //implementation appDependencies.facebook.facebookSdk
     //implementation appDependencies.facebook.accountKit
     implementation appDependencies.facebook.stetho

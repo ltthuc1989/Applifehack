@@ -1,7 +1,6 @@
 package com.applifehack.knowledge.ui.activity.quotes
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
 import android.widget.LinearLayout
@@ -20,10 +19,14 @@ import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
-import com.applifehack.knowledge.data.network.response.CatResp
+import com.applifehack.knowledge.data.network.response.FactResp
+import com.applifehack.knowledge.data.network.response.HackResp
+import com.applifehack.knowledge.data.network.response.MeaningPhotoResp
+
 import com.applifehack.knowledge.data.network.response.QuoteResp
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
 import com.applifehack.knowledge.util.AppConstants
+import com.applifehack.knowledge.util.CategoryType
 import com.applifehack.knowledge.util.MediaUtil
 import com.applifehack.knowledge.util.ShareType
 import com.applifehack.knowledge.util.extension.await
@@ -31,10 +34,12 @@ import com.applifehack.knowledge.util.extension.shareImage
 import com.applifehack.knowledge.util.extension.shareMessage
 import com.applifehack.knowledge.util.extension.toArray
 import com.ezyplanet.supercab.data.local.db.DbHelper
+import com.google.android.gms.tasks.Task
 import com.google.firebase.dynamiclinks.ShortDynamicLink
 import com.google.firebase.dynamiclinks.ktx.androidParameters
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -53,7 +58,7 @@ class QuotesVM @Inject constructor(
     val results = NonNullLiveData<List<Post>>(emptyList())
     private val mData = ArrayList<Post>()
 
-     var quotes : Array<String>?=null
+    val quotes = NonNullLiveData<Array<String>>(emptyArray())
 
     private var lastItem: DocumentSnapshot? = null
     private var currentPage = 0
@@ -63,6 +68,7 @@ class QuotesVM @Inject constructor(
     val shareType = MutableLiveData<ShareType>()
     private var currentLoadMorePosition = 0
     var onStop = false
+    private var catType : String? = null
 
     @Inject
     lateinit var fbAnalytics: FirebaseAnalyticsHelper
@@ -72,25 +78,26 @@ class QuotesVM @Inject constructor(
         shareType.value = ShareType.NONE
     }
 
-    fun initData(){
-        getQuotes(false)
-        getQuoteCat()
+    fun initData(catType:String){
+        this.catType = catType
+        getPosts(false)
+        getPostCat()
     }
 
-    fun getQuotes(nextPage: Boolean? = false, quoteType: String? = null) {
+    fun getPosts(nextPage: Boolean? = false, quoteType: String? = null) {
         if (quoteType != null) this.quoteType = quoteType
 
         if (nextPage == false) {
             navigator?.showProgress()
             mData?.clear()
             lastItem = null
-           currentLoadMorePosition = 0
+            currentLoadMorePosition = 0
             (navigator as QuotesNav).scrollToTop()
         }
         resetLoadingState = true
         uiScope?.launch {
             try {
-                val data = appDataManager.getPostByQuote(quoteType, nextPage, lastItem)
+                val data = getApiByCat(nextPage,quoteType)
 
                 data?.await().let {
                     if (!it.isEmpty) {
@@ -160,7 +167,7 @@ class QuotesVM @Inject constructor(
         if (position>currentLoadMorePosition) {
             currentLoadMorePosition = position+5
 
-            getQuotes(true)
+            getPosts(true)
         }
 
     }
@@ -254,7 +261,7 @@ class QuotesVM @Inject constructor(
 
         }.addOnSuccessListener {
             navigator?.hideProgress()
-            if(post?.getPostType()==PostType.QUOTE) {
+            if(post?.getPostType()!=PostType.ARTICLE) {
                 (context as MvvmActivity<*, *>).shareImage(it.shortLink.toString())
             }else{
                 val message = String.format(context.getString(R.string.share_info_text," '${post?.title}'",it.shortLink.toString()))
@@ -281,8 +288,8 @@ class QuotesVM @Inject constructor(
         onStop = true
     }
 
-     fun myFavoritePost(position: Int) {
-         if(mData.isEmpty()) return
+    fun myFavoritePost(position: Int) {
+        if(mData.isEmpty()) return
         uiScope?.launch {
             val temp = async(Dispatchers.IO) {
                 dbHelper.getPostById(mData[position].id)
@@ -296,23 +303,40 @@ class QuotesVM @Inject constructor(
         }
     }
 
-    fun getQuoteCat() {
+    fun getPostCat() {
 
         uiScope.launch {
-            val data = appDataManager.getQuoteCat()
+            val data = getCats()
             try {
                 data?.await().let {
                     if (!it.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
-                            it.toObjects(QuoteResp::class.java)
+                            when(catType){
+                                CategoryType.HACK.type->{
+                                    it.toObjects(HackResp::class.java)
+                                }
+                                CategoryType.FACTS.type->{
+                                    it.toObjects(FactResp::class.java)
+                                }
+
+                                CategoryType.MEANING_PICTURE.type->{
+                                    it.toObjects(MeaningPhotoResp::class.java)
+                                }
+
+                                else->{
+                                    it.toObjects(QuoteResp::class.java)
+                                }
+                            }
+
                         }
 
                         val temp = snapshot.await()
                         var data = ArrayList<String>()
                         temp.forEach {
-                            data.add(it.quote_name!!)
+                            data.add(it.toString())
                         }
-                         quotes= toArray(data)
+                        quotes.value= toArray(data)
+
 
 
                     }
@@ -320,12 +344,74 @@ class QuotesVM @Inject constructor(
 
                 }
             }catch (ex:Exception){
-              ex.printStackTrace()
+                ex.printStackTrace()
             }
         }
 
 
     }
+
+    private fun getApiByCat(nextPage: Boolean? = false, quoteType: String? = null): Task<QuerySnapshot> {
+        return  when(catType){
+            CategoryType.HACK.type -> {
+                appDataManager.getPostByHack(quoteType, nextPage, lastItem)
+            }
+            PostType.FACT.type -> {
+                appDataManager.getPostByFact(quoteType, nextPage, lastItem)
+            }
+            PostType.PICTURE.type -> {
+                appDataManager.getPostByPhoto(quoteType, nextPage, lastItem)
+            }
+            else -> {
+                appDataManager.getPostByQuote(quoteType, nextPage, lastItem)
+            }
+
+        }
+    }
+
+    private fun getCats():Task<QuerySnapshot>{
+        return  when(catType){
+            CategoryType.HACK.type -> {
+                appDataManager.getHackCat()
+            }
+            PostType.FACT.type -> {
+                appDataManager.getFactCat()
+            }
+            PostType.PICTURE.type -> {
+                appDataManager.getMeaningCat()
+            }
+            else -> {
+                appDataManager.getQuoteCat()
+            }
+
+        }
+    }
+
+
+
+    fun openPostDetail(isAuthor:Boolean,data: Post) {
+        uiScope?.launch {
+            try {
+
+
+                (navigator as QuotesNav).gotoPageUrl(isAuthor,data)
+
+                logEvent(data?.id, "readmore")
+
+                val resul = appDataManager.updateViewCount(data.id)
+                resul.await()
+
+            } catch (ex: Exception) {
+
+            }
+
+
+        }
+
+
+    }
+
+
 
 
 

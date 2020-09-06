@@ -3,6 +3,7 @@ package com.applifehack.knowledge.ui.activity.home
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -28,6 +29,7 @@ import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.replaceFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.install.model.ActivityResult
+import kotlinx.android.synthetic.main.toolbar.view.*
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,ToolbarListener,NavListener {
@@ -63,11 +65,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
         homeEventModel?.toolbarTitle?.observe(this, Observer {
             binding.toolbarHome.titleBar = it
         })
-        viewModel.handleIntent(intent)
+
+        viewModel.subcribePush()
         viewModel.getDynamicLink(intent,this)
+
         homeEventModel.showRefresh.observe(this, Observer {
             binding.toolbarHome.showRefresh(it)
+            binding.toolbarHome.showDate(it)
         })
+        homeEventModel.datePosted.observe(this, Observer {
+            binding.toolbarHome.setDatePost(it)
+
+        })
+
 
 
 
@@ -84,7 +94,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
             onSaved()
         }
         else{
-            updateToolBarTitle(R.string.category)
+          //  updateToolBarTitle(R.string.category)
         }
     }
 
@@ -205,6 +215,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
     override fun openDynamicLink(postId: String) {
+        Log.e("openDynamicLink",postId)
        gotoActivity(DynamicLinkActivity::class, mapOf(AppBundleKey.KEY_POST_ID to postId))
     }
 

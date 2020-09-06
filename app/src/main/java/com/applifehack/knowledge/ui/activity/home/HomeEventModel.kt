@@ -9,5 +9,6 @@ class HomeEventModel : ViewModel(){
     val toolbarTitle = SingleEventLiveData<String>()
     val refreshClick = SingleEventLiveData<Boolean>()
     val showRefresh = SingleEventLiveData<Boolean>()
+    val datePosted = SingleEventLiveData<String>()
 
 }

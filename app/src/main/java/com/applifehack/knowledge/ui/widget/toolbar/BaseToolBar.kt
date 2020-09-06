@@ -15,12 +15,14 @@ class BaseToolBar :FrameLayout{
 
 
    private var _titleBar:String?=null
+
     var titleBar: String?
         get() = _titleBar
         set(value) {
             _titleBar = value
             binding.title.setText(value)
         }
+
 
     constructor(context: Context?) : super(context) {
         initInflate()
@@ -56,6 +58,12 @@ class BaseToolBar :FrameLayout{
 
     fun showRefresh(show:Boolean){
         binding.imMenu.visibility = if(show) View.VISIBLE else View.GONE
+    }
+    fun setDatePost(date:String){
+        binding.tvPostedDate.text =  date
+    }
+    fun showDate(show:Boolean){
+        binding.tvPostedDate.visibility = if(show) View.VISIBLE else View.GONE
     }
 
 

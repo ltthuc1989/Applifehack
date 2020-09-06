@@ -3,6 +3,8 @@
 
     <data>
         <import type="com.applifehack.knowledge.util.ShareType"/>
+        <import type="android.widget.ImageView.ScaleType"/>
+        <import type="android.text.TextUtils"/>
         <variable
             name="item"
             type="com.applifehack.knowledge.data.entity.Post" />
@@ -35,9 +37,9 @@
                 app:riv_corner_radius_top_right="4dp"
                 android:alpha="0.8"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
+                android:scaleType='@{item.imageScaleType==0? ScaleType.CENTER_CROP:ScaleType.FIT_XY}'
                 app:srcImageBitmapUrl="@{item.imageUrl}"
-
+                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
 
                 />
 
@@ -47,6 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:gradient="@{true}"
+                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
+                goneUnless="@{TextUtils.isEmpty(item.imageUrl)}"
                 android:alpha="0.5" />
 
             <!--Quote-->
@@ -64,6 +68,7 @@
                 app:autoResizeTextMax="@{30}"
                 app:autoResizeTextMin="@{14}"
                 android:text="@{item.title}"
+                goneUnless="@{!TextUtils.isEmpty(item.title)}"
                 app:autoSizeTextType="uniform" />
 
             <!--Author-->
@@ -110,7 +115,7 @@
                 android:src="@drawable/ic_share"
                 android:tint="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvReadMore"
                 app:layout_constraintTop_toTopOf="parent"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
@@ -198,7 +203,27 @@
                 app:layout_constraintStart_toStartOf="parent"
 
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvReadMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_readmore"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="@string/readMore"
+                android:textSize="16sp"
+                goneUnless="@{!TextUtils.isEmpty(item.redirect_link)}"
+                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout

@@ -6,10 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.Timestamp
-import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 import kotlin.collections.HashMap
@@ -120,6 +117,7 @@ data class Post(
     @get:PropertyName("post_image_scale_type")
     @ColumnInfo(name = "post_image_scale_type")
     var imageScaleType : Int? = 0
+
 ) : Parcelable {
 
 
@@ -148,7 +146,11 @@ data class Post(
     fun getPostType(): PostType = when (type) {
         "article" -> PostType.ARTICLE
         "quote" -> PostType.QUOTE
-        else -> PostType.VIDEO
+        "fact" -> PostType.FACT
+        "hack" -> PostType.HACK
+        "picture" -> PostType.PICTURE
+         "video"-> PostType.VIDEO
+        else -> PostType.QUOTE
 
     }
 
@@ -173,12 +175,16 @@ data class Post(
     fun formatViews():String = "$video_views"
 
 
+
 }
 
 enum class PostType(val type: String?) {
     ARTICLE("article"),
     QUOTE("quote"),
-    VIDEO("video")
+    VIDEO("video"),
+    FACT("fact"),
+    HACK("hack"),
+    PICTURE("picture")
 
 }
 

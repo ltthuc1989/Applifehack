@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.applifehack.knowledge.data.entity.PostType"/>
         <import type="com.applifehack.knowledge.util.ShareType"/>
+        <import type="com.applifehack.knowledge.data.entity.PostType"/>
         <import type="android.widget.ImageView.ScaleType"/>
         <import type="android.text.TextUtils"/>
         <variable
@@ -14,7 +14,7 @@
 
         <variable
             name="viewModel"
-            type="com.applifehack.knowledge.ui.fragment.feed.FeedVM" />
+            type="com.applifehack.knowledge.ui.activity.quotes.QuotesVM"/>
     </data>
 
     <RelativeLayout
@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/feed_hero_gradient_background">
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <FrameLayout
             android:id="@+id/feed_hero_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,7 +46,7 @@
                 android:scaleType='@{item.imageScaleType==0? ScaleType.CENTER_CROP:ScaleType.FIT_XY}'
                 app:srcImageBitmapUrl="@{item.imageUrl}"
                 android:cropToPadding="true"
-                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
+                android:onClick="@{(view)->viewModel.openPostDetail(false,item)}"
 
                 />
 
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:layout_marginStart="8dp"
-                android:onClick="@{(view)->viewModel.shareClick(view,item)}"
+                android:onClick="@{(view)->viewModel.shareClick(item,view)}"
                 android:src="@drawable/ic_share"
                 android:tint="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -185,7 +185,7 @@
                 android:text="@{item.author}"
                 android:textColor="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
-                android:onClick="@{()->viewModel.openPageUrl(item)}"
+                android:onClick="@{()->viewModel.openPostDetail(true,item)}"
                 app:layout_constraintStart_toEndOf="@+id/ic_calendar"
                 app:layout_constraintEnd_toStartOf="@id/imglike"
                 app:layout_constraintTop_toTopOf="@id/ic_calendar"
@@ -198,7 +198,7 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 app:civ_fill_color="@color/white_75"
-                android:onClick="@{()->viewModel.openPageUrl(item)}"
+                android:onClick="@{()->viewModel.openPostDetail(true,item)}"
 
                 android:src="@drawable/ic_author_black_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -223,7 +223,7 @@
                 android:text="@string/readMore"
                 android:textSize="16sp"
                 goneUnless="@{!TextUtils.isEmpty(item.redirect_link)}"
-                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
+                android:onClick="@{(view)->viewModel.openPostDetail(false,item)}"
                 android:textColor="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

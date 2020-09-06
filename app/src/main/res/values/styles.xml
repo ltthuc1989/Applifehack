@@ -171,4 +171,25 @@
         <item name="android:background">@null</item>
         <item name="tabIndicatorColor">@color/bright_blue</item>
     </style>
+
+    <style name="article_visit_source_style">
+        <item name="android:textSize">@dimen/article_text_size</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/view_source_img</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:drawablePadding">@dimen/visit_source_drawaable_padding</item>
+        <item name="android:drawableStart">@drawable/world_icon_png</item>
+        <item name="android:fontFamily">@font/cabin_condensed_regular</item>
+        <item name="android:paddingStart">@dimen/visit_source_padding_left</item>
+    </style>
+    <style name="CollapsedTitleText">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="TitleText">
+        <item name="android:textSize">@dimen/article_title_text_size</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/cabin_condensed_regular</item>
+    </style>
 </resources>

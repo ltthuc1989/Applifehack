@@ -156,4 +156,26 @@
     <dimen name="eight">8dp</dimen>
     <dimen name="fourDp">4</dimen>
     <dimen name="dp_16">16dp</dimen>
+
+    <dimen name="article_ad_height">90dp</dimen>
+    <dimen name="article_ad_text_size">12sp</dimen>
+    <dimen name="article_ad_title_text_size">16sp</dimen>
+    <dimen name="article_ad_vertical_margin">20dp</dimen>
+    <dimen name="article_edges_margin">6dp</dimen>
+    <dimen name="article_end_ad_attribution_text_size">16sp</dimen>
+    <dimen name="article_icon_size">32dp</dimen>
+    <dimen name="article_icon_vertical_margin">8dp</dimen>
+    <dimen name="article_image_height">300dp</dimen>
+    <dimen name="article_like_count_text_size">18sp</dimen>
+    <dimen name="article_text_size">18sp</dimen>
+    <dimen name="article_text_vertical_padding">10dp</dimen>
+    <dimen name="article_title_text_size">24sp</dimen>
+    <dimen name="article_title_vertical_margin">8dp</dimen>
+    <dimen name="rate_us_text_top_margin">16dp</dimen>
+    <dimen name="visit_source_drawaable_padding">10dp</dimen>
+    <dimen name="visit_source_padding_left">20dp</dimen>
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
 </resources>

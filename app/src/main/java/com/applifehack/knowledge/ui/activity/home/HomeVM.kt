@@ -1,25 +1,20 @@
 package com.applifehack.knowledge.ui.activity.home
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.util.Log
-import com.ezyplanet.core.util.SchedulerProvider
-import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.messaging.FirebaseMessaging
 import com.applifehack.knowledge.data.AppDataManager
-import com.applifehack.knowledge.data.entity.ArticleType
-import com.applifehack.knowledge.data.entity.PostType
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.firebase.PayloadResult
 import com.applifehack.knowledge.ui.activity.BaseBottomVM
 import com.applifehack.knowledge.util.AppBundleKey
 import com.applifehack.knowledge.util.RateUs
+import com.ezyplanet.core.util.SchedulerProvider
+import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
-
+import com.google.firebase.messaging.FirebaseMessaging
 import javax.inject.Inject
 
 
@@ -32,7 +27,10 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
         homeClick()
     }
 
+
     fun getVersionCode(): Int? = appDataManager?.appPreferenceHelper?.versionUpdate
+
+
 
     fun showRateUse(activity: HomeActivity){
 
@@ -43,10 +41,11 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
     }
 
     override fun handleIntent(intent: Intent?, isOnNewIntent: Boolean?) {
-        if(isOnNewIntent!=true) subcribePush()
+      //  if(isOnNewIntent!=true) subcribePush()
 
         val payloadResult = intent?.getParcelableExtra<PayloadResult>(AppBundleKey.KEY_NOTIFICATION)
         if(payloadResult!=null){
+           // Log.e("openDynamicLink","handleIntent")
             (navigator as HomeNav).openDynamicLink(payloadResult.postId!!)
         }
     }
@@ -56,8 +55,9 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
     fun subcribePush() {
         if (appDataManager.appPreferenceHelper.enableNotification == true) {
             FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { it1 ->
-
-                FirebaseMessaging.getInstance().subscribeToTopic("all").addOnSuccessListener {
+             //  val topic = if(BuildConfig.DEBUG) "test" else "all"
+               val topic = "all"
+                FirebaseMessaging.getInstance().subscribeToTopic(topic).addOnSuccessListener {
 
                 }
             }
@@ -108,6 +108,7 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
 
                     val postId=pendingDynamicLinkData.link?.getQueryParameter("postId")
                     logEvent(postId,"openDynamicLink")
+                  //  Log.e("openDynamicLink","getDynamicLink")
                     ( navigator as HomeNav).openDynamicLink(postId!!)
                 }
 
@@ -123,5 +124,11 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
 
 
     }
+
+
+
+
+
+
 
 }
