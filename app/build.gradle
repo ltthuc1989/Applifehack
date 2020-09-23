@@ -20,9 +20,9 @@ android {
         applicationId "com.applifehack.knowledge"
         minSdkVersion rootProject.androidMinSdkVersion
         targetSdkVersion rootProject.androidTargetSdkVersion
-        versionCode 16
+        versionCode 17
         multiDexEnabled true
-        versionName "1.1.5"
+        versionName "1.1.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     dexOptions {

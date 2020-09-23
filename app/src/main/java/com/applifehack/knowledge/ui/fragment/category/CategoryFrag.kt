@@ -107,7 +107,7 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
 
 
     override fun gotoCatDetailScreen(resp: CatResp) {
-       if(resp?.cat_type != null && resp?.cat_type == "article" || resp?.cat_type == "video") {
+       if(resp?.cat_type != null && (resp?.cat_post_type =="article")) {
 
             homeEventModel.categoryClick?.postValue(resp)
 

@@ -19,6 +19,7 @@ data class CatResp constructor(val cat_name:String?="",
                                val cat_id:String?="",
                                val cat_desc:String?="",
                                val cat_type:String?="",
+                               val cat_post_type:String?="",
                                val editing:Boolean = false):Parcelable
 
 @Parcelize

@@ -55,7 +55,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
                         (binding?.adapter as FeedAdapter)?.getRowData(position)?.let {
                             it?.quote_type?.let { type->
                                 if(catName==null) catName = ""
-                                binding.dailyFeedToolbar.setTitle("$type  $catName")
+                                binding.dailyFeedToolbar.setTitle("$type")
                             }
 
                         }
