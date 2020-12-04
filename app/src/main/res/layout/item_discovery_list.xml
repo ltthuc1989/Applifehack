@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.applifehack.knowledge.data.entity.PostType"/>
+        <import type="com.applifehack.knowledge.util.ShareType"/>
+        <import type="android.widget.ImageView.ScaleType"/>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="item"
+            type="com.applifehack.knowledge.data.entity.Post" />
+
+        <variable
+            name="viewModel"
+            type="com.applifehack.knowledge.ui.fragment.feed.FeedVM" />
+    </data>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/feed_hero_gradient_background">
+
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/feed_hero_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_above="@id/titleBottom"
+
+            android:layout_alignParentTop="true"
+            android:fitsSystemWindows="true">
+
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/feed_hero_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                app:riv_corner_radius_top_left="4dp"
+                app:riv_corner_radius_top_right="4dp"
+                android:alpha="0.8"
+                android:fitsSystemWindows="true"
+                android:scaleType='@{item.imageScaleType==0? ScaleType.CENTER_CROP:ScaleType.FIT_XY}'
+                app:srcImageBitmapUrl="@{item.imageUrl}"
+                android:cropToPadding="true"
+                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
+
+                />
+
+            <TextView
+                style="@style/text_roboto_bold_h1"
+                android:text="@{item.title}"
+                goneUnless="@{!TextUtils.isEmpty(item.title)&amp;&amp;item.getPostType()!=PostType.PICTURE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+
+                tools:text="A North Korean waves at his South Korean brother after inter-Korean temporary family reunions.c" />
+
+
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/vBottom"
+
+            android:layout_marginTop="-5dp"
+            android:background="@color/darker_gray"
+            android:layout_height="16dp"
+
+            />
+
+        <TextView
+            style="@style/text_roboto_bold_h1"
+            android:text="@{item.title}"
+
+            goneUnless="@{!TextUtils.isEmpty(item.title)&amp;&amp;item.getPostType()==PostType.PICTURE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginLeft="1dp"
+            android:id="@+id/titleBottom"
+            android:layout_above="@id/linBottom"
+
+
+            android:textSize="14sp"
+
+            android:textColor="@color/white"
+
+
+
+
+            app:autoResizeTextMax="@{14}"
+            app:autoResizeTextMin="@{10}"
+
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+
+
+
+            tools:text="A North Korean waves at his South Korean brother after inter-Korean temporary family reunions.c" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/shareLayout"
+            android:background="@drawable/bg_item_feed_bottom"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+
+
+            <ImageView
+                android:id="@+id/imgShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="8dp"
+                android:onClick="@{(view)->viewModel.shareClick(view,item)}"
+                android:src="@drawable/ic_share"
+                android:tint="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvReadMore"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:scaleType="fitCenter"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+
+                android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
+                android:tint="@color/white_75"
+                android:id="@+id/imglike"
+                android:onClick="@{()->viewModel.likeClick(item)}"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvLinkCount"
+                tools:src="@drawable/ic_like"
+
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvLinkCount"
+                app:layout_constraintEnd_toStartOf="@id/imgShare"
+                tools:text="22"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@{item.formatLikes}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/light_gray"
+                android:layout_height="wrap_content" />
+
+
+
+
+            <TextView
+                android:id="@+id/tvPostedDate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                app:autoResizeTextMax="@{16}"
+                app:autoResizeTextMin="@{10}"
+                app:autoSizeTextType="uniform"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="left|center"
+                android:text="@{item.author}"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="@id/ic_calendar"
+                android:onClick="@{()->viewModel.openPageUrl(item)}"
+                app:layout_constraintStart_toEndOf="@+id/ic_calendar"
+                app:layout_constraintEnd_toStartOf="@id/imglike"
+                app:layout_constraintTop_toTopOf="@id/ic_calendar"
+                android:layout_marginEnd="16dp"
+                tools:text="7 days ago" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ic_calendar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                app:civ_fill_color="@color/white_75"
+                android:onClick="@{()->viewModel.openPageUrl(item)}"
+
+                android:src="@drawable/ic_author_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvReadMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_readmore"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="@string/readMore"
+                android:textSize="16sp"
+                goneUnless="@{!TextUtils.isEmpty(item.redirect_link)}"
+                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:id="@+id/shareLayout"
+
+
+            android:padding="@dimen/eight"
+            android:background="@drawable/bg_item_feed_bottom"
+            android:layout_above="@id/vBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+
+
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                app:srcCompat="@drawable/play_store" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+
+                app:srcCompat="@drawable/web_app_icon" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

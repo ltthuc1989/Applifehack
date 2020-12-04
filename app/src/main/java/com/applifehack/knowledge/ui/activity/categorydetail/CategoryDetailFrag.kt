@@ -37,7 +37,7 @@ class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryD
     override fun onViewInitialized(binding: FragmentCategoryDetailBinding) {
         super.onViewInitialized(binding)
         viewModel.navigator = this
-        setToolBar(binding.tagFeedLayout.view_toolbar, "")
+      // setToolBar(binding.tagFeedLayout.view_toolbar, "")
         binding.viewModel = viewModel
         cat=intent.getParcelableExtra<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)
         viewModel.updateModel(cat)
