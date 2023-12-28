@@ -3,6 +3,8 @@ package com.applifehack.knowledge.ui.activity.home
 import android.app.Activity
 import android.content.Intent
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.Observer
@@ -64,11 +66,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
         })
         viewModel.handleIntent(intent)
         viewModel.getDynamicLink(intent,this)
-
-
-
-
-
 
     }
 

@@ -132,8 +132,8 @@ fun Bundle.fill(vararg params: Pair<String, Any?>) = apply {
 /**
  * Converts [LiveData] into initView [Flowable]
  */
-fun <T> LiveData<T>.toFlowable(lifecycleOwner: LifecycleOwner): Flowable<T> =
-        Flowable.fromPublisher(LiveDataReactiveStreams.toPublisher(lifecycleOwner, this))
+//fun <T> LiveData<T>.toFlowable(lifecycleOwner: LifecycleOwner): Flowable<T> =
+//        Flowable.fromPublisher(LiveDataReactiveStreams.toPublisher(lifecycleOwner, this))
 
 /**
  * show keyboard on [Activity.getCurrentFocus] view

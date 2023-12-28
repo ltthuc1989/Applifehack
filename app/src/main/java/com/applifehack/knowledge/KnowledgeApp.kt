@@ -8,7 +8,6 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.applifehack.knowledge.di.component.DaggerAppComponent
 import com.applifehack.knowledge.util.AppConstans
-import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.firebase.FirebaseApp

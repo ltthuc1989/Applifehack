@@ -29,7 +29,6 @@ import androidx.core.graphics.toColorInt
 import androidx.core.view.setMargins
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.util.setGradient
-import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.GlobalScope
@@ -93,7 +92,6 @@ object F {
         return try {
             Gradients.random().colors.map { it.toColorInt() }
         } catch (e: Exception) {
-            Crashlytics.logException(e)
             e.printStackTrace()
             randomGradient()
         }
@@ -124,7 +122,6 @@ object F {
                 try {
                     callback(b1.sameAs(b2)) // callback with compare
                 } catch (e: Exception) {
-                    Crashlytics.logException(e)
                     e.printStackTrace()
                     callback(false)
                 }
