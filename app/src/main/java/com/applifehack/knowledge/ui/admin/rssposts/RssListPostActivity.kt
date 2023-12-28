@@ -12,8 +12,6 @@ import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.databinding.ActivityRssListPostBinding
 import com.applifehack.knowledge.databinding.ItemListPostBinding
 import com.applifehack.knowledge.ui.activity.webview.WebViewJavaScriptLoad
-import kotlinx.android.synthetic.main.activity_rss_list_post.*
-
 class RssListPostActivity : MvvmActivity<ActivityRssListPostBinding, RssListPostVM>(), RssListPostNav {
 
     override val viewModel: RssListPostVM by getLazyViewModel()
@@ -41,13 +39,13 @@ class RssListPostActivity : MvvmActivity<ActivityRssListPostBinding, RssListPost
 
 
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
-        setToolBar(toolbarRssPost)
+        setToolBar(binding.toolbarRssPost)
     }
 
     override fun resetState() {
-        recyclerView.scrollToPosition(0)
+        binding.recyclerView.scrollToPosition(0)
     }
 
     private fun setToolBar(toolbar: Toolbar, title: String?="") {

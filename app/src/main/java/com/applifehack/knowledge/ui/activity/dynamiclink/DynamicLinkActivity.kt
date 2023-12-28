@@ -7,7 +7,6 @@ import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.fragment.feed.FeedFrag
 import com.applifehack.knowledge.util.AppBundleKey
 import com.ezyplanet.core.util.extension.replaceFragment
-import kotlinx.android.synthetic.main.activity_dynamic_link.*
 
 class DynamicLinkActivity :BaseActivity<ActivityDynamicLinkBinding,DynamicLinkVM>(),DynamicLinkNav{
 
@@ -25,7 +24,7 @@ class DynamicLinkActivity :BaseActivity<ActivityDynamicLinkBinding,DynamicLinkVM
     }
 
     override fun openFeedFragment(post: Post?) {
-        setToolBar(dynLinkToolbar,post?.catName!!)
+        setToolBar(binding.dynLinkToolbar,post?.catName!!)
         binding.tvTitle.text = post?.catName
         replaceFragment(FeedFrag().newInstance(post))
     }

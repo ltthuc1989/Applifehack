@@ -7,7 +7,7 @@ class WebViewJSInterface (){
     @JavascriptInterface
     fun processHTML(html: String?) {
         // process the html as needed by the app
-        Log.d("abcd",html)
+        Log.d("abcd",html!!)
 
 
     }

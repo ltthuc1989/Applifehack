@@ -25,9 +25,6 @@ import com.applifehack.knowledge.ui.adapter.FeedAdapter
 import com.applifehack.knowledge.ui.fragment.BaseFragment
 import com.applifehack.knowledge.util.AppBundleKey
 import com.ezyplanet.core.util.extension.putArgs
-import kotlinx.android.synthetic.main.fragment_daily_feed.*
-
-
 class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
     override val viewModel: FeedVM by getLazyViewModel(ViewModelScope.FRAGMENT)
@@ -63,9 +60,9 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
                 try {
 
                     val snapHelper = PagerSnapHelper()
-                    snapHelper.attachToRecyclerView(daily_feed_recyclerview)
+                    snapHelper.attachToRecyclerView(binding.dailyFeedRecyclerview)
 
-                    daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper,
+                    binding.dailyFeedRecyclerview.attachSnapHelperWithListener(snapHelper,
                         SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
                         object : OnSnapPositionChangeListener {
                             override fun onSnapPositionChange(position: Int) {
@@ -90,7 +87,7 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
         binding.adapter = FeedAdapter(viewModel)
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
         val event = "explore_feed"
         fbAnalyticsHelper.logEvent(event,event,"app_sections")

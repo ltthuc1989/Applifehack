@@ -117,14 +117,14 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
             navigator?.showAlert(R.string.please_pick_post_type)
             return false
         }
-        if(textPostType.text?.equals(PostType.QUOTE.type)){
+        if(textPostType.text!!.equals(PostType.QUOTE.type)){
             isQuoteType = true
             if(textQuoteType.text.isEmpty()){
                 navigator?.showAlert(R.string.please_pick_quote_type)
                 return false
             }
         }
-        if(textTitle.text?.isEmpty()&&!textPostType.text?.equals(PostType.VIDEO.type)){
+        if(textTitle.text!!.isEmpty()&& textPostType.text!!.equals(PostType.VIDEO.type) != true){
             navigator?.showAlert(R.string.please_enter_title)
             return false
         }
@@ -138,7 +138,7 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
         }
         if(isQuoteType) return true
 
-        if(textContentUrl.text.isEmpty()&&!textPostType.text?.equals(PostType.VIDEO.type)){
+        if(textContentUrl.text.isEmpty()&& textPostType.text?.equals(PostType.VIDEO.type) != true){
             navigator?.showAlert(R.string.please_enter_content_url)
             return false
         }

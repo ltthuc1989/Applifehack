@@ -2,14 +2,14 @@ package com.applifehack.knowledge.ui.admin.rssposts
 
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.network.response.RssCatResp
-import com.prof.rssparser.Article
+import com.prof18.rssparser.model.RssItem
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 data class PostContent(
-        val article: Article
+        val article: RssItem
 ) {
 
 

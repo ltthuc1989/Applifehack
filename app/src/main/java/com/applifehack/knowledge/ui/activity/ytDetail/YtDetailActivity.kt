@@ -8,7 +8,6 @@ import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.widget.listener.ToolbarListener
 import com.applifehack.knowledge.util.AppBundleKey
 import com.applifehack.knowledge.util.MediaUtil
-import kotlinx.android.synthetic.main.view_youtube_appbar.*
 
 class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>(),YtDetailNav,ToolbarListener{
 
@@ -21,7 +20,7 @@ class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>()
         setToolBar(binding.viewToolbar, "")
         viewModel.navigator = this
         val post = intent.getParcelableExtra<Post>(AppBundleKey.YOUTUBE_URL)
-        viewModel.getYtDetail(post.video_url)
+        viewModel.getYtDetail(post!!.video_url)
         val event = "explore_article"
         fbAnalytics.logEvent(event,event,"app_sections")
 

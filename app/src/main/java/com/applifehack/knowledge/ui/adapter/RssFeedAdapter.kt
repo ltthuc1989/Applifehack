@@ -38,7 +38,7 @@ class RssFeedAdapter(viewModel: BaseViewModel<*, *>) : SingleLayoutAdapter<RssCa
     }
 
     fun getRowData(position: Int):RssCatResp{
-        return items?.get(position)
+        return items!!.get(position)
     }
 
 }

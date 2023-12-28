@@ -116,7 +116,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val result = Gson().fromJson<PayloadResult>(payload, PayloadResult::class.java)
             intent?.putExtra(AppBundleKey.KEY_NOTIFICATION,result)
         }catch (ex:Exception){
-             Log.d("pushyExce",ex.message)
+             Log.d("pushyExce",ex.message!!)
         }
 
 

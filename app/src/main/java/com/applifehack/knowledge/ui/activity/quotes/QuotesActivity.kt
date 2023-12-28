@@ -17,7 +17,6 @@ import com.applifehack.knowledge.util.extension.openLink
 import com.ezyplanet.core.ui.listener.OnSnapPositionChangeListener
 import com.ezyplanet.core.ui.widget.pager.SnapOnScrollListener
 import com.ezyplanet.core.util.extension.attachSnapHelperWithListener
-import kotlinx.android.synthetic.main.fragment_daily_feed.*
 
 class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
     QuoteViewListener, ToolbarQuoteListener, NavListener {
@@ -35,8 +34,8 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
         try {
 
             val snapHelper = PagerSnapHelper()
-            snapHelper.attachToRecyclerView(daily_feed_recyclerview)
-            daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper,
+            snapHelper.attachToRecyclerView(binding.dailyFeedRecyclerview)
+            binding.dailyFeedRecyclerview.attachSnapHelperWithListener(snapHelper,
                 SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
                 object : OnSnapPositionChangeListener {
                     override fun onSnapPositionChange(position: Int) {
@@ -57,7 +56,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
 
         binding.listener = this
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
         val event = "explore_quote"
         fbAnalytics.logEvent(event, event, "app_sections")

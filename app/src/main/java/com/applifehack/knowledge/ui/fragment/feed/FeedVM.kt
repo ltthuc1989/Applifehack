@@ -84,7 +84,7 @@ open class FeedVM @Inject constructor(
                 val data = appDataManager.getPost(nextPage, lastItem)
 
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if (!it!!.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
                             it.toObjects(Post::class.java)
                         }
@@ -297,7 +297,7 @@ open class FeedVM @Inject constructor(
                 dbHelper.getPostById(mData[position].id)
             }.await()
             if (temp != null) {
-                results.value = mData?.apply {
+                results.value = mData!!.apply {
                     get(position).liked = true
                 }
             }

@@ -95,7 +95,7 @@ class BindingAdapters{
         @JvmStatic
         @BindingAdapter("loadUrl")
         fun loadUrl(view: WebView, url: String?) {
-            view.loadUrl(url)
+            view.loadUrl(url!!)
         }
     }
 

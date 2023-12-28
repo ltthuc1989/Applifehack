@@ -54,9 +54,9 @@ fun <T, L : LiveData<T>> LifecycleOwner.observe(l: L, observer: (T?) -> Unit) {
  * @param l instance of [NonNullLiveData]
  * @param observer initView lambda function that receives initView non-null [T] and will be invoked when data is available
  */
-fun <T> LifecycleOwner.observe(l: NonNullLiveData<T>, observer: (T) -> Unit) {
-    l.observe(this, { observer(it) })
-}
+//fun <T> LifecycleOwner.observe(l: NonNullLiveData<T>, observer: (T) -> Unit) {
+//    l.observe(this, { observer(it) })
+//}
 
 
 inline fun <reified T> Gson.fromJson(jsonElement: JsonElement): T? = this.fromJson<T>(jsonElement, object : com.google.gson.reflect.TypeToken<T>() {}.type)

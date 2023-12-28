@@ -39,7 +39,7 @@ viewModel) {
     }
 
     fun getRowData(position: Int):Post{
-        return items?.get(position)
+        return items!!.get(position)
     }
 
 }

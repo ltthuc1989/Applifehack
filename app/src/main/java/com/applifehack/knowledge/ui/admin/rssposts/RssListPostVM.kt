@@ -14,7 +14,7 @@ import com.applifehack.knowledge.ui.activity.webview.WebViewJavaScriptLoad
 import com.applifehack.knowledge.ui.widget.TextObserVable
 import com.applifehack.knowledge.util.MeasureTime
 import com.ezyplanet.supercab.data.local.db.DbHelper
-import com.prof.rssparser.Article
+import com.prof18.rssparser.model.RssItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -109,7 +109,7 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
         }
     }
 
-    private suspend fun toPostList(data: List<Article>) = withContext(Dispatchers.Default) {
+    private suspend fun toPostList(data: List<RssItem>) = withContext(Dispatchers.Default) {
         val result = mutableListOf<PostContent>()
         data.forEach {
             result.add(PostContent(it))

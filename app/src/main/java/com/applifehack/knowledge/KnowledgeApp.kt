@@ -16,7 +16,6 @@ import com.google.firebase.FirebaseOptions
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
-import io.fabric.sdk.android.Fabric
 import okhttp3.OkHttpClient
 import org.sourcei.kowts.utils.functions.F
 import org.sourcei.kowts.utils.reusables.Gradients
@@ -31,7 +30,6 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
 
     // @Inject   lateinit var locationHelper: LocationHelper
     var isBackGround = false
-
 
     override fun onCreate() {
         super.onCreate()

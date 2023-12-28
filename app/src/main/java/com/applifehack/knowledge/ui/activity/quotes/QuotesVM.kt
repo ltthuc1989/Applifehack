@@ -91,15 +91,15 @@ class QuotesVM @Inject constructor(
                 val data = appDataManager.getPostByQuote(quoteType, nextPage, lastItem)
 
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if (it?.isEmpty != true) {
                         val snapshot = async(Dispatchers.Default) {
-                            it.toObjects(Post::class.java)
+                            it?.toObjects(Post::class.java)
                         }
 
 
-                        lastItem = it.documents[it.size() - 1]
+                        lastItem = it!!.documents[it.size() - 1]
                         val rs = snapshot.await()
-                        mData.addAll(rs)
+                        mData.addAll(rs!!)
                         hasMore = (rs.size > visibleThreshold - 1)
 
 
@@ -288,7 +288,7 @@ class QuotesVM @Inject constructor(
             if (temp != null) {
                 results.value = mData?.apply {
                     get(position).liked = true
-                }
+                }!!
             }
 
         }
@@ -300,14 +300,14 @@ class QuotesVM @Inject constructor(
             val data = appDataManager.getQuoteCat()
             try {
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if (it?.isEmpty != true) {
                         val snapshot = async(Dispatchers.Default) {
-                            it.toObjects(QuoteResp::class.java)
+                            it?.toObjects(QuoteResp::class.java)
                         }
 
                         val temp = snapshot.await()
                         var data = ArrayList<String>()
-                        temp.forEach {
+                        temp?.forEach {
                             data.add(it.quote_name!!)
                         }
                          quotes= toArray(data)

@@ -21,8 +21,9 @@ import com.applifehack.knowledge.ui.fragment.videolist.VideoListFrag
 import com.applifehack.knowledge.ui.widget.listener.NavListener
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.gotoActivityClearTask
-import kotlinx.android.synthetic.main.view_category_detail.*
-import kotlinx.android.synthetic.main.view_category_detail.view.*
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.Tab
+
 import javax.inject.Inject
 
 class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryDetailVM>(),
@@ -34,19 +35,19 @@ class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryD
     @Inject lateinit var fbAnalyticsHelper: FirebaseAnalyticsHelper
 
 
+
     override fun onViewInitialized(binding: FragmentCategoryDetailBinding) {
         super.onViewInitialized(binding)
         viewModel.navigator = this
-        setToolBar(binding.tagFeedLayout.view_toolbar, "")
+        setToolBar(binding.tagFeedLayout.findViewById(R.id.view_toolbar), "")
         binding.viewModel = viewModel
-        cat=intent.getParcelableExtra<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)
+        cat= intent.getParcelableExtra<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)!!
         viewModel.updateModel(cat)
         binding.listener = this
 
         binding.viewPager.offscreenPageLimit = 1
         binding.viewPager.adapter = TabAdapter(supportFragmentManager)
-
-        tabs.setupWithViewPager(binding.viewPager)
+        binding.tagFeedLayout.findViewById<TabLayout>(R.id.tabs).setupWithViewPager(binding.viewPager)
         val event = "explore_category_detail"
         fbAnalyticsHelper.logEvent(event,event,"app_sections")
 

@@ -32,10 +32,6 @@ import com.applifehack.knowledge.util.setGradient
 import com.crashlytics.android.Crashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.inflator_quote_empty.view.*
-import kotlinx.android.synthetic.main.inflator_quote_empty.view.card
-import kotlinx.android.synthetic.main.inflator_quote_empty.view.image
-import kotlinx.android.synthetic.main.item_share_post.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -163,108 +159,107 @@ object F {
         )!!
     }
 
-    @NonNull
-    fun createBitmapFromView(context: Context,post: Post,bitmap: Bitmap): Bitmap? {
-        val view = LayoutInflater.from(context)
-            .inflate(com.applifehack.knowledge.R.layout.item_share_post, null)
-        view.title.text = post.title
-        view.image.setImageBitmap(bitmap)
-        val point = displayDimensions(context)
-        view.measure(
-            View.MeasureSpec.makeMeasureSpec(point.x, View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(point.y, View.MeasureSpec.EXACTLY)
-        )
-        val bitmap =
-            Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
-        view.draw(canvas)
-//        val createBitmap =
-//            Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-//        view.draw(Canvas(createBitmap))
-        return bitmap
-    }
-
-    fun generateBitmap(context: Context, quoteObject: QuoteResp): Bitmap {
-        val layout = LayoutInflater.from(context)
-            .inflate(com.applifehack.knowledge.R.layout.inflator_quote_empty, null)
-        val card = layout.card
-        val quote = layout.quote
-        val authorText = layout.author
-        val image = layout.image
-        val gradient = layout.gradient
-        val authorLayout = layout.authorLayout
-        val logo = layout.logo
-
-        // set values
-        image.setImageBitmap(quoteObject.image)
-       // authorText.text = quoteObject.author
-        quote.text = quoteObject.quote
-
-        // set dimensions for card
-        val point = displayDimensions(context)
-        val margin = dpToPx(16, context)
-        val x = point.x
-        val y = x
-
-        val params = FrameLayout.LayoutParams(x, y)
-        card.layoutParams = params
-
-
-        // new params
-        val paramsNQ = RelativeLayout.LayoutParams(x, 3 * y / 4)
-//        val paramsNA = RelativeLayout.LayoutParams(
-//            authorLayout.layoutParams.width,
-//            authorLayout.layoutParams.height
+//    fun createBitmapFromView(context: Context,post: Post,bitmap: Bitmap): Bitmap? {
+//        val view = LayoutInflater.from(context)
+//            .inflate(com.applifehack.knowledge.R.layout.item_share_post, null)
+//        view.title.text = post.title
+//        view.image.setImageBitmap(bitmap)
+//        val point = displayDimensions(context)
+//        view.measure(
+//            View.MeasureSpec.makeMeasureSpec(point.x, View.MeasureSpec.EXACTLY),
+//            View.MeasureSpec.makeMeasureSpec(point.y, View.MeasureSpec.EXACTLY)
 //        )
-        val paramsL = RelativeLayout.LayoutParams(
-            logo.layoutParams.width,
-            logo.layoutParams.height
-        )
+//        val bitmap =
+//            Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+//        val canvas = Canvas(bitmap)
+//        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+//        view.draw(canvas)
+////        val createBitmap =
+////            Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+////        view.draw(Canvas(createBitmap))
+//        return bitmap
+//    }
 
-        // alignment quote
-        quote.gravity = when (quoteObject.quoteAlign) {
-            0 -> Gravity.LEFT
-            1 -> Gravity.CENTER
-            else -> Gravity.RIGHT
-        }
-
-        // align author
-//        when (quoteObject.authorAlign) {
-//            0 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-//            1 -> paramsNA.addRule(RelativeLayout.CENTER_HORIZONTAL)
-//            2 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+//    fun generateBitmap(context: Context, quoteObject: QuoteResp): Bitmap {
+//        val layout = LayoutInflater.from(context)
+//            .inflate(com.applifehack.knowledge.R.layout.inflator_quote_empty, null)
+//        val card = layout.card
+//        val quote = layout.quote
+//        val authorText = layout.author
+//        val image = layout.image
+//        val gradient = layout.gradient
+//        val authorLayout = layout.authorLayout
+//        val logo = layout.logo
+//
+//        // set values
+//        image.setImageBitmap(quoteObject.image)
+//       // authorText.text = quoteObject.author
+//        quote.text = quoteObject.quote
+//
+//        // set dimensions for card
+//        val point = displayDimensions(context)
+//        val margin = dpToPx(16, context)
+//        val x = point.x
+//        val y = x
+//
+//        val params = FrameLayout.LayoutParams(x, y)
+//        card.layoutParams = params
+//
+//
+//        // new params
+//        val paramsNQ = RelativeLayout.LayoutParams(x, 3 * y / 4)
+////        val paramsNA = RelativeLayout.LayoutParams(
+////            authorLayout.layoutParams.width,
+////            authorLayout.layoutParams.height
+////        )
+//        val paramsL = RelativeLayout.LayoutParams(
+//            logo.layoutParams.width,
+//            logo.layoutParams.height
+//        )
+//
+//        // alignment quote
+//        quote.gravity = when (quoteObject.quoteAlign) {
+//            0 -> Gravity.LEFT
+//            1 -> Gravity.CENTER
+//            else -> Gravity.RIGHT
 //        }
-
-        // align logo
-//        when (quoteObject.authorAlign) {
-//            0, 1 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-//            2 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-//        }
-
-        // set new params
-        paramsNQ.setMargins(margin)
-        paramsL.setMargins(margin, 0, margin, margin)
-        //paramsNA.setMargins(margin, 0, margin, margin)
-       // paramsNA.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
-        paramsL.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
-
-        quote.layoutParams = paramsNQ
-       // authorLayout.layoutParams = paramsNA
-        logo.layoutParams = paramsL
-
-        // set gradients
-        gradient.setGradient(quoteObject.gradient!!, 0, quoteObject.angle!!)
-       // authorLayout.setGradient(quoteObject.authorGradient!!, 16)
-
-        // prepare for export
-        layout.measure(
-            View.MeasureSpec.makeMeasureSpec(x, View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(y, View.MeasureSpec.EXACTLY)
-        )
-        layout.layout(0, 0, layout.measuredWidth, layout.measuredHeight)
-
-        return getBitmapFromView(layout)
-    }
+//
+//        // align author
+////        when (quoteObject.authorAlign) {
+////            0 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+////            1 -> paramsNA.addRule(RelativeLayout.CENTER_HORIZONTAL)
+////            2 -> paramsNA.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+////        }
+//
+//        // align logo
+////        when (quoteObject.authorAlign) {
+////            0, 1 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+////            2 -> paramsL.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+////        }
+//
+//        // set new params
+//        paramsNQ.setMargins(margin)
+//        paramsL.setMargins(margin, 0, margin, margin)
+//        //paramsNA.setMargins(margin, 0, margin, margin)
+//       // paramsNA.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
+//        paramsL.addRule(RelativeLayout.BELOW, com.applifehack.knowledge.R.id.quote)
+//
+//        quote.layoutParams = paramsNQ
+//       // authorLayout.layoutParams = paramsNA
+//        logo.layoutParams = paramsL
+//
+//        // set gradients
+//        gradient.setGradient(quoteObject.gradient!!, 0, quoteObject.angle!!)
+//       // authorLayout.setGradient(quoteObject.authorGradient!!, 16)
+//
+//        // prepare for export
+//        layout.measure(
+//            View.MeasureSpec.makeMeasureSpec(x, View.MeasureSpec.EXACTLY),
+//            View.MeasureSpec.makeMeasureSpec(y, View.MeasureSpec.EXACTLY)
+//        )
+//        layout.layout(0, 0, layout.measuredWidth, layout.measuredHeight)
+//
+//        return getBitmapFromView(layout)
+//    }
 
 }

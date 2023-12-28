@@ -62,14 +62,14 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         if (loadMore == true) {
             val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
             return getFirebaseStorage()?.collection(ApiEndPoint.POST_DB_KEY)
-                .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
+                ?.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                 ?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
-                .startAfter(lastItem).limit(10).get()
+                ?.startAfter(lastItem)!!.limit(10).get()
         } else {
 
             return getFirebaseStorage()?.collection(ApiEndPoint.POST_DB_KEY)
-                .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
-                .limit(10).get()
+                ?.orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
+                ?.limit(10)!!.get()
             
         }
 
@@ -78,9 +78,9 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun getCatgories(): Task<QuerySnapshot> {
 
-        return getFirebaseStorage()?.collection(ApiEndPoint.GET_CATEGORIES).
-        whereEqualTo(DatabasePath.EDITING_DATABASE,false).
-        orderBy(DatabasePath.CAT_CREATED_DATE, Query.Direction.DESCENDING).get()
+        return getFirebaseStorage()?.collection(ApiEndPoint.GET_CATEGORIES)?.
+        whereEqualTo(DatabasePath.EDITING_DATABASE,false)?.
+        orderBy(DatabasePath.CAT_CREATED_DATE, Query.Direction.DESCENDING)!!.get()
     }
 
     override fun getPopularPost(): Task<QuerySnapshot> {
@@ -224,7 +224,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
 
         var supQuery = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
-        if (typeQuote != null&&!typeQuote?.equals("All",true)){
+        if (typeQuote != null&&!typeQuote?.equals("All",true)!!){
 
            supQuery=supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote)
 
@@ -236,7 +236,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
 
             supQuery?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
-                ?.startAfter(lastItem).limit(10).get()
+                ?.startAfter(lastItem)?.limit(10)!!.get()
 
 
         } else {
@@ -350,7 +350,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
         val query = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).document(generateId)
 
-        return getFirebaseStorage()?.runTransaction {
+        return getFirebaseStorage()!!.runTransaction {
             it.set(query,postValues)
             // val snapshot = it.get(query)
             // it.update(query,DatabasePath.ID,snapshot.id)
@@ -427,7 +427,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         val postValues = rssCatResp.toMap()
         val query = getFirebaseStorage().collection(ApiEndPoint.GET_RSS_CATEGORY).document(rssCatResp.title!!)
 
-        return getFirebaseStorage()?.runTransaction {
+        return getFirebaseStorage()!!.runTransaction {
             it.set(query,postValues)
             // val snapshot = it.get(query)
             // it.update(query,DatabasePath.ID,snapshot.id)

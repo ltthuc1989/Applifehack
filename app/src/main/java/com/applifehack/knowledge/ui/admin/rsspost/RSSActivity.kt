@@ -15,9 +15,6 @@ import com.applifehack.knowledge.ui.activity.webview.WebViewActivity
 import com.applifehack.knowledge.ui.adapter.FeedAdapter
 import com.applifehack.knowledge.ui.adapter.RssFeedAdapter
 import com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity
-import kotlinx.android.synthetic.main.activty_rss.*
-
-
 class RSSActivity : MvvmActivity<ActivtyRssBinding,RSSVM>(),RSSNav{
 
     override val viewModel: RSSVM by getLazyViewModel()
@@ -37,9 +34,9 @@ class RSSActivity : MvvmActivity<ActivtyRssBinding,RSSVM>(),RSSNav{
         binding.adapter = RssFeedAdapter(viewModel)
 
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
-        setToolBar(toolbarRss)
+        setToolBar(binding.toolbarRss)
     }
 
     override fun gotoListPostScreen(resp: RssCatResp) {

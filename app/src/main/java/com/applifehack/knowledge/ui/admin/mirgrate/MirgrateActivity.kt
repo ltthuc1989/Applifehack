@@ -4,7 +4,6 @@ import androidx.appcompat.widget.Toolbar
 import com.applifehack.knowledge.databinding.ActivityTransferBinding
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.MvvmNav
-import kotlinx.android.synthetic.main.activity_transfer.*
 
 class MirgrateActivity : MvvmActivity<ActivityTransferBinding,MirgrateVM>(),MvvmNav {
 
@@ -15,7 +14,7 @@ class MirgrateActivity : MvvmActivity<ActivityTransferBinding,MirgrateVM>(),Mvvm
         super.onViewInitialized(binding)
         viewModel.navigator = this
         binding.viewModel = viewModel
-        setToolBar(setting_toolbar)
+        setToolBar(binding.settingToolbar)
     }
 
     private fun setToolBar(toolbar: Toolbar, title: String?="") {

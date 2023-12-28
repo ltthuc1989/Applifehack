@@ -42,10 +42,10 @@ class DeviceUtilImpl @Inject constructor(
 //                return context.getString(R.string.app_version)+" "+context?.getPackageManager()?.getPackageInfo(context?.getPackageName(), 0)?.versionName
 //
 //            }
-            return context.getString(R.string.app_version)+" "+context?.getPackageManager()?.getPackageInfo(context?.getPackageName(), 0)?.versionName
+            return context.getString(R.string.app_version)+" "+context?.getPackageManager()?.getPackageInfo(context!!.getPackageName(), 0)?.versionName
 
         } catch (e: PackageManager.NameNotFoundException) {
-            Log.e("About", e.message)
+            Log.e("About", e.message!!)
         }
        return ""
     }

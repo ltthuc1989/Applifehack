@@ -46,7 +46,7 @@ class LocalPostActivity : MvvmActivity<ActivityLocalPostBinding,LocalPostVM>(), 
 
 
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
 
 

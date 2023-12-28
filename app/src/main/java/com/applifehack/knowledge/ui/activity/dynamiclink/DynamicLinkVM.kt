@@ -33,12 +33,12 @@ class DynamicLinkVM  @Inject constructor(val appDataManager: AppDataManager, sch
             val data = appDataManager.getPostDetail(id!!).addOnSuccessListener {
 
             }.addOnFailureListener {
-                Log.d("abc",it.message)
+                Log.d("abc",it.message!!)
             }
             data?.await().let {
 
                 val snapshot = async(Dispatchers.Default) {
-                    it.toObject(Post::class.java)
+                    it?.toObject(Post::class.java)
                 }
 
 

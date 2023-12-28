@@ -31,7 +31,7 @@ class YtModel(val id:String?,val video: Item){
     }
     fun likeCount():String?{
         val dFormat = DecimalFormat("####,###")
-        return dFormat.format(video?.statistics.likeCount)
+        return dFormat.format(video?.statistics?.likeCount)
     }
     fun viewCount():String?{
         val dFormat = DecimalFormat("####,###")

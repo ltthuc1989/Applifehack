@@ -40,7 +40,7 @@ class UnsplashHelper {
             .build()
 
         val response = client.newCall(request).execute()
-        val jsonDataString = response.body()?.string()
+        val jsonDataString = response.body?.string()
 
         val json = JSONObject(jsonDataString)
         if (!response.isSuccessful) {

@@ -61,12 +61,12 @@ class MirgrateVM @Inject constructor(val appDataManager: AppDataManager,schedule
             val data = appDataManager.getCatgories()
             try {
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if ( it?.isEmpty != true) {
                         val snapshot = async(Dispatchers.Default) {
-                            it.toObjects(CatResp::class.java)
+                            it?.toObjects(CatResp::class.java)
                         }
 
-                        transferCat(snapshot.await())
+                        transferCat(snapshot.await()!!)
 
 
                     }
@@ -86,7 +86,7 @@ class MirgrateVM @Inject constructor(val appDataManager: AppDataManager,schedule
             val data = appDataManager.getQuoteCat()
             try {
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if (!it!!.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
                             it.toObjects(QuoteResp::class.java)
                         }

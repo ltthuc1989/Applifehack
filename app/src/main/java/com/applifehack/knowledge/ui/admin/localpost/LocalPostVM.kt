@@ -110,7 +110,7 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
 
     }
    fun publish(){
-       if (isRandom.value!=true) return
+       if (isRandom.value != true) return
 
            navigator?.showProgress()
           var ids = mutableListOf<String>()
@@ -181,7 +181,7 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
 
 
     fun exportDatabse(){
-        if(mData?.isNullOrEmpty()) return
+        if( mData?.isNullOrEmpty()== true) return
         navigator?.showProgress()
          appDatabase?.close()
         val context = appDataManager.context

@@ -51,8 +51,6 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
         viewModel.navigator = this
     }
 
-
-
     override fun onViewInitialized(binding: FragmentCategoryBinding) {
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
@@ -97,7 +95,7 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
         }
 
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
         val event = "explore_article"
         fbAnalyticsHelper.logEvent(event,event,"app_sections")

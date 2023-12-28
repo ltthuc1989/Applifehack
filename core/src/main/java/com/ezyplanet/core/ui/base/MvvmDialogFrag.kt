@@ -92,7 +92,7 @@ abstract class MvvmDialogFrag<V : BaseViewModel<*,*>, B : ViewDataBinding> : Dia
     }
 
     open fun onCreatedDialogCustom(dialog: Dialog) {
-        dialog.window.setBackgroundDrawable(
+        dialog.window!!.setBackgroundDrawable(
                 ColorDrawable(Color.WHITE))
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
