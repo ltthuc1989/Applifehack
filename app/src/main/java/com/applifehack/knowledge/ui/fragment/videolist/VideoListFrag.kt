@@ -49,7 +49,7 @@ class VideoListFrag : MvvmFragment<VideoListVM, FragVideoListBinding>(), VideoLi
 
         observe(viewModel.results) {
             if(isDataLoaded) {
-                binding.adapter?.swapItems(it)
+                binding.adapter?.swapItems(it!!)
             }
         }
         val event = "explore_video"

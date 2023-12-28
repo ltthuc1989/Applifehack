@@ -45,7 +45,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.sourcei.kowts.utils.functions.F
+import com.applifehack.knowledge.util.F
 import java.util.*
 import javax.inject.Inject
 
@@ -100,7 +100,7 @@ class QuotesVM @Inject constructor(
                 val data = getApiByCat(nextPage,quoteType)
 
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if (!it!!.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
                             it.toObjects(Post::class.java)
                         }
@@ -295,7 +295,7 @@ class QuotesVM @Inject constructor(
                 dbHelper.getPostById(mData[position].id)
             }.await()
             if (temp != null) {
-                results.value = mData?.apply {
+                results.value = mData!!.apply {
                     get(position).liked = true
                 }
             }
@@ -309,7 +309,7 @@ class QuotesVM @Inject constructor(
             val data = getCats()
             try {
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if (!it!!.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
                             when(catType){
                                 CategoryType.HACK.type->{

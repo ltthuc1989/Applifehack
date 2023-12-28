@@ -10,7 +10,6 @@ import com.applifehack.knowledge.databinding.ActivitySettingBinding
 import com.applifehack.knowledge.util.CustomTabHelper
 import com.applifehack.knowledge.util.extension.openLink
 import com.ezyplanet.core.util.extension.gotoActivity
-import kotlinx.android.synthetic.main.activity_setting.*
 import javax.inject.Inject
 
 class SettingActivity : MvvmActivity<ActivitySettingBinding, SettingVM>(), SettingNav {
@@ -27,7 +26,7 @@ class SettingActivity : MvvmActivity<ActivitySettingBinding, SettingVM>(), Setti
         viewModel.navigator = this
         val event = "explore_setting"
         fbAnalyticsHelper.logEvent(event,event,"app_sections")
-        setToolBar(setting_toolbar)
+        setToolBar(binding.settingToolbar)
 
     }
 

@@ -1,7 +1,5 @@
 package com.ezyplanet.core.ui.base
 
-
-
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Bundle
@@ -20,12 +18,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.ezyplanet.core.util.livedata.ColdEventObserver
 import com.ezyplanet.core.viewmodel.DataChangeVM
 import com.ezyplanet.core.ui.listener.RetryCallback
-
-
-
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
-
 
 abstract class MvvmFragment<V : BaseViewModel<*,*>, B : ViewDataBinding> : Fragment(), MvvmView<V, B> {
 
@@ -115,14 +109,14 @@ abstract class MvvmFragment<V : BaseViewModel<*,*>, B : ViewDataBinding> : Fragm
         super.onViewCreated(view, savedInstanceState)
         // observe viewModel uiActions in order to pass parent activity as argument of uiAction
         setUpNavigator()
-        viewModel.activityAction.observe(this, Observer { it?.invoke(requireActivity()) })
-        viewModel.fragmentAction.observe(this, Observer { it?.invoke(this) })
+        viewModel.activityAction.observe(viewLifecycleOwner, Observer { it?.invoke(requireActivity()) })
+        viewModel.fragmentAction.observe(viewLifecycleOwner, Observer { it?.invoke(this) })
         onViewInitialized(binding)
         dataChangeVM = ViewModelProviders.of(activity!!).get(DataChangeVM::class.java)
-        dataChangeVM?.isLogined.observe(this, ColdEventObserver(this) {
+        dataChangeVM?.isLogined?.observe(viewLifecycleOwner, ColdEventObserver(this) {
             viewModel.reLoadData()
         })
-        dataChangeVM?.isNeedReload.observe(this, ColdEventObserver(this) {
+        dataChangeVM?.isNeedReload?.observe(viewLifecycleOwner, ColdEventObserver(this) {
             viewModel.reLoadData()
         })
         if(savedInstanceState==null){

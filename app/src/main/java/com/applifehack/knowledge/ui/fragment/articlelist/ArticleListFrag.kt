@@ -50,7 +50,7 @@ class ArticleListFrag : BaseFragment< FragArticleListBinding,ArticleListVM>(), A
 
 
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
 
         val event = "explore_article"

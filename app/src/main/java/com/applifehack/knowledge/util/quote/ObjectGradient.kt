@@ -12,7 +12,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  **/
-package org.sourcei.kowts.utils.pojo
+package com.applifehack.knowledge.util.quote
 
 /**
  * @info -

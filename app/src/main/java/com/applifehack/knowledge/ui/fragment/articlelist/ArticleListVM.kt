@@ -17,7 +17,6 @@ import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.util.AppConstants
 import com.applifehack.knowledge.util.SortBy
 import com.applifehack.knowledge.util.extension.await
-import com.applifehack.knowledge.util.extension.shareImage
 import com.applifehack.knowledge.util.extension.shareMessage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ezyplanet.core.GlideApp
@@ -29,7 +28,6 @@ import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
-import org.sourcei.kowts.utils.functions.F
 import java.util.*
 import javax.inject.Inject
 
@@ -58,7 +56,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
                 val data = appDataManager.getPostByCat(catId, SortBy.NEWEST, nextPage,lastItem)
 
                 data?.await().let {
-                    if(!it.isEmpty) {
+                    if(!it!!.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
                             it.toObjects(Post::class.java)
                         }
@@ -68,7 +66,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
                         val rs = snapshot.await()
                         mData.addAll(rs)
                         rs.forEach {
-                            Log.d("PostTitle",it.title)
+                            Log.d("PostTitle",it.title!!)
                         }
 
                         isNoMoreDataLoad = false
@@ -154,7 +152,7 @@ class ArticleListVM @Inject constructor(val appDataManager: AppDataManager, sche
 
     private fun updateRow(data: Post):List<Post>{
         val size = mData?.size
-            for(i in 0..size){
+            for(i in 0..size!!){
                 var p = mData.get(i)
                 if(p.id==data.id){
                     p.likesCount=+1

@@ -41,7 +41,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             return firStore.collection(ApiEndPoint.POST_DB_KEY)
                 .orderBy(DatabasePath.CREATED_DATE_TEXT, Query.Direction.DESCENDING)
                 ?.whereLessThan(DatabasePath.CREATED_DATE_TEXT, createdAt)
-                .startAfter(lastItem).limit(10).get()
+                ?.startAfter(lastItem)?.limit(10)!!.get()
         } else {
 
             return firStore.collection(ApiEndPoint.POST_DB_KEY)
@@ -194,7 +194,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     ): Task<QuerySnapshot> {
 
         var supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.QUOTE.type)
-        if (typeQuote != null&&!typeQuote?.equals("All",true)){
+        if (typeQuote != null&&!typeQuote!!.equals("All",true)){
 
            supQuery=supQuery.whereEqualTo(DatabasePath.QUOTE_TYPE, typeQuote)
 
@@ -206,7 +206,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
 
             supQuery?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
-                ?.startAfter(lastItem).limit(10).get()
+                ?.startAfter(lastItem)!!.limit(10).get()
 
 
         } else {
@@ -285,7 +285,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         lastItem: DocumentSnapshot?
     ): Task<QuerySnapshot> {
         var supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.FACT.type)
-        if (typeFact != null&&!typeFact?.equals("All",true)){
+        if (typeFact != null&&!typeFact!!.equals("All",true)){
 
             supQuery=supQuery.whereEqualTo(DatabasePath.FACT_TYPE, typeFact)
 
@@ -297,7 +297,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
 
             supQuery?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
-                ?.startAfter(lastItem).limit(10).get()
+                ?.startAfter(lastItem)!!.limit(10).get()
 
 
         } else {
@@ -318,7 +318,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         lastItem: DocumentSnapshot?
     ): Task<QuerySnapshot> {
         var supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.HACK.type)
-        if (typeHack != null&&!typeHack?.equals("All",true)){
+        if (typeHack != null&&!typeHack!!.equals("All",true)){
 
             supQuery=supQuery.whereEqualTo(DatabasePath.HACK_TYPE, typeHack)
 
@@ -330,7 +330,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
 
             supQuery?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
-                ?.startAfter(lastItem).limit(10).get()
+                ?.startAfter(lastItem)!!.limit(10).get()
 
 
         } else {
@@ -351,7 +351,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
         lastItem: DocumentSnapshot?
     ): Task<QuerySnapshot> {
         var supQuery = firStore.collection(ApiEndPoint.POST_DB_KEY).whereEqualTo(DatabasePath.TYPE, PostType.PICTURE.type)
-        if (typePhoto != null&&!typePhoto?.equals("All",true)){
+        if (typePhoto != null&&!typePhoto!!.equals("All",true)){
 
             supQuery=supQuery.whereEqualTo(DatabasePath.PHOTO_TYPE, typePhoto)
 
@@ -363,7 +363,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
             val createdAt = lastItem!![DatabasePath.CREATED_DATE_TEXT] as Timestamp
 
             supQuery?.whereLessThanOrEqualTo(DatabasePath.CREATED_DATE_TEXT, createdAt)
-                ?.startAfter(lastItem).limit(10).get()
+                ?.startAfter(lastItem)!!.limit(10).get()
 
 
         } else {

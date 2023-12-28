@@ -14,7 +14,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import okhttp3.OkHttpClient
-import org.sourcei.kowts.utils.functions.F
+import com.applifehack.knowledge.util.F
 import org.sourcei.kowts.utils.reusables.Gradients
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -27,7 +27,6 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
 
     // @Inject   lateinit var locationHelper: LocationHelper
     var isBackGround = false
-
 
     override fun onCreate() {
         super.onCreate()

@@ -131,7 +131,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             try {
                 loadImage(context, remoteView, notification, result?.imageUrl!!)
             }catch (ex:Exception){
-                Log.d("exce",ex.message)
+                ex.message?.let { Log.d("exce", it) }
             }
         }
 

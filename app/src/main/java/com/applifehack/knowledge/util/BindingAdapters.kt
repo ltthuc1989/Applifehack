@@ -6,7 +6,6 @@ import android.widget.FrameLayout
 
 import androidx.databinding.BindingAdapter
 
-import org.sourcei.kowts.utils.functions.F
 import org.sourcei.kowts.utils.reusables.Angles
 
 

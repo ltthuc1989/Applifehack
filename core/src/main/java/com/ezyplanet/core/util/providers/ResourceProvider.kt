@@ -53,15 +53,15 @@ class ResourceProvider @Inject constructor(context: Context) : BaseResourceProvi
     }
 
     override fun getContentInputStream(uri: Uri): InputStream {
-        return mContext.contentResolver.openInputStream(uri)
+        return mContext.contentResolver.openInputStream(uri)!!
     }
 
     override fun getMimType(uri: Uri): String {
         return if (uri.scheme?.contentEquals("content") == true)
-            return mContext.contentResolver.getType(uri)
+            return mContext!!.contentResolver.getType(uri)!!
         else
             MimeTypeMap.getFileExtensionFromUrl(uri.path)
-                    ?: MimeTypeMap.getSingleton().getMimeTypeFromExtension(uri.path)
+                    ?: MimeTypeMap.getSingleton().getMimeTypeFromExtension(uri.path)!!
     }
 
     override fun getContentResolver(): ContentResolver = mContext.contentResolver

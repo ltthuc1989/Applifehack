@@ -2,6 +2,7 @@ package com.applifehack.knowledge.ui.activity.quotes
 
 import android.content.Intent
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.observe
@@ -21,8 +22,6 @@ import com.applifehack.knowledge.util.extension.openLink
 import com.ezyplanet.core.ui.listener.OnSnapPositionChangeListener
 import com.ezyplanet.core.ui.widget.pager.SnapOnScrollListener
 import com.ezyplanet.core.util.extension.attachSnapHelperWithListener
-import kotlinx.android.synthetic.main.fragment_daily_feed.daily_feed_recyclerview
-import kotlinx.android.synthetic.main.toolbar_quote.view.*
 
 class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav,
     QuoteViewListener, ToolbarQuoteListener, NavListener {
@@ -41,13 +40,13 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
         viewModel.navigator = this
         var catName = intent.getStringExtra(
             KEY_CAT_NAME)
-        viewModel.initData(intent.getStringExtra(KEY_CAT_TYPE))
+        intent.getStringExtra(KEY_CAT_TYPE)?.let { viewModel.initData(it) }
 
         try {
 
             val snapHelper = PagerSnapHelper()
-            snapHelper.attachToRecyclerView(daily_feed_recyclerview)
-            daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper,
+            snapHelper.attachToRecyclerView(binding.dailyFeedRecyclerview)
+            binding.dailyFeedRecyclerview.attachSnapHelperWithListener(snapHelper,
                 SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
                 object : OnSnapPositionChangeListener {
                     override fun onSnapPositionChange(position: Int) {
@@ -76,15 +75,15 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
 
         binding.listener = this
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
         val event = "explore_quote"
         fbAnalytics.logEvent(event, event, "app_sections")
         viewModel.quotes.observe {
             if(it.isEmpty()){
-                binding.dailyFeedToolbar.tvSortBy.visibility = View.GONE
+                binding.dailyFeedToolbar.findViewById<TextView>(R.id.tvSortBy).visibility = View.GONE
             }else{
-                binding.dailyFeedToolbar.tvSortBy.visibility = View.VISIBLE
+                binding.dailyFeedToolbar.findViewById<TextView>(R.id.tvSortBy).visibility = View.VISIBLE
             }
         }
 
@@ -148,7 +147,7 @@ class QuotesActivity : BaseActivity<ActivityQuoteBinding, QuotesVM>(), QuotesNav
 }
 
     override fun scrollToTop() {
-        daily_feed_recyclerview?.scrollToPosition(0)
+        binding.dailyFeedRecyclerview?.scrollToPosition(0)
     }
 
 

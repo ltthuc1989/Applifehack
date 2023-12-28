@@ -15,7 +15,7 @@
 package org.sourcei.kowts.utils.reusables
 
 import android.content.SharedPreferences
-import org.sourcei.kowts.utils.pojo.ObjectGradient
+import com.applifehack.knowledge.util.quote.ObjectGradient
 
 /**
  * @info -

@@ -255,7 +255,7 @@ import androidx.lifecycle.OnLifecycleEvent
     companion object {
 
         fun with(lifecycleOwner: LifecycleOwner): RxLifecycle {
-            return RxLifecycle(lifecycleOwner.getLifecycle())
+            return RxLifecycle(lifecycleOwner.lifecycle)
         }
 
         fun with(lifecycle: Lifecycle): RxLifecycle {
@@ -263,11 +263,11 @@ import androidx.lifecycle.OnLifecycleEvent
         }
 
         fun with(lifecycleActivity: AppCompatActivity): RxLifecycle {
-            return RxLifecycle(lifecycleActivity.getLifecycle())
+            return RxLifecycle(lifecycleActivity.lifecycle)
         }
 
         fun with(lifecycleFragment: Fragment): RxLifecycle {
-            return RxLifecycle(lifecycleFragment.getLifecycle())
+            return RxLifecycle(lifecycleFragment.lifecycle)
         }
 
         fun onEvent(lifecycle: Lifecycle): Observable<Lifecycle.Event> {
@@ -359,7 +359,7 @@ import androidx.lifecycle.OnLifecycleEvent
         }
 
         fun disposeOn(lifecycleOwner: LifecycleOwner, disposeEvent: DISPOSE_EVENT, disposable: Disposable) {
-            disposeOn(lifecycleOwner.getLifecycle(), disposeEvent, disposable)
+            disposeOn(lifecycleOwner.lifecycle, disposeEvent, disposable)
         }
 
         fun disposeOnDestroy(lifecycleOwner: LifecycleOwner, subscription: Subscription) {
@@ -407,7 +407,7 @@ import androidx.lifecycle.OnLifecycleEvent
         }
 
         fun <T> disposeOn(lifecycleOwner: LifecycleOwner, disposeEvent: DISPOSE_EVENT): RxTransformer<T, T> {
-            return disposeOn(lifecycleOwner.getLifecycle(), disposeEvent)
+            return disposeOn(lifecycleOwner.lifecycle, disposeEvent)
         }
 
         fun <T> disposeOnDestroy(lifecycle: Lifecycle): RxTransformer<T, T> {

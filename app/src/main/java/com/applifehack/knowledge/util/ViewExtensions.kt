@@ -6,7 +6,6 @@ import android.view.ViewParent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import org.sourcei.kowts.utils.functions.F
 
 // change layout parameters
 fun View.setParams(width: Int, height: Int) {

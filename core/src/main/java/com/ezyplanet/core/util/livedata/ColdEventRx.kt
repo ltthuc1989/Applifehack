@@ -30,9 +30,10 @@ open class ColdEventRx <out T>(private val content: T?) {
 }
 
 class ColdEventObserver<T>(private val classThatWantToUseEvent: Any, private val onEventUnhandledContent: (T) -> Unit) : Observer<ColdEventRx<T>> {
-    override fun onChanged(event: ColdEventRx<T>?) {
-        event?.getContentIfNotHandled(classThatWantToUseEvent)?.let { value ->
-            onEventUnhandledContent(value)
+
+    override fun onChanged(value: ColdEventRx<T>) {
+        value?.getContentIfNotHandled(classThatWantToUseEvent)?.let { event ->
+            onEventUnhandledContent(event)
         }
     }
 }

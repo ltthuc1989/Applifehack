@@ -44,9 +44,10 @@ open class HotEventRx<out T>(private val content: T) {
 
 }
 class HotEventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Observer<HotEventRx<T>> {
-    override fun onChanged(event: HotEventRx<T>?) {
-        event?.getContentIfNotHandled()?.let { value ->
-            onEventUnhandledContent(value)
+
+    override fun onChanged(value: HotEventRx<T>) {
+        value?.getContentIfNotHandled()?.let { event ->
+            onEventUnhandledContent(event)
         }
     }
 }

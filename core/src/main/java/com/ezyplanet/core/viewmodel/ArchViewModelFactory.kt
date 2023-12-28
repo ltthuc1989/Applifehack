@@ -17,8 +17,7 @@ import javax.inject.Singleton
 class ArchViewModelFactory
 @Inject constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        // get the ViewModel provider based on given class
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val creator = creators[modelClass] ?: creators.entries.firstOrNull {
             modelClass.isAssignableFrom(it.key)
         }?.value ?: throw IllegalArgumentException("Unknown model class $modelClass")
@@ -29,4 +28,5 @@ class ArchViewModelFactory
             throw RuntimeException(e)
         }
     }
+
 }

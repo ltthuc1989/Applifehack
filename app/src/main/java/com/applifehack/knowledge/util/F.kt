@@ -12,7 +12,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  **/
-package org.sourcei.kowts.utils.functions
+package com.applifehack.knowledge.util
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -23,23 +23,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.annotation.NonNull
+import android.widget.TextView
 import androidx.core.graphics.toColorInt
 import androidx.core.view.setMargins
+import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.entity.Post
-import com.applifehack.knowledge.util.setGradient
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.inflator_quote_empty.view.*
-import kotlinx.android.synthetic.main.inflator_quote_empty.view.card
-import kotlinx.android.synthetic.main.inflator_quote_empty.view.image
-import kotlinx.android.synthetic.main.item_share_post.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONArray
-import org.sourcei.kowts.utils.pojo.ObjectGradient
+import com.applifehack.knowledge.util.quote.ObjectGradient
 import org.sourcei.kowts.utils.pojo.QuoteResp
 import org.sourcei.kowts.utils.reusables.Gradients
 import kotlin.random.Random
@@ -163,12 +160,11 @@ object F {
         )!!
     }
 
-    @NonNull
     fun createBitmapFromView(context: Context,post: Post,bitmap: Bitmap): Bitmap? {
         val view = LayoutInflater.from(context)
             .inflate(com.applifehack.knowledge.R.layout.item_share_post, null)
-        view.title.text = post.title
-        view.image.setImageBitmap(bitmap)
+        view.findViewById<TextView>(R.id.title).text = post.title
+        view.findViewById<ImageView>(R.id.image).setImageBitmap(bitmap)
         val point = displayDimensions(context)
         view.measure(
             View.MeasureSpec.makeMeasureSpec(point.x-50, View.MeasureSpec.EXACTLY),
@@ -188,13 +184,13 @@ object F {
     fun generateBitmap(context: Context, quoteObject: QuoteResp): Bitmap {
         val layout = LayoutInflater.from(context)
             .inflate(com.applifehack.knowledge.R.layout.inflator_quote_empty, null)
-        val card = layout.card
-        val quote = layout.quote
-        val authorText = layout.author
-        val image = layout.image
-        val gradient = layout.gradient
-        val authorLayout = layout.authorLayout
-        val logo = layout.logo
+        val card = layout.findViewById<RelativeLayout>(R.id.card)
+        val quote = layout.findViewById<TextView>(R.id.quote);
+        val authorText = layout.findViewById<TextView>(R.id.author)
+        val image = layout.findViewById<ImageView>(R.id.image)
+        val gradient = layout.findViewById<FrameLayout>(R.id.gradient)
+        val authorLayout = layout.findViewById<FrameLayout>(R.id.authorLayout)
+        val logo = layout.findViewById<ImageView>(R.id.logo)
 
         // set values
         image.setImageBitmap(quoteObject.image)

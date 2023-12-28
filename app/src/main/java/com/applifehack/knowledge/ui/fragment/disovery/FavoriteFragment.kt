@@ -23,7 +23,6 @@ import com.ezyplanet.core.ui.widget.pager.SnapOnScrollListener
 import com.ezyplanet.core.util.extension.attachSnapHelperWithListener
 import com.ezyplanet.core.util.extension.observe
 import com.ezyplanet.core.util.extension.transitionActivity
-import kotlinx.android.synthetic.main.activity_quote.*
 
 class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),FeedNav {
 
@@ -50,9 +49,9 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
         try {
 
             val snapHelper = PagerSnapHelper()
-            snapHelper.attachToRecyclerView(daily_feed_recyclerview)
+            snapHelper.attachToRecyclerView(binding.dailyFeedRecyclerview)
 
-            daily_feed_recyclerview.attachSnapHelperWithListener(snapHelper,
+            binding.dailyFeedRecyclerview.attachSnapHelperWithListener(snapHelper,
                 SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
                 object : OnSnapPositionChangeListener {
                     override fun onSnapPositionChange(position: Int) {
@@ -72,7 +71,7 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
         binding.adapter = FeedAdapter(viewModel)
 
         observe(viewModel.results) {
-            binding.adapter?.swapItems(it)
+            binding.adapter?.swapItems(it!!)
         }
         val event = "explore_feed"
         homeEventModel.showRefresh.value = false

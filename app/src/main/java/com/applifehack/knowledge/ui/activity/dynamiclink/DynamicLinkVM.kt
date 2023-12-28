@@ -38,7 +38,7 @@ class DynamicLinkVM  @Inject constructor(val appDataManager: AppDataManager, sch
             data?.await().let {
 
                 val snapshot = async(Dispatchers.Default) {
-                    it.toObject(Post::class.java)
+                    it?.toObject(Post::class.java)
                 }
 
 

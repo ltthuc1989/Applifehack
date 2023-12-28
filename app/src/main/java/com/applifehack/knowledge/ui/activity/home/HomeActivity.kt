@@ -29,7 +29,6 @@ import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.replaceFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.install.model.ActivityResult
-import kotlinx.android.synthetic.main.toolbar.view.*
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,ToolbarListener,NavListener {

@@ -17,7 +17,7 @@
 
     </data>
 
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
 
     android:id="@+id/tag_feed_layout"
     android:layout_width="match_parent"
@@ -25,37 +25,23 @@
     android:background="?attr/themeBackground"
     android:layout_height="match_parent">
 
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
+    <include layout="@layout/view_category_detail"
+        android:id="@+id/tag_feed_hero_fragment"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentTop="true"
 
-        android:elevation="6dp"
-        app:tabIndicatorColor="@color/brighter_blue"
-        app:tabIndicatorHeight="@dimen/tab_indicator_height"
-        app:tabMaxWidth="0dp"
-        app:tabMode="fixed"
-
-
-        app:tabPadding="-1dp"
-        app:tabSelectedTextColor="@color/brighter_blue"
-        app:tabTextColor="@color/white_50" />
-
+        android:layout_height="wrap_content"
+        app:viewModel="@{viewModel}"
+        />
 
 
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_below="@id/tabs"
         android:layout_height="match_parent"
-        android:layout_above="@id/iclBottom"
-
 
         android:paddingBottom="@dimen/bottom_navigation_height"
-    />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
 
@@ -67,9 +53,9 @@
         android:id="@+id/iclBottom"
         android:layout_height="wrap_content"
         app:viewModel="@{viewModel}"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         layout="@layout/bottom_navigation"/>
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

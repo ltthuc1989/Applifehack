@@ -51,7 +51,7 @@ class CategoryVM @Inject constructor(
             val data = appDataManager.getCatgories()
             try {
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if (!it!!.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
                             it.toObjects(CatResp::class.java)
                         }
@@ -104,7 +104,7 @@ class CategoryVM @Inject constructor(
 
 
                 data?.await().let {
-                    if (!it.isEmpty) {
+                    if (!it!!.isEmpty) {
                         val snapshot = async(Dispatchers.Default) {
                             it.toObjects(Post::class.java)
                         }

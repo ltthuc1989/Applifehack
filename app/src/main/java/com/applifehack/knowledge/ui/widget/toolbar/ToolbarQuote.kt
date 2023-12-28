@@ -11,13 +11,6 @@ import com.applifehack.knowledge.databinding.ToolbarQuoteBinding
 import com.applifehack.knowledge.ui.activity.quotes.QuotesVM
 import com.applifehack.knowledge.ui.widget.listener.ToolbarQuoteListener
 import com.applifehack.knowledge.util.AlertDialogUtils
-import com.applifehack.knowledge.util.JsonHelper
-import com.applifehack.knowledge.util.SortBy
-import com.applifehack.knowledge.util.extension.toArray
-import com.ezyplanet.core.util.extension.fromJson
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.item_quote_list.view.*
-import kotlinx.android.synthetic.main.toolbar_quote.*
 
 class ToolbarQuote : FrameLayout {
     lateinit var binding: ToolbarQuoteBinding
@@ -47,18 +40,18 @@ class ToolbarQuote : FrameLayout {
             binding.viewModel = value
         }
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context?) : super(context!!) {
         initInflate()
 
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {
         initInflate()
 
     }
 
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context!!, attrs, defStyleAttr) {
         initInflate()
     }
 
@@ -73,7 +66,7 @@ class ToolbarQuote : FrameLayout {
                 AlertDialogUtils.showSingleChoice(context, _sortBy, quote!!, indexSortBy) {
                     indexSortBy = it
                     binding.listener?.sortBy(
-                        quote?.get(it)
+                        quote!!.get(it)
                     )
                     binding.tvSortBy.text = quote?.get(it)
                     _sortBy = quote?.get(it)

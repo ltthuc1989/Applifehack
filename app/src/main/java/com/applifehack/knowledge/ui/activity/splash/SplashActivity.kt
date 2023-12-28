@@ -39,7 +39,7 @@ class SplashActivity : MvvmActivity<ActivitySplashBinding,SplashVM>(),SplashNav{
         }else{
             val bundle = intent.extras
             var payload: PayloadResult? = null
-            if(bundle!=null&&bundle?.containsKey("postId")){
+            if(bundle!=null && bundle?.containsKey("postId") == true){
                 payload = PayloadResult()
                 bundle.keySet().forEach { it1 ->
 
