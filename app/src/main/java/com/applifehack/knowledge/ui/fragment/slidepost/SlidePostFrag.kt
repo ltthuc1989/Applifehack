@@ -1,6 +1,6 @@
 package com.applifehack.knowledge.ui.fragment.slidepost
 
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.ezyplanet.core.ui.base.MvvmFragment
 import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.util.extension.lazyFast
@@ -35,7 +35,7 @@ class SlidePostFrag :MvvmFragment<SlidePostVM,ItemSlidePostBinding>(),SlidePostN
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         binding.item = arguments?.getParcelable(key)
-        categoryShareEvent = ViewModelProviders.of(activity!!).get(CategoryShareEvent::class.java)
+        categoryShareEvent = ViewModelProvider(activity!!).get(CategoryShareEvent::class.java)
 
 
 

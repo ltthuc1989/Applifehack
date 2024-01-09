@@ -1,5 +1,6 @@
 package com.applifehack.knowledge.ui.activity.dynamiclink
 
+import androidx.fragment.app.Fragment
 import com.applifehack.knowledge.databinding.ActivityDynamicLinkBinding
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.entity.Post
@@ -7,6 +8,7 @@ import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.fragment.feed.FeedFrag
 import com.applifehack.knowledge.util.AppBundleKey
 import com.ezyplanet.core.util.extension.replaceFragment
+import dagger.android.AndroidInjector
 
 class DynamicLinkActivity :BaseActivity<ActivityDynamicLinkBinding,DynamicLinkVM>(),DynamicLinkNav{
 

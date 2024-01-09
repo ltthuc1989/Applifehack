@@ -46,6 +46,10 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -116,7 +120,6 @@ dependencies {
     implementation appDependencies.facebook.stetho_okhttp3
     implementation appDependencies.circleImageView
     implementation 'com.makeramen:roundedimageview:2.2.1'
-    implementation 'com.github.rubensousa:gravitysnaphelper:2.2.2'
     // Dagger
     implementation appDependencies.dagger
     implementation appDependencies.daggerAndroid
@@ -132,17 +135,15 @@ dependencies {
     //room
     implementation appDependencies.Room
     implementation appDependencies.RxRoom
-    kapt appDependencies.RoomCompiler
+//    kapt appDependencies.RoomCompiler
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation  appDependencies.timeAgo
     implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {
         exclude group: 'org.apache.httpcomponents'
         exclude group:'com.google.guava'
     }
-    implementation 'jp.wasabeef:blurry:3.0.0' //blur library
 
     //implementation appDependencies.play_services.ads
-    implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
 
 
     implementation 'com.google.firebase:firebase-dynamic-links-ktx:19.1.0'

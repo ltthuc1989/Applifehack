@@ -21,7 +21,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 
 import com.ezyplanet.core.R
 import com.ezyplanet.core.ui.listener.RetryCallback
@@ -50,22 +49,22 @@ abstract class MvvmDialogFrag<V : BaseViewModel<*,*>, B : ViewDataBinding> : Dia
      * @param activity given scope.
      * @return T an instance of requested ViewModel.
      */
-    inline fun <reified T : BaseViewModel<*,*>> getLazyViewModel(scope: ViewModelScope): Lazy<T> =
-            lazy {
-                when (scope) {
-                    ViewModelScope.ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)[T::class.java]
-                    ViewModelScope.FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)[T::class.java]
-                }
-
-            }
-
-    inline fun <reified T : ViewModel> getLazyNormalViewModel(scope: ViewModelScope): Lazy<T> =
-            lazy {
-                when (scope) {
-                    ViewModelScope.ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)[T::class.java]
-                    ViewModelScope.FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)[T::class.java]
-                }
-            }
+//    inline fun <reified T : BaseViewModel<*,*>> getLazyViewModel(scope: ViewModelScope): Lazy<T> =
+//            lazy {
+//                when (scope) {
+//                    ViewModelScope.ACTIVITY -> ViewModelProvider(requireActivity(), viewModelFactory)[T::class.java]
+//                    ViewModelScope.FRAGMENT -> ViewModelProvider(this, viewModelFactory)[T::class.java]
+//                }
+//
+//            }
+//
+//    inline fun <reified T : ViewModel> getLazyNormalViewModel(scope: ViewModelScope): Lazy<T> =
+//            lazy {
+//                when (scope) {
+//                    ViewModelScope.ACTIVITY -> ViewModelProvider(requireActivity(), viewModelFactory)[T::class.java]
+//                    ViewModelScope.FRAGMENT -> ViewModelProvider(this, viewModelFactory)[T::class.java]
+//                }
+//            }
 
     override fun onStart() {
         super.onStart()
@@ -153,7 +152,7 @@ abstract class MvvmDialogFrag<V : BaseViewModel<*,*>, B : ViewDataBinding> : Dia
         setUpNavigator()
         viewModel.activityAction.observe(this, Observer { it?.invoke(requireActivity()) })
         viewModel.fragmentAction.observe(this, Observer { it?.invoke(this) })
-        dialogEventVM = ViewModelProviders.of(activity!!).get(DialogEventVM::class.java)
+        dialogEventVM = ViewModelProvider(activity!!).get(DialogEventVM::class.java)
         onViewInitialized(binding)
 
         if (savedInstanceState == null) {

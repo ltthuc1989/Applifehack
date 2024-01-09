@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.ezyplanet.core.util.livedata.ColdEventObserver
 import com.ezyplanet.core.viewmodel.DataChangeVM
 import com.ezyplanet.core.ui.listener.RetryCallback
@@ -40,8 +39,8 @@ abstract class MvvmFragment<V : BaseViewModel<*,*>, B : ViewDataBinding> : Fragm
     inline fun <reified T : BaseViewModel<*,*>> getLazyViewModel(scope: ViewModelScope): Lazy<T> =
             lazy {
                 when (scope) {
-                    ViewModelScope.ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)[T::class.java]
-                    ViewModelScope.FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)[T::class.java]
+                    ViewModelScope.ACTIVITY -> ViewModelProvider(requireActivity(), viewModelFactory)[T::class.java]
+                    ViewModelScope.FRAGMENT -> ViewModelProvider(this, viewModelFactory)[T::class.java]
                 }
 
             }
@@ -49,8 +48,8 @@ abstract class MvvmFragment<V : BaseViewModel<*,*>, B : ViewDataBinding> : Fragm
     inline fun <reified T : ViewModel> getLazyNormalViewModel(scope: ViewModelScope): Lazy<T> =
             lazy {
                 when (scope) {
-                    ViewModelScope.ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)[T::class.java]
-                    ViewModelScope.FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)[T::class.java]
+                    ViewModelScope.ACTIVITY -> ViewModelProvider(requireActivity(), viewModelFactory)[T::class.java]
+                    ViewModelScope.FRAGMENT -> ViewModelProvider(this, viewModelFactory)[T::class.java]
                 }
             }
 
@@ -112,7 +111,7 @@ abstract class MvvmFragment<V : BaseViewModel<*,*>, B : ViewDataBinding> : Fragm
         viewModel.activityAction.observe(viewLifecycleOwner, Observer { it?.invoke(requireActivity()) })
         viewModel.fragmentAction.observe(viewLifecycleOwner, Observer { it?.invoke(this) })
         onViewInitialized(binding)
-        dataChangeVM = ViewModelProviders.of(activity!!).get(DataChangeVM::class.java)
+        dataChangeVM = ViewModelProvider(activity!!).get(DataChangeVM::class.java)
         dataChangeVM?.isLogined?.observe(viewLifecycleOwner, ColdEventObserver(this) {
             viewModel.reLoadData()
         })

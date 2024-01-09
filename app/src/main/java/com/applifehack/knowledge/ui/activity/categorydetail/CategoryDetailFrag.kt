@@ -4,8 +4,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.ViewModelProviders
-import com.ezyplanet.core.ui.base.MvvmActivity
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.network.response.CatResp
@@ -23,6 +21,7 @@ import com.ezyplanet.core.util.extension.gotoActivity
 import com.ezyplanet.core.util.extension.gotoActivityClearTask
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.Tab
+import dagger.android.AndroidInjector
 
 import javax.inject.Inject
 
@@ -31,6 +30,7 @@ class CategoryDetailFrag : BaseActivity<FragmentCategoryDetailBinding, CategoryD
 
     override val viewModel: CategoryDetailVM by getLazyViewModel()
     override val layoutId: Int = R.layout.fragment_category_detail
+
     lateinit var cat:CatResp
     @Inject lateinit var fbAnalyticsHelper: FirebaseAnalyticsHelper
 

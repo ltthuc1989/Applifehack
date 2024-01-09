@@ -6,7 +6,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.ezyplanet.core.ui.base.ViewModelScope
 import com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter
@@ -57,8 +57,8 @@ class CategoryFrag : BaseFragment<FragmentCategoryBinding, CategoryVM>(), Catego
         binding.viewModel = viewModel
         viewModel.navigator = this
 
-        homeEventModel = ViewModelProviders.of(activity!!).get(HomeEventModel::class.java)
-        categoryShareEvent = ViewModelProviders.of(activity!!).get(CategoryShareEvent::class.java)
+        homeEventModel = ViewModelProvider(requireActivity()).get(HomeEventModel::class.java)
+        categoryShareEvent = ViewModelProvider(requireActivity()).get(CategoryShareEvent::class.java)
         categoryShareEvent.catClickEvent.observe(this, androidx.lifecycle.Observer {
             viewModel.catDetailClick(it)
         })

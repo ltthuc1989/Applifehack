@@ -10,16 +10,16 @@ abstract class MvvmToolbar<B : ViewDataBinding>  : Toolbar {
     lateinit var binding: B
      abstract val layoutToolbarId: Int
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context?) : super(context!!) {
         initInflate()
 
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {
         initInflate()
     }
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context!!, attrs, defStyleAttr) {
         initInflate()
     }
 

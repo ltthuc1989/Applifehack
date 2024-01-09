@@ -30,7 +30,7 @@ class ArticleListFrag : BaseFragment< FragArticleListBinding,ArticleListVM>(), A
     }
     override fun onViewInitialized(binding: FragArticleListBinding) {
         super.onViewInitialized(binding)
-        binding.viewModel = viewModel
+        viewModel.also { binding.viewModel = it }
 
 
            arguments?.getParcelable<CatResp>(CategoryFrag.KEY_CATEGORY_DETAIL)?.let {

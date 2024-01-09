@@ -3,7 +3,7 @@ package com.applifehack.knowledge.ui.fragment.feed
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.ezyplanet.core.ui.base.MvvmActivity
@@ -52,7 +52,7 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
 
 
-        homeEventModel = ViewModelProviders.of(activity!!).get(HomeEventModel::class.java)
+        homeEventModel = ViewModelProvider(activity!!).get(HomeEventModel::class.java)
 
         if(post ==null) {
 

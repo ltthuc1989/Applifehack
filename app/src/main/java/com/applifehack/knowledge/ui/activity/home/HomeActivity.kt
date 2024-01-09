@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.applifehack.knowledge.R
 import com.applifehack.knowledge.data.network.response.CatResp
 import com.applifehack.knowledge.databinding.ActivityHomeBinding
@@ -56,7 +56,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
 
         replaceFragment(FeedFrag())
         initAppUpdate()
-        homeEventModel = ViewModelProviders.of(this).get(HomeEventModel::class.java)
+        homeEventModel = ViewModelProvider(this).get(HomeEventModel::class.java)
         homeEventModel?.categoryClick?.observe(this, Observer {
             gotoActivity(CategoryDetailFrag::class, mapOf(CategoryFrag.KEY_CATEGORY_DETAIL to (it as CatResp)))
         })

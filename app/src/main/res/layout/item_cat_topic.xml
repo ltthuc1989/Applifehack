@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -85,10 +86,10 @@
             android:layout_width="wrap_content"
             android:layout_toRightOf="@+id/img"
             android:src='@{item.liked?@drawable/ic_liked:@drawable/ic_like}'
-            android:tint="@color/white_75"
             android:onClick="@{()->viewModel.likeClick(item)}"
             android:layout_alignBottom="@id/img"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:tint="@color/white_75" />
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/tvLinkCount"

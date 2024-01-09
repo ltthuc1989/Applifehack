@@ -12,16 +12,16 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.firebase.FirebaseApp
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
 import okhttp3.OkHttpClient
 import com.applifehack.knowledge.util.F
+import dagger.android.HasAndroidInjector
 import org.sourcei.kowts.utils.reusables.Gradients
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
+class KnowledgeApp : MultiDexApplication() , HasAndroidInjector {
     @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Any>
     @Inject
     lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
 
@@ -64,15 +64,16 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
     /**
      * @return android dispatching injector for providing dependencies in android activities
      */
-    override fun activityInjector(): AndroidInjector<Activity>? {
-        return activityDispatchingAndroidInjector
-    }
 
 
 
 
     private fun initLiveDatabase(){
 
+    }
+
+    override fun androidInjector(): AndroidInjector<Any> {
+        return activityDispatchingAndroidInjector
     }
 
 }

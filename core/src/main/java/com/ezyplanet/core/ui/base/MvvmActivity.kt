@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.ezyplanet.core.R
 import com.ezyplanet.core.ui.listener.RetryCallback
 import com.ezyplanet.core.ui.widget.TransparentProgressDialog
@@ -32,7 +31,7 @@ import com.tapadoo.alerter.OnHideAlertListener
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
 
@@ -42,7 +41,7 @@ import javax.inject.Inject
  * @param V A ViewModel class that inherited from [BaseViewModel], will be used as default ViewModel of activity
  * @param B A Binding class that inherited from [ViewDataBinding], will be used for creating View of this activity
  */
-open abstract class MvvmActivity<B : ViewDataBinding, V : BaseViewModel<*,*>> : AppCompatActivity(), MvvmView<V, B>, HasSupportFragmentInjector, MvvmFragment.Callback {
+open abstract class MvvmActivity<B : ViewDataBinding, V : BaseViewModel<*,*>> : AppCompatActivity(), MvvmView<V, B>, HasAndroidInjector, MvvmFragment.Callback {
     private var checking: Boolean?= false
     override lateinit var binding: B
 
@@ -55,7 +54,7 @@ open abstract class MvvmActivity<B : ViewDataBinding, V : BaseViewModel<*,*>> : 
     val REQUEST_CAMERA_PERMISSION = 101
     internal var hasShowingDlg: Boolean = false
     @Inject
-    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -77,7 +76,7 @@ open abstract class MvvmActivity<B : ViewDataBinding, V : BaseViewModel<*,*>> : 
      * @return T an instance of requested ViewModel.
      */
     inline fun <reified T : BaseViewModel<*,*>> getLazyViewModel(): Lazy<T> =
-            lazy { ViewModelProviders.of(this, viewModelFactory)[T::class.java] }
+            lazy { ViewModelProvider(this, viewModelFactory)[T::class.java] }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,7 +146,7 @@ open abstract class MvvmActivity<B : ViewDataBinding, V : BaseViewModel<*,*>> : 
         }
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
+
     override fun onFragmentAttached() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -225,6 +224,10 @@ open abstract class MvvmActivity<B : ViewDataBinding, V : BaseViewModel<*,*>> : 
         AlertUtils.showOkAlert(this, title!!, message!!)
     }
 
+    override fun androidInjector():
+            AndroidInjector<Any> {
+        return fragmentDispatchingAndroidInjector
+    }
 
 
     override fun onStop() {

@@ -71,8 +71,8 @@ dependencies {
     // Dagger
     implementation appDependencies.dagger
     implementation appDependencies.daggerAndroid
-    kapt appDependencies.daggerCompiler
-    kapt appDependencies.daggerAndroidCompiler
+//    kapt appDependencies.daggerCompiler
+//    kapt appDependencies.daggerAndroidCompiler
 
     // Rx
     api appDependencies.rxJava
@@ -84,7 +84,7 @@ dependencies {
 
     api appDependencies.spinkit
     api appDependencies.fastNetwork
-    api appDependencies.errorView
+//    api appDependencies.errorView
 
 
     // api "com.facebook.android:facebook-android-sdk:$facebook_version"
@@ -98,13 +98,6 @@ dependencies {
     api appDependencies.timber
     api appDependencies.playCore
 
-    testImplementation testDependencies.junit
-    testImplementation testDependencies.mockitoKotlin
-    testImplementation testDependencies.archTesting
-
-    androidTestImplementation testDependencies.testCore
-    androidTestImplementation testDependencies.testRunner
-    androidTestImplementation testDependencies.esperesso
 
     androidTestImplementation 'androidx.test:rules:1.1.0-beta02'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

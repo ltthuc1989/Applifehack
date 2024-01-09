@@ -2,7 +2,7 @@ package com.applifehack.knowledge.ui.fragment.favorite
 
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.databinding.FragmentDailyFeedBinding
@@ -40,7 +40,7 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
         binding.viewModel = viewModel
         viewModel.navigator = this
 
-        homeEventModel = ViewModelProviders.of(activity!!).get(HomeEventModel::class.java)
+        homeEventModel = ViewModelProvider(activity!!).get(HomeEventModel::class.java)
 
         viewModel.getPost()
 
