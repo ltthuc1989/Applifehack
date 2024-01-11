@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="item"
             type="com.applifehack.knowledge.data.entity.Post" />
@@ -12,109 +13,227 @@
             type="com.applifehack.knowledge.ui.admin.rssposts.RssListPostVM" />
     </data>
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/CardView.Light"
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_height="match_parent"
+        android:background="@drawable/feed_hero_gradient_background">
+
+        <RelativeLayout
+            android:id="@+id/feed_hero_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_above="@id/linBottom"
+
+            android:layout_alignParentTop="true"
+            android:fitsSystemWindows="true">
+
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/feed_hero_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:layout_below="@id/txtTitle"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="20dp"
+                android:alpha="0.8"
+                android:fitsSystemWindows="true"
+                android:layout_above="@id/txtDescription"
+                app:srcImageBitmapUrl="@{item.imageUrl}"
+                android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
+                />
+
+            <TextView
+                style="@style/text_roboto_bold_h1"
+                android:id="@+id/txtTitle"
+                android:text="@{item.title}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/white"
+                tools:text="hello abc" />
+
+            <TextView
+                android:id="@+id/txtDescription"
+                style="@style/text_roboto_italic_h2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="0dp"
+                android:text="@{item.image_caption}"
+                android:textColor="@color/white"
+                tools:text="hello abc" />
+
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/vBottom"
+
+            android:layout_marginTop="-5dp"
+            android:background="@color/darker_gray"
+            android:layout_height="16dp"
+
+            />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/linBottom"
             android:layout_width="match_parent"
-                                android:layout_marginBottom="16dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@id/vBottom"
+            android:background="@drawable/bg_item_feed_bottom"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                style="@style/text_roboto_header"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/roboto"
+            android:paddingBottom="8dp">
 
-                android:text="@{item.title}"
-                android:textColor="#DE000000"
-                app:layout_constraintEnd_toStartOf="@+id/image"
+            <CheckBox
+                android:id="@+id/check_send_push"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                app:civ_fill_color="@color/white_75"
+                android:onCheckedChanged="@{(compoundButton, checked) ->viewModel.checkPush(checked)}"
+
+                android:src="@drawable/ic_author_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/pubDate"
-                android:layout_width="0dp"
+                android:id="@+id/tvSendPush"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="16dp"
-                style="@style/text_roboto"
+                android:layout_marginStart="8dp"
 
-                android:textColor="#8A000000"
-                android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/image"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title" />
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:text="Send Push"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="@id/check_send_push"
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                srcImageUrl="@{item.imageUrl}"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/check_send_push"
+                app:layout_constraintTop_toTopOf="@id/check_send_push"
+                />
+
+            <CheckBox
+                android:id="@+id/check_push_style"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                app:civ_fill_color="@color/white_75"
+
+                android:src="@drawable/ic_author_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvSendPush"
+                android:onCheckedChanged="@{(compoundButton, checked) ->viewModel.checkPushStyle(checked)}"
+
+
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <TextView
-                android:id="@+id/categories"
-                android:layout_width="match_parent"
+                android:id="@+id/tvPushStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="24dp"
-                style="@style/text_roboto"
-                android:textColor="#DE000000"
-                android:text='@{item.author_type +item.getVideoViews() + " "+item.duration}'
+                android:layout_marginStart="8dp"
+
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:text="Push Image Style"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="@id/check_push_style"
+
+                app:layout_constraintStart_toEndOf="@+id/check_push_style"
+                app:layout_constraintTop_toTopOf="@id/check_push_style"
+                />
+
+
+
+            <TextView
+                android:id="@+id/tvPostNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_readmore"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="@string/post_now"
+                android:onClick="@{(view)->viewModel.postNow(item)}"
+                android:textColor="@color/white_75"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                app:layout_constraintTop_toBottomOf="@+id/image" />
-            <Button android:layout_width="0dp"
-                    style="@style/text_roboto"
-                    android:text="@string/post_now"
-                    android:id="@+id/btPostNow"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintHorizontal_weight="5"
-                    android:layout_marginStart="16dp"
-                    android:background="@drawable/bg_bt_blue"
-                    android:textColor="@color/white"
-                    android:layout_marginEnd="16dp"
-                    android:onClick="@{()->viewModel.postNow(item)}"
-                    app:layout_constraintTop_toBottomOf="@id/categories"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/btSchedule"
-                    android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tvSkip"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
 
-            <Button android:layout_width="0dp"
-                    style="@style/text_roboto"
-                    android:id="@+id/btSchedule"
-                    android:text="@string/skip"
-                    android:background="@drawable/bg_bt_blue"
-                    app:layout_constraintHorizontal_weight="5"
-                    android:layout_marginTop="16dp"
-                android:onClick="@{()->viewModel.skip(item)}"
-
-                    android:layout_marginEnd="16dp"
-                    android:textColor="@color/white"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/btPostNow"
-                    app:layout_constraintTop_toBottomOf="@id/categories"
-                    android:layout_height="wrap_content"/>
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_readmore"
+                android:fontFamily="@font/cabin_condensed_regular"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="@string/skip"
+                android:onClick="@{(view)->viewModel.skip(item)}"
+                android:textColor="@color/white_75"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvPostNow"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:id="@+id/shareLayout"
+
+
+            android:padding="@dimen/eight"
+            android:background="@drawable/bg_item_feed_bottom"
+            android:layout_above="@id/vBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+
+
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                app:srcCompat="@drawable/play_store" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+
+                app:srcCompat="@drawable/web_app_icon" />
+        </LinearLayout>
+
+    </RelativeLayout>
 </layout>

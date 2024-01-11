@@ -8,6 +8,7 @@ import com.applifehack.knowledge.util.CategoryType
 import com.applifehack.knowledge.util.FormatterUtil
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.util.*
@@ -16,11 +17,12 @@ class Livescience :BaseCrawler() {
 
     override suspend fun getPosts(doc: Document,categoryType:CategoryType): List<Post>  = coroutineScope {
         val cat = CatResp().getCatByType(categoryType)
-        var elements = doc.select("div.listingResult")
+        var elements = doc.select("div[id*=Item]")
         elements.forEach {
 
             var mediaElement = async {extractImage(it)}.await()
             var linksElement = async { extractLink(it) }.await()
+            var imageCaption = async { extractImageCaption(linksElement!!) }.await()
             var titleElement = async { extractTitle(it) }.await()
             if (mediaElement?.isNotEmpty()==true && linksElement?.isNotEmpty() ==true && titleElement?.isNotEmpty()==true) {
                 var idPost = formatId(titleElement)
@@ -40,6 +42,7 @@ class Livescience :BaseCrawler() {
                                 catName = cat.cat_name
                                 createdDate = Date()
                                 author_type = author
+                                image_caption = imageCaption
 
 
                             })
@@ -54,9 +57,12 @@ class Livescience :BaseCrawler() {
 
     override  fun extractImage(el: Element): String? {
         try {
-
-            FormatterUtil.extractUrls(el.select("img").toString())?.forEach {
-                if (it.contains("1024")) return it
+           var imgSearch = el.select("img").attr("srcset")
+            if (imgSearch.isEmpty()) imgSearch = el.select("img").attr("data-srcset")
+            FormatterUtil.extractUrls(imgSearch)?.forEach {
+                if (it.contains("840-80")) {
+                    return it
+                }
             }
         }catch (ex:Exception){
             ex.printStackTrace()
@@ -69,7 +75,7 @@ class Livescience :BaseCrawler() {
 
     override  fun extractTitle(el: Element): String?{
         try{
-        return el.select("h3").text()
+        return el.select("span.article-name").text()
         }catch (ex:Exception){
             ex.printStackTrace()
 
@@ -86,5 +92,11 @@ class Livescience :BaseCrawler() {
         }
         return ""
 
+    }
+
+    fun extractImageCaption(hrefLink: String): String? {
+        val doc = Jsoup.connect(hrefLink).get()
+        val elements = doc.select("span[class=caption-text]")
+        return elements.text()
     }
 }

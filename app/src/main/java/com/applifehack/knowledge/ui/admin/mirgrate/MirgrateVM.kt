@@ -57,6 +57,7 @@ class MirgrateVM @Inject constructor(val appDataManager: AppDataManager,schedule
     }
 
     fun getCat() {
+        navigator?.showProgress();
         uiScope.launch {
             val data = appDataManager.getCatgories()
             try {
@@ -81,6 +82,7 @@ class MirgrateVM @Inject constructor(val appDataManager: AppDataManager,schedule
     }
 
     fun getQuoteCat() {
+        navigator?.showProgress();
 
         uiScope.launch {
             val data = appDataManager.getQuoteCat()

@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/feed_hero_gradient_background">
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:id="@+id/feed_hero_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,29 +36,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                app:riv_corner_radius_top_left="4dp"
-                app:riv_corner_radius_top_right="4dp"
+                android:layout_below="@id/txtTitle"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="20dp"
                 android:alpha="0.8"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
+                android:layout_above="@id/txtDescription"
                 app:srcImageBitmapUrl="@{item.imageUrl}"
-                android:cropToPadding="true"
                 android:onClick="@{(view)->viewModel.openPostDetail(item,view)}"
-
                 />
 
             <TextView
                 style="@style/text_roboto_bold_h1"
+                android:id="@+id/txtTitle"
                 android:text="@{item.title}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/white"
+                tools:text="hello abc" />
+
+            <TextView
+                style="@style/text_roboto_italic_h2"
+                android:id="@+id/txtDescription"
+                android:text="@{item.image_caption}"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_alignParentBottom="true"
                 android:textColor="@color/white"
                 tools:text="hello abc" />
 
 
-        </FrameLayout>
+        </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"

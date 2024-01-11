@@ -7,7 +7,10 @@ import androidx.multidex.MultiDexApplication
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.applifehack.knowledge.di.component.DaggerAppComponent
-import com.applifehack.knowledge.util.AppConstans
+import com.applifehack.knowledge.util.ENVIRONMENT
+import com.applifehack.knowledge.util.FirebaseDatabaseTransfer
+import com.applifehack.knowledge.util.FirebaseLiveDatabase
+import com.applifehack.knowledge.util.FirebaseStagingDatabase
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.firebase.FirebaseApp
@@ -34,7 +37,6 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
         super.onCreate()
         MultiDex.install(this)
         FirebaseApp.initializeApp(this)
-        FirebaseApp.getInstance()
 
         DaggerAppComponent.builder()
                 .application(this)
@@ -54,8 +56,15 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
             Stetho.initializeWithDefaults(this)
             AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY)
         }
+
+        if (BuildConfig.ENVIRONMENT == ENVIRONMENT.ADMIN.type) {
+            FirebaseDatabaseTransfer.database_name = FirebaseStagingDatabase.database_name
+            initStagingDatabase()
+        } else {
+            FirebaseDatabaseTransfer.database_name = FirebaseLiveDatabase.database_name
+        }
         Gradients = F.readGradients(this)
-        initLiveDatabase()
+        // initLiveDatabase()
 
     }
 
@@ -75,24 +84,24 @@ class KnowledgeApp : MultiDexApplication(), HasActivityInjector {
 
     private fun initLiveDatabase(){
         val options= FirebaseOptions.Builder()
-            .setProjectId(AppConstans.databse_live_id)
-            .setApplicationId(AppConstans.database_live_app_id) // Required for Analytics.
-            .setApiKey(AppConstans.database_live_key) // Required for Auth.
-            .setDatabaseUrl(AppConstans.database_live_url) // Required for RTDB.
+            .setProjectId(FirebaseLiveDatabase.database_id)
+            .setApplicationId(FirebaseLiveDatabase.database_app_id) // Required for Analytics.
+            .setApiKey(FirebaseLiveDatabase.database_key) // Required for Auth.
+            .setDatabaseUrl(FirebaseLiveDatabase.database_url) // Required for RTDB.
             .build()
 
-        FirebaseApp.initializeApp(this /* Context */, options, AppConstans.database_live_name)
+        FirebaseApp.initializeApp(this /* Context */, options, FirebaseLiveDatabase.database_name)
     }
 
     private fun initStagingDatabase(){
         val options= FirebaseOptions.Builder()
-            .setProjectId(AppConstans.databse_live_id)
-            .setApplicationId(AppConstans.database_live_app_id) // Required for Analytics.
-            .setApiKey(AppConstans.database_live_key) // Required for Auth.
-            .setDatabaseUrl(AppConstans.database_live_url) // Required for RTDB.
+            .setProjectId(FirebaseStagingDatabase.database_id)
+            .setApplicationId(FirebaseStagingDatabase.database_app_id) // Required for Analytics.
+            .setApiKey(FirebaseStagingDatabase.database_key) // Required for Auth.
+            .setDatabaseUrl(FirebaseStagingDatabase.database_url) // Required for RTDB.
             .build()
 
-        FirebaseApp.initializeApp(this /* Context */, options, AppConstans.database_live_name)
+        FirebaseApp.initializeApp(this /* Context */, options, FirebaseStagingDatabase.database_name)
     }
 
 }

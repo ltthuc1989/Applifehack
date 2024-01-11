@@ -27,7 +27,7 @@ ext {
     final stethoVersion = "1.5.0"
     final accountKitVersion = "4.37.0"
     final circleImageViewVersion = "2.1.0"
-    final roomVersion = "2.2.5"
+    final roomVersion = "2.6.1"
 
     //firebase
     final firebaseCoreVersion = '16.0.0'

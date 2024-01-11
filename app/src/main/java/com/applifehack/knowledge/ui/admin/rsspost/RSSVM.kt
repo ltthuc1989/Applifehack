@@ -1,32 +1,20 @@
 package com.applifehack.knowledge.ui.activity
 
-import android.renderscript.ScriptGroup
 import android.util.Log
-import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ezyplanet.core.ui.base.BaseViewModel
 import com.ezyplanet.core.util.SchedulerProvider
 import com.ezyplanet.thousandhands.util.connectivity.BaseConnectionManager
 import com.ezyplanet.thousandhands.util.livedata.NonNullLiveData
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
-import com.applifehack.knowledge.data.local.db.AppDatabase
 import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.ui.activity.webview.WebViewJavaScriptLoad
 import com.applifehack.knowledge.ui.admin.rsspost.URLWraper
-import com.applifehack.knowledge.util.AppConstans
-import com.ezyplanet.core.util.CoreConstants
-import com.ezyplanet.core.util.FileUtils
 import com.ezyplanet.supercab.data.local.db.DbHelper
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStream
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -75,7 +63,19 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
     private fun setUrlWrapers(data:List<RssCatResp>){
         data.forEach {
-            urlWrapers.add(URLWraper(it,1))
+            if(it.author_name?.contains("howstuffworks") == true) {
+                it.feed = "https://science.howstuffworks.com/"
+                urlWrapers.add(URLWraper(it,1))
+                it.feed = "https://animals.howstuffworks.com/"
+                urlWrapers.add(URLWraper(it,1))
+                it.feed = "https://people.howstuffworks.com/culture"
+                urlWrapers.add(URLWraper(it,1))
+                it.feed = "https://electronics.howstuffworks.com/tech"
+                urlWrapers.add(URLWraper(it,1))
+            } else {
+                urlWrapers.add(URLWraper(it,1))
+            }
+
         }
 
 

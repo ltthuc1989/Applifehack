@@ -1,7 +1,6 @@
 package com.applifehack.knowledge.data.network.response
 
 import android.os.Parcelable
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.ui.admin.crawler.YoutubeChannel
@@ -215,7 +214,8 @@ data class CatResp constructor(
     var cat_id: String? = "",
     var cat_desc: String? = "",
     var cat_type: String? = "",
-    var created_date:Date?=null,
+    var cat_created_date:Date?=null,
+    var cat_post_type: String? = "",
     var editing :Boolean = false
 ) : Parcelable {
 
@@ -358,8 +358,9 @@ data class CatResp constructor(
         result["cat_name"] = cat_name
         result["cat_thumb_url"] = cat_thumb_url
         result["cat_type"] = cat_type
-        result["cat_created_date"] = com.google.firebase.Timestamp(created_date!!)
-        result["editing"] = true
+        result["cat_created_date"] = com.google.firebase.Timestamp(cat_created_date!!)
+        result["editing"] = false
+        result["cat_post_type"] = cat_post_type
 
         return  result
 

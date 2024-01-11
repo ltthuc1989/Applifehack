@@ -2,6 +2,7 @@ package com.applifehack.knowledge.ui.fragment.feed
 
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -92,6 +93,11 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
         val event = "explore_feed"
         fbAnalyticsHelper.logEvent(event,event,"app_sections")
 
+        homeEventModel.refreshClick.observe(this, Observer {
+            viewModel.reLoadData()
+        })
+        homeEventModel.showRefresh.value = true
+
     }
 
 
@@ -127,6 +133,9 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
         // gotoActivity(YtDetailActivity::class, mapOf(AppBundleKey.YOUTUBE_URL to post.video_url))
     }
 
+    override fun scrollToTop() {
+        binding.dailyFeedRecyclerview.scrollToPosition(0)
 
+    }
 
 }

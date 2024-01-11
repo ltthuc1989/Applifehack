@@ -67,6 +67,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
         viewModel.handleIntent(intent)
         viewModel.getDynamicLink(intent,this)
 
+        homeEventModel.showRefresh.observe(this, Observer {
+            binding.toolbarHome.showRefresh(it)
+            binding.toolbarHome.showDate(it)
+        })
+        homeEventModel.datePosted.observe(this, Observer {
+            binding.toolbarHome.setDatePost(it)
+
+        })
+
+
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -172,7 +182,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeVM>(), HomeNav,Toolba
     }
 
     override fun onMenu() {
-
+        homeEventModel.refreshClick.postValue(true)
     }
 
 

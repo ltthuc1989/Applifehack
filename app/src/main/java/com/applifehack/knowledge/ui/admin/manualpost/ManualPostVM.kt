@@ -138,10 +138,10 @@ class ManualPostVM @Inject constructor(val appDataManager: AppDataManager, sched
         }
         if(isQuoteType) return true
 
-        if(textContentUrl.text.isEmpty()&& textPostType.text?.equals(PostType.VIDEO.type) != true){
-            navigator?.showAlert(R.string.please_enter_content_url)
-            return false
-        }
+//        if(textContentUrl.text.isEmpty()&& textPostType.text?.equals(PostType.VIDEO.type) != true){
+//            navigator?.showAlert(R.string.please_enter_content_url)
+//            return false
+//        }
         if(textImageUrl.text.isEmpty()){
             navigator?.showAlert(please_enter_image_url)
             return false

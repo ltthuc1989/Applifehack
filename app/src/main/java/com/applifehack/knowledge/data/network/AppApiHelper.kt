@@ -1,6 +1,5 @@
 package com.applifehack.knowledge.data.network
 
-import android.os.Environment
 import android.util.Log
 import com.androidhuman.rxfirebase2.firestore.RxFirebaseFirestore
 import com.androidhuman.rxfirebase2.firestore.model.Value
@@ -10,14 +9,12 @@ import com.google.firebase.firestore.*
 import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.entity.PostType
-import com.applifehack.knowledge.data.network.ApiEndPoint.API_YOUTUBE
 import com.applifehack.knowledge.data.network.response.CatResp
 import com.applifehack.knowledge.data.network.response.QuoteResp
 import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.data.network.response.youtube.YoutubeResp
 import com.applifehack.knowledge.util.*
 import com.rx2androidnetworking.Rx2AndroidNetworking
-import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 import com.google.api.services.youtube.YouTube
@@ -29,8 +26,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import java.io.File
 import java.io.FileInputStream
-import java.time.LocalDate
-import java.util.*
 
 
 /**
@@ -262,11 +257,6 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
     override fun updateViewCount(postId: String?): Task<Transaction> {
 
-        if(BuildConfig.ENVIRONMENT==ENVIRONMENT.ADMIN.type){
-            val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
-            firStore = FirebaseFirestore.getInstance(firebaseApp)
-        }
-
         val query = getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).document(postId!!)
         return getFirebaseStorage().runTransaction {
             val snapshot = it.get(query)
@@ -304,20 +294,12 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
 
 
     override fun getPostDetail(postId: String): Task<DocumentSnapshot> {
-        if(BuildConfig.ENVIRONMENT==ENVIRONMENT.ADMIN.type){
-            val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
-            firStore = FirebaseFirestore.getInstance(firebaseApp)
-        }
+
         return getFirebaseStorage().collection(ApiEndPoint.POST_DB_KEY).document(postId!!).get()
     }
 
     override fun uploadDatabase(file: File): UploadTask {
         var storage = FirebaseStorage.getInstance()
-        if(BuildConfig.ENVIRONMENT==ENVIRONMENT.ADMIN.type){
-            val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
-
-            storage = FirebaseStorage.getInstance(firebaseApp)
-        }
 
         val storageRef = storage.reference.child("Database/posts.db")
         val stream = FileInputStream(file)
@@ -382,7 +364,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun transferCat(cats: List<CatResp>): Task<Void> {
-        val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+        val firebaseApp = FirebaseApp.getInstance(FirebaseDatabaseTransfer.database_name)
         val firebseStore = FirebaseFirestore.getInstance(firebaseApp)
         val query = firebseStore.collection(ApiEndPoint.GET_CATEGORIES)
         var batch = firebseStore.batch()
@@ -394,7 +376,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun transferQuoteCat(quotes: List<QuoteResp>): Task<Void> {
-        val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+        val firebaseApp = FirebaseApp.getInstance(FirebaseDatabaseTransfer.database_name)
         val firebseStore = FirebaseFirestore.getInstance(firebaseApp)
         val query = firebseStore.collection(ApiEndPoint.GET_QUOTES)
         var batch = firebseStore.batch()
@@ -406,7 +388,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
 
     override fun transferCrawlData(rssCats :List<RssCatResp>): Task<Void> {
-        val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
+        val firebaseApp = FirebaseApp.getInstance(FirebaseDatabaseTransfer.database_name)
         val firebseStore = FirebaseFirestore.getInstance(firebaseApp)
         val query = firebseStore.collection(ApiEndPoint.GET_RSS_CATEGORY)
         var batch = firebseStore.batch()
@@ -436,13 +418,7 @@ class AppApiHelper @Inject constructor(private val apiHeader: ApiHeader) : ApiHe
     }
     private fun getFirebaseStorage():FirebaseFirestore{
         if(firStore==null) {
-            if (BuildConfig.ENVIRONMENT == ENVIRONMENT.ADMIN.type) {
-                val firebaseApp = FirebaseApp.getInstance(AppConstans.database_live_name)
-                firStore = FirebaseFirestore.getInstance(firebaseApp)
-
-            } else {
-                firStore = FirebaseFirestore.getInstance()
-            }
+            firStore = FirebaseFirestore.getInstance()
         }
         return firStore!!
 

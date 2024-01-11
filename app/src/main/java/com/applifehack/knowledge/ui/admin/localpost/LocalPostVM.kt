@@ -3,6 +3,7 @@ package com.applifehack.knowledge.ui.admin.localpost
 import android.content.Context
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.entity.Post
@@ -32,6 +33,8 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
     val results = NonNullLiveData<List<Post>>(emptyList())
     private var mData = ArrayList<Post>()
     val postSize = MutableLiveData<String>()
+    var sendPush = false
+    var pushStyle = false
 
 
     private var authors  : ArrayList<String>? = appDataManager.getAuthors()
@@ -140,10 +143,14 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
 
     fun postNow(item: Post){
 
-
-        uiScope?.launch {
+        uiScope.launch {
             navigator?.showProgress()
-            appDataManager.createPostLive(item.id, item).addOnFailureListener {
+            appDataManager.createPostLive(item.id, item.apply {
+                if (sendPush) {
+                    send_push = 1
+                    push_style = if (pushStyle) 1 else 0
+                }
+            }).addOnFailureListener {
                 navigator?.hideProgress()
                 navigator?.showAlert(it.message)
 
@@ -195,6 +202,17 @@ class LocalPostVM @Inject constructor(val appDataManager: AppDataManager, val db
     }
     fun onItemClick(item:Post){
         navigator?.openDetail(item)
+    }
+
+    fun checkPush(isChecked: Boolean) {
+        sendPush = isChecked
+
+
+    }
+
+    fun checkPushStyle(isChecked: Boolean) {
+        pushStyle = isChecked
+
     }
 
 

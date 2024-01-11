@@ -109,6 +109,11 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
         )
 
     }
+
+    override fun scrollToTop() {
+        TODO("Not yet implemented")
+    }
+
 }
 
 

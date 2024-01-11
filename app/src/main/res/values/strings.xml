@@ -78,5 +78,7 @@
     <string name="crawlData">Crawl Data</string>
     <string name="daily">Daily</string>
     <string name="product_mode">Production Mode</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 
 </resources>

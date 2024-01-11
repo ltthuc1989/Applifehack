@@ -120,7 +120,22 @@ data class Post(
     @set:PropertyName("post_author_type")
     @get:PropertyName("post_author_type")
     @ColumnInfo(name = "post_author_type")
-    var author_type : String? =""
+    var author_type : String? ="",
+
+    @set:PropertyName("post_image_caption")
+    @get:PropertyName("post_image_caption")
+    @ColumnInfo(name = "post_image_caption")
+    var image_caption: String? = "",
+
+    @set:PropertyName("post_send_push")
+    @get:PropertyName("post_send_push")
+    @ColumnInfo(name = "post_send_push")
+    var send_push: Int? = null,
+
+    @set:PropertyName("post_push_style")
+    @get:PropertyName("post_push_style")
+    @ColumnInfo(name = "post_push_style")
+    var push_style: Int? = null
 ) : Parcelable {
 
 
@@ -138,8 +153,19 @@ data class Post(
         result["post_created_date"] = Timestamp.now()
         result["post_id"] = id!!
         result["post_type"] = type!!
+        result["post_image_caption"] = image_caption?: ""
         if(quote_type?.isEmpty()!=true){
             result["post_quote_type"] = quote_type!!
+        }
+        send_push?.let {
+            result["post_send_push"] = 1
+            if (push_style == null || push_style == 0) {
+                // notification normal
+                result["post_push_style"] = 0
+            } else {
+                // notification image style
+                result["post_push_style"] = 1
+            }
         }
         if(type == PostType.VIDEO.type){
             result["post_video_id"] = video_url!!
@@ -194,6 +220,9 @@ data class Post(
         }
     }
 
+    override fun toString(): String {
+        return "${id}, $title"
+    }
 
 }
 

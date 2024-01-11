@@ -16,7 +16,7 @@ class Newscientist :BaseCrawler() {
 
     override suspend fun getPosts(doc: Document,categoryType:CategoryType): List<Post>  = coroutineScope {
         val cat = CatResp().getCatByType(categoryType)
-        var elements = doc.select("div.card")
+        var elements = doc.select("a.cardlink")
         elements.forEach {
 
             var mediaElement = async {extractImage(it)}.await()
@@ -55,17 +55,15 @@ class Newscientist :BaseCrawler() {
     override  fun extractImage(el: Element): String? {
 
 
-        FormatterUtil.extractUrls(el.select("img").toString())?.forEach {
-            if(it.endsWith("800")&&!it.contains("logo")){
-                return it
-            }
+        FormatterUtil.extractUrls(el.select("img").attr("srcset"))?.forEach {
+            if (it.contains("width=800")) return it
         }
         return ""
     }
 
 
     override  fun extractTitle(el: Element): String?{
-        return el.select("h2").text()
+        return el.select("h3.Card__Title").text()
 
     }
 

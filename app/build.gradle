@@ -72,13 +72,13 @@ android {
         mockup {
             // minSdkVersion 21
            // ext.enableCrashlytics = false
-            applicationId "com.applifehack.knowledge.staging"
+            applicationId "com.applifehack.knowledge.admin.staging"
             buildConfigField "String", "API_YOUTUBE", "\"AIzaSyCzwn_65bFMiqB1pP-yI4DvfOrR_DJN7vo\""
             buildConfigField "String", "URL_DYNAMIC_LINK", "\"https://applifehack.page.link\""
             buildConfigField "String", "DYNAMIC_PACKAGE_NAME", "\"com.applifehack.knowledge.staging\""
             buildConfigField "String", "ENVIRONMENT", "\"mockup\""
 
-            resValue "string","app_name","Staging"
+            resValue "string","app_name","Admin-Staging"
 
 
         }
@@ -152,6 +152,7 @@ dependencies {
     implementation appDependencies.Room
     implementation appDependencies.RxRoom
     kapt appDependencies.RoomCompiler
+    // kapt "android.arch.persistence.room:compiler:1.1.1"
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation  appDependencies.timeAgo
     implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {

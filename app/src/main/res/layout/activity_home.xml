@@ -15,47 +15,47 @@
     </data>
 
 
-        <LinearLayout
-            android:id="@+id/linHome"
+    <LinearLayout
+        android:id="@+id/linHome"
 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:background="?attr/themeBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:background="?attr/themeBackground"
-            android:orientation="vertical">
+            android:id="@+id/frameToolbar"
 
-            <FrameLayout
+            android:layout_height="wrap_content">
+
+            <com.applifehack.knowledge.ui.widget.toolbar.BaseToolBar
+                android:id="@+id/toolbarHome"
                 android:layout_width="match_parent"
-                android:id="@+id/frameToolbar"
-
-                android:layout_height="wrap_content">
-
-                <com.applifehack.knowledge.ui.widget.toolbar.BaseToolBar
-                    android:id="@+id/toolbarHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleBar="@{viewModel.toolbarTitle}" />
+                android:layout_height="wrap_content"
+                app:titleBar="@{viewModel.toolbarTitle}" />
 
         </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                />
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            />
 
 
 
 
-            <include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"
-                app:listener="@{listener}"
-                android:layout_width="wrap_content"
-                android:id="@+id/iclBottom"
-                android:layout_height="wrap_content"
-                app:viewModel="@{viewModel}"
-                layout="@layout/bottom_navigation"/>
-        </LinearLayout>
+        <include android:fitsSystemWindows="true" app:layout_scrollFlags="scroll"
+            app:listener="@{listener}"
+            android:layout_width="wrap_content"
+            android:id="@+id/iclBottom"
+            android:layout_height="wrap_content"
+            app:viewModel="@{viewModel}"
+            layout="@layout/bottom_navigation"/>
+    </LinearLayout>
 
 
 

@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.util.*
 
+// delete
 class Sciencefocus :BaseCrawler() {
 
     override suspend fun getPosts(doc: Document,categoryType:CategoryType): List<Post>  = coroutineScope {
