@@ -44,8 +44,11 @@ open class WebViewVM @Inject constructor(connectionManager: BaseConnectionManage
             super.onProgressChanged(view, newProgress)
             if (newProgress <= 80)
                 navigator?.showProgress()
-            else if (newProgress > 80)
+            else if (newProgress > 80) {
                 navigator?.hideProgress()
+                Log.d("WebViewVM", "WebViewVM ${newProgress}")
+                view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
+            }
 
         }
 
@@ -54,6 +57,7 @@ open class WebViewVM @Inject constructor(connectionManager: BaseConnectionManage
 
 
         }
+
 
     }
 

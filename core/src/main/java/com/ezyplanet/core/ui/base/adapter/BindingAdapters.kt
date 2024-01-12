@@ -33,6 +33,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.ezyplanet.core.GlideApp
 import com.ezyplanet.core.ui.listener.OneClickListener
+import com.ezyplanet.core.ui.webview.WebViewJSInterface
 import com.ezyplanet.core.ui.widget.decoration.GridSpacingItemDecoration
 import com.ezyplanet.core.ui.widget.decoration.SpaceItemDecoration
 import com.ezyplanet.core.ui.widget.pager.RVPagerSnapFancyDecorator
@@ -374,6 +375,7 @@ class BindingAdapters {
 
 
             view.webChromeClient = client
+            view.addJavascriptInterface(WebViewJSInterface(), "$$")
         }
         @JvmStatic
         @BindingAdapter("loadUrl")

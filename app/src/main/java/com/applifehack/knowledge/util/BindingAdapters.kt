@@ -61,8 +61,8 @@ class BindingAdapters{
 
         }
         @JvmStatic
-        @BindingAdapter(value = ["ChromeClient"],requireAll = false)
-        fun setChromeClient(view: WebView, client: WebChromeClient) {
+        @BindingAdapter(value = ["ChromeClient", "rssCat"])
+        fun setChromeClient(view: WebView, client: WebChromeClient, rssCatResp: RssCatResp) {
 
             val settings =view.settings
             settings.loadWithOverviewMode = true
@@ -90,6 +90,7 @@ class BindingAdapters{
 
 
             view.webChromeClient = client
+            view.addJavascriptInterface(WebViewJSInterface(rssCatResp),"$$")
 
         }
         @JvmStatic

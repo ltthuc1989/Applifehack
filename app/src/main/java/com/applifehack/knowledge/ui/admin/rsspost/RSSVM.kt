@@ -1,6 +1,7 @@
 package com.applifehack.knowledge.ui.activity
 
 import android.util.Log
+import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.ezyplanet.core.ui.base.BaseViewModel
@@ -29,8 +30,8 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
 
 
-    fun getWebClient(item: RssCatResp):Client{
-        return Client(item)
+    fun getWebClient():ChromeClient{
+        return ChromeClient()
     }
 
     fun getRssCat() {
@@ -146,12 +147,36 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
-            view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
+            // view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
         }
     }
 
 
 
+
+    inner class ChromeClient() : WebChromeClient() {
+
+
+        override fun onProgressChanged(view: WebView?, newProgress: Int) {
+            super.onProgressChanged(view, newProgress)
+            if (newProgress <= 80)
+                // navigator?.showProgress()
+            else if (newProgress > 80) {
+                // navigator?.hideProgress()
+                Log.d("RSSVM", "onProgressChanged: ${newProgress}")
+                view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
+            }
+
+        }
+
+        override fun onReceivedTitle(view: WebView?, title: String?) {
+            super.onReceivedTitle(view, title)
+
+
+        }
+
+
+    }
 
 
 }

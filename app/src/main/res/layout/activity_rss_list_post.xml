@@ -50,7 +50,7 @@
 
             app:loadUrl="@{viewModel.rssCatResp.feed}"
             app:rssCat="@{viewModel.rssCatResp}"
-            app:webClient="@{viewModel.getWebClient(viewModel.rssCatResp)}"
+            app:ChromeClient="@{viewModel.getWebClient()}"
             android:layout_width="match_parent"
             android:id="@+id/web_view"
             android:layout_below="@id/toolbarRssPost"
