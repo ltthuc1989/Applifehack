@@ -90,6 +90,42 @@ class BindingAdapters{
 
 
             view.webChromeClient = client
+            view.setInitialScale(20)
+            view.addJavascriptInterface(WebViewJSInterface(rssCatResp),"$$")
+
+        }
+
+        @JvmStatic
+        @BindingAdapter(value = ["ChromeWebClient", "webViewClient","rssCat"])
+        fun setChromeWebClient(view: WebView, client: WebChromeClient, webViewClient: WebViewClient, rssCatResp: RssCatResp) {
+
+            val settings =view.settings
+            settings.loadWithOverviewMode = true
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            settings.databaseEnabled = true
+            settings.useWideViewPort = true
+            settings.setSupportZoom(true)
+            settings.builtInZoomControls = true
+            settings.loadWithOverviewMode = true
+
+
+
+            settings.cacheMode = WebSettings.LOAD_NO_CACHE
+
+
+
+            if (Build.VERSION.SDK_INT >= 21) {
+                settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
+            }
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                settings.databasePath = "/data/data/" + view.context.packageName + "/databases/"
+            }
+
+
+
+            view.webChromeClient = client
+            view.webViewClient = webViewClient
             view.addJavascriptInterface(WebViewJSInterface(rssCatResp),"$$")
 
         }

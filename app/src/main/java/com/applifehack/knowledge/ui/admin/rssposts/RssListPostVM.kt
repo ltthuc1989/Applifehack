@@ -3,6 +3,7 @@ package com.applifehack.knowledge.ui.admin.rssposts
 import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.MutableLiveData
@@ -258,11 +259,22 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
     fun getWebClient():ChromeClient {
         return ChromeClient()
     }
-    class Client(val item: RssCatResp) : WebViewClient() {
+
+    fun getClient(): WebViewClient {
+        return Client()
+    }
+    class Client() : WebViewClient() {
 
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
+        }
+
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            return false
         }
     }
     fun showWeb(){
@@ -307,6 +319,7 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
 
     }
 
+
     inner class ChromeClient() : WebChromeClient() {
 
 
@@ -317,7 +330,7 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
             else if (newProgress > 80) {
                 // navigator?.hideProgress()
                 Log.d("RssListPostVM", "onProgressChanged: ${newProgress}")
-                view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
+                // view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
             }
 
         }
@@ -327,6 +340,7 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
 
 
         }
+
 
 
     }

@@ -2,6 +2,7 @@ package com.applifehack.knowledge.ui.activity
 
 import android.util.Log
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.ezyplanet.core.ui.base.BaseViewModel
@@ -34,6 +35,10 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
         return ChromeClient()
     }
 
+    fun getClient(): WebViewClient {
+        return Client()
+    }
+
     fun getRssCat() {
         navigator?.showProgress()
         compositeDisposable.add(appDataManager.getRssCat().compose(schedulerProvider?.ioToMainSingleScheduler())
@@ -57,8 +62,12 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
     fun onItemClicked(item:RssCatResp){
        // scrapData(item)
-        val doc = Jsoup.parse(item.youtubeHtml)
-       navigator?.gotoListPostScreen(item)
+        //val doc = Jsoup.parse(item.youtubeHtml)
+        Log.d("RSSVM","OnItemClick ${item.youtubeHtml}")
+        val temp = item.copy().apply {
+            item.youtubeHtml = ""
+        }
+       navigator?.gotoListPostScreen(temp)
 
     }
 
@@ -142,13 +151,20 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
 
 
-     class Client(val item: RssCatResp) : WebViewClient() {
+     class Client() : WebViewClient() {
 
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
             // view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
         }
+
+         override fun shouldOverrideUrlLoading(
+             view: WebView?,
+             request: WebResourceRequest?
+         ): Boolean {
+             return false
+         }
     }
 
 

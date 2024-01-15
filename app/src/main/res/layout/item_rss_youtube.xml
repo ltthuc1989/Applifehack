@@ -37,8 +37,9 @@
 
                 app:loadUrl="@{item.feed}"
                 app:rssCat="@{item}"
-                app:ChromeClient="@{viewModel.getWebClient()}"
-                android:layout_width="10dp"
+                app:ChromeWebClient="@{viewModel.getWebClient()}"
+                app:webViewClient="@{viewModel.getClient()}"
+                android:layout_width="match_parent"
 
                 android:layout_height="100dp" />
 
