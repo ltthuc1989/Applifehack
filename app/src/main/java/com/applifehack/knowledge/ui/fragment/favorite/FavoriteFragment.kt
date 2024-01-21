@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.databinding.FragmentDailyFeedBinding
+import com.applifehack.knowledge.databinding.ItemFeedListBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.activity.home.HomeEventModel
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
@@ -18,6 +19,7 @@ import com.applifehack.knowledge.util.extension.openLink
 import com.ezyplanet.core.ui.base.MvvmActivity
 import com.ezyplanet.core.ui.base.MvvmFragment
 import com.ezyplanet.core.ui.base.ViewModelScope
+import com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter
 import com.ezyplanet.core.ui.listener.OnSnapPositionChangeListener
 import com.ezyplanet.core.ui.widget.pager.SnapOnScrollListener
 import com.ezyplanet.core.util.extension.attachSnapHelperWithListener
@@ -67,7 +69,7 @@ class FavoriteFragment : BaseFragment<FragmentDailyFeedBinding,FavoriteVM>(),Fee
         }
 
 
-        binding.adapter = FeedAdapter(viewModel)
+        binding.adapter = FeedAdapter(viewModel) as SingleLayoutAdapter<Post, ItemFeedListBinding>
 
         observe(viewModel.results) {
             binding.adapter?.swapItems(it!!)

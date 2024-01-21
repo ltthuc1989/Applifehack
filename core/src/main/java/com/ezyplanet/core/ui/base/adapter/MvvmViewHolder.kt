@@ -12,7 +12,7 @@ import com.ezyplanet.core.ui.base.BaseViewModel
  * @param binding an instance of [B] to get root view for [RecyclerView.ViewHolder] constructor and
  * display data model
  */
- open class MvvmViewHolder<in T, out B : ViewDataBinding>(val binding: B) : RecyclerView.ViewHolder(binding.root) {
+ open class  MvvmViewHolder<in T, out B : ViewDataBinding>(val binding: B) : RecyclerView.ViewHolder(binding.root) {
 
     /**
      * binding method that bind data model to [ViewDataBinding] class

@@ -194,16 +194,17 @@ data class Post(
     }
 
     fun getVideoId(): String? {
+        return video_url
 
-        val pattern = "(?<=watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*"
-
-        val compiledPattern = Pattern.compile(pattern)
-        val matcher = compiledPattern.matcher(video_url)
-
-        if (matcher.find()) {
-            return matcher.group()
-        }
-        return ""
+//        val pattern = "(?<=watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*"
+//
+//        val compiledPattern = Pattern.compile(pattern)
+//        val matcher = compiledPattern.matcher(video_url)
+//
+//        if (matcher.find()) {
+//            return matcher.group()
+//        }
+//        return ""
     }
 
     fun formatLikes(): String = "$likesCount"

@@ -172,6 +172,7 @@ dependencies {
     implementation 'it.skrape:skrapeit:1.2.2'
     implementation 'com.prof18.youtubeparser:youtubeparser:4.0.1'
     implementation("com.google.firebase:firebase-crashlytics:18.6.0")
+    implementation appDependencies.youtube
 
 
 

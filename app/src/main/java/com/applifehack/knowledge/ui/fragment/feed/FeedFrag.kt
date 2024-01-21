@@ -19,12 +19,14 @@ import com.applifehack.knowledge.data.entity.Post
 
 
 import com.applifehack.knowledge.databinding.FragmentDailyFeedBinding
+import com.applifehack.knowledge.databinding.ItemFeedListBinding
 import com.applifehack.knowledge.ui.activity.BaseActivity
 import com.applifehack.knowledge.ui.activity.home.HomeEventModel
 import com.applifehack.knowledge.ui.activity.ytDetail.YtDetailActivity
 import com.applifehack.knowledge.ui.adapter.FeedAdapter
 import com.applifehack.knowledge.ui.fragment.BaseFragment
 import com.applifehack.knowledge.util.AppBundleKey
+import com.ezyplanet.core.ui.base.adapter.SingleLayoutAdapter
 import com.ezyplanet.core.util.extension.putArgs
 class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
@@ -86,7 +88,7 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
 
 
 
-        binding.adapter = FeedAdapter(viewModel)
+        binding.adapter = FeedAdapter(lifecycle = viewLifecycleOwner.lifecycle, viewModel =  viewModel) as SingleLayoutAdapter<Post, ItemFeedListBinding>
         observe(viewModel.results) {
             binding.adapter?.swapItems(it!!)
         }
