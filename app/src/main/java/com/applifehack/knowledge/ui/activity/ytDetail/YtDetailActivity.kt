@@ -22,7 +22,7 @@ class YtDetailActivity : BaseActivity<ActivityYoutubeDetailBinding,YtDetailVM>()
         val post = intent.getParcelableExtra<Post>(AppBundleKey.YOUTUBE_URL)
         viewModel.getYtDetail(post!!.video_url)
         val event = "explore_article"
-        fbAnalytics.logEvent(event,event,"app_sections")
+       // fbAnalytics.logEvent(event,event,"app_sections")
 
 
     }

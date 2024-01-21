@@ -14,6 +14,7 @@ import com.applifehack.knowledge.databinding.ItemRssLinkBinding
 import com.applifehack.knowledge.ui.activity.webview.WebViewActivity
 import com.applifehack.knowledge.ui.adapter.FeedAdapter
 import com.applifehack.knowledge.ui.adapter.RssFeedAdapter
+import com.applifehack.knowledge.ui.admin.rssposts.RssListModel
 import com.applifehack.knowledge.ui.admin.rssposts.RssListPostActivity
 class RSSActivity : MvvmActivity<ActivtyRssBinding,RSSVM>(),RSSNav{
 
@@ -39,7 +40,7 @@ class RSSActivity : MvvmActivity<ActivtyRssBinding,RSSVM>(),RSSNav{
         setToolBar(binding.toolbarRss)
     }
 
-    override fun gotoListPostScreen(resp: RssCatResp) {
+    override fun gotoListPostScreen(resp: RssListModel) {
         gotoActivity(
                 RssListPostActivity::class,
                 mapOf(RssListPostActivity.KEY_FEED_URL to resp)

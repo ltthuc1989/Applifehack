@@ -14,6 +14,7 @@ import com.applifehack.knowledge.data.entity.Post
 import com.applifehack.knowledge.data.network.response.RssCatResp
 import com.applifehack.knowledge.ui.activity.webview.WebViewJavaScriptLoad
 import com.applifehack.knowledge.ui.admin.rsspost.URLWraper
+import com.applifehack.knowledge.ui.admin.rssposts.RssListModel
 import com.ezyplanet.supercab.data.local.db.DbHelper
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
@@ -62,12 +63,8 @@ class RSSVM @Inject constructor(val appDataManager: AppDataManager, val dbHelper
 
     fun onItemClicked(item:RssCatResp){
        // scrapData(item)
-        //val doc = Jsoup.parse(item.youtubeHtml)
-        Log.d("RSSVM","OnItemClick ${item.youtubeHtml}")
-        val temp = item.copy().apply {
-            item.youtubeHtml = ""
-        }
-       navigator?.gotoListPostScreen(temp)
+        val rssModel = RssListModel(feedUrl = item.feed, feedPageUrl = item.feedPageUrl, type = item.type)
+       navigator?.gotoListPostScreen(rssModel)
 
     }
 

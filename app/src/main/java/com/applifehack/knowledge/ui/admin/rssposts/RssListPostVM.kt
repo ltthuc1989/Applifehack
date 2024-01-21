@@ -48,17 +48,20 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
 
 
 
-    fun setModel(resp: RssCatResp){
+    fun setModel(resp: RssListModel){
 
         pageText.text = currentPage.toString()
-        rssCatResp = resp.apply {
+        rssCatResp = RssCatResp().apply {
+            feed = resp.feedUrl
+            feedPageUrl = resp.feedPageUrl
+            type = resp.type!!
             event = MutableLiveData<String>()
         }
         isVideo.value = rssCatResp.type =="video"
-        URL = resp.feed
+        URL = resp.feedUrl
         pageUrl = resp.feedPageUrl
 
-        getFeed(currentPage,false)
+//        getFeed(currentPage,false)
 
 
 
@@ -83,7 +86,7 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
                         val doc = if (rssCatResp.type != "video") Jsoup.connect(temUrl).get()
                         else {
 
-                            Jsoup.connect(rssCatResp.feed).get()
+                            Jsoup.parse(rssCatResp.youtubeHtml)
                         }
                         rssCatResp.cSSQuery(doc)
                     }else{
@@ -330,7 +333,7 @@ class RssListPostVM @Inject constructor(val appDataManager: AppDataManager, sche
             else if (newProgress > 80) {
                 // navigator?.hideProgress()
                 Log.d("RssListPostVM", "onProgressChanged: ${newProgress}")
-                // view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
+                view?.loadUrl(WebViewJavaScriptLoad().loadHtml)
             }
 
         }
