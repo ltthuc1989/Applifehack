@@ -29,6 +29,7 @@ ext {
     final accountKitVersion = "4.37.0"
     final circleImageViewVersion = "2.1.0"
     final roomVersion = "2.6.1"
+    final youtubeVersion = "12.1.0"
 
     //firebase
     final firebaseCoreVersion = '16.0.0'
@@ -180,7 +181,8 @@ ext {
 
             ],
             timeAgo : "com.github.marlonlom:timeago:$timeAgoVersion",
-            playCore : "com.google.android.play:core:$playCoreVersion"
+            playCore : "com.google.android.play:core:$playCoreVersion",
+            youtube: "com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtubeVersion"
 
 
 

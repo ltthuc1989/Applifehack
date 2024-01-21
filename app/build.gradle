@@ -135,7 +135,8 @@ dependencies {
     //room
     implementation appDependencies.Room
     implementation appDependencies.RxRoom
-//    kapt appDependencies.RoomCompiler
+    kapt appDependencies.RoomCompiler
+
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation  appDependencies.timeAgo
     implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {
@@ -147,6 +148,7 @@ dependencies {
 
 
     implementation 'com.google.firebase:firebase-dynamic-links-ktx:19.1.0'
+    implementation appDependencies.youtube
 
 
 

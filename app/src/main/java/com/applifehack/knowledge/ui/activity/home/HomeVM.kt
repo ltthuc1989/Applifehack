@@ -3,6 +3,7 @@ package com.applifehack.knowledge.ui.activity.home
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import com.applifehack.knowledge.BuildConfig
 import com.applifehack.knowledge.data.AppDataManager
 import com.applifehack.knowledge.data.firebase.FirebaseAnalyticsHelper
 import com.applifehack.knowledge.data.firebase.PayloadResult
@@ -56,7 +57,8 @@ class HomeVM @Inject constructor( appDataManager: AppDataManager, schedulerProvi
         if (appDataManager.appPreferenceHelper.enableNotification == true) {
             FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { it1 ->
              //  val topic = if(BuildConfig.DEBUG) "test" else "all"
-               val topic = "all"
+
+                val topic = if (BuildConfig.DEBUG) "test" else "all"
                 FirebaseMessaging.getInstance().subscribeToTopic(topic).addOnSuccessListener {
 
                 }
