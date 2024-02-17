@@ -1,5 +1,6 @@
 package com.applifehack.knowledge.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,9 @@ viewModel) {
         super.onBindViewHolder(holder, position)
         if (holder is YouTubePlayerViewHolder<*,*>) {
             getItem(position).getVideoId()?.let { holder.cueVideo(it) }
+
         }
+        Log.d("FeedAdapter","onBindViewHolder: $position")
     }
 
     override fun getItemCount(): Int {
@@ -76,11 +79,13 @@ viewModel) {
         return items!!.get(position)
     }
 
+
     internal class YouTubePlayerViewHolder<T, B>(
         lifecycle: Lifecycle?, binding: ItemVideoListBinding
     ) : MvvmViewHolder<Post,ItemVideoListBinding>(binding) {
         private var youTubePlayer: YouTubePlayer? = null
         private var currentVideoId: String? = null
+        private var _isPlaying = false
 
         init {
             val youTubePlayerView = binding.youtubePlayerView
@@ -89,7 +94,10 @@ viewModel) {
             // the overlay view is used to intercept clicks when scrolling the recycler view
             // without it touch events used to scroll might accidentally trigger clicks in the player
             // when the overlay is clicked it starts playing the video
-            binding.overlayView.setOnClickListener { youTubePlayer?.play() }
+            binding.overlayView.setOnClickListener {
+                youTubePlayer?.play()
+                _isPlaying = true
+            }
 
             youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
@@ -105,7 +113,14 @@ viewModel) {
                         PlayerConstants.PlayerState.VIDEO_CUED -> binding.overlayView.visibility = View.VISIBLE
                         // remove the overlay for every other state, so that we don't intercept clicks and the
                         // user can interact with the player.
-                        else -> binding.overlayView.visibility = View.GONE
+                        else -> {
+                            if (state == PlayerConstants.PlayerState.PLAYING) {
+                                _isPlaying = true
+                            } else if (state == PlayerConstants.PlayerState.PAUSED) {
+                                _isPlaying = false
+                            }
+                            binding.overlayView.visibility = View.GONE
+                        }
                     }
                 }
             })
@@ -115,6 +130,15 @@ viewModel) {
             currentVideoId = videoId
             // cue the video if the youtube player is available
             youTubePlayer?.cueVideo(videoId, 0f)
+        }
+
+        fun pause() {
+            youTubePlayer?.pause()
+            _isPlaying = false
+        }
+
+        fun isPlaying(): Boolean {
+            return  _isPlaying
         }
     }
 

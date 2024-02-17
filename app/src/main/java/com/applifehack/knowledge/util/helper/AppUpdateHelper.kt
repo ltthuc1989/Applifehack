@@ -24,6 +24,7 @@ class AppUpdateHelper :LifecycleObserver,InstallStateUpdatedListener, MutableLiv
         const val REQUEST_CODE_UPDATE = 1000
     }
 
+
     fun checkUpdate(context: Context) {
 
 
@@ -70,13 +71,13 @@ class AppUpdateHelper :LifecycleObserver,InstallStateUpdatedListener, MutableLiv
     }
 
 
-    override fun onStateUpdate(installState: InstallState?) {
-
-        if (installState?.installStatus() == InstallStatus.DOWNLOADED) {
-            postValue(HotEventRx(installState))
-        }
-    }
     fun completeUpdate(){
         appUpdateManager.completeUpdate()
+    }
+
+    override fun onStateUpdate(installState: InstallState) {
+        if (installState.installStatus() == InstallStatus.DOWNLOADED) {
+            postValue(HotEventRx(installState))
+        }
     }
 }

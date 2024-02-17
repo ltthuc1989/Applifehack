@@ -75,6 +75,10 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
                                     (binding?.adapter as FeedAdapter)?.getRowData(position)?.catName
                                 viewModel.onPageChange(position)
 
+                                if (position !=0) {
+                                    pauseIfYoutubePlay(position)
+                                }
+
                             }
                         })
 
@@ -100,6 +104,26 @@ class FeedFrag : BaseFragment<FragmentDailyFeedBinding, FeedVM>(), FeedNav {
         })
         homeEventModel.showRefresh.value = true
 
+    }
+
+    fun pauseIfYoutubePlay(position: Int) {
+        try {
+
+
+            val recyclerView = binding.dailyFeedRecyclerview
+
+            val prevPosition = if (recyclerView.childCount < position) {
+                0
+            } else {
+                position - 1
+            }
+            val viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(prevPosition))
+            if (viewHolder is FeedAdapter.YouTubePlayerViewHolder<*, *> && viewHolder.isPlaying()) {
+                viewHolder.pause()
+            }
+        } catch (ex: Exception) {
+            Log.e("FeedFragment", "pauseIfYoutubePlay: ${ex.message}")
+        }
     }
 
 
